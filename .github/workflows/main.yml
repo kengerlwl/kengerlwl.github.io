@@ -29,6 +29,7 @@ jobs:
       # 4.安装依赖
       - name: Install deps
         run: |
+          ls -al
           unzip node_modules.zip      
           npm i hexo-cli -g
           npm install
