@@ -2,6 +2,7 @@ hexo clean
 hexo g
 cd public
 
+
 # 初始化
 git init
 
