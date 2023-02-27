@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.x]
+        node_version: [12.x]
 
     steps:
       # 1.检出仓库
@@ -22,7 +22,7 @@ jobs:
       - name: Set node version to ${{ matrix.node_version }}
         uses: actions/setup-node@v2
         with:
-          node-version: '12.x'
+          node-version: ${{ matrix.node_version }}
           cache: "npm" # 缓存
           cache-dependency-path: package-lock.json
 
@@ -34,18 +34,18 @@ jobs:
           npm i hexo-cli -g
           npm ci
 
-      - uses: shaowenchen/debugger-action@v1
-        name: debugger
-        timeout-minutes: 30
-        continue-on-error: true
-        with:
-          frp_server_addr: 110.40.204.239
-          frp_server_port: 7000
-          frp_token: 12345678
-          ssh_port: 29001
+      # - uses: shaowenchen/debugger-action@v1
+      #   name: debugger
+      #   timeout-minutes: 30
+      #   continue-on-error: true
+      #   with:
+      #     frp_server_addr: 110.40.204.239
+      #     frp_server_port: 7000
+      #     frp_token: 12345678
+      #     ssh_port: 29001
 
-      # # 构建/部署
-      # - name: Deploy
-      #   env: # 设置环境变量
-      #     GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }} # toKen私密变量
-      #   run: bash ./run.sh
+      # 构建/部署
+      - name: Deploy
+        env: # 设置环境变量
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }} # toKen私密变量
+        run: bash ./run.sh
