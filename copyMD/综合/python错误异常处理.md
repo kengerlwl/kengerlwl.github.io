@@ -1,3 +1,17 @@
+---
+title: python错误异常处理
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- python
+categories:
+- 综合
+---
 # python 错误处理
 
 ## try and except捕获异常

@@ -1,3 +1,19 @@
+---
+title: 自建机场之websocket+tls+cloudflare
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- 机场
+- 代理
+categories:
+- 代理
+---
+
 # 介绍
 
 ## 工具
@@ -29,9 +45,9 @@
 
 如图，我的域名是`kenger.top`
 
-![image-20230212001120974](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/cf57b2981859559f5ce35c14818242a9/69f5041eb1400f670ec1ef7e99f8cc09.png)
+![image-20230212001120974](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/631677d165f07cf277602467d7c9d208.png)
 
-![image-20230212001750936](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/cf57b2981859559f5ce35c14818242a9/70a68199992faf152eefba100f26bbf5.png)
+![image-20230212001750936](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/148bef1878a96f0ad50f9c3146690689.png)
 
 
 
@@ -43,7 +59,7 @@ NS值，也就是指**nameserver**，域名解析服务器。即DNS服务
 
 进入cloudflare，新增站点
 
-![image-20230212001827761](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/cf57b2981859559f5ce35c14818242a9/c10fe8cc1a93463a201455534e4abf19.png)
+![image-20230212001827761](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/a67e5e4209da493b67ab68151cc79ff6.png)
 
 
 
@@ -53,7 +69,7 @@ NS值，也就是指**nameserver**，域名解析服务器。即DNS服务
 
 ## 填入NS值
 
-![image-20230212002056139](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/cf57b2981859559f5ce35c14818242a9/40c87670be6920e90c2d633c33243559.png)
+![image-20230212002056139](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/3d18f0fc84409391c6a5ae604be1857b.png)
 
 然后提交**submit**
 
@@ -63,7 +79,7 @@ NS值，也就是指**nameserver**，域名解析服务器。即DNS服务
 
 如图。
 
-![image-20230212002239985](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/cf57b2981859559f5ce35c14818242a9/cb975bde32885b6182ef2131c75b8a67.png)
+![image-20230212002239985](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/eeceb42e0a3f979ef456d15556aec71e.png)
 
 ## 关于cloudflare的CDN代理说明
 
@@ -71,7 +87,7 @@ CDN实际上就是再帮我们的服务器做一次反向代理。
 
 如图，当我们访问`v.kenger.top`时，实际上是先访问cloudflare的服务器，然后cloudflare去访问我们的目标服务器。**优点是非常的安全**
 
-![image-20230212002331566](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/cf57b2981859559f5ce35c14818242a9/b1c954cf4d2cb783a29ebd62624f6263.png)
+![image-20230212002331566](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/dae299b69528febbfd9ba822f2d7ae90.png)
 
 
 
@@ -81,7 +97,7 @@ CDN实际上就是再帮我们的服务器做一次反向代理。
 
 这里最好设置成这个，选择灵活的话，好像访问次数多了，会自动判定访问http。
 
-![image-20230212002502214](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/cf57b2981859559f5ce35c14818242a9/c707726f9a369ab9d42060db4885abde.png)
+![image-20230212002502214](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/be5ea4f2f6b73a27e67c543062ab0085.png)
 
 
 
@@ -151,7 +167,7 @@ sudo docker run -it --name v2ray -v $PWD/v2ray/config.json:/etc/v2ray/config.jso
 
 ## 宝塔nginx
 
-![image-20230212002943126](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/cf57b2981859559f5ce35c14818242a9/6ba654e1b570afb780e97fcad4732e92.png)
+![image-20230212002943126](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/1f73b282a0a1d91092581e7c6f0f523a.png)
 
 
 
@@ -159,7 +175,7 @@ sudo docker run -it --name v2ray -v $PWD/v2ray/config.json:/etc/v2ray/config.jso
 
 用免费的就行
 
-![image-20230212003148350](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/cf57b2981859559f5ce35c14818242a9/fc54de028dedba39dc565bc9a3be98a9.png)
+![image-20230212003148350](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/16bbf7acfcf511abea9dab049eb1666e.png)
 
 
 
@@ -184,7 +200,7 @@ sudo docker run -it --name v2ray -v $PWD/v2ray/config.json:/etc/v2ray/config.jso
 
 
 
-![image-20230212003053921](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/cf57b2981859559f5ce35c14818242a9/03d2c125ff48c1b595e1e47671c7e728.png)
+![image-20230212003053921](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/7827842c01801cb2a5de3931b9358eef.png)
 
 
 
@@ -194,13 +210,13 @@ sudo docker run -it --name v2ray -v $PWD/v2ray/config.json:/etc/v2ray/config.jso
 
 就宝塔自带的nginx静态资源代理
 
-![image-20230212183926877](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/cf57b2981859559f5ce35c14818242a9/ef224ee25ad63d89dd6d32547ba58a86.png)
+![image-20230212183926877](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/75ef46423362d2abe08fc00f562fd960.png)
 
 **将网站放入该文件夹下即可。**
 
 效果
 
-![image-20230212183956514](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/cf57b2981859559f5ce35c14818242a9/6ed51f767e4f62f111ce0ffd8f771c93.png)
+![image-20230212183956514](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/fc32c1779c3ae6bace7fde7dd64e61b6.png)
 
 
 
@@ -240,7 +256,7 @@ https://www.winhow.top/archives/14/#Joe-8
 
 ## v2ray填写
 
-![2802654365](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/cf57b2981859559f5ce35c14818242a9/535de391b15c8ba72edcdca32d08483b.png)
+![2802654365](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/a55fc95b24d0dda05ce13eef52b43eba.png)
 
 
 

@@ -1,3 +1,17 @@
+---
+title: python 请求重试机制tenacity
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- python
+categories:
+- 综合
+---
 # python 请求重试机制tenacity
 
 优秀的参考

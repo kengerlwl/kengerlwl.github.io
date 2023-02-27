@@ -1,3 +1,17 @@
+---
+title: 命令行浏览器w3m
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- 服务器
+categories:
+- 服务器
+---
 ### 打开指定网页地址
 
 ```

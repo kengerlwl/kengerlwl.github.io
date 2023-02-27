@@ -1,3 +1,18 @@
+---
+title: 服务器挂载其他云盘，例如googledrive，onedrive
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- 服务器
+- 挂载
+categories:
+- 服务器
+---
 # 服务器可以挂载很多云网盘
 
 **用到的工具Rclone**
@@ -39,7 +54,7 @@ q) Quit config
 
 然后有：
 
-![image-20220831231450455](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/ddc552e2fb60427a31c6b3d28ba21944/190c5cd6fd72ae07d40dc37b782a5c5b.png)
+![image-20220831231450455](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/ddc552e2fb60427a31c6b3d28ba21944/69b94b1ad4cfc3d4acb3f2f4f190bf2a.png)
 
 **对于这个id以及secret，输入enter跳过就行。**
 
@@ -137,7 +152,7 @@ rclone mount one_drive_test1: /onedrive --allow-other --allow-non-empty --vfs-ca
 df -h
 ```
 
-![image-20220831232119105](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/ddc552e2fb60427a31c6b3d28ba21944/c80ebaf306121bc49740af4fe17cb717.png)
+![image-20220831232119105](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/ddc552e2fb60427a31c6b3d28ba21944/750110b64a59b0a23bc6cf808c7f6e1a.png)
 
 
 
@@ -153,7 +168,7 @@ df -h
 基本流程和上面是一致的，但是要注意：
 - 这个要选择第一个
 
-- ![image-20220917175707801](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/ddc552e2fb60427a31c6b3d28ba21944/8e7ea2a21d97e78f3d5ff4631ce393f1.png)
+- ![image-20220917175707801](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/ddc552e2fb60427a31c6b3d28ba21944/4efac40a129a35d631dd81cb33b5acb3.png)
 
   
 

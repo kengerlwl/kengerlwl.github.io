@@ -1,3 +1,17 @@
+---
+title: cuda环境的配置
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- pytorch
+categories:
+- 学术
+---
 ## cuda环境的配置
 
 分为不同的系统，把环境变量的搞好就行

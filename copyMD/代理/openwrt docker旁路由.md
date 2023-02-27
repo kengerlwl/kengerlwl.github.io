@@ -1,3 +1,20 @@
+---
+title: openwrt docker旁路由
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- openwrt
+- 代理
+categories:
+- 代理
+- openwrt
+---
+
 # openwrt docker
 
 ## 提要
@@ -95,7 +112,7 @@ config interface 'vpn0'
 
 然后就可以通过192.168.0.2访问openwrt了。
 
-![image-20221113144733240](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/abc4bfe03679e22fabb51b8e9fb21bf4/76cf55cc1affeae22ac0fed3004002e5.png)
+![image-20221113144733240](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/fe1a21ac19801f2fc6a8da0c4ddb5a7f/3d19efd0e078458cccfa68203f8e20e8.png)
 
 
 
@@ -121,4 +138,4 @@ config interface 'vpn0'
 
 让连接主路由的设备默认走旁路由网关
 
-![image-20221113144137125](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/abc4bfe03679e22fabb51b8e9fb21bf4/8557371175b5879904b17864fb35bbe4.png)
+![image-20221113144137125](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/fe1a21ac19801f2fc6a8da0c4ddb5a7f/83418a8dd78659c8a6b72dff32c71c4c.png)

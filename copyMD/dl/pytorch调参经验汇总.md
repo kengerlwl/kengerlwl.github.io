@@ -1,3 +1,17 @@
+---
+title: pytorch调参经验汇总
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- pytorch
+categories:
+- 学术
+---
 ## 关于train loss 降低不下去
 
 

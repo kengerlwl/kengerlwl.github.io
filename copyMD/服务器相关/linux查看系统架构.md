@@ -1,3 +1,18 @@
+---
+title: linux查看系统架构，以及架构分类
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- 服务器
+- linux
+categories:
+- 服务器
+---
 # 架构
 
 在开发过程中，不可避免的需要下载各种程序的可执行文件。如何针对自己系统的发行版下载好久显得很重要。
@@ -32,7 +47,7 @@ uname -a
 
 
 
-![image-20230116215725688](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/658b2b5c183fcf1e9130b23aa3785369/2af73444b80ec3a9311613ade8970541.png)
+![image-20230116215725688](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/658b2b5c183fcf1e9130b23aa3785369/b83c61174520b3b3288c88d09df55db4.png)
 
 
 

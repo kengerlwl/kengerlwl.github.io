@@ -1,3 +1,18 @@
+---
+title: hexo静态博客搭建
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- hexo
+- 博客
+categories:
+- 综合
+---
 # 前置环境安装
 
 - node   v12.16.2
@@ -10,13 +25,7 @@ npm install
 
 
 
-
-
-
-
-
-
-### git
+### push脚本
 
 模板
 

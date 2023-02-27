@@ -1,3 +1,17 @@
+---
+title: 关于print与日志处理
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- 日志
+categories:
+- 学术
+---
 # logging
 
 通过使用日志模块重载print函数，既保留print的输出，同时又实现logging

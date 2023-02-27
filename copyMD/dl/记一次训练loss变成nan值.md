@@ -1,10 +1,24 @@
+---
+title: 记一次训练loss变成nan值
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- pytorch
+categories:
+- 学术
+---
 # 情况
 
 我正在用transformer训练自己的一个数据集。
 
 结果
 
-![image-20230113225050509](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/230e647f418926abc0ab069056ffffcc/cfb7147ebdf0563d3ab63a4259c638d3.png)
+![image-20230113225050509](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/230e647f418926abc0ab069056ffffcc/f01a7096b9af0e7a9bd59545b305176c.png)
 
 
 
@@ -28,7 +42,7 @@
 
 但是发现我这一开始loss就是nan。
 
-![image-20230113225244523](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/230e647f418926abc0ab069056ffffcc/72907cccc256126eb9cb0ab6c70319e1.png)
+![image-20230113225244523](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/230e647f418926abc0ab069056ffffcc/e940bd1bfb7e3ff654485b6b43fa0cb2.png)
 
 模型内部应该加入SIGMOD之类的防止越界
 
@@ -36,7 +50,7 @@
 
 然后输出模型的的out查看
 
-![image-20230113230413317](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/230e647f418926abc0ab069056ffffcc/a879c2b8e861c45a003c2d2e01d649d4.png)
+![image-20230113230413317](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/230e647f418926abc0ab069056ffffcc/91eb7485cd11e2576e3159d19da24927.png)
 
 发现第一次的数据就有nan值。不知道是中间哪一层开始的。
 

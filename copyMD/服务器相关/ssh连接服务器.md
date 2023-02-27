@@ -1,3 +1,18 @@
+---
+title: ssh连接服务器
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- 服务器
+- linux
+categories:
+- 服务器
+---
 # 常见连接服务器方式
 
 ## 密码
@@ -16,7 +31,7 @@
 ssh-keygen
 ```
 
-![image-20230113162239303](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/691a708e850e02dce427debbb2f5a7fe/b7ea389ea57bcd57b016567deeb9676e.png)
+![image-20230113162239303](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/691a708e850e02dce427debbb2f5a7fe/ff899f7ceb362824fe28a405971e0a7e.png)
 
 将公钥添加到服务器的某个账户上，然后在客户端利用私钥即可完成认证并登录。这样一来，没有私钥，任何人都无法通过 SSH 暴力破解你的密码来远程登录到系统
 

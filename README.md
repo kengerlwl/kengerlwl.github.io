@@ -1,47 +1,41 @@
-# 关于如何将 MD 的图片换源成github
+# 如何使用自建github图床搭建github pages博客
 
+## 技术
+- 博客使用hexo框架
+- 图源管理使用自己写的python脚本，存储是基于github的源接口
+- 自动化使用的是github action
 
+## 关于hexo使用
 
-# 使用前编辑配置文件
+**环境**
 
-![image-20230206205436715](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/04c6e90faac2675aa89e2176d2eec7d8/0cfd91a41ae5d32ea7f56bd58e6ac9af.png)
+- node-v12
+- hexo插件
+
+**命令**
 
 ```
-{
-  "username": "kengerlwl", # 用户名
-  "repository" : "MDimg", # 仓库名
-  "proxy": true, # 针对特殊图片，是否使用代理
-  "wordpress": { # 上传到wordpress的配置
-    "host": "http://host:8081",
-    "username": "***",
-    "password": "***"
-  }
-}
+npm install # 安装库
+
+hexo g 生成静态文件到public文件夹
+hexo s 启用本地local服务端
 ```
 
 
 
-# 单文件使用
-
-![image-20230206205223812](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/04c6e90faac2675aa89e2176d2eec7d8/b46d94e1f7d9535afb98173c704bda0e.png)
+关键是一些配置如何管理，可以参考[blog](https://godweiyang.com/2018/04/13/hexo-blog/)
 
 
 
-- 然后上传仓库。
+## 关于图源管理
+
+具体参考以前的仓库
+
+[MDing 图源](https://github.com/kengerlwl/MDimg)
 
 
 
-# 多文件批量更换
+## 关于github action
 
-**这里设置默认更改这个文件夹的所有文档图源**
-
-![image-20230206205616493](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/04c6e90faac2675aa89e2176d2eec7d8/941a43b4e962abb55908fa077eec0ad3.png)
-
-
-
-## 生成的新图源文档在如下文件夹
-
-![image-20230206205730187](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/04c6e90faac2675aa89e2176d2eec7d8/b32536486b294ebe49e34d764d5fd524.png)
-
-
+- 当每次更新仓库后，会自动将`copyMD`文件夹下面的所有文件重新打包上传到另一个分支里面
 

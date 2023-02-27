@@ -1,4 +1,18 @@
-
+---
+title: 安卓root探索记录
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- 安卓
+- root
+categories:
+- 综合
+---
 
 # root后如何愉快玩耍
 

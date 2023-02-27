@@ -1,3 +1,18 @@
+---
+title: 关于我在Ubuntu上配置route
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- 实验室
+- 路由表
+categories:
+- 实验室
+---
 # 关于我在Ubuntu上配置route
 
 ## 前言

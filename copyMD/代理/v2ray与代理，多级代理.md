@@ -1,3 +1,18 @@
+---
+title: v2ray与代理，多级代理
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- v2ray
+- 代理
+categories:
+- 代理
+---
 # 代理与V2ray
 
 参考：
@@ -70,7 +85,7 @@
 
 客户端配置
 
-![image-20220508111037368](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/8cb3d7627a138d3e74c02045c2347434/c6d740bf302d115132551cefdf25eeaa.png)
+![image-20220508111037368](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/8cb3d7627a138d3e74c02045c2347434/e13d6fa0744082ab7f21973b385bafad.png)
 
 
 
@@ -108,7 +123,7 @@
 
 正向代理是代理的客户端，所有客户端都可以走代理服务器
 
-![image-20220508112316782](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/8cb3d7627a138d3e74c02045c2347434/daa5afb33830ea1b0187d19056218a38.png)
+![image-20220508112316782](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/8cb3d7627a138d3e74c02045c2347434/33f7cefd5f32433ba897e077253b21ef.png)
 
 
 

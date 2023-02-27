@@ -1,3 +1,18 @@
+---
+title: shell小note
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- 服务器
+- linux
+categories:
+- 服务器
+---
 ## 变量
 
 - 简单定义一个变量
@@ -328,7 +343,7 @@ groupdel g1
 
 显示的内容如下：
 
-![image-20221020134132328](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/c53b935433a115d5732aa06e1e6ac8ac/bdd03cabe38c22bbb73f783161e8504d.png)
+![image-20221020134132328](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/c53b935433a115d5732aa06e1e6ac8ac/40e434fe37e731e20ea912fb2e41d2ad.png)
 
 其中的kenger.txt表示属于kenger用户，files用户组。同组的具有rwx权限。
 

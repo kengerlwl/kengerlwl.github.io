@@ -1,3 +1,17 @@
+---
+title: neo4j知识图谱环境搭建
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- pytorch
+categories:
+- 学术
+---
 # neo4j图数据库
 
 这是一个知识图谱搭建并可视化的优秀平台
@@ -58,7 +72,7 @@ liunx环境[Neo4j](https://so.csdn.net/so/search?q=Neo4j&spm=1001.2101.3001.7020
 
 然后有结果。
 
-![image-20220905200159871](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/2970cc53434809d84eb89184b8668416/a3a551c9751930366f0511a069220dbe.png)
+![image-20220905200159871](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/2970cc53434809d84eb89184b8668416/1a00cb19834f970596e2bfd3ccb898c9.png)
 
 停止
 

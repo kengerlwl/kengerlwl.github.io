@@ -1,3 +1,19 @@
+---
+title: 基于宝塔nginx的多站点管理
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- 服务器
+- 宝塔
+- nginx
+categories:
+- 服务器
+---
 # 应用的场景
 
 有若干服务需要访问，他们或者ip不一样，或者端口不一样。
@@ -18,31 +34,31 @@
 
 先直接将域名指向服务器ip。或者服务器www域名也可以。总之就是直接到80端口。
 
-![image-20221217203603861](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/7d3fdd730213faafd876f5c39adc98ca/f6fdfb6c69c5f7b513aa171974e0ea87.png)
+![image-20221217203603861](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7d3fdd730213faafd876f5c39adc98ca/7c600b883827b37010c4aa5fd5a6ad04.png)
 
 ## 设置宝塔面板nginx
 
 然后去宝塔
 
-![image-20221217203731037](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/7d3fdd730213faafd876f5c39adc98ca/efcab459a012bf898b8bc6260ddaf6a8.png)
+![image-20221217203731037](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7d3fdd730213faafd876f5c39adc98ca/4478ddcc4224e5f5fa0ba799d09c245e.png)
 
 
 
 添加一个站点
 
-![image-20221217203751574](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/7d3fdd730213faafd876f5c39adc98ca/ea3a5a87ac083d069d4d82b89c69c386.png)
+![image-20221217203751574](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7d3fdd730213faafd876f5c39adc98ca/96411d22da4f6290b0c8645b93df94af.png)
 
 
 
 设置反向代理到本地
 
-![image-20221217204302535](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/7d3fdd730213faafd876f5c39adc98ca/693152a0e565faee0ca878b3661da118.png)
+![image-20221217204302535](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7d3fdd730213faafd876f5c39adc98ca/0a0df8a8546b32df15f96a5226a75713.png)
 
 ### 错误注意
 
 尽量不要用localhost。用127.0.0.1更好。
 
-![image-20221217203808588](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/7d3fdd730213faafd876f5c39adc98ca/b403b7242a1e21d95530d7cce95128dc.png)
+![image-20221217203808588](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7d3fdd730213faafd876f5c39adc98ca/d1fb124357b45b2d75a26dcfa362255f.png)
 
 
 
@@ -50,7 +66,7 @@
 
 
 
-![image-20221217204312605](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/7d3fdd730213faafd876f5c39adc98ca/860676fa93d310175d980bf6a266df6d.png)
+![image-20221217204312605](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7d3fdd730213faafd876f5c39adc98ca/510f3b91cd60dcc1840fc5194894106a.png)
 
 
 

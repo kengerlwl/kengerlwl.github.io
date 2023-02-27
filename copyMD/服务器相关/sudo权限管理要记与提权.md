@@ -1,3 +1,18 @@
+---
+title: sudo权限管理要记与提权
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- 服务器
+- linux
+categories:
+- 服务器
+---
 # sudoers文件进行权限管理
 
 作用：能够进行用户以及用户组的权限管理。
@@ -43,23 +58,23 @@ visudo
 
 找到一个神奇的方法：远程的话开两个ssh终端，**两个终端要同一个用户**
 
-![img](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/256a8173241b71a641a53b2611818473/d3937500028f3c23bb88cf2d30177105.png)
+![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/256a8173241b71a641a53b2611818473/935f42020b37b33df1475e98899d9d97.png)
 
  对tty1终端：`输入 echo $$` //获取pid
 
-![img](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/256a8173241b71a641a53b2611818473/8023102ce6f8366254f1184377084c9e.png)
+![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/256a8173241b71a641a53b2611818473/b3bcfe6c69b219662b23d551378b81df.png)
 
 切换到tty2：输入 `pkttyagent --process 获取的pid值 ；此时该tty2终端会卡住`
 
-![img](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/256a8173241b71a641a53b2611818473/35c4611902ca88caa0a631c4e84d6769.png)
+![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/256a8173241b71a641a53b2611818473/83bb92c112a41136ff2914a7674a26a3.png)
 
 切到tty1：输入 `pkexec visudo ；此时tty1也会卡住`
 
-![img](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/256a8173241b71a641a53b2611818473/e7d7d494ae4cc05619a8d73e2043aee1.png)
+![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/256a8173241b71a641a53b2611818473/1d95133a0c33c083b85d4b1529429aed.png)
 
 切到tty2：会看到要求输入密码，对应输入
 
-![img](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/256a8173241b71a641a53b2611818473/c7103736a1a11c107746bd6f74137ad4.png)
+![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/256a8173241b71a641a53b2611818473/e312b434366f48505ae07fdf9e42a32d.png)
 
 切回到tty1：发现已经进入了visudo编辑界面，实际上把**pkexec**后面的命令换成其他也是一样的用sudo执行
 

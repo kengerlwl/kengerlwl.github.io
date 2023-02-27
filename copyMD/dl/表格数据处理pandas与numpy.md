@@ -1,3 +1,18 @@
+---
+title: 表格数据处理pandas与numpy
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- pandas
+- numpy
+categories:
+- 学术
+---
 # pandas
 
 
@@ -115,10 +130,10 @@ print(anchors.reshape([3,6]))  # 生成一个（3，6）的二维数组
 print(anchors.reshape([2,9]))  # 生成一个（2，9）的二维数组
 ```
 
-![3，6的输出结果](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/1b1d9635de88de5898e66f7ece180df7/51e8b0ed3aa99934f470914a4a5890dd.png)
+![3，6的输出结果](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/1b1d9635de88de5898e66f7ece180df7/3be4e53204a777c3d752b739ca1d6c81.png)
 
 
-![](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/1b1d9635de88de5898e66f7ece180df7/5b701ad441b6213cd2af64bf31d69ed1.png)
+![](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/1b1d9635de88de5898e66f7ece180df7/d612f0e1b52938aa3c3d8e89530f5528.png)
 
 
 
@@ -256,13 +271,13 @@ torch.mm(a, b)
 
 **当输入有多维时，把多出的一维作为batch提出来，其他部分做矩阵乘法。**
 
-![image-20220810220646801](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/1b1d9635de88de5898e66f7ece180df7/75c072e2f13b0e0356763b3de5b63655.png)
+![image-20220810220646801](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/1b1d9635de88de5898e66f7ece180df7/693dbea9d6c0094ecc65ae89c2cbf69a.png)
 
 
 
 或者都是3维的
 
-![image-20220810220708808](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/1b1d9635de88de5898e66f7ece180df7/0a86bcca07904caa6e37e1c491bd0bea.png)
+![image-20220810220708808](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/1b1d9635de88de5898e66f7ece180df7/29a9c75cff17a9db7443d9f4dfc7a1d8.png)
 
 
 

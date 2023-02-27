@@ -1,3 +1,18 @@
+---
+title: selenium新版本后如何定位元素
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- 爬虫
+- selenium
+categories:
+- 综合
+---
 # 老版本的selenium更新后有些方法用不了
 
 对于python来说，在4.2的selenium后就不能使用以下办法。

@@ -1,4 +1,17 @@
-
+---
+title: 趣味shell小脚本
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- 服务器
+categories:
+- 服务器
+---
 
 # 监控哪些人在服务器卷小脚步
 

@@ -1,3 +1,18 @@
+---
+title: moonlight云电脑
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- moonlight
+- 串流
+categories:
+- 综合
+---
 # 场景
 
 有一台配置有N卡的win，有一个可能不在同一个局域网的PC机B。
@@ -17,13 +32,13 @@
 你需要安装Nvidia Geforce Experience，在它的设置中找到并启用Shield串流服务。这个需要比较彻底的科学上网才能开，建议
 
 - 使用openwrt
-- 使用clash的![image-20221218215126294](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/73e9ab486fd11539c76112ad3b7a06ee/aa75dc1d4821f4ef9038d94241064049.png)
+- 使用clash的![image-20221218215126294](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/73e9ab486fd11539c76112ad3b7a06ee/b703ea739dcdd293f634aa9e2a162cea.png)
 
 
 
 开启
 
-![image-20221218215224220](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/73e9ab486fd11539c76112ad3b7a06ee/93ddecc08da551187d5414a8cfb5171c.png)
+![image-20221218215224220](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/73e9ab486fd11539c76112ad3b7a06ee/5746c9a1c937323307aec8793f8fccdb.png)
 
 
 
@@ -119,7 +134,7 @@ remote_port = 48010
 
 输入ip就可以了
 
-![image-20221218215436510](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/73e9ab486fd11539c76112ad3b7a06ee/1c585179af1e0b42cd02697fb2b5f03e.png)
+![image-20221218215436510](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/73e9ab486fd11539c76112ad3b7a06ee/b09f89e9c462116de9d3f82fd710ba58.png)
 
 
 

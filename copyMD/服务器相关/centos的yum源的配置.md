@@ -1,3 +1,18 @@
+---
+title: centos的yum源的配置
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- 服务器
+- linux
+categories:
+- 服务器
+---
 ### yum源配置
 
 ```bash
@@ -23,12 +38,12 @@ rpm -aq | grep yum | xargs rpm -e --nodeps
 ```
 
 3、查看
-![在这里插入图片描述](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/27b7ca39ce6c419cd68af06fd49a272f/ebb746bcbd84b84aaded963e29379f52.png)4、下载rpm,repo包
+![在这里插入图片描述](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/27b7ca39ce6c419cd68af06fd49a272f/46cbd7160ed983002e180f9693d9f506.png)4、下载rpm,repo包
 
 （1）在此网易镜像链接下载http://tel.mirrors.163.com/centos/7/os/x86_64/Packages/
 （2）五个包
-![在这里插入图片描述](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/27b7ca39ce6c419cd68af06fd49a272f/b1f89e3bf90a304bc258db1cf007a4d5.png)rz 命令上传到linux
-![在这里插入图片描述](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/27b7ca39ce6c419cd68af06fd49a272f/7b82dfea6cb68fd7f5e57be877add0d0.png)
+![在这里插入图片描述](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/27b7ca39ce6c419cd68af06fd49a272f/37642dfb8aeea230835b49100835f053.png)rz 命令上传到linux
+![在这里插入图片描述](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/27b7ca39ce6c419cd68af06fd49a272f/2803df350ec1ff5df6a40be6e7756b4e.png)
 (4)安装
 
 ```bash
@@ -37,7 +52,7 @@ rpm -ivh python-2.7.5-89.el7.x86_64.rpm python-iniparse-0.4-9.el7.noarch.rpm --n
 rpm -ivh yum-3.4.3-168.el7.centos.noarch.rpm yum-plugin-fastestmirror-1.1.31-54.el7_8.noarch.rpm --nodeps --force
 ```
 
-![在这里插入图片描述](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/27b7ca39ce6c419cd68af06fd49a272f/5c10bc5a8e77a816837c2b06e7e5e297.png)5、更改yum源
+![在这里插入图片描述](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/27b7ca39ce6c419cd68af06fd49a272f/3be3fd8466481090b19664b534750969.png)5、更改yum源
 
 （1）备份/etc/yum.repos.d/CentOS-Base.repo
 
@@ -59,7 +74,7 @@ yum clean all
 yum makecache
 ```
 
-![在这里插入图片描述](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/27b7ca39ce6c419cd68af06fd49a272f/5b8d70ba3e4afe19aeb9ffb3ca271fe7.png)
+![在这里插入图片描述](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/27b7ca39ce6c419cd68af06fd49a272f/4030065ba0be8abd3be187e2f468258b.png)
 6、检查
 
 ```bash

@@ -1,3 +1,17 @@
+---
+title: pipenv虚拟环境实用
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- pipenv
+categories:
+- 综合
+---
 # pipenv虚拟环境管理
 
 ## 安装
@@ -23,7 +37,7 @@ pipenv install
 ```
 pipenv shell
 ```
-![](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/f4c8bb88e70a139f1a1b6fd1fbe46230/0c5e1eed2297e846bea8335613d5262c.png)
+![](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/f4c8bb88e70a139f1a1b6fd1fbe46230/2dc9f02aaf0a29976a9390bd13ae75b1.png)
 
 
 推出虚拟环境

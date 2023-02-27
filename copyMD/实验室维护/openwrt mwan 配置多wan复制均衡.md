@@ -1,3 +1,19 @@
+---
+title: openwrt mwan 配置多wan复制均衡
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- 实验室
+- linux
+- 网络
+categories:
+- 实验室
+---
 ## openwrt新建多个wan口
 
 - 可以采取多线多口的方式。多个物理接口对应多个wan口
@@ -17,7 +33,7 @@ mwan是一个openwrt上的插件，可以实现多wan口的上网流量管理。
 
 **前置wan注意点**
 
-![image-20221123161720081](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/daa0b5992d6a9fb3beceed9958bce7d2/eda6e16df827df14aad0155101d03f09.png)
+![image-20221123161720081](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/daa0b5992d6a9fb3beceed9958bce7d2/c6023b7600b77f4a35908dd079d9b432.png)
 
 - 网关跳跃点必须要有且不能重复
 
@@ -37,7 +53,7 @@ mwan是一个openwrt上的插件，可以实现多wan口的上网流量管理。
 
 中文界面如图
 
-![image-20221123162109769](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/daa0b5992d6a9fb3beceed9958bce7d2/edb606a7224ab98ef8d1f4882b10fa20.png)
+![image-20221123162109769](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/daa0b5992d6a9fb3beceed9958bce7d2/9a17fdd2ace3c1d3ff8b772a5d1fdfbe.png)
 
 
 
@@ -45,7 +61,7 @@ mwan是一个openwrt上的插件，可以实现多wan口的上网流量管理。
 
 **如何查看mwan的界面情况**
 
-![image-20221123162154984](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/daa0b5992d6a9fb3beceed9958bce7d2/5a80cbdc331c819ef110d686b3e7077d.png)
+![image-20221123162154984](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/daa0b5992d6a9fb3beceed9958bce7d2/6b165289c29de018e7e20912490f1eff.png)
 
 在这个界面可以看到各个接口的在线情况
 
@@ -79,7 +95,7 @@ mwan是一个openwrt上的插件，可以实现多wan口的上网流量管理。
 
 **不过这里策略多出了一些单wan口直连的，用于后序的网络断开重连维护**
 
-![image-20221123162711423](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/daa0b5992d6a9fb3beceed9958bce7d2/6a0de772c0c3d8ef3ba274aa238c7f57.png)
+![image-20221123162711423](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/daa0b5992d6a9fb3beceed9958bce7d2/edc22a6499e598bd5288f9e5907c7da1.png)
 
 
 
@@ -106,7 +122,7 @@ mwan是一个openwrt上的插件，可以实现多wan口的上网流量管理。
 
 如图
 
-![image-20221124131230129](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/daa0b5992d6a9fb3beceed9958bce7d2/739fa6efefb433250b8cb44812f60ff6.png)
+![image-20221124131230129](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/daa0b5992d6a9fb3beceed9958bce7d2/808da81abd8ed21979deb4014431b709.png)
 
 
 

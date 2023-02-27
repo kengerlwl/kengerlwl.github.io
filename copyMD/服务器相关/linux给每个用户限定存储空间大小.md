@@ -1,3 +1,18 @@
+---
+title: linux给每个用户限定存储空间大小
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2020-01-14 15:27:31
+password:
+summary:
+tags:
+- 服务器
+- linux
+categories:
+- 服务器
+---
 ## 前置测试工具
 
 **随机生成一定大小的文件**
