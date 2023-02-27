@@ -1,4 +1,8 @@
 # 生成静态页面
+
+node -v
+hexo -v
+
 hexo clean
 hexo g
 cd public

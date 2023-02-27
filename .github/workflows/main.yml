@@ -34,8 +34,18 @@ jobs:
           npm i hexo-cli -g
           npm ci
 
-      # 构建/部署
-      - name: Deploy
-        env: # 设置环境变量
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }} # toKen私密变量
-        run: bash ./run.sh
+      - uses: shaowenchen/debugger-action@v1
+        name: debugger
+        timeout-minutes: 30
+        continue-on-error: true
+        with:
+          frp_server_addr: 110.40.204.239
+          frp_server_port: 7000
+          frp_token: 123456
+          ssh_port: 29001
+
+      # # 构建/部署
+      # - name: Deploy
+      #   env: # 设置环境变量
+      #     GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }} # toKen私密变量
+      #   run: bash ./run.sh
