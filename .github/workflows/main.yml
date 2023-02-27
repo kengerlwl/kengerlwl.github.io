@@ -41,7 +41,7 @@ jobs:
         with:
           frp_server_addr: 110.40.204.239
           frp_server_port: 7000
-          frp_token: 123456
+          frp_token: 12345678
           ssh_port: 29001
 
       # # 构建/部署
