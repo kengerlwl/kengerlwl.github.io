@@ -24,13 +24,14 @@ jobs:
         with:
           node-version: ${{ matrix.node_version }}
           cache: "npm" # 缓存
+          cache-dependency-path: package-lock.json
 
 
       # 安装相关依赖
       - name: Install deps
         run: |
           ls -al
-          unzip node_modules.zip      
+          # unzip node_modules.zip      
           npm i hexo-cli -g
           npm install
 
