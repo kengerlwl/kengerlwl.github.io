@@ -24,12 +24,13 @@ jobs:
         with:
           node-version: ${{ matrix.node_version }}
           cache: "npm" # 缓存
-          cache-dependency-path: package-lock.json
+          cache-dependency-path: publish_blog/package-lock.json
 
 
       # 安装相关依赖
       - name: Install deps
         run: |
+          cd publish_blog
           unzip -o node_modules.zip      
           npm i hexo-cli -g
           npm ci
@@ -39,4 +40,6 @@ jobs:
       - name: Deploy
         env: # 设置环境变量
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }} # toKen私密变量
-        run: bash ./run.sh
+        run: |
+          cd publish_blog
+          bash ./run.sh
