@@ -76,7 +76,7 @@ git branch gh-pages
 git checkout gh-pages 
 
 # 强制上传
-git push --force --quiet "https://kengerlwl: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@github.com/kengerlwl/kengerlwl.github.io.git"  gh-pages       
+git push --force --quiet "https://kengerlwl:(token)@github.com/kengerlwl/kengerlwl.github.io.git"  gh-pages       
 ```
 
 
