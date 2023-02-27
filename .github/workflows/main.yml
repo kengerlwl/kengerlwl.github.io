@@ -34,15 +34,6 @@ jobs:
           npm i hexo-cli -g
           npm ci
 
-      # - uses: shaowenchen/debugger-action@v1
-      #   name: debugger
-      #   timeout-minutes: 30
-      #   continue-on-error: true
-      #   with:
-      #     frp_server_addr: 110.40.204.239
-      #     frp_server_port: 7000
-      #     frp_token: 12345678
-      #     ssh_port: 29001
 
       # 构建/部署
       - name: Deploy

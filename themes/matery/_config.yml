@@ -39,7 +39,6 @@ dream:
   showTitle: true
   title: 欢迎关注
   text: 我搬到谁的隔壁，谁成了我的邻居。鸣谢生命有你参与，笑纳我的邀请。
-  img: https://pic1.zhimg.com/80/v2-0205cde00e314b1414a5e9d94106a431_r.jpg
 
 # Whether to display the musics.
 # 是否在首页显示音乐.
@@ -100,7 +99,7 @@ socialLink:
   github: kengerlwl
   weibo: kengerlwl
   email: kengerlwl@qq.com
-  zhihu: kengerlwl
+  zhihu: xing-zhe-55-44-13
 
 # Whether to activate the Post TOC, and Configure which title types are supported by TOC support.
 # You can add `toc: false` to the Front-matter of a post to turn off the TOC.
@@ -121,7 +120,6 @@ reward:
   enable: true
   title: 写作不易，客官能否打赏一杯奶茶？
   wechat: /medias/reward/wechat.png
-  alipay: /medias/reward/alipay.jpg
 
 # Whether to activate the copyright information of the blog and author when copying the post content.
 # minCharNumber: Approve copyright information by copying at least how many characters.
@@ -166,9 +164,8 @@ text:
 # 在”关于”页面中配置个人信息，包括头像、职业和个人介绍.
 profile:
   avatar: /medias/avatars/avatar.jpg
-  career: 华东师范大学 | 计算机科学与技术 | AntNLP
-  introduction: 我是华东师范大学计算机科学与技术专业2018级硕士研究生。直研进入本校计算机系攻读硕士，研究方向是深度学习与自然语言处理。我们实验室是AntNLP，欢迎大家报考！欢迎关注我的微信公众号「算法码上来」，干货每天不错过！
-
+  career: 湖南大学 | 软件工程 | 计算机科学与技术 
+  introduction: 我是来自湖大的2022级计算机研究生水硕，谢谢博客记录一下自己的技术经历，以及一些生活想法。
 # config my projects informations in about page.
 # If you don't want to display this `My Projects` content, you can deactivate or delete this configuration.
 # 在“关于”页面配置"我的项目"信息，如果你不需要这些信息则可以将其设置为不激活或者将其删除.
@@ -177,19 +174,9 @@ myProjects:
   data:
     hexo-matery-modified:
       icon: fa-meetup
-      iconBackground: 'linear-gradient(to bottom right, #66BB6A 0%, #81C784 100%)'
+      iconBackground: 'fuck code(to bottom right, #66BB6A 0%, #81C784 100%)'
       url: https://github.com/kengerlwl/hexo-matery-modified
       desc: 我的个性化配置过的博客源码，即下即用。
-    Span-Linearization-Parser:
-        icon: fa-database
-        iconBackground: 'linear-gradient(to bottom right, #F06292 0%, #EF5350 100%)'
-        url: https://github.com/AntNLP/span-linearization-parser
-        desc: 基于PyTorch的成分句法分析模型，ACL2020论文源码。
-    ECNU-BeamerTemplate:
-        icon: fa-file-text-o
-        iconBackground: 'linear-gradient(to bottom right, #29B6F6 0%, #1E88E5 100%)'
-        url: https://github.com/kengerlwl/ECNU_BeamerTemplate
-        desc: 基于Latex Beamer的华东师范大学PPT模板。
 
 # config my skills informations in about page.
 # If you don't want to display this `My Skills` content, you can deactivate or delete this configuration.
@@ -197,30 +184,22 @@ myProjects:
 mySkills:
   enable: true
   data:
-    Algorithm:
-      background: 'linear-gradient(to right, #FF0066 0%, #FF00CC 100%)'
-      percent: 90%
-    C++:
-      background: 'linear-gradient(to right, #9900FF 0%, #CC66FF 100%)'
-      percent: 80%
     Python:
       background: 'linear-gradient(to right, #2196F3 0%, #42A5F5 100%)'
-      percent: 80%
+      percent: 90%
+    Algorithm:
+      background: 'linear-gradient(to right, #FF0066 0%, #FF00CC 100%)'
+      percent: 30%
+    C++:
+      background: 'linear-gradient(to right, #9900FF 0%, #CC66FF 100%)'
+      percent: 60%
     Pytorch:
       background: 'linear-gradient(to right, #951213 0%, #961117 100%)'
-      percent: 75%
-    Dynet:
-      background: 'linear-gradient(to right, #F12F12 0%, #F6464F 100%)'
-      percent: 75%
+      percent: 30%
     Java:
       background: 'linear-gradient(to right, #00BCD4 0%, #80DEEA 100%)'
       percent: 50%
-    SQL:
-      background: 'linear-gradient(to right, #4CAF50 0%, #81C784 100%)'
-      percent: 50%
-    HTML:
-      background: 'linear-gradient(to right, #FFEB3B 0%, #FFF176 100%)'
-      percent: 45%
+
 
 # config gallery of my photos in about page.
 # If you don't want to display this `Gallery` content, you can deactivate or delete this configuration.
@@ -369,19 +348,7 @@ featureImages:
 - /medias/featureimages/13.jpg
 - /medias/featureimages/14.jpg
 - /medias/featureimages/15.jpg
-- /medias/featureimages/16.jpg
-- /medias/featureimages/17.jpg
-- /medias/featureimages/18.jpg
-- /medias/featureimages/19.jpg
-- /medias/featureimages/20.jpg
-- /medias/featureimages/21.jpg
-- /medias/featureimages/22.jpg
-- /medias/featureimages/23.jpg
-- /medias/featureimages/24.jpg
-- /medias/featureimages/25.jpg
-- /medias/featureimages/26.jpg
-- /medias/featureimages/27.jpg
-- /medias/featureimages/28.jpg
+
 
   # default configs that the default policy for every articles/posts
   # default 配置文章的默认转载规则
