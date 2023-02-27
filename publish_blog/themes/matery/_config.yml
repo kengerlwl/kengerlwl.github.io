@@ -120,6 +120,7 @@ reward:
   enable: true
   title: 写作不易，客官能否打赏一杯奶茶？
   wechat: /medias/reward/wechat.png
+  alipay: /medias/reward/alipay.png
 
 # Whether to activate the copyright information of the blog and author when copying the post content.
 # minCharNumber: Approve copyright information by copying at least how many characters.
