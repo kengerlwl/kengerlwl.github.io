@@ -31,8 +31,8 @@ jobs:
       - name: Install deps
         run: |
           # unzip node_modules.zip      
-          npm i hexo-cli -g
-          npm install
+          # npm i hexo-cli -g
+          npm ci
 
       # 构建/部署
       - name: Deploy

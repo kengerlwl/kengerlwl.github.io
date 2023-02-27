@@ -3,6 +3,8 @@ hexo clean
 hexo g
 cd public
 
+
+echo 查看前端页面
 cat index.html
 
 # # 初始化

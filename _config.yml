@@ -141,5 +141,5 @@ live2d:
 baidu_url_submit:
   count: 100
   host: kengerlwl.com
-  token: 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
+  token: 
   path: baidu_urls.txt
