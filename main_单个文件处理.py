@@ -100,9 +100,9 @@ def main():
             try:
                 image_url = image_urls[0]
                 print(image_url)
-                if image_url.find("raw.githubusercontent.com") != -1:
-                    # print(image_url.find("raw.githubusercontent.com"))
-                    raise Exception("已经是github图源了")
+                # if image_url.find("raw.githubusercontent.com") != -1:
+                #     # print(image_url.find("raw.githubusercontent.com"))
+                #     raise Exception("已经是github图源了")
 
                 git_url = img_pro(image_url)
                 print(git_url)

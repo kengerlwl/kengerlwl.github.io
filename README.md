@@ -4,7 +4,7 @@
 
 # 使用前编辑配置文件
 
-![image-20230206205436715](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/04c6e90faac2675aa89e2176d2eec7d8/dbb4269a401b961e45b40c12d51bfeeb.png)
+![image-20230206205436715](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/04c6e90faac2675aa89e2176d2eec7d8/0cfd91a41ae5d32ea7f56bd58e6ac9af.png)
 
 ```
 {
@@ -23,7 +23,7 @@
 
 # 单文件使用
 
-![image-20230206205223812](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/04c6e90faac2675aa89e2176d2eec7d8/50fe86a639e05acf27a546ab81ac3dbb.png)
+![image-20230206205223812](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/04c6e90faac2675aa89e2176d2eec7d8/b46d94e1f7d9535afb98173c704bda0e.png)
 
 
 
@@ -35,13 +35,13 @@
 
 **这里设置默认更改这个文件夹的所有文档图源**
 
-![image-20230206205616493](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/04c6e90faac2675aa89e2176d2eec7d8/c9683de0999cae2ce963333b3166135d.png)
+![image-20230206205616493](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/04c6e90faac2675aa89e2176d2eec7d8/941a43b4e962abb55908fa077eec0ad3.png)
 
 
 
 ## 生成的新图源文档在如下文件夹
 
-![image-20230206205730187](https://raw.githubusercontent.com/kengerlwl/MDimg/master/image/04c6e90faac2675aa89e2176d2eec7d8/570b3a5cf2a5c523732de1b349308d3b.png)
+![image-20230206205730187](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/04c6e90faac2675aa89e2176d2eec7d8/b32536486b294ebe49e34d764d5fd524.png)
 
 
 
