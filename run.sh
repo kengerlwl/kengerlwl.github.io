@@ -1,5 +1,11 @@
+# 生成静态页面
+hexo clean
+hexo g
+
 cd public
 
+
+cat index.html
 
 # 初始化
 git init
@@ -13,10 +19,6 @@ git config user.email "email"
 git branch gh-pages 
 git checkout gh-pages 
 
-
-# 生成静态页面
-hexo clean
-hexo g
 
 
 # commit
