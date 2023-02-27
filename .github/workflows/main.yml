@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.16.2]
+        node-version: [12]
 
     steps:
       # 1.检出仓库
@@ -30,7 +30,7 @@ jobs:
       # 安装相关依赖
       - name: Install deps
         run: |
-          # unzip node_modules.zip      
+          unzip -o node_modules.zip      
           npm i hexo-cli -g
           npm ci
 
