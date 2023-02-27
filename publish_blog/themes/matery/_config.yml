@@ -223,8 +223,8 @@ gitalk:
   owner: kengerlwl
   repo: kengerlwl.github.io
   oauth:
-    clientId: 查教程获取
-    clientSecret: 查教程获取
+    clientId: a213377a193e22efc2ba
+    clientSecret: b32ed824f9da3ac3040a97074614ca31de05054e
   admin: kengerlwl
 
 # the Gitment config，default disabled
@@ -254,7 +254,7 @@ livere:
 # Valine 评论模块的配置，默认为不激活，如要使用，就请激活该配置项，并设置 appId 和 appKey.
 valine:
   enable: true
-  appId: 查教程获取
+  appId: a213377a193e22efc2ba
   appKey: 查教程获取
   notify: false
   verify: false
