@@ -8,7 +8,7 @@ date: 2020-01-14 15:27:31
 password:
 summary:
 tags:
-- pytorch
+- 知识图谱neo4j
 categories:
 - 学术
 ---

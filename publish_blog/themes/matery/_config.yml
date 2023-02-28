@@ -166,19 +166,41 @@ text:
 profile:
   avatar: /medias/avatars/avatar.jpg
   career: 湖南大学 | 软件工程 | 计算机科学与技术 
-  introduction: 我是来自湖大的2022级计算机研究生水硕，谢谢博客记录一下自己的技术经历，以及一些生活想法。
+  introduction: 我是来自湖大的2022级计算机研究生水硕，写写博客记录一下自己的技术经历，以及一些生活想法。
 # config my projects informations in about page.
 # If you don't want to display this `My Projects` content, you can deactivate or delete this configuration.
 # 在“关于”页面配置"我的项目"信息，如果你不需要这些信息则可以将其设置为不激活或者将其删除.
 myProjects:
   enable: true
   data:
-    hexo-matery-modified:
-      icon: fa-meetup
+    BirthdayBot:
+      icon: fas fa-file-alt
       iconBackground: 'fuck code(to bottom right, #66BB6A 0%, #81C784 100%)'
-      url: https://github.com/kengerlwl/hexo-matery-modified
-      desc: 我的个性化配置过的博客源码，即下即用。
+      url: https://github.com/kengerlwl/birthdayBot
+      desc: 我的基于github action的生日邮件提醒脚本
+    docker_demo:
+      icon: fas fa-database
+      iconBackground: 'fuck code(to bottom right, #66BB6A 0%, #81C784 100%)'
+      url: https://github.com/kengerlwl/docker_demo
+      desc: 常用的docker的相关demo
+    LeetCode:
+      icon: fas fa-file-alt
+      iconBackground: 'fuck code(to bottom right, #66BB6A 0%, #81C784 100%)'
+      url: https://github.com/kengerlwl/leeCode
+      desc: LeetCode算法
+    ChipDistribution:
+      icon: fas fa-file-alt
+      iconBackground: 'fuck code(to bottom right, #66BB6A 0%, #81C784 100%)'
+      url: https://github.com/kengerlwl/ChipDistribution
+      desc: 筹码分布python计算源码，全网首发
+    kengerlwl:
+      icon: fas fa-file-alt
+      iconBackground: 'fuck code(to bottom right, #66BB6A 0%, #81C784 100%)'
+      url: https://github.com/kengerlwl/kengerlwl.github.io
+      desc: 基于hexo的博客网站，同时自己编写了一套基于github的图源管理脚本，并且实现了写完博客后自动使用github action上传
 
+
+  
 # config my skills informations in about page.
 # If you don't want to display this `My Skills` content, you can deactivate or delete this configuration.
 # 在“关于”页面配置"我的技能"信息，如果你不需要这些信息则可以将其设置为不激活或者将其删除.
@@ -190,16 +212,16 @@ mySkills:
       percent: 90%
     Algorithm:
       background: 'linear-gradient(to right, #FF0066 0%, #FF00CC 100%)'
-      percent: 30%
+      percent: 60%
     C++:
       background: 'linear-gradient(to right, #9900FF 0%, #CC66FF 100%)'
-      percent: 60%
+      percent: 50%
     Pytorch:
       background: 'linear-gradient(to right, #951213 0%, #961117 100%)'
       percent: 30%
     Java:
       background: 'linear-gradient(to right, #00BCD4 0%, #80DEEA 100%)'
-      percent: 50%
+      percent: 30%
 
 
 # config gallery of my photos in about page.
