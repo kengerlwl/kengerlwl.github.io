@@ -1,5 +1,5 @@
 ---
-title: 趣味shell小脚本
+title: 趣味shell小脚本，防卷
 top: false
 cover: false
 toc: true
@@ -227,5 +227,35 @@ do
 	sleep(500);
 	who | grep $username | awk -F ' ' '{print $2}' | xargs  pkill -kill -t 
 done;
+```
+
+
+
+
+
+# 输出带颜色的字体
+
+```
+s=fuck
+echo -e "\033[00;41m$s\033[0m"
+```
+
+
+
+## 输出文字到其他在线终端
+
+```
+[testuser@reg ~]$ w
+ 16:21:27 up 125 days,  5:46,  5 users,  load average: 0.11, 0.06, 0.05
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+fang     pts/25   202.197.34.34    08:17    1:08m  0.01s  0.00s tmux attach -t
+csuerlk  pts/27   202.197.33.133   日21   18:07m  0.05s  0.05s -bash
+testuser pts/60   202.197.33.131   14:34    1:30   0.10s  0.00s sshd: testuser
+wxh      pts/61   119.39.65.148    15:37   36:39   0.01s  0.01s -bash
+testuser pts/62   202.197.33.217   16:18    6.00s  0.02s  0.00s w
+
+命令
+s=我建议你下线
+echo -e "\033[00;41m$s\033[0m"  > /dev/pts/60
 ```
 

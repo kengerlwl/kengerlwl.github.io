@@ -232,7 +232,7 @@ sudo ip route add default dev ens192 via 10.11.11.11 table ax3600
 ```
 for((i=1; i<=3; i++));
 do 
-	sudo ip route append 10.10.0.0/16 dev ens160 src 10.10.110.3$i protocol kernel  metric 100 table main
+	sudo ip route append 10.10.0.0/16 dev ens34 src 10.10.114.3$i protocol kernel  metric 100 table main
 done
 ```
 
@@ -245,7 +245,7 @@ done
 ```
 for((i=1; i<=6; i++));
 do 
-	sudo ip route append 10.11.0.0/16 dev ens192 src 10.11.110.3$i protocol kernel  metric 101 table main
+	sudo ip route append 10.11.0.0/16 dev ens37 src 10.11.114.3$i protocol kernel  metric 101 table main
 done
 ```
 

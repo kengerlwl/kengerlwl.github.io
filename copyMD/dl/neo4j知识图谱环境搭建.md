@@ -92,3 +92,27 @@ http://服务器ip地址:7474/browser/
 
 **在浏览器访问图数据库所在的机器上的7474端口（第一次访问账号neo4j，密码neo4j，会提示修改初始密码）**
 
+
+
+
+
+
+
+# docker 搭建
+
+运行容器
+
+```
+docker run -d --name neo4j_csy -p 17474:7474 -p 17687:7687 -v $PWD/data:/data -v $PWD/logs:/logs -v $PWD/conf:/var/lib/neo4j/conf -v $PWD/import:/var/lib/neo4j/import --env NEO4J_AUTH=neo4j/password neo4j
+
+
+
+```
+
+
+
+**NEO4J_AUTH=neo4j/password**
+
+- 代表，用户名是neo4j
+- 密码是password
+

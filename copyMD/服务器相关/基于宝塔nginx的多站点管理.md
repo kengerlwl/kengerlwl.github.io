@@ -72,3 +72,25 @@ categories:
 
 
 
+# 伪静态设置
+
+通俗来讲其实就是一种seo的方式。
+
+伪静态是相对真实静态来讲的，通常我们为了增强搜索引擎的友好面，都将文章内容生成静态页面，但是为了实时的显示一些信息，就损失了对搜索引擎的友好面。 伪静态即是**网站本身是动态网页，url后有"?** **"加参数来读取不同数据，伪静态就是做url重写操作(rewrite)**。
+
+```
+// 监听80端口
+//访问www.test.com/wangla.html跳转到百度
+//访问www.test.com/纯数字至少一个数字.html跳转到QQ官网
+//访问www.test.com/匹配字母或数字或下划线组合.html 跳转到百度对应页面。
+server {
+    listen       80;
+    server_name      www.test.com;
+    index    index.html index.htm index.php;
+ 
+    rewrite  ^/wangla.html$  http://www.baidu.com/ permanent;
+    rewrite  ^/(\d+).html$   http://www.qq.com/ permanent;
+    rewrite  ^/(\w+).html$   http://www.baidu.com/index_wd_v5.html permanent;
+}
+```
+
