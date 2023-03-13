@@ -220,6 +220,24 @@ sudo docker run -it --name v2ray -v $PWD/v2ray/config.json:/etc/v2ray/config.jso
 
 
 
+# 启动bbr加速内核
+
+`wget -N --no-check-certificate "https://raw.githubusercontent.com/chiakge/Linux-NetSpeed/master/tcp.sh" && chmod +x tcp.sh && ./tcp.sh`
+
+1. 先在[1 – 3]切换内核（第一次显示为bbr内核也要切换一遍），重启
+
+有部分系统会出现下面的选项，移动光标选择no
+
+![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/f7a1d604dfbcc7eceffa6a1fdd24235a.png)
+
+2. 重启后输入
+
+```
+ ./tcp.sh
+```
+
+
+
 # 一些不知道的问题
 
 - 不知道为什么，第一天搭建好后效果很差，又反复重新搭建了几次，突然又变还不错了。
