@@ -246,7 +246,7 @@ gitalk:
   repo: kengerlwl.github.io
   oauth:
     clientId: a213377a193e22efc2ba
-    clientSecret: b32ed824f9da3ac3040a97074614ca31de05054e
+    clientSecret: a57703a97d136fc3a80c7bd234cdb813dbee11c6
   admin: kengerlwl
 
 # the Gitment config，default disabled

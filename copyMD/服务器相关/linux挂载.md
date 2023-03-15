@@ -1,10 +1,10 @@
-```
+---
 title: linux挂载
 top: false
 cover: false
 toc: true
 mathjax: true
-date: 2020-01-15 15:27:31
+date: 2023-03-12 15:27:31
 password:
 summary:
 tags:
@@ -13,7 +13,7 @@ tags:
 - mount
 categories:
 - 服务器
-```
+---
 
 
 
