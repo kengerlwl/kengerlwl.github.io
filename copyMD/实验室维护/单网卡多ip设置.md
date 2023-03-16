@@ -123,3 +123,11 @@ netplan apply
 
 
 
+
+
+
+
+
+
+
+
