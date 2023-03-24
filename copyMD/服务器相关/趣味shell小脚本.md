@@ -43,7 +43,7 @@ def send_msg(msg):
     #     msg
     # )
 
-    url = 'http://110.40.204.239:5700/send_private_msg?user_id={}&message={}'.format(
+    url = 'http://127.0.0.1:5700/send_private_msg?user_id={}&message={}'.format(
         '2892211452',
         msg
     )
@@ -54,7 +54,7 @@ def send_msg(msg):
 
 
 if __name__ == '__main__':
-    listen_username = 'lwl'
+    listen_username = 'testuser'
     cmd = "w | grep {}".format(listen_username)
     online_users = {}
     while True:
@@ -194,20 +194,20 @@ if __name__ == '__main__':
                 except Exception as e:
                     print(e)
 
-            if all_msgs:
-                send_msg(all_msgs)
+        if all_msgs:
+            send_msg(all_msgs)
 
 
-            # 清理掉不在线的终端
-            del_key = []
-            for user_key in online_users:
-                if user_key not in online_tty:
-                    print("{} 终端已经下线".format(online_users[user_key]))
-                    del_key.append(user_key)
-            for user_key in del_key:
-                online_users.__delitem__(user_key)
-                del_msg = "{} 用户已经下线".format(user_key)
-                send_msg(del_msg)
+        # 清理掉不在线的终端
+        del_key = []
+        for user_key in online_users:
+            if user_key not in online_tty:
+                print("{} 终端已经下线".format(online_users[user_key]))
+                del_key.append(user_key)
+        for user_key in del_key:
+            online_users.__delitem__(user_key)
+            del_msg = "{} 用户已经下线".format(user_key)
+            send_msg(del_msg)
         # print(online_users)
         time.sleep(5)
 ```

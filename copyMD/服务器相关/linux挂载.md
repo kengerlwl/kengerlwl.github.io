@@ -25,6 +25,38 @@ sudo apt install nfs-common
 
 
 
+# 启动就挂载
+
+
+
+### 说明
+
+要挂载某个盘到某个目录下面。要保证该目录已经存在
+
+### 配置
+
+`/etc/fstab`文件
+
+```
+Last login: Mon Mar 20 22:14:35 2023 from 127.0.0.1
+[root@core-labot ~]# cat /etc/fstab 
+
+#
+# /etc/fstab
+# Created by anaconda on Sun Oct 10 04:29:36 2021
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/mapper/centos-root                         /                                       xfs     defaults                0 0
+UUID=18255ddd-b54f-450a-a75c-b7d475858905       /boot                                   xfs     defaults                0 0
+/dev/mapper/centos-swap                         swap                                    swap    defaults                0 0
+zvol.csubot.cn:/mnt/matrix/Data-Core            /mnt/DataCore                           nfs4    defaults,_netdev        0 0
+/mnt/DataCore                                   /www/wwwroot/file.csuoss.cn/DataCore    none    defaults,bind           0 0
+```
+
+
+
 
 
 # 挂载nas
