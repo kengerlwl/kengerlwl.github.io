@@ -8,15 +8,12 @@ date: 2023-03-21 15:27:31
 password:
 summary:
 tags:
--istore
+- istore
 - 代理
 - 旁路由
 categories:
 - 代理
-- openwrt
 ---
-
-
 
 # 为什么istore
 
