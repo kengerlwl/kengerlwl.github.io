@@ -129,6 +129,38 @@ istore暂停挂起后，好像会失效，建议重启解决。
 
 
 
+# 坑3------DNS配置要注意
+
+对于旁路由，如果不正确配置其DNS，可能会导致旁路由下的设备会使用不了不分域名解析。
+
+**正确的思路：**
+
+我的主路由ip：`10.10.10.10`
+
+我的旁路由ip：`10.10.100.1`
+
+配置文件为：**/etc/resolv.conf** 
+
+```
+search lan
+nameserver 10.10.10.10
+nameserver 8.8.8.8
+```
+
+解释：
+
+```bash
+cat /etc/resolv.conf
+domain  51osos.com
+search  www.51osos.com  51osos.com
+nameserver 202.102.192.68
+nameserver 202.102.192.69
+```
+
+1）nameserver：表示域名解析时，使用该地址指定的主机为域名服务器，其中域名服务器是按照文件中出现的顺序来查询的，且**只有当第一个nameserver没有反应时才查询下面的nameserver**。
+2）domain：声明主机的域名，很多程序会用到，如邮件系统。当为没有域名的主机进行DNS查询时，也要用到。如果没有域名，主机名将被使用，删除所有在第一个点(.)前面的内容。
+3）search：它的多个参数指明域名查询顺序，当要查询没有域名的主机，主机将在由search声明的域中分别查找。
+**注意：search和domain不能共存，如果同时存在，后面出现的将会被使用。**
 # ref
 
 https://post.smzdm.com/p/a0qrvdgw/
