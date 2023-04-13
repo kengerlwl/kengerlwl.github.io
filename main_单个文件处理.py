@@ -117,7 +117,8 @@ def main():
 
 if __name__ == '__main__':
 
-    conf['md_name'] = "README.md"
-    conf['complete_name'] = "./README.md"
+
+    conf['md_name'] = "test.md"
+    conf['complete_name'] = "./test.md"
     init()
     main()
