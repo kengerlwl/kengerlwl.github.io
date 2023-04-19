@@ -97,7 +97,22 @@ docker run -p 3000:5000 demo:v1
 ## 容器的管理
 
 
-删除不需要的镜像，和容器
+
+
+
+## build指定运行中的环境变量
+
+如果直接将一些参数写到Dockerfile是非常不安全的，所以一般是指定运行时环境变量。
+
+`docker build --build-arg`用于传递构建参数给Docker构建过程中的Dockerfile文件。这些构建参数可在Dockerfile内使用，通过`${变量名}`格式访问。示例如下：
+
+```
+复制代码docker build --build-arg MY_VARIABLE=value .
+```
+
+
+
+## 删除不需要的镜像，和容器
 
 查看所有的容器
 ```
