@@ -169,7 +169,7 @@ ecosystem. Journal of Systems and Software 85, 6 (2012), 1290–1297. https:
 
 
 
-# 文章的引用格式生成
+# 文章文献的引用格式生成
 
 注意带[J]的是期刊
 
@@ -190,6 +190,12 @@ ecosystem. Journal of Systems and Software 85, 6 (2012), 1290–1297. https:
   year={2012}
 }
 
+注意：
+1 如果文本中没有pages参数，就请不要随机生成，可以是空值。
+2 请不要随便增删会议或期刊名字，没有期刊名字时也可以是空值
+3 请不要随便增删作者名字，哪怕是缩写也不要补全成其他样子，请保持原样
+4 title属性的""不要省略
+5 对于一些类似于publisher等的参数，没有可以选择不要加上去
 ```
 
 
@@ -197,8 +203,7 @@ ecosystem. Journal of Systems and Software 85, 6 (2012), 1290–1297. https:
 会议
 
 ```
-这是一段论文的引用文本：DECAN A, MENS T, CLAES M. An empirical comparison of dependency issues in OSS packaging ecosystems; proceedings of the IEEE International Conference on Software Analysis, F, 2017 [C].
-请帮我写成如下格式
+这是一段论文的引用文本：DECAN A, MENS T, CLAES M, et al. On the Development and Distribution of R Packages: An Empirical Analysis of the R Ecosystem; proceedings of the ACM, F, 2015 [C].
 
 @inproceedings{xxx,        %引用时缩写
   title="{xxx}",
@@ -208,11 +213,24 @@ ecosystem. Journal of Systems and Software 85, 6 (2012), 1290–1297. https:
   year={xx}                           %年份
 }
 
+注意：
+1 如果文本中没有pages参数，就请不要随机生成，可以是空值。
+2 请不要随便增删会议或期刊名字，没有期刊名字时也可以是空值
+3 请不要随便增删作者名字，哪怕是缩写也不要补全成其他样子，请保持原样
+4 title属性的""不要省略
+5 对于一些类似于publisher等的参数，没有可以选择不要加上去
 ```
 
 
 
+ \cite{Liao2018Empirical}前面不要加入点 .
 
+例如错误，会编译失败
+```
+. \cite{Liao2018Empirical}
+```
+
+  
 
 
 
