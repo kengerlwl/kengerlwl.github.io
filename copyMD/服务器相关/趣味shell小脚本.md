@@ -259,3 +259,29 @@ s=我建议你下线
 echo -e "\033[00;41m$s\033[0m"  > /dev/pts/60
 ```
 
+
+
+# 恐吓萌新的代码
+
+```
+#!/bin/bash
+
+echo -e "\033[31m检测到您的电脑正在运行高危脚本，10s后将会自动关机。\033[0m"
+
+countdown=10
+while [ $countdown -gt 0 ]
+do
+    echo -e "\033[31m$countdown\033[0m"
+    sleep 1
+    countdown=$((countdown - 1))
+done
+
+echo -e "\033[31m关机ing...\033[0m"
+```
+
+运行
+
+```
+bash test.sh > /dev/pts/$num
+```
+

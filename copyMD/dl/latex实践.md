@@ -66,7 +66,7 @@ categories:
 
 例如，202就是我的id
 
-![image-20230420111132042](/Users/lwl/Library/Application Support/typora-user-images/image-20230420111132042.png)
+![image-20230420111132042](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7f588d14531a9e2231c0950d124be9df/952ed478d7e14957e6efe698d26563b9.png)
 
 
 
@@ -134,7 +134,7 @@ CCF会议以及期刊论文，某个section的，或者subsecion。第一个段�
 \end{document}
 ```
 
-![v2-23b67081dc78de280d25e4f4e1362964_b](https://pic1.zhimg.com/v2-23b67081dc78de280d25e4f4e1362964_b.jpg)
+![v2-23b67081dc78de280d25e4f4e1362964_b](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7f588d14531a9e2231c0950d124be9df/7777188702cac7c62991c637ec555c67.png)
 
 
 
@@ -213,7 +213,7 @@ Figure \ref{Fig.main} has two sub figures, fig. \ref{Fig.sub.1} is the travel de
 
 
 
-![image-20230419204928081](/Users/lwl/Library/Application Support/typora-user-images/image-20230419204928081.png)
+![image-20230419204928081](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7f588d14531a9e2231c0950d124be9df/800bf5664042fce1de778abbc9fa6650.png)
 
 
 
@@ -224,7 +224,7 @@ Figure \ref{Fig.main} has two sub figures, fig. \ref{Fig.sub.1} is the travel de
 # 如何查找会议或者期刊的bib引用
 
 - 使用谷歌学术
-- ![image-20230419213615531](/Users/lwl/Library/Application Support/typora-user-images/image-20230419213615531.png)
+- ![image-20230419213615531](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7f588d14531a9e2231c0950d124be9df/29f8b5bf1fa566f42e1cf060267713a0.png)
 
 
 
@@ -232,7 +232,7 @@ Figure \ref{Fig.main} has two sub figures, fig. \ref{Fig.sub.1} is the travel de
 
 - 对于名字不全，只能在文章中提到做什么的论文，可以把对该论文的描述发给new bing看能不能搜索到，如何我搜索到了
 
-![image-20230419214052251](/Users/lwl/Library/Application Support/typora-user-images/image-20230419214052251.png)
+![image-20230419214052251](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7f588d14531a9e2231c0950d124be9df/3eabb9953f63e269f1b44453d7e47153.png)
 
 
 
