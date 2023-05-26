@@ -33,7 +33,7 @@ categories:
 
 在gpu2上有个nas挂载目录，只有csuoss目录组才有权限。而root不是该用户组的。
 
-默认root用户运行命令
+默认root用户运行命令。（注意，待挂载的目录必须是个空目录`/data/DataLACP/mysql_b`）
 
 ```
 sudo docker run --rm --name=mysql_lxy  -v /data/DataLACP/mysql_b:/var/lib/mysql/data -it -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 mysql /bin/bash
@@ -92,6 +92,45 @@ done
 
 
 
+查看某个组的用户
+
+```
+getent group csuoss
+```
+
+**注意：**
+
+linux修改用户所属于的组后，不会立刻生效。
+
+- 要么退出当前会话重新登录
+- docker的话可以直接重新运行容器
+- su - $USER : 使用这个命令重新开始一个 session ， 并重新继承当前环境。
+
+```
+su - $USER
+```
+
+
+
+
+
+## 坑
+
+对于挂载的特定用户组才能访问的nas目录，很奇怪。当即使我们刷新了用户权限后，如下：
+
+```
+root@gpu2-labot:/var/opt# id
+uid=0(root) gid=0(root) groups=0(root),999(mssql),212000(csuoss)
+```
+
+**对于root用户而言仍然是不可以访问的。**
+
+但是对于其他非root用户，mssql或者其他用户自建的用户则都可以访问。
+
+
+
+
+
 
 
 ### 启动server
@@ -133,10 +172,8 @@ docker pull tdengine/tdengine:2.4.0.7
 
 
 ```
-docker run -d --name tdengine --restart=always \
--v /data/DataLACP/td_data:/tmp \
--p 6030:6030 -p 6035:6035 -p 6041:6041 -p 6030-6040:6030-6040/udp tdengine/tdengine:2.4.0.7
-
+sudo docker run --rm -it --name tdengine_1  -v /data/DataLACP/td_data:/tmp1  \
+-p 6030:6030 -p 6035:6035 -p 6041:6041 -p 6030-6040:6030-6040/udp tdengine/tdengine:2.4.0.7 bash
 ```
 
 
@@ -204,7 +241,7 @@ echo ${my_dict["CONTAINER_CREATED_USER"]}
 #!/bin/bash
 
 # 获取指定进程pid
-pid=1697717
+pid=2111388
 
 # 使用cgroup查找PID所属的容器ID,,,这里的NF-0。代表从后面数第一个。
 container_ids=$(awk -F/ '$2 == "docker"{ print $(NF-0) }' /proc/$pid/cgroup | sort -u)
