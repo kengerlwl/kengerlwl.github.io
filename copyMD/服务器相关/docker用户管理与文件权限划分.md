@@ -68,7 +68,7 @@ useradd -u $NEW_UID -g $NEW_GID -G $NEW_GROUP $NEW_USER
 
 ```
 # docker 启动命令
-docker run --name=sqlserver --rm -it \
+docker run --name=sqlserver -it \
 -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=8580555@Mf' -e 'MSSQL_PID=Enterprise' \
 --net host \
 -p 1433:1433  \
@@ -80,6 +80,11 @@ docker run --name=sqlserver --rm -it \
 
 # 将所有用户都加入某个用户组(注意，其中某些用户只有root才能执行，请在docker中先用root登录)
 
+NEW_GROUP="csuoss"
+NEW_GID="212000"
+
+# 创建新组
+groupadd -g $NEW_GID $NEW_GROUP
 #!/bin/bash
 groupadd -g 212000 csuoss
 # 将所有用户添加到csuoss组
@@ -92,11 +97,21 @@ done
 
 
 
-查看某个组的用户
+查看某个组的用户（但是这个命令获取的所有用户并不全）
 
 ```
 getent group csuoss
 ```
+
+
+
+
+
+
+
+
+
+
 
 **注意：**
 
@@ -150,7 +165,7 @@ uid=0(root) gid=0(root) groups=0(root),999(mssql),212000(csuoss)
 程序启动命令
 
 ```
-(/opt/mssql/bin/sqlservr --accept-eula & ) | grep -q "Service Broker manager has started" &&  /opt/mssql-tools/bin/sqlcmd -S127.0.0.1 -Usa -PabcDEF123# -i filldata.sql
+(/opt/mssql/bin/sqlservr --accept-eula & ) | grep -q "Service Broker manager has started" &&  /opt/mssql-tools/bin/sqlcmd -S127.0.0.1 -Usa -P8580555@Mf -i filldata.sql
 ```
 
 进入cli工具
@@ -203,6 +218,22 @@ docker run -itd -e CONTAINER_CREATED_USER=$(whoami) ubuntu /bin/bash
 
 
 ## 个人思路
+
+## 1 将所有csuoss组的用户都加入docker用户组
+
+另一种方式
+
+```
+csuoss_gid=212000
+for user in $(getent passwd | grep $csuoss_gid |  cut -f1 -d:); do
+  echo $user
+  usermod -a -G docker $user
+done
+```
+
+因为用户执行docker的方式不能通过sudo。否则会读取不到当前用户的环境变量。因此，只能将所有用户都加入到docker用户组
+
+
 
 
 
@@ -272,10 +303,78 @@ else
 fi
 ```
 
-别名
+别名，要对所有用户生效，加入`/etc/profile`
 
 ```
 echo "alias docker=\"docker_wrapper.sh\"" >> /etc/bash.bashrc
+```
+
+然后每隔几秒检查一下，更新所有csuoss用户组的用户到docker用户组。
+
+最后使用方式是，普通1用户登录后可以直接使用docker命令，无需root。
+
+
+
+
+
+# docker cuda
+
+ Ubuntu 22.10 安装：
+
+```bash
+distribution=ubuntu22.04 && \
+curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg && \
+curl -s -L https://nvidia.github.io/libnvidia-container/$distribution/libnvidia-container.list | sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+```
+
+命令执行完毕之后，我们的系统中就添加好了 Lib Nvidia Container 工具的软件源啦，然后更新系统软件列表，使用命令安装 `nvidia-container-toolkit` 即可：
+
+```bash
+sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
+```
+
+完成 `nvidia-container-toolkit` 的安装之后，我们继续执行 `nvidia-ctk runtime configure` 命令，为 Docker 添加 `nvidia` 这个运行时。完成后，我们的应用就能在容器中使用显卡资源了：
+
+```bash
+sudo nvidia-ctk runtime configure --runtime=docker
+```
+
+命令执行成功，我们将看到类似下面的日志输出：
+
+```bash
+# sudo nvidia-ctk runtime configure --runtime=docker
+
+INFO[0000] Loading docker config from /etc/docker/daemon.json 
+INFO[0000] Successfully loaded config                   
+INFO[0000] Flushing docker config to /etc/docker/daemon.json 
+INFO[0000] Successfully flushed config                  
+INFO[0000] Wrote updated config to /etc/docker/daemon.json 
+INFO[0000] It is recommended that the docker daemon be restarted. 
+```
+
+在完成配置之后，别忘记重启 docker 服务，让配置生效：
+
+```bash
+sudo systemctl restart docker
+```
+
+服务重启完毕，我们查看 Docker 运行时列表，能够看到 `nvidia` 已经生效啦。
+
+```bash
+# docker info | grep Runtimes
+
+ Runtimes: nvidia runc io.containerd.runc.v2
+```
+
+
+
+## 测试
+
+```
+git clone https://github.com/wilicc/gpu-burn
+cd gpu-burn
+docker build -t gpu_burn .
+docker run --rm --gpus all gpu_burn
 ```
 
 
