@@ -20,7 +20,7 @@ categories:
 
 网络拓扑图：
 
-![VLAN通过多个交换机传输，实现同VLAN互通，不同VLAN不通_运用](http://s2.51cto.com/images/blog/201805/03/d1795b253decf57c5955b633940e18b6.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_30,g_se,x_10,y_10,shadow_20,type_ZmFuZ3poZW5naGVpdGk=/format,webp/resize,m_fixed,w_1184)
+![VLAN通过多个交换机传输，实现同VLAN互通，不同VLAN不通_运用](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/27585c10df88135ff438aec38b8370e5/18366101eb0c1a747752dcb59c9d34fe.png)
 
 **思路：LSW1~3每个交换机都创建了两个VLAN，所以交换机连接交换的那个端口应该设置trunk端口，连接PC机的两个端口类型都设置为access。**
 **vlan数据经过LSW4时，LSW4里没有配置vlan 2和vlan 3 ，所以LSW4无法识别VLAN数据的目标MAC。所以LSW4上应该也要创建VLAN 2和VLAN 3，**
