@@ -56,6 +56,12 @@ ip:port/launchpad
 
 *参考 https://yxnchen.github.io/technique/Docker部署ShareLaTeX并简单配置中文环境/#安装并配置ShareLaTeX*
 
+
+
+
+
+**注意，如果按照我的`docker_demo`中的做法，想要把`/usr/local/texlive`也挂载，那么要先不挂载运行，让容器自动产生缓存文件，更新完毕后，将容器内的文件拷贝出来。然后再启动挂载**
+
 ```
 # 进入容器的命令行（sharelatex容器本质上是一个Ubuntu）
 $ docker exec -it sharelatex bash
@@ -63,8 +69,7 @@ $ docker exec -it sharelatex bash
 # 进入texlive默认安装目录
 $ cd /usr/local/texlive
 
-# 复制2020文件夹为2021
-$ cp -a 2020 2021
+
 
 # 下载并运行升级脚本
 $ wget http://mirror.ctan.org/systems/texlive/tlnet/update-tlmgr-latest.sh
