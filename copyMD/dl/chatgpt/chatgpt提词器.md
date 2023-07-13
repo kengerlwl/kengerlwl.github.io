@@ -14,6 +14,19 @@ categories:
 
 ---
 
+# 说明
+
+gpt ai不是万能的，只能用来辅助编写一些简单的弱逻辑性文字，而且有很多缺点
+
+- 容易忘或者记不住，如果你给了多个要求，但是却有些冲突，那么很可能会很矛盾
+- 推理能力若，得分步骤
+
+![image-20230713140201811](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/213a09f034a4c01d390b2d1214041d01/30603d9ec5f67aec294c6cb53aa1c826.png)
+
+
+
+
+
 
 
 # 使用身份限定
