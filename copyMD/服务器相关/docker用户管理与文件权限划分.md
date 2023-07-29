@@ -247,27 +247,51 @@ done
 ```
 #!/bin/bash
 
-# 输入待处理字符串
-str=$(sudo docker inspect --format='{{range $k, $v := .Config.Env}}{{$v}} {{end}}' 8a33787a0ba9aa714dcfdbf1290d6e67971ce45de6d2b3ec949809def1a52730)
+get_container_env_vars() {
+    container_id="$1"
 
-# 定义一个关联数组
-declare -A my_dict
+    # 输入待处理字符串
+    str=$(sudo docker inspect --format='{{range $k, $v := .Config.Env}}{{$v}} {{end}}' "$container_id")
 
-# 分割字符串并获取键值对
-for pair in $str; do
-    key=$(echo $pair | cut -d'=' -f1)
-    value=$(echo $pair | cut -d'=' -f2)
-    my_dict[$key]=$value
-done
+    # 定义一个关联数组
+    declare -A my_dict
 
-# 输出结果
-for key in "${!my_dict[@]}"; do
-    echo "$key: ${my_dict[$key]}"
-done
+    # 分割字符串并获取键值对
+    for pair in $str; do
+        key=$(echo "$pair" | cut -d'=' -f1)
+        value=$(echo "$pair" | cut -d'=' -f2)
+        my_dict[$key]=$value
+    done
 
-# 查看指定属性的变量
-echo ${my_dict["CONTAINER_CREATED_USER"]}
+    # 输出结果
+    echo "目标容器的env："
+    for key in "${!my_dict[@]}"; do
+        echo "$key: ${my_dict[$key]}"
+    done
+
+    # 查看指定属性的变量
+    echo ""
+    echo "目标容器的运行用户为："
+    echo ${my_dict["CONTAINER_CREATED_USER"]}
+}
+
+# 使用示例：find_container_user.sh -c container_id
+if [ "$1" == "-c" ]; then
+    container_id="$2"
+    get_container_env_vars "$container_id"
+fi
+
 ```
+
+**使用**
+
+```
+find_container_user.sh -c 容器id
+
+alias find_container_user=\"/home/labot/lib/find_container_user.sh\"
+```
+
+
 
 
 
@@ -276,20 +300,46 @@ echo ${my_dict["CONTAINER_CREATED_USER"]}
 ```
 #!/bin/bash
 
-# 获取指定进程pid
-pid=2111388
+get_container_id() {
+    while getopts "p:" opt; do
+        case $opt in
+            p) pid=$OPTARG ;;
+            \?) echo "Invalid option: -$OPTARG" >&2; exit 1 ;;
+        esac
+    done
 
-# 使用cgroup查找PID所属的容器ID,,,这里的NF-0。代表从后面数第一个。
-container_ids=$(awk -F/ '$2 == "docker"{ print $(NF-0) }' /proc/$pid/cgroup | sort -u)
-echo $container_ids
-# 输出结果
-if [ -z "$container_ids" ]; then
-    echo "该进程没有在任何Docker容器中运行！"
-else
-    echo "该进程所属的Docker容器ID为：$container_ids"
-fi
+    if [ -z "$pid" ]; then
+        echo "请使用 -p 参数指定进程的 PID"
+        exit 1
+    fi
+
+    # 使用 cgroup 查找 PID 所属的容器 ID
+    container_ids=$(awk -F/ '$2 == "docker"{ print $(NF-0) }' /proc/"$pid"/cgroup | sort -u)
+
+    # 输出结果
+    if [ -z "$container_ids" ]; then
+        echo "该进程没有在任何 Docker 容器中运行！"
+    else
+        echo "该进程所属的 Docker 容器 ID 为：$container_ids"
+    fi
+}
+
+# 使用示例：find_container_id.sh -p pid
+get_container_id "$@"
 
 ```
+
+**使用**
+
+```
+$ ./find_container.sh -p 12345
+```
+
+
+
+
+
+
 
 ### 覆盖原有的docker命令
 

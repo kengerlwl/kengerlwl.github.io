@@ -13,6 +13,33 @@ categories:
 - 综合
 ---
 
+# TMP草稿区
+
+````
+请问下面这段代码是什么意思，代码内容在下文```代码块内：
+```
+robot_data['msft-github-bot']['event_type_L3']
+```
+
+要求：
+1. 总体的说明这段代码的目标是实现什么功能
+2. 对代码中的部分函数以及一些关键性的点做出点评
+````
+
+
+
+````
+以下是pandas的一列数据，请你帮我对这一列数据实现分割
+```
+robot_data['msft-github-bot']['event_type_L3']
+def split_by_length(now_user_data, length):
+    pass
+```
+
+````
+
+
+
 
 
 # 身份
@@ -114,6 +141,10 @@ class User:
 1. 按照代码里面提到的注释实现相关功能。
 2. 尽量保证原有的大方向架构不要变
 ````
+
+
+
+
 
 
 
