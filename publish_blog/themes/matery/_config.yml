@@ -241,17 +241,18 @@ postCalendar: true
 # the Gitalk config，default disabled
 # Gitalk 评论模块的配置，默认为不激活
 gitalk:
-  enable: true
-  owner: kengerlwl
-  repo: kengerlwl.github.io
-  oauth:
-    clientId: a213377a193e22efc2ba
-    clientSecret: a57703a97d136fc3a80c7bd234cdb813dbee11c6
-  admin: kengerlwl
-  proxy: https://netnr-proxy.cloudno.de/https://github.com/login/oauth/access_token
-  labels: "Gitalk"  # Github issue labels. If you used to use Gitment, you can change it
-  createIssueManually: true # 设置为true，如果是管理员登录，会自动创建issue，如果是false，需要管理员手动添加第一个评论(issue)
-
+  enable: true # 开关打开
+  autoExpand: true # 评论是否自动展开
+  clientID: 'a213377a193e22efc2ba' # 上一步申请的得到的clientId
+  clientSecret: 'f8da69d9dc121f2505267ea35f0ecd30a88b4513' # 第一步申请的得到的client secrets
+  repo: 'blog-comments' # 上一步创建的GitHub仓库名
+  owner: 'kengerlwl' # 对应github用户名
+  admin: ['kengerlwl']
+  id: uid # 不知道咋写填uid
+  language: en # 语言
+  distractionFreeMode: true
+  recentComment: true # 是否展示最近评论
+  proxy: '' # 代理设置
 
 # the Gitment config，default disabled
 # Gitment 评论模块的配置，默认为不激活
