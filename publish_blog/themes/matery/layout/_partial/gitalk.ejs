@@ -9,13 +9,13 @@
 <script>
   let gitalk = new Gitalk({
     clientID: 'a213377a193e22efc2ba',
-    clientSecret: 'f8da69d9dc121f2505267ea35f0ecd30a88b4513',
+    // clientSecret: 'f8da69d9dc121f2505267ea35f0ecd30a88b4513',
     repo: 'blog-comments',
     owner: 'kengerlwl',
     admin: ['kengerlwl'],
     id: '<%= page.path %>', // 使用当前文章的 URL 作为唯一标识符
     distractionFreeMode: false, // 关闭无干扰模式
-    proxy: 'https://test.kenger.work/login/oauth/access_token'
+    proxy: 'http://43.143.21.219:8000/api/tools/get_access_token'
   });
 
     gitalk.render('gitalk-container');
