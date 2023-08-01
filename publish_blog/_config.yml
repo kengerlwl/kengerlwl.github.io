@@ -153,6 +153,6 @@ live2d:
 
 baidu_url_submit:
   count: 100
-  host: kengerlwl.com
+  host: blog.kenger.work
   token: 
   path: baidu_urls.txt
