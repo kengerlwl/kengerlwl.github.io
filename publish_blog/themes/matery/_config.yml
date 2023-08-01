@@ -254,15 +254,15 @@ gitalk:
   recentComment: true # 是否展示最近评论
   proxy: '' # 代理设置
 
-# the Gitment config，default disabled
-# Gitment 评论模块的配置，默认为不激活
-gitment:
-  enable: false
-  owner:
-  repo:
-  oauth:
-    clientId:
-    clientSecret:
+# # the Gitment config，default disabled
+# # Gitment 评论模块的配置，默认为不激活
+# gitment:
+#   enable: false
+#   owner:
+#   repo:
+#   oauth:
+#     clientId:
+#     clientSecret:
 
 # disqus config, default disabled
 # Disqus评论模块的配置，默认为不激活
@@ -280,7 +280,7 @@ livere:
 # To use it, activate the configuration item and set appId and appKey.
 # Valine 评论模块的配置，默认为不激活，如要使用，就请激活该配置项，并设置 appId 和 appKey.
 valine:
-  enable: true
+  enable: false
   appId: a213377a193e22efc2ba
   appKey: 查教程获取
   notify: false
