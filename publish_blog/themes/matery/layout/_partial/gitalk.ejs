@@ -13,7 +13,7 @@
     repo: 'blog-comments',
     owner: 'kengerlwl',
     admin: ['kengerlwl'],
-    id: '<%= page.path %>', // 使用当前文章的 URL 作为唯一标识符
+    id: md5(window.location.pathname), // 使用当前文章的 URL 作为唯一标识符，由于要小于50字符，使用加密后的 md5 值
     distractionFreeMode: false, // 关闭无干扰模式
     proxy: 'http://43.143.21.219:8000/api/tools/get_access_token'
   });

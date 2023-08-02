@@ -28,12 +28,7 @@ categories:
 
 
 ````
-以下是pandas的一列数据，请你帮我对这一列数据实现分割
-```
-robot_data['msft-github-bot']['event_type_L3']
-def split_by_length(now_user_data, length):
-    pass
-```
+请你针对下面的函数帮我做出修改，具体修改如下：
 
 ````
 
