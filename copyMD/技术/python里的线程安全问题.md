@@ -160,3 +160,69 @@ if __name__ == '__main__':
 
 ```
 
+
+
+
+
+# 附录
+
+## python里面使用rabbitmq的例子
+
+```
+from flask import Flask, request, jsonify
+import pika
+import json
+import threading
+import Kit
+from Config import *
+
+app = Flask(__name__)
+
+
+
+
+# 发送消息到RabbitMQ队列
+def send_to_queue(message):
+    conf = get_config()
+    connection = Kit.rabbitmq_conn(conf, "rabbitmq")
+    channel = connection.channel()
+    channel.queue_declare(queue='my_queue')  # 声明队列
+    channel.basic_publish(exchange='', routing_key='my_queue', body=message)
+    connection.close()
+
+# 处理从队列接收到的消息
+def process_queue_message(ch, method, properties, body):
+    """
+    处理从队列接收到的消息的回调函数
+    :param ch: pika.Channel 表示与 RabbitMQ 之间的连接通道，可用于执行消息操作。
+    :param method: pika.spec.Basic.Deliver 包含有关传递消息的方法信息，如交换机、路由键等。
+    :param properties: pika.spec.BasicProperties 包含消息的属性，这些属性可以是用户自定义的或者是 RabbitMQ 本身定义的。
+    :param body: bytes 实际的消息内容，以字节序列的形式传递。
+    :return: None
+    """
+    print("Received message:", body)
+    # 在这里你可以执行你需要的任务，例如数据库操作、计算等
+
+
+@app.route('/send_message/<message>', methods=['GET'])
+def send_message(message):
+    
+    send_to_queue(message)
+    return jsonify({"message": "Message sent to queue successfully"})
+
+if __name__ == '__main__':
+    # 启动Flask应用
+    thread = threading.Thread(target=app.run, kwargs={"host": "0.0.0.0", "port": 50001})
+    thread.start()
+
+    # 启动消息处理者
+    conf = get_config()
+    connection = Kit.rabbitmq_conn(conf, "rabbitmq")
+    channel = connection.channel()
+    channel.queue_declare(queue='my_queue')
+    channel.basic_consume(queue='my_queue', on_message_callback=process_queue_message, auto_ack=True)
+    print("Waiting for messages. To exit press CTRL+C")
+    channel.start_consuming()
+
+```
+
