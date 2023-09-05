@@ -95,15 +95,17 @@ disable_custom_tls_first_byte = true
 
 [bitwarden_https_port]
 type = https
-custom_domains = txs.kenger.work   #（这个域名解析到服务器端，然后服务器端访问该 域名：vhost_https_ip）
-
+#（这个域名解析到服务器端，然后服务器端访问该 域名：vhost_https_ip）
+custom_domains = txs.kenger.work  
 
 plugin = https2http
-plugin_local_addr = 127.0.0.1:8080  	#(指定我本地需要代理的端口)
+#(指定我本地需要代理的端口)
+plugin_local_addr = 127.0.0.1:8080
 
 # HTTPS 证书相关的配置
-plugin_crt_path = /etc/frp/ssl/server.crt    #txs.kenger.work的ssl证书
-plugin_key_path = /etc/frp/ssl/server.key		 #
+#txs.kenger.work的ssl证书
+plugin_crt_path = /etc/frp/ssl/server.crt    
+plugin_key_path = /etc/frp/ssl/server.key
 plugin_host_header_rewrite = 127.0.0.1
 plugin_header_X-From-Where = frp
 
