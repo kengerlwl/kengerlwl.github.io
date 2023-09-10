@@ -69,7 +69,7 @@ netfilter：内核里的工具
 开放指定tcp端口
 
 ```
-iptables -A INPUT -p tcp --dport 3300 -j ACCEPT
+iptables -A INPUT -p tcp --dport 52333 -j ACCEPT
 ```
 
 开放所有链接端口：允许已经建立或相关的连接的数据包从系统的输出链。一定程度上，就是all开放 
