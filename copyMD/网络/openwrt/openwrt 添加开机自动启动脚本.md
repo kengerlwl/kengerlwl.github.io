@@ -32,9 +32,7 @@ categories:
    - `/etc/rc.local`：通常只包含一个文件 `/etc/rc.local`，你可以编辑此文件并在其中添加自定义命令。它不涉及特定的服务管理。
    - `/etc/init.d`：包含了多个服务脚本，每个脚本都与一个特定的服务相关联。你可以使用 `service <servicename> start/stop/restart/status` 命令来管理这些服务。
 
-# 注意
 
-注意：在使用该方式后，openwrt的启动项界面打不开了。
 
 # 方法
 

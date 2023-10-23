@@ -58,19 +58,31 @@ categories:
 
 ## 我做了docker的挂载目录更改
 
+**如需还想继续扩容root。可以考虑直接从ubuntu启动，然后用正常的硬盘分区扩容思路来扩容。**
+
 所以该镜像暂定为2gb大小。
 
 
 
-
-
-# /根目录扩容
+## /根目录扩容
 
 docker目录扩容很简单，但是根目录比较麻烦。
 
 踩坑1： 忘记做复制操作了。
 
-踩坑2：给的目录太小了。导致根目录直接挂满。于是我重新ubuntu启动，然后给root目录手动扩容到1.5g
+踩坑2：给的目录太小了。导致根目录直接挂满。于是我重新ubuntu启动，然后给root目录手动扩容到2.5g
+```
+mkdir -p /tmp/introot
+mkdir -p /tmp/extroot
+mount --bind / /tmp/introot
+mount /dev/sda4 /tmp/extroot
+tar -C /tmp/introot -cvf - . | tar -C /tmp/extroot -xf -
+umount /tmp/introot
+umount /tmp/extroot
+```
+
+## overlay软件包目录扩容
+- 扩容到1g
 
 
 

@@ -40,7 +40,7 @@ categories:
 
 ```
 root@OpenWrt:~# mount /dev/sdb1 /mnt/
-root@OpenWrt:~# dd if=/dev/sda of=/mnt/backup.img count=2048 bs=1024k  conv=sync
+root@OpenWrt:~# dd if=/dev/sda of=/mnt/backup.img count=4048 bs=1024k  conv=sync
 ```
 
 等待dd命令运行完成后，就得到了RAW格式的backup.img镜像
