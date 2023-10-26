@@ -285,3 +285,73 @@ echo -e "\033[31m关机ing...\033[0m"
 bash test.sh > /dev/pts/$num
 ```
 
+
+
+
+
+# 检测老师是否在实验室脚本
+
+
+
+## v1 通过ping直接发送邮件
+
+```
+#!/bin/bash
+
+send_email() {
+  local url="http://tx.kenger.work:8000/api/tools/email/_send"
+  local NAME="teacher liao"
+  local STATUS="leaving"
+  local NOW=$(date)
+
+  local data='{
+    "target_email": "kengerlwl@qq.com",
+    "title": "'"${NAME} is ${STATUS}"'",
+    "content": "'"${NOW} \n ${NAME} is ${STATUS}"'",
+    "token": "u2InTXnmFF0Um6Sd"
+  }'
+
+  local response=$(curl -X POST -H "Content-Type: application/json" -d "$data" "$url")
+
+  echo "服务器响应: $response"
+}
+
+
+
+ip_to_ping="192.168.31.137"
+
+while true; do
+    if ping -c 1 -W 3 "$ip_to_ping" >/dev/null; then
+        echo "teacher is here"
+        sleep 3
+    else
+        echo "teacher is leaving"
+        send_email
+    fi
+done
+
+```
+
+
+
+## v2通过healthycheck
+
+```
+ip_to_ping="192.168.31.137"
+
+if ping -c 1 -W 3 "$ip_to_ping" >/dev/null; then
+    echo "teacher is here"
+    curl  --location 'http://43.143.21.219:18000/ping/8d35b23c-8cd3-4358-88b2-9088242aa7b2'
+else
+    echo "now ping down"
+
+
+
+```
+
+1min 执行一次
+
+```
+*/1 * * * * /bin/bash /root/check_teacher.sh
+```
+
