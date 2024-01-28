@@ -355,3 +355,88 @@ else
 */1 * * * * /bin/bash /root/check_teacher.sh
 ```
 
+
+
+
+
+# 删除占用空间远小于文件大小的破损文件
+
+```
+#!/bin/bash
+
+get_file_size() {
+    local file="$1"
+    local size=$(ls -l "$file" | awk '{print $5}')
+    echo "$((size /1024 /1024))"
+}
+
+# 获取占用空间
+get_disk_usage() {
+    local file="$1"
+    local size=$(du "$file" | awk '{print $1}' | sed 's/[A-Za-z]//g')
+    echo "$((size / 1024))"
+}
+# 函数：删除占用空间与文件大小不匹配的文件
+delete_mismatched_files() {
+    local file="$1"
+    local file_size=$(get_file_size "$file")
+    local disk_usage=$(get_disk_usage "$file")
+    echo $file_size
+    echo $disk_usage
+    # 如果占用空间小于文件大小的1%，则删除文件
+    local threshold=$((file_size / 5))
+    echo $threshold
+    echo "\n\n"
+    if (( disk_usage < threshold )); then
+        echo "Deleting $file"
+        rm "$file"
+    fi
+}
+
+# 函数：遍历目录及其子目录中的.mp4文件
+traverse_directory() {
+    local directory="$1"
+
+    # 遍历目录中的所有文件和子目录
+    for entry in "$directory"/*; do
+        if [[ -d "$entry" ]]; then
+            # 如果是目录，则递归调用自身
+            traverse_directory "$entry"
+        elif [[ -f "$entry" && "$entry" =~ \.mp4$ ]]; then
+            # 如果是以.mp4结尾的文件，则检查其大小是否不匹配
+            delete_mismatched_files "$entry"
+        fi
+    done
+}
+
+# 主函数：从指定目录开始遍历
+main() {
+    local target_directory="$1"
+    
+    # 检查目标目录是否存在
+    if [[ ! -d "$target_directory" ]]; then
+        echo "Error: Directory '$target_directory' not found."
+        exit 1
+    fi
+    
+    # 开始遍历目标目录
+    traverse_directory "$target_directory"
+}
+
+# 检查是否提供了目标目录作为参数
+if [[ $# -ne 1 ]]; then
+    echo "Usage: $0 <target_directory>"
+    exit 1
+fi
+
+# 执行主函数
+main "$1"
+
+```
+
+用法
+
+```
+./rm_file.exe /dir_path
+```
+
