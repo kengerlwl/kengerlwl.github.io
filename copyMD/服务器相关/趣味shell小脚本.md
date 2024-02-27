@@ -391,6 +391,13 @@ delete_mismatched_files() {
         echo "Deleting $file"
         rm "$file"
     fi
+    
+    # 如果占用空间小于文件大小的50MB，则删除文件
+    local threshold2=50  # 50MB 的阈值
+    if (( disk_usage < threshold2 )); then
+        echo "Deleting $file"
+        rm "$file"
+    fi
 }
 
 # 函数：遍历目录及其子目录中的.mp4文件
