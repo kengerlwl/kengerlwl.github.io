@@ -1,5 +1,5 @@
 ---
-title: chatgpt 写文章题词器
+title: chatgpt写项目文章提词器
 top: false
 cover: false
 toc: true

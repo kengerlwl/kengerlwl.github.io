@@ -198,6 +198,52 @@ source ~/.bashrc
 
 
 
+
+
+# cudnn环境
+
+## 方法一
+
+官方的tar解压
+
+```
+cudnn-linux-x86_64-8.8.1.3_cuda12-archive.tar.xz
+sudo cp ./include/* /usr/local/cuda-12.1/include
+sudo cp ./lib/libcudnn* /usr/local/cuda-12.1/lib64
+ 
+sudo chmod a+r /usr/local/cuda-12.1/include/cudnn* 
+sudo chmod a+r /usr/local/cuda-12.1/lib64/libcudnn*
+```
+
+
+
+## 方法二-ubuntu
+
+官网：https://developer.nvidia.com/rdp/cudnn-archive
+
+```
+labot@gpu6-labot:~$ sudo dpkg -i cudnn-local-repo-ubuntu2204-8.9.4.25_1.0-1_amd64.deb   # 从官网下载
+[sudo] password for labot: 
+Selecting previously unselected package cudnn-local-repo-ubuntu2204-8.9.4.25.
+(Reading database ... 165519 files and directories currently installed.)
+Preparing to unpack cudnn-local-repo-ubuntu2204-8.9.4.25_1.0-1_amd64.deb ...
+Unpacking cudnn-local-repo-ubuntu2204-8.9.4.25 (1.0-1) ...
+Setting up cudnn-local-repo-ubuntu2204-8.9.4.25 (1.0-1) ...
+
+The public cudnn-local-repo-ubuntu2204-8.9.4.25 GPG key does not appear to be installed.
+To install the key, run this command:
+sudo cp /var/cudnn-local-repo-ubuntu2204-8.9.4.25/cudnn-local-3C3A81D3-keyring.gpg /usr/share/keyrings/ # 运行这行输出的命令
+
+labot@gpu6-labot:~$ sudo cp /var/cudnn-local-repo-ubuntu2204-8.9.4.25/cudnn-local-3C3A81D3-keyring.gpg /usr/share/keyrings/
+labot@gpu6-labot:~$ sudo apt-get update 
+labot@gpu6-labot:~$ sudo apt-get install libcudnn8
+
+```
+
+
+
+
+
 # anaconda
 
 ```

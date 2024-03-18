@@ -1,5 +1,5 @@
 ---
-title: chatgpt学术Prompt
+title: chatgpt写论文Prompt
 top: false
 cover: false
 toc: true
