@@ -1,5 +1,5 @@
 ```
-title: Bmon linux下一个强大的网络带宽监视和调试工具
+title: Bmonlinux下一个强大的网络带宽监视和调试工具
 top: false
 cover: false
 toc: true
