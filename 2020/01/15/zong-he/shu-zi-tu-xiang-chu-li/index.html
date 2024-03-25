@@ -1,0 +1,1431 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="codeva-Mv3BZ4ipge">
+    <meta name="keywords" content="数字图像处理, 服务器 运维 自然语言处理 深度学习 Python">
+    <meta name="baidu-site-verification" content="fmlEuI34ir">
+    <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
+    <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
+    <meta name="description" content="数字图像处理本博客主要涉及算法方面。需要堆图形由一定了解
+预处理，加载，存储使用pillow进行加载
+from PIL import Image
+im = Image.open(&amp;#39;./../image/lena.png&amp;#39;)存">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>数字图像处理 | kenger的博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?ce84511d3df71640a9378a69f6293044";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    
+        <script>
+            (function(){
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+                }
+                else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+        </script>
+    
+
+    <script>
+        (function(){
+        var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+        document.write('<script src="' + src + '" id="sozz"><\/script>');
+        })();
+    </script>
+
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">kenger的博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/contact" class="waves-effect waves-light">
+            
+            <i class="fa fa-comments"></i>
+            
+            <span>留言板</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">kenger的博客</div>
+        <div class="logo-desc">
+            
+            湖南大学 | 软件工程 | 计算机科学与技术 | 服务器运维
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        <li>
+            <a href="/contact" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-comments"></i>
+                
+                留言板
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/kengerlwl/hexo-matery-modified" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/kengerlwl/hexo-matery-modified" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        数字图像处理
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                        <a href="/tags/数字图像处理/" target="_blank">
+                            <span class="chip bg-color">数字图像处理</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                        <a href="/categories/综合/" class="post-category" target="_blank">
+                            综合
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-01-15
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                    kenger
+                    
+                </div>
+
+                
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3.6k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    12 分
+                </div>
+                
+                
+
+                
+                <div id="busuanzi_container_page_pv" class="info-break-policy">
+                    <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                    <span id="busuanzi_value_page_pv"></span>
+                </div>
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="数字图像处理"><a href="#数字图像处理" class="headerlink" title="数字图像处理"></a>数字图像处理</h1><p>本博客主要涉及算法方面。需要堆图形由一定了解</p>
+<h2 id="预处理，加载，存储"><a href="#预处理，加载，存储" class="headerlink" title="预处理，加载，存储"></a>预处理，加载，存储</h2><p>使用<strong>pillow</strong>进行加载</p>
+<pre><code>from PIL import Image
+im = Image.open(&#39;./../image/lena.png&#39;)</code></pre><p>存储</p>
+<pre><code># 把图像用png格式保存:
+im.save(&#39;thumbnail.png&#39;, &#39;png&#39;)</code></pre><p> 转换成<strong>numpy</strong>形式</p>
+<pre><code>img = np.array(im)      # image类 转 numpy</code></pre><p>将<strong>numpy</strong>格式数组用图片显示</p>
+<pre><code>from matplotlib import pyplot as plt
+plt.imshow(img)
+plt.show()</code></pre><p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/f94e03f541141f10e5ae260eeaf3b346.png" alt="image-20210515125837128"></p>
+<p>分为不同得<strong>通道</strong>显示</p>
+<pre><code>b = img[:,:,0:1]
+plt.imshow(img, &#39;Blues&#39;)</code></pre><p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/0970dd506bec75a22096a10f6c3409af.png" alt="image-20210515125815860"></p>
+<h2 id="关于图像平滑处理"><a href="#关于图像平滑处理" class="headerlink" title="关于图像平滑处理"></a>关于图像平滑处理</h2><h3 id="首先对图像添加噪声"><a href="#首先对图像添加噪声" class="headerlink" title="首先对图像添加噪声"></a>首先对图像添加噪声</h3><p>我们这里添加白色小点得噪声</p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/88e7af24819a548676006107387ee677.png" alt="image-20210515130157855"></p>
+<p><strong>白色得噪声是（255，255，255）</strong></p>
+<p>得到噪声图</p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/1a7eea8b29c386eb818b8a7545ab761b.png" alt="image-20210515143316188"></p>
+<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>图像平滑是一种区域增强的算法，平滑算法有<strong>邻域平均法、中指滤波、边界保持类滤波</strong>等。在图像产生、传输和复制过程中，常常会因为多方面原因而<strong>被噪声干扰或出现数据丢失，降低了图像的质量</strong>（某一像素，如果它与周围像素点相比有明显的不同，则该点被噪声所感染）。这就需要<strong>对图像进行一定的增强处理以减小这些缺陷带来的影响</strong>。</p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/00af0448eb5eaf0c9dec1f5eaf765889.png" alt="img"></p>
+<h3 id="邻域平均法和均值滤波"><a href="#邻域平均法和均值滤波" class="headerlink" title="邻域平均法和均值滤波"></a>邻域平均法和均值滤波</h3><p>其实就是一个<strong>卷积运算</strong></p>
+<p>可以类比一下卷积神经网络</p>
+<p>$$g(x,y)= 1/M  \sum_{(x,y)∈S} f(x,y)$$</p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/39f570ba9bec4752ee89dd997b2561cd.png" alt="image-20210515132244573"></p>
+<p><strong>如图</strong></p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/12e61be231a5458f8770e4867e00131c.png" alt="image-20210515132401506"></p>
+<ul>
+<li>我们这里先写一个单通道单核得卷积</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/cf8b6e055283c133cd7bb2863f06ec80.png" alt="image-20210515134556505"></p>
+<ul>
+<li><p>初始化一个卷积核</p>
+<pre><code># filterKernel = np.array([
+#     [1, 1, 1],
+#     [1, 1, 1],
+#     [1, 1, 1]
+# ])
+filterKernel = np.ones((6,6))</code></pre></li>
+</ul>
+<ul>
+<li>查看结果</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/c0cb034f14a22c8586369fd7181783fb.png" alt="image-20210515134707303"></p>
+<ul>
+<li><p><strong>很明显有效果， 然后就是变单通道为多通道，单核为多核</strong></p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/0c63e5cfbac9c05a15839a2bdff99fe3.png" alt="image-20210515143402138"></p>
+</li>
+</ul>
+<p><strong>success</strong></p>
+<h3 id="高斯平滑"><a href="#高斯平滑" class="headerlink" title="高斯平滑"></a>高斯平滑</h3><p>为了克服简单局部平均法的弊端(图像模糊)，目前已提出许多保持边缘、细节的局部平滑算法。它们的出发点都集中在如何选择邻域的大小、形状和方向、参数加平均及邻域各店的权重系数等。<br><strong>图像高斯平滑也是邻域平均的思想对图像进行平滑的一种方法</strong>，在图像高斯平滑中，对图像进行平均时，不同位置的像素被赋予了不同的权重。高斯平滑与简单平滑不同，它在对邻域内像素进行平均时，给予不同位置的像素不同的权值，下图的所示的 3 * 3 和 5 * 5 领域的高斯模板。</p>
+<p><strong>其实就是用二维高斯去生成一个卷积核</strong></p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/8a28a3b57fe46705d989c0f2740d3511.png" alt="image-20210517100746197"></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>到这里，一些基本得卷积算法就已经剖析完毕，剩下得就只是对这些卷积核做一定处理。</p>
+<h3 id="引申滤波的概念"><a href="#引申滤波的概念" class="headerlink" title="引申滤波的概念"></a><strong>引申滤波的概念</strong></h3><p>滤波的目的主要两个：</p>
+<p>1.通过滤波来提取图像特征，简化图像所带的信息作为后续其它的图像处理</p>
+<p>2.为适应图像处理的需求，通过滤波消除图像数字化时所混入的噪声</p>
+<p><strong>其中第一点就是边缘检测中所使用的基本思想，即简化图像信息，使用边缘线代表图像所携带信息</strong></p>
+<p><strong>滤波可理解为滤波器(通常为3<em>3、5</em>5矩阵)在图像上进行从上到下，从左到右的遍历，计算滤波器与对应像素的值并根据滤波目的进行数值计算返回值到当前像素点</strong>，实际就是卷积</p>
+<h2 id="图像几何变换（缩放、图像旋转、图像翻转与图像平移）"><a href="#图像几何变换（缩放、图像旋转、图像翻转与图像平移）" class="headerlink" title="图像几何变换（缩放、图像旋转、图像翻转与图像平移）"></a>图像几何变换（缩放、图像旋转、图像翻转与图像平移）</h2><p>主要知识：<strong>线性代数</strong></p>
+<h3 id="提前概念"><a href="#提前概念" class="headerlink" title="提前概念"></a>提前概念</h3><p>对于一个图像，我们可以表达成一个<strong>二维函数</strong></p>
+<p>$$f(x, y) = 色值 $$</p>
+<p><strong>而几何变换，并不改变色值，仅仅改变x，y得位置。</strong></p>
+<p>也就是说</p>
+<p>$$f(x^{<code>}, y^{</code>}) = f(x, y)$$</p>
+<p><strong>是一个映射</strong></p>
+<p><strong>（以下得图转载）</strong></p>
+<h3 id="平移"><a href="#平移" class="headerlink" title="平移"></a>平移</h3><p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/076fe31ea3d3beede9cfb8fe97fc778b.png" alt="image-20210515144701393"></p>
+<h3 id="缩放"><a href="#缩放" class="headerlink" title="缩放"></a>缩放</h3><p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/abbcdf7c324d2fe5ecbf12b1b11b9319.png" alt="image-20210515144734355"></p>
+<h3 id="旋转"><a href="#旋转" class="headerlink" title="旋转"></a>旋转</h3><p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/9faf48eb59ef440fe453efa8fc87b6d4.png" alt="image-20210515144811005"></p>
+<h3 id="镜像变换"><a href="#镜像变换" class="headerlink" title="镜像变换"></a>镜像变换</h3><p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/2a8fcd4cd9e81aeb1681c1dbba85ecbe.png" alt="image-20210515145002510"></p>
+<h3 id="插值算法"><a href="#插值算法" class="headerlink" title="插值算法"></a>插值算法</h3><p>关于以上变换有个要注意得问题。</p>
+<p><strong>变换后得坐标，定义域不一定和值域完全重合。</strong></p>
+<p>也就是说，变换后得点可能落不到整数上（一种情况。）</p>
+<p><strong>那么就需要插值算法了。</strong> （简单起见，这里只讲线性插值算法）</p>
+<p>先讲一下整体得套路：</p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/09848574492cb96e8618543a2ab1bce7.png" alt="7B0D9C468E20156153764274EE6DAABA"></p>
+<h4 id="邻近插值算法"><a href="#邻近插值算法" class="headerlink" title="邻近插值算法"></a>邻近插值算法</h4><p>简单来说就是，直接对x和y进行取整。</p>
+<p>按照上述思路实现。</p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/a9d28767ad1d6502be7cc49cc768ccd1.png" alt="image-20210515185639914"></p>
+<p>不难看出，效果还行。</p>
+<p>试试旋转矩阵</p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/c0d330b5d9ebac7b31702fbc514ed2e8.png" alt="image-20210515193419491"></p>
+<h4 id="双线性插值"><a href="#双线性插值" class="headerlink" title="双线性插值"></a>双线性插值</h4><p><strong>双线性插值是线性插值在二维时的推广,在两个方向上共做了三次线性插值。</strong>定义了一个双曲抛物面与四个已知点拟合。</p>
+<p>具体操作为在X方向上进行两次线性插值计算，然后在Y方向上进行一次插值计算</p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/4fa4f7aa924b01c16cc2f124f2feb0f2.png" alt="image-20210515185941228"></p>
+<p><strong>具体得公式</strong></p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/5a2a029603dc329ab1648127d5ba2500.png" alt="image-20210515190007957"></p>
+<p><strong>（我这里踩了坑，原有的图像数据的大小是8位的，最大255）所以在上述运算中很容易就溢出了。</strong></p>
+<p>结果</p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/e52beee2d09d319190019e323ab8c55d.png" alt="image-20210515222501615"></p>
+<p><strong>success</strong></p>
+<h2 id="仿射变换与透视变换"><a href="#仿射变换与透视变换" class="headerlink" title="仿射变换与透视变换"></a>仿射变换与透视变换</h2><h3 id="提前概念（二维为例子）"><a href="#提前概念（二维为例子）" class="headerlink" title="提前概念（二维为例子）"></a>提前概念（二维为例子）</h3><ul>
+<li>什么是线性变换？</li>
+</ul>
+<p>$$<br>x^{,}= A \cdot x_{0}<br>$$</p>
+<p>原点不变，且原有的平行关系和倍数关系都不变</p>
+<h3 id="仿射变换"><a href="#仿射变换" class="headerlink" title="仿射变换"></a>仿射变换</h3><p>在线性变换的基础上，<strong>原点可以发生变换</strong>。</p>
+<p>仿射变换是单纯对图片进行平移，缩放，倾斜和旋转，而这几个操作都不会改变图片线之间的平行关系。</p>
+<p>$$<br>x^{,}= A \cdot x_{0} + b<br>$$</p>
+<p>如果用三维去线性表达，那么就是：<br>$$<br>\begin{bmatrix}<br>x^{,}\<br>y^{,}\<br>1</p>
+<p>\end{bmatrix}<br>= </p>
+<p>\begin{bmatrix}<br>a11 &amp;a12  &amp;b1 \<br>a21 &amp;  a22&amp; b2\<br> 0&amp;0  &amp; 1<br>\end{bmatrix}</p>
+<p>\cdot</p>
+<p>\begin{bmatrix}<br>x\<br>y\<br>1</p>
+<p>\end{bmatrix}<br>$$</p>
+<h3 id="什么是透视变换"><a href="#什么是透视变换" class="headerlink" title="什么是透视变换"></a>什么是透视变换</h3><p>如果说仿射变换是在二维空间中的旋转，平移和缩放。<strong>那么透视变换则是在三维空间中视角的变化。</strong></p>
+<p><strong>相对于仿射。透视变换能保持“直线性”，即原图像里面的直线，经透视变换后仍为直线</strong></p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/6a9dc656fdb51208fb89fa5cae6e9db9.png" alt="image-20210515224105702"></p>
+<p>这里讲一下，如果说，仿射变化是三维空间中对某个平面的一些二维变化。</p>
+<p>那么透视变化就是对这个平面进行变换，并且利用视觉原理将图像进行一定处理（近大，远小）。</p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/7cd9b73c2e30d18cc70089e39cde9ef7.png" alt="OpenCV-透视变换及对二维点求透视变换之后的坐标_leonardohaig的博客-CSDN博客"></p>
+<p><strong>也就是说，先将图像旋转到$A^{,}B^{,}C^{,}$</strong></p>
+<p><strong>然后投影到平面$ABC$</strong></p>
+<p><strong>这里有一下假设，假设我们人是远点，从我们的眼睛去看，垂直与我们的目光的这个轴是$z$轴.</strong></p>
+<p><strong>在离我们一定距离的地方选一个画布$ABC$，其他所有画像都投影到这个画布上。</strong></p>
+<p><strong>那么假设平面$z$轴的距离是1.</strong></p>
+<p><strong>从$A^{,}B^{,}C^{,}$投影到画布$ABC$，计算公式为</strong></p>
+<p>$$<br>\begin{bmatrix}<br>x\<br>y\<br>1</p>
+<p>\end{bmatrix}<br>=<br>(1/z^{,}) \cdot<br>\begin{bmatrix}<br>x^{,}\<br>y^{,}\<br>z^{,}</p>
+<p>\end{bmatrix}<br>$$</p>
+<p>有了以上概念，<strong>我们来最后计算一遍</strong></p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/cf979213798d2c47c9812aec744257a2.png" alt="image-20210516140838713"></p>
+<p><strong>先进行旋转变换。</strong></p>
+<p><strong>然后进行投影变换。</strong></p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/6ac973beb6b9b2abd1f3015b67501623.png" alt="image-20210516140914286"></p>
+<p>然后就是繁琐的解方程过程，<strong>这里是非齐次线性方程组求解</strong></p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/bab59271d7636ce0e8e0deca3e1bcb70.png" alt="image-20210516140938930"></p>
+<p>让我们来看一下最后效果。</p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/5aa9315b59033ce612da1ca402b2263b.png" alt="image-20210516141108490"></p>
+<p>右边是我们手动实现的。</p>
+<p>具体的思路是仿照<strong>opencv</strong>，不过代码是手动用<strong>numpy</strong>实现的，有助于理解。</p>
+<p><strong>核心代码</strong></p>
+<pre><code>#根据四个顶点设置图像透视变换矩阵
+pos1 = np.float32([[114, 82], [287, 156], [8, 322], [216, 333]])  # 原来的坐标
+pos2 = np.float32([[0, 0], [188, 0], [0, 262], [188, 262]])    # 变换后的坐标
+
+# 实际肉眼看上去的x，y和数组的存储是有区别的
+def exchangeXY(pos):
+    for i in range(len(pos)):
+        pos[i] = [pos[i][1], pos[i][0]]
+
+exchangeXY(pos1)
+exchangeXY(pos2)
+
+# 计算透视变换矩阵
+def getPerspectiveTransform(pos1, pos2):
+    length = len(pos1)
+    tmpMatrix = []
+    b = []
+    for i in range(length):
+        x0, y0 = pos1[i]
+        xn, yn = pos2[i]
+        tmpMatrix.append(
+            [x0, y0,1,0,0,0,-1 * x0 * xn, -1 * y0 * xn]
+        )
+        tmpMatrix.append(
+            [0,0,0,x0, y0,1,-1 * x0 * yn, -1 * y0 * yn]
+        )
+
+        b.append(xn)
+        b.append(yn)
+
+
+    tmpMatrix= np.array(tmpMatrix)
+    b = np.array(b)
+    ans =np.dot(np.linalg.inv(tmpMatrix), b)
+    finalMatrix = [
+        [ans[0], ans[1], ans[2]],
+        [ans[3], ans[4], ans[5]],
+        [ans[6], ans[7], 1]
+
+    ]
+    return np.array(finalMatrix)
+
+M = getPerspectiveTransform(pos1, pos2)</code></pre><h2 id="图像阈值化"><a href="#图像阈值化" class="headerlink" title="图像阈值化"></a>图像阈值化</h2><p>图像的二值化或阈值化（Binarization）旨在提取图像中的目标物体，将背景以及噪声区分开来。通常会设定一个阈值T，通过T将图像的像素划分为两类：大于T的像素群和小于T的像素群。</p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/433b35f3bcae835a073b6d32eebbd17a.png" alt="image-20210516195934138"></p>
+<p><strong>二进制阈值化</strong></p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/a8fbf0daf8cfae6d38d46288b089cb0f.png" alt="image-20210516200029306"></p>
+<p>所谓其他阈值化，其实也就是不断在基础形式上都不同的类进行一定处理。</p>
+<h2 id="灰度直方图"><a href="#灰度直方图" class="headerlink" title="灰度直方图"></a>灰度直方图</h2><h3 id="前置概念"><a href="#前置概念" class="headerlink" title="前置概念"></a>前置概念</h3><p><strong>RGB图像：</strong></p>
+<p>RGB的值分别为0，0，0 表示的是黑色。</p>
+<p>RGB的值为255，255，255表示的是白色。</p>
+<p><strong>灰度图像：</strong></p>
+<p>灰度值为0表示黑色。</p>
+<p>灰度值为255表示白色。</p>
+<h3 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h3><p>灰度直方图（histogram）是灰度级的函数，描述的是图像中每种灰度级像素的个数，反映图像中每种灰度出现的频率。横坐标是灰度级，纵坐标是灰度级出现的频率。</p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/40a7560ec1269824078571db3fb345d9.png" alt="image-20210516200650255"></p>
+<p><strong>用处：</strong></p>
+<p>在使用轮廓线确定物体边界时，通过直方图更好的选择边界阈值，进行阈值化处理；对物体与背景有较强对比的景物的分割特别有用；简单物体的面积和综合光密度IOD可以通过图像的直方图求得。</p>
+<h3 id="直方图修正"><a href="#直方图修正" class="headerlink" title="直方图修正"></a>直方图修正</h3><p>图像的直方图修正方法主要有直方图均衡化和直方图规定化直方图修正的目的是，<strong>使修正后的图像的灰度间距拉开或者是图像灰度分布均匀，从而增大反差，使图像细节清晰，从而达到图像增强的目的</strong></p>
+<p>我们这里主要<strong>直方图均衡化</strong>。</p>
+<p>算法原理，把原有的概率乘以一个数（通常是色值的大小，取整）。这样就可以把一些较为相近的值给化到一起了。</p>
+<h2 id="灰度值处理"><a href="#灰度值处理" class="headerlink" title="灰度值处理"></a>灰度值处理</h2><p><strong>rbg如何变为灰度值图像呢？</strong></p>
+<p>一种常见的方法是将RGB三个分量求和再取平均值，但更为准确的方法是设置不同的权重，将RGB分量按不同的比例进行灰度划分。比如人类的眼睛感官蓝色的敏感度最低，敏感最高的是绿色，因此将RGB按照0.299、0.587、0.144比例加权平均能得到较合理的灰度图像，</p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/502aaa4539120de42999f8496a000538.png" alt="image-20210516201613044"></p>
+<h2 id="图像灰度线性变换"><a href="#图像灰度线性变换" class="headerlink" title="图像灰度线性变换"></a>图像灰度线性变换</h2><p>图像的灰度线性变换是通过建立灰度映射来调整原始图像的灰度，从而改善图像的质量，凸显图像的细节，<strong>提高图像的对比度</strong></p>
+<p>$$<br>f(D) = S \cdot D + b<br>$$</p>
+<p><strong>图像灰度非线性变换</strong></p>
+<ul>
+<li>例如什么一元二次函数</li>
+<li>对数变换</li>
+<li>伽玛变换又称为指数变换或幂次变换，是另一种常用的灰度非线性变换。就是指数函数</li>
+</ul>
+<h2 id="图像锐化"><a href="#图像锐化" class="headerlink" title="图像锐化"></a>图像锐化</h2><p>展图像锐化和边缘检测处理，加强原图像的高频部分。锐化突出图像的边缘细节，改善图像的对比度，使模糊的图像变得更清晰。</p>
+<p>图像锐化和边缘提取技术可以消除图像中的噪声，<strong>提取图像信息中用来表征图像的一些变量</strong>，为图像识别提供基础。</p>
+<p>通常使用<strong>灰度差分法</strong>对图像的边缘、轮廓进行处理，将其凸显。</p>
+<p><strong>如果把每一种算法都用卷积核来表示成矩阵的乘法，那么实际上就是一种卷积运算了</strong></p>
+<h3 id="Roberts算子（梯度法）"><a href="#Roberts算子（梯度法）" class="headerlink" title="Roberts算子（梯度法）"></a>Roberts算子（梯度法）</h3><p><strong>通过计算梯度从而凸显轮廓</strong></p>
+<p>对于图像 <img src="https://www.zhihu.com/equation?tex=f%28x%2Cy%29" alt="[公式]"> ,在点 <img src="https://www.zhihu.com/equation?tex=%28x%2Cy%29" alt="[公式]"> 处的梯度是一个矢量，定义为<img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/af44bf51d6163dce5848043bcc3b45a4.png" alt="[公式]">。</p>
+<p>梯度的幅度表示为 <img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/9b7105a5b1496426ed25b23465be24d8.png" alt="[公式]"></p>
+<p>对于数字图像而言， <img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/6d4fdcb8e36ea49c8022f6639dfdc5e9.png" alt="[公式]"> ，</p>
+<p>该式可以简化成 <img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/862192f8ea6c8e974e6f350ff000ba2b.png" alt="[公式]"></p>
+<p><strong>当梯度计算完之后，可以根据需要生成不同的梯度增强图像，</strong></p>
+<p>1）第一种， <img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/f3ae902679c7e7dff01e3e0b560d1341.png" alt="[公式]"> ，只显示灰度变化大的边缘轮廓，灰度变化平缓的呈黑色。</p>
+<p>2）第二种， <img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/cd884a2879adad0a0b1472324bed828a.png" alt="[公式]"></p>
+<p>可以显示出非常明显的边缘轮廓，又不会破坏原灰度变化平缓的背景。</p>
+<p>3）第三种， <img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/97a3a607639fe7d14c1d78b2f41e5f0f.png" alt="[公式]"></p>
+<p>。。。。还有很多类似的</p>
+<h3 id="Sobel算子"><a href="#Sobel算子" class="headerlink" title="Sobel算子"></a><strong>Sobel算子</strong></h3><p>采用梯度微分锐化图像，会让噪声、条纹得到增强，Sobel算子在一定程度上解决了这个问题， <img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/41e073a71a215b55b008f0b760277548.png" alt="[公式]"></p>
+<p>从这个式子中，可以得到两个性质，</p>
+<ul>
+<li><p>Sobel引入了平均的因素，因此对噪声有一定的平滑作用</p>
+</li>
+<li><p>Sobel算子的操作就是相隔两个行（列）的差分，所以边缘两侧元素的得到了增强，因此边缘显得粗而亮。</p>
+</li>
+<li><p>Sobel算子表示形式为：</p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/0e35c51da6c8afd65cd5fce63b02fbf6.png" alt="[公式]"></p>
+</li>
+</ul>
+<h3 id="拉普拉斯算子（二阶微分）"><a href="#拉普拉斯算子（二阶微分）" class="headerlink" title="拉普拉斯算子（二阶微分）"></a><strong>拉普拉斯算子（二阶微分）</strong></h3><p>拉普拉斯运算也是各向同性的线性运算。拉普拉斯算子为： <img src="https://www.zhihu.com/equation?tex=+%5Cnabla+%5E2f%3D%5Cfrac%7B%5Cpartial+%5E2f%7D%7B%5Cpartial+x%5E2%7D%2B%5Cfrac%7B%5Cpartial+%5E2f%7D%7B%5Cpartial+y%5E2%7D++" alt="[公式]"> ,锐化之后的图像 <img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/7acb21174b6f45d337bd6545f59ded57.png" alt="[公式]"></p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/a2b2713bb60871f3f1ec41c2aa6b28b1.png" alt="[公式]"> 为扩散效应的系数。</p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/109971bec2577b9104960b127601fe00.png" alt="[公式]"></p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/d3c44e73ed44a2e0a465c4f92926048d.png" alt="[公式]"></p>
+<p>由此式可知，数字图像在 <img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/52c725820821186c715be2460f505135.png" alt="[公式]"> 点的拉普拉斯算子，可以由该点的灰度值减去该点及其邻域四个点的平均灰度值求得。</p>
+<h3 id="Canny算子"><a href="#Canny算子" class="headerlink" title="Canny算子"></a>Canny算子</h3><p><strong>1.使用高斯平滑（如公式所示）去除噪声。</strong></p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/2b12e73be69e86eb73254448684195e8.png" alt="image-20210517111128781"></p>
+<p><strong>2.按照Sobel滤波器步骤计算梯度幅值和方向，寻找图像的强度梯度。先将卷积模板分别作用x和y方向，再计算梯度幅值和方向，其公式如下所示。梯度方向一般取0度、45度、90度和135度四个方向。</strong></p>
+<p><img src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/84ec341a66fdbd14311e39fb5b266923/5b62600374d0cce9e566e19e6aa002fa.png" alt="image-20210517111159837"></p>
+<p><strong>3.通过非极大值抑制（Non-maximum Suppression）过滤掉非边缘像素，将模糊的边界变得清晰。该过程保留了每个像素点上梯度强度的极大值，过滤掉其他的值。</strong></p>
+<p><strong>4.利用滞后技术来跟踪边界。若某一像素位置和强边界相连的弱边界认为是边界，其他的弱边界则被删除。</strong></p>
+<h2 id="边缘线检测"><a href="#边缘线检测" class="headerlink" title="边缘线检测"></a>边缘线检测</h2><p>边缘检测算法主要是基于图像强度的一阶和二阶导数，但<strong>导数通常对噪声很敏感，</strong>因此需要采用<strong>滤波器来过滤噪声</strong>，并<strong>调用图像增强或阈值化算法进行处理</strong>，<strong>最后再进行边缘检测</strong>。</p>
+<p>而所谓边缘检测，其实是用锐化算法算出边缘，然后通过一些细节处理捕捉边缘。</p>
+
+            </div>
+            <hr />
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">写作不易，客官能否打赏一杯奶茶？</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.png" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《数字图像处理》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/01/15/zong-he/shu-zi-tu-xiang-chu-li/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                kenger
+            </a> 采用
+            <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+    <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.13.0/js/md5.min.js"></script>
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+  let gitalk = new Gitalk({
+    clientID: 'a213377a193e22efc2ba',
+    // clientSecret: 'f8da69d9dc121f2505267ea35f0ecd30a88b4513',
+    repo: 'blog-comments',
+    owner: 'kengerlwl',
+    admin: ['kengerlwl'],
+    id: md5(window.location.pathname), // 使用当前文章的 URL 作为唯一标识符，由于要小于50字符，使用加密后的 md5 值
+    distractionFreeMode: false, // 关闭无干扰模式
+    proxy: 'http://43.143.21.219:8000/api/tools/get_access_token'
+  });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/01/15/zong-he/shu-ju-ku-chi-zi-python/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="数据库池子Python">
+                        
+                        <span class="card-title">数据库池子Python</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Python 数据库池子引言假设网站一天有很大的访问量，数据库服务器就需要为每次连接创建一次数据库连接，极大的浪费数据库的资源，并且极易造成数据库服务器内存溢出、拓机。数据库连接是一种关键的有限的昂贵的资源,这一点在多用户的网页应用程序中体
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-01-15
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/综合/" class="post-category" target="_blank">
+                                    综合
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/数据库/" target="_blank">
+                        <span class="chip bg-color">数据库</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/01/15/zong-he/ou-la-gong-shi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="欧拉公式">
+                        
+                        <span class="card-title">欧拉公式</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            欧拉公式推导及其python代码公式 
+我们把n的取值从0到1用程序模拟看看，x取从【0，2PI】。
+代码结果当n是51当n是751当n是4801不难看出，n越大，就越趋近于圆。
+当n趋近于无穷大的时候。在复平面上，是趋近于极坐标的。可以用
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-01-15
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/综合/" class="post-category" target="_blank">
+                                    综合
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/数学/" target="_blank">
+                        <span class="chip bg-color">数学</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: kenger的博客<br />'
+            + '作者: kenger<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () { bodyElement.removeChild(newdiv); }, 200);
+    });
+</script>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+<!-- 代码语言 -->
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+<!-- 代码块复制 -->
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+<script type="text/javascript" src="/libs/codeBlock/clipboard.min.js"></script>
+<!-- 代码块收缩 -->
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script> 
+<!-- 代码块折行 -->
+<style type="text/css">code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }</style>
+
+
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            &copy; 2020-2023 kenger. 版权所有
+
+            
+            &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+            <span class="white-color">135.4k</span>
+            
+
+            <br>
+            <span id="sitetime"></span>
+
+            
+            
+            <br>
+            
+
+            <!-- 访问人数统计代码 -->
+            <!-- <span id="busuanzi_container_site_pv" style='display:none'>
+                <i class="fa fa-heart-o"></i>
+                本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv" style='display:none'>
+                人次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+            </span> -->
+            
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/kengerlwl" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:kengerlwl@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="https://zhihu.com/people/xing-zhe-55-44-13" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-inverse">知</i>
+    </a>
+
+
+
+    <a href="http://wpa.qq.com/msgrd?v=3&uin=2892211452&site=qq&menu=yes" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+
+    <a href="https://weibo.com/kengerlwl" class="tooltipped" target="_blank" data-tooltip="关注我的微博" data-position="top" data-delay="50">
+        <i class="fa fa-weibo"></i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+    $(document).ready(function () {
+
+        var int = setInterval(fixCount, 50);
+        var pvcountOffset = 80000;
+        var uvcountOffset = 20000;
+
+        function fixCount() {
+            if (document.getElementById("busuanzi_container_site_pv").style.display != "none") {
+                $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + pvcountOffset);
+                clearInterval(int);
+            }
+            if ($("#busuanzi_container_site_pv").css("display") != "none") {
+                $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + uvcountOffset); // 加上初始数据 
+                clearInterval(int);
+            }
+        }
+    });
+</script>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2020, 09, 11, 00, 00, 00); //北京时间2020-2-13 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <script type="text/javascript"> var OriginTitile = document.title, st; document.addEventListener("visibilitychange", function () { document.hidden ? (document.title = "Σ(っ °Д °;)っ喔哟，崩溃啦！", clearTimeout(st)) : (document.title = "φ(゜▽゜*)♪咦，又好了！", st = setTimeout(function () { document.title = OriginTitile }, 3e3)) })
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=查教程获取"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', '查教程获取');
+</script>
+
+
+
+    
+    <script src="/libs/others/clicklove.js"></script>
+    
+
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    <!-- 雪花特效 -->
+    
+
+</body>
+
+</html>

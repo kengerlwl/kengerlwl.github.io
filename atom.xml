@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>kenger的博客</title>
+  
+  <subtitle>随便写写记录一下</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://blog.kenger.work/"/>
+  <updated>2024-03-25T17:33:56.164Z</updated>
+  <id>https://blog.kenger.work/</id>
+  
+  <author>
+    <name>kenger</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="https://blog.kenger.work/2024/03/25/wang-luo/bmon-linux-xia-yi-ge-qiang-da-de-wang-luo-dai-kuan-jian-shi-he-diao-shi-gong-ju/"/>
+    <id>https://blog.kenger.work/2024/03/25/wang-luo/bmon-linux-xia-yi-ge-qiang-da-de-wang-luo-dai-kuan-jian-shi-he-diao-shi-gong-ju/</id>
+    <published>2024-03-25T17:33:56.164Z</published>
+    <updated>2024-03-25T17:33:56.164Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;pre&gt;&lt;code&gt;title: Bmonlinux下一个强大的网络带宽监视和调试工具
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2023-03-21
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>数据库原理</title>
+    <link href="https://blog.kenger.work/2024/03/12/zhao-gong-zuo/shu-ju-ku-yuan-li/"/>
+    <id>https://blog.kenger.work/2024/03/12/zhao-gong-zuo/shu-ju-ku-yuan-li/</id>
+    <published>2024-03-12T15:27:31.000Z</published>
+    <updated>2024-03-25T17:33:56.160Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;事务&quot;&gt;&lt;a href=&quot;#事务&quot; class=&quot;headerlink&quot; title=&quot;事务&quot;&gt;&lt;/a&gt;事务&lt;/h2&gt;&lt;p&gt;事务指的是&lt;strong&gt;满足 ACID 特性的一组操作&lt;/strong&gt;，可以通过 Commit 提交一个事务，也可以使用
+        
+      
+    
+    </summary>
+    
+      <category term="find JOB" scheme="https://blog.kenger.work/categories/find-JOB/"/>
+    
+    
+      <category term="数据库" scheme="https://blog.kenger.work/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>win上使用mklink创建软连接实现跨盘共享</title>
+    <link href="https://blog.kenger.work/2024/01/27/fu-wu-qi-xiang-guan/win-shang-shi-yong-mklink-chuang-jian-ruan-lian-jie-shi-xian-kua-pan-gong-xiang/"/>
+    <id>https://blog.kenger.work/2024/01/27/fu-wu-qi-xiang-guan/win-shang-shi-yong-mklink-chuang-jian-ruan-lian-jie-shi-xian-kua-pan-gong-xiang/</id>
+    <published>2024-01-27T15:27:31.000Z</published>
+    <updated>2024-03-25T17:33:56.160Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;win上使用mklink创建软连接实现跨盘共享&lt;/p&gt;
+&lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="服务器" scheme="https://blog.kenger.work/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    
+    
+      <category term="linux" scheme="https://blog.kenger.work/tags/linux/"/>
+    
+      <category term="服务器" scheme="https://blog.kenger.work/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ubuntu使用命令行写入光驱</title>
+    <link href="https://blog.kenger.work/2023/11/20/fu-wu-qi-xiang-guan/ubuntu-shi-yong-ming-ling-xing-xie-ru-guang-qu/"/>
+    <id>https://blog.kenger.work/2023/11/20/fu-wu-qi-xiang-guan/ubuntu-shi-yong-ming-ling-xing-xie-ru-guang-qu/</id>
+    <published>2023-11-20T15:27:31.000Z</published>
+    <updated>2024-03-25T17:33:56.160Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;ubuntu使用命令行写入光驱&lt;/p&gt;
+&lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h1&gt;&lt;p&gt;有相关的需求&lt;/p&gt;
+&lt;h1 id=&quot;方法&quot;&gt;&lt;a href=&quot;#方法&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="服务器" scheme="https://blog.kenger.work/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    
+    
+      <category term="linux" scheme="https://blog.kenger.work/tags/linux/"/>
+    
+      <category term="服务器" scheme="https://blog.kenger.work/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>windows实现旁路由</title>
+    <link href="https://blog.kenger.work/2023/10/25/wang-luo/dai-li/windows-shi-xian-pang-lu-you/"/>
+    <id>https://blog.kenger.work/2023/10/25/wang-luo/dai-li/windows-shi-xian-pang-lu-you/</id>
+    <published>2023-10-25T15:27:31.000Z</published>
+    <updated>2024-03-25T17:33:56.164Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="代理" scheme="https://blog.kenger.work/categories/%E4%BB%A3%E7%90%86/"/>
+    
+    
+      <category term="代理" scheme="https://blog.kenger.work/tags/%E4%BB%A3%E7%90%86/"/>
+    
+      <category term="旁路由" scheme="https://blog.kenger.work/tags/%E6%97%81%E8%B7%AF%E7%94%B1/"/>
+    
+      <category term="windows" scheme="https://blog.kenger.work/tags/windows/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>异地多局域网互联(详细版)</title>
+    <link href="https://blog.kenger.work/2023/09/15/wang-luo/yi-di-duo-ju-yu-wang-hu-lian/"/>
+    <id>https://blog.kenger.work/2023/09/15/wang-luo/yi-di-duo-ju-yu-wang-hu-lian/</id>
+    <published>2023-09-15T15:27:31.000Z</published>
+    <updated>2024-03-25T17:33:56.164Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="实验室" scheme="https://blog.kenger.work/categories/%E5%AE%9E%E9%AA%8C%E5%AE%A4/"/>
+    
+    
+      <category term="组网" scheme="https://blog.kenger.work/tags/%E7%BB%84%E7%BD%91/"/>
+    
+      <category term="静态ip" scheme="https://blog.kenger.work/tags/%E9%9D%99%E6%80%81ip/"/>
+    
+      <category term="route" scheme="https://blog.kenger.work/tags/route/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>openclash的进阶详解</title>
+    <link href="https://blog.kenger.work/2023/09/09/wang-luo/openwrt/openclash-de-jin-jie-xiang-jie/"/>
+    <id>https://blog.kenger.work/2023/09/09/wang-luo/openwrt/openclash-de-jin-jie-xiang-jie/</id>
+    <published>2023-09-09T15:27:31.000Z</published>
+    <updated>2024-03-25T17:33:56.164Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h1&gt;&lt;p&gt;最近使用openclash遇到了很多问题&lt;/p&gt;
+&lt;h1 id=&quot;过程&quot;&gt;&lt;a href=&quot;#过程&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="网络" scheme="https://blog.kenger.work/categories/%E7%BD%91%E7%BB%9C/"/>
+    
+    
+      <category term="openwrt" scheme="https://blog.kenger.work/tags/openwrt/"/>
+    
+      <category term="openclash" scheme="https://blog.kenger.work/tags/openclash/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>openwrt的dhcp绑定与设置详解</title>
+    <link href="https://blog.kenger.work/2023/09/09/wang-luo/openwrt/openwrt-de-dhcp-bang-ding-yu-she-zhi-xiang-jie/"/>
+    <id>https://blog.kenger.work/2023/09/09/wang-luo/openwrt/openwrt-de-dhcp-bang-ding-yu-she-zhi-xiang-jie/</id>
+    <published>2023-09-09T15:27:31.000Z</published>
+    <updated>2024-03-25T17:33:56.164Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h1&gt;&lt;p&gt;计划将openwrt作为主路由，然后通过dhcp绑定来绑定ip与mac地址。&lt;/p&gt;
+&lt;h1 id=&quot;方法&quot;&gt;&lt;a href=&quot;#方法&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="网络" scheme="https://blog.kenger.work/categories/%E7%BD%91%E7%BB%9C/"/>
+    
+    
+      <category term="openwrt" scheme="https://blog.kenger.work/tags/openwrt/"/>
+    
+      <category term="dhcp" scheme="https://blog.kenger.work/tags/dhcp/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>openwrt系统镜像打包</title>
+    <link href="https://blog.kenger.work/2023/09/09/wang-luo/openwrt/openwrt-xi-tong-jing-xiang-da-bao/"/>
+    <id>https://blog.kenger.work/2023/09/09/wang-luo/openwrt/openwrt-xi-tong-jing-xiang-da-bao/</id>
+    <published>2023-09-09T15:27:31.000Z</published>
+    <updated>2024-03-25T17:33:56.164Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="网络" scheme="https://blog.kenger.work/categories/%E7%BD%91%E7%BB%9C/"/>
+    
+    
+      <category term="linux" scheme="https://blog.kenger.work/tags/linux/"/>
+    
+      <category term="openwrt" scheme="https://blog.kenger.work/tags/openwrt/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于我的openwrt镜像踩坑注意事项</title>
+    <link href="https://blog.kenger.work/2023/09/09/wang-luo/openwrt/guan-yu-wo-de-openwrt-jing-xiang-cai-keng-zhu-yi-shi-xiang/"/>
+    <id>https://blog.kenger.work/2023/09/09/wang-luo/openwrt/guan-yu-wo-de-openwrt-jing-xiang-cai-keng-zhu-yi-shi-xiang/</id>
+    <published>2023-09-09T15:27:31.000Z</published>
+    <updated>2024-03-25T17:33:56.164Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h1&gt;&lt;p&gt;目前我已经把我的openwrt打包成了一个img镜像，但是在如何使用该镜像方面有一些需要注意的坑如下&lt;/p&gt;
+&lt;h1
+        
+      
+    
+    </summary>
+    
+      <category term="网络" scheme="https://blog.kenger.work/categories/%E7%BD%91%E7%BB%9C/"/>
+    
+    
+      <category term="linux" scheme="https://blog.kenger.work/tags/linux/"/>
+    
+      <category term="openwrt" scheme="https://blog.kenger.work/tags/openwrt/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>基于路由器代理实现异地组网</title>
+    <link href="https://blog.kenger.work/2023/09/08/wang-luo/dai-li/ji-yu-lu-you-qi-dai-li-shi-xian-yi-di-zu-wang/"/>
+    <id>https://blog.kenger.work/2023/09/08/wang-luo/dai-li/ji-yu-lu-you-qi-dai-li-shi-xian-yi-di-zu-wang/</id>
+    <published>2023-09-08T15:27:31.000Z</published>
+    <updated>2024-03-25T17:33:56.164Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="代理" scheme="https://blog.kenger.work/categories/%E4%BB%A3%E7%90%86/"/>
+    
+    
+      <category term="组网" scheme="https://blog.kenger.work/tags/%E7%BB%84%E7%BD%91/"/>
+    
+      <category term="代理" scheme="https://blog.kenger.work/tags/%E4%BB%A3%E7%90%86/"/>
+    
+      <category term="v2ray" scheme="https://blog.kenger.work/tags/v2ray/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于web服务中的认证，授权，会话</title>
+    <link href="https://blog.kenger.work/2023/09/01/ji-zhu/guan-yu-web-fu-wu-zhong-de-ren-zheng-shou-quan-hui-hua/"/>
+    <id>https://blog.kenger.work/2023/09/01/ji-zhu/guan-yu-web-fu-wu-zhong-de-ren-zheng-shou-quan-hui-hua/</id>
+    <published>2023-09-01T15:27:31.000Z</published>
+    <updated>2024-03-25T17:33:56.160Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://blog.kenger.work/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="web" scheme="https://blog.kenger.work/tags/web/"/>
+    
+      <category term="Spring" scheme="https://blog.kenger.work/tags/Spring/"/>
+    
+      <category term="Session" scheme="https://blog.kenger.work/tags/Session/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HTTP连接</title>
+    <link href="https://blog.kenger.work/2023/08/22/zhao-gong-zuo/http-lian-jie/"/>
+    <id>https://blog.kenger.work/2023/08/22/zhao-gong-zuo/http-lian-jie/</id>
+    <published>2023-08-22T15:27:31.000Z</published>
+    <updated>2024-03-25T17:33:56.160Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;基础概念&quot;&gt;&lt;a href=&quot;#基础概念&quot; class=&quot;headerlink&quot; title=&quot;基础概念&quot;&gt;&lt;/a&gt;基础概念&lt;/h1&gt;&lt;h3 id=&quot;请求和响应报文&quot;&gt;&lt;a href=&quot;#请求和响应报文&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="find JOB" scheme="https://blog.kenger.work/categories/find-JOB/"/>
+    
+    
+      <category term="计算机网络" scheme="https://blog.kenger.work/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>git使用</title>
+    <link href="https://blog.kenger.work/2023/08/22/zhao-gong-zuo/git-shi-yong/"/>
+    <id>https://blog.kenger.work/2023/08/22/zhao-gong-zuo/git-shi-yong/</id>
+    <published>2023-08-22T15:27:31.000Z</published>
+    <updated>2024-03-25T17:33:56.160Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;当本地版本修改与云端发生冲突解决办法&quot;&gt;&lt;a href=&quot;#当本地版本修改与云端发生冲突解决办法&quot; class=&quot;headerlink&quot; title=&quot;当本地版本修改与云端发生冲突解决办法&quot;&gt;&lt;/a&gt;当本地版本修改与云端发生冲突解决办法&lt;/h1&gt;&lt;h2
+        
+      
+    
+    </summary>
+    
+      <category term="find JOB" scheme="https://blog.kenger.work/categories/find-JOB/"/>
+    
+    
+      <category term="git" scheme="https://blog.kenger.work/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>java容器</title>
+    <link href="https://blog.kenger.work/2023/08/22/zhao-gong-zuo/java-rong-qi/"/>
+    <id>https://blog.kenger.work/2023/08/22/zhao-gong-zuo/java-rong-qi/</id>
+    <published>2023-08-22T15:27:31.000Z</published>
+    <updated>2024-03-25T17:33:56.160Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;概览&quot;&gt;&lt;a href=&quot;#概览&quot; class=&quot;headerlink&quot; title=&quot;概览&quot;&gt;&lt;/a&gt;概览&lt;/h2&gt;&lt;p&gt;容器主要包括 Collection 和 Map 两种，Collection 存储着对象的集合，而 Map
+        
+      
+    
+    </summary>
+    
+      <category term="find JOB" scheme="https://blog.kenger.work/categories/find-JOB/"/>
+    
+    
+      <category term="java" scheme="https://blog.kenger.work/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>计算机操作系统</title>
+    <link href="https://blog.kenger.work/2023/08/22/zhao-gong-zuo/ji-suan-ji-cao-zuo-xi-tong/"/>
+    <id>https://blog.kenger.work/2023/08/22/zhao-gong-zuo/ji-suan-ji-cao-zuo-xi-tong/</id>
+    <published>2023-08-22T15:27:31.000Z</published>
+    <updated>2024-03-25T17:33:56.160Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h1&gt;&lt;h2 id=&quot;并发和并行&quot;&gt;&lt;a href=&quot;#并发和并行&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="find JOB" scheme="https://blog.kenger.work/categories/find-JOB/"/>
+    
+    
+      <category term="计算机操作系统" scheme="https://blog.kenger.work/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>计算机网络</title>
+    <link href="https://blog.kenger.work/2023/08/22/zhao-gong-zuo/ji-suan-ji-wang-luo/"/>
+    <id>https://blog.kenger.work/2023/08/22/zhao-gong-zuo/ji-suan-ji-wang-luo/</id>
+    <published>2023-08-22T15:27:31.000Z</published>
+    <updated>2024-03-25T17:33:56.160Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h1&gt;&lt;h2 id=&quot;ISP&quot;&gt;&lt;a href=&quot;#ISP&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="find JOB" scheme="https://blog.kenger.work/categories/find-JOB/"/>
+    
+    
+      <category term="计算机网络" scheme="https://blog.kenger.work/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>python注解与装饰器</title>
+    <link href="https://blog.kenger.work/2023/08/22/ji-zhu/python-zhu-jie-yu-zhuang-shi-qi/"/>
+    <id>https://blog.kenger.work/2023/08/22/ji-zhu/python-zhu-jie-yu-zhuang-shi-qi/</id>
+    <published>2023-08-22T15:27:31.000Z</published>
+    <updated>2024-03-25T17:33:56.160Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://blog.kenger.work/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="线程安全" scheme="https://blog.kenger.work/tags/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8/"/>
+    
+      <category term="消息队列" scheme="https://blog.kenger.work/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>python里的线程安全问题</title>
+    <link href="https://blog.kenger.work/2023/08/08/ji-zhu/python-li-de-xian-cheng-an-quan-wen-ti/"/>
+    <id>https://blog.kenger.work/2023/08/08/ji-zhu/python-li-de-xian-cheng-an-quan-wen-ti/</id>
+    <published>2023-08-08T15:27:31.000Z</published>
+    <updated>2024-03-25T17:33:56.160Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://blog.kenger.work/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="线程安全" scheme="https://blog.kenger.work/tags/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8/"/>
+    
+      <category term="消息队列" scheme="https://blog.kenger.work/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>cors跨域，原理与解决</title>
+    <link href="https://blog.kenger.work/2023/08/01/ji-zhu/cors-kua-yu-yuan-li-yu-jie-jue/"/>
+    <id>https://blog.kenger.work/2023/08/01/ji-zhu/cors-kua-yu-yuan-li-yu-jie-jue/</id>
+    <published>2023-08-01T15:27:31.000Z</published>
+    <updated>2024-03-25T17:33:56.160Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="综合" scheme="https://blog.kenger.work/categories/%E7%BB%BC%E5%90%88/"/>
+    
+    
+      <category term="web api" scheme="https://blog.kenger.work/tags/web-api/"/>
+    
+      <category term="cgi" scheme="https://blog.kenger.work/tags/cgi/"/>
+    
+  </entry>
+  
+</feed>
