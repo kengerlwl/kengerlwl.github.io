@@ -256,3 +256,93 @@ try {
 
 
 
+
+
+
+
+## synchronized对象锁和类锁简介
+
+我们可以从synchronized加锁位置区分对象锁和类锁。
+
+**1、对象锁**
+
+普通同步方法，锁是当前实例对象。比如：
+
+```java
+public synchronized void doLongTimeTaskC() {}
+```
+
+**2、类锁**
+
+静态同步方法，锁是当前类的Class对象。比如：
+
+```java
+public synchronized static void doLongTimeTaskA() {}
+```
+
+**3、同步代码块上的对象锁或类锁**
+
+加在同步代码块上，锁是Synchonized括号里配置的对象，可以是实例对象，也可以是Class对象；
+
+```java
+public void doLongTimeTaskD() {
+    // 对象锁
+    synchronized (this) {
+    }
+}
+```
+
+或
+
+```java
+public static void doLongTimeTaskE() {
+
+    // 类锁
+    synchronized (Task.class) {
+    }
+
+}
+```
+
+对象锁和类锁是两个完全不一样的锁，下面通过实例看看他们的区别
+
+
+
+
+
+### 对象锁
+
+**总结：**
+
+**多线程分别持有多个对象，每个线程异步执行对象的同步方法，因为JVM为每个对象创建了锁。**
+
+**如果想让线程排队执行，让多个线程持有同一个对象，线程就会排队执行。**
+
+
+
+### 类级锁
+
+这就是结果按顺序输出的原因，这也是类锁的特性，多个线程持有一个类锁，排队执行，持有就是王者，
+
+
+
+
+
+## java 线程相关结构
+
+
+
+
+
+![Java 运行时数据区域（JDK1.8 之后）](https://oss.javaguide.cn/github/javaguide/java/jvm/java-runtime-data-areas-jdk1.8.png)
+
+- 程序计数器私有主要是为了**线程切换后能恢复到正确的执行位置**
+- **虚拟机栈：** 每个 Java 方法在执行之前会创建一个栈帧用于存储局部变量表、操作数栈、常量池引用等信息。从方法调用直至执行完成的过程，就对应着一个栈帧在 Java 虚拟机栈中入栈和出栈的过程。
+- **本地方法栈：** 和虚拟机栈所发挥的作用非常相似，区别是：**虚拟机栈为虚拟机执行 Java 方法 （也就是字节码）服务，而本地方法栈则为虚拟机使用到的 Native 方法服务。** 在 HotSpot 虚拟机中和 Java 虚拟机栈合二为一。
+
+
+
+
+
+
+
