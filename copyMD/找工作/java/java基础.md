@@ -542,5 +542,5 @@ class hello {
 
 `BigInteger` 内部使用 `int[]` 数组来存储任意大小的整形数据。
 
-
+**原因是BigDecimal采用了long intCompact和int scale来表示数值，而不是浮点型的科学计数法。BigDecimal的原理很简单，就是将小数扩大N倍，转成整数后再进行计算，同时结合指数，得出没有精度损失的结果。**
 
