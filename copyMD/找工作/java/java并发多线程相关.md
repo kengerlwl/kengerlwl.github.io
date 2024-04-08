@@ -381,7 +381,7 @@ public static void doLongTimeTaskE() {
 
 
 
-![Java 运行时数据区域（JDK1.8 之后）](https://oss.javaguide.cn/github/javaguide/java/jvm/java-runtime-data-areas-jdk1.8.png)
+![Java 运行时数据区域（JDK1.8 之后）](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/bb65bdb9c9fd2ec81565504ae3c020cd/ab3aa96730a25c95c8e9a6b6c184d643.png)
 
 - 程序计数器私有主要是为了**线程切换后能恢复到正确的执行位置**
 - **虚拟机栈：** 每个 Java 方法在执行之前会创建一个栈帧用于存储局部变量表、操作数栈、常量池引用等信息。从方法调用直至执行完成的过程，就对应着一个栈帧在 Java 虚拟机栈中入栈和出栈的过程。

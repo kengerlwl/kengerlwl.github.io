@@ -25,7 +25,7 @@ categories:
 
 > Java虚拟机包括一个**类加载器子系统**（Class Loader SubSystem）、**运行时数据区**（Runtime Data Area）、**执行引擎和本地接口库**（Native Interface Library）。本地接口库通过调用本地方法库（Native Method Library）与操作系统交互
 >
-> ![在这里插入图片描述](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/45b80edfddf34ff1955a9cadb4410002~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp)
+> ![在这里插入图片描述](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/f2e69943a7177210b2e5fff570bf4e7b/73d29dcb23f68f1f4695f67fd4e00fd3.png)
 >
 > 其中：
 >
@@ -40,7 +40,7 @@ categories:
 
 ### java内存分区
 
-![image-20221026100332889](https://www.javaxiaobear.cn/assets/image-20221026100332889-itJQs2Iu.png)
+![image-20221026100332889](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/f2e69943a7177210b2e5fff570bf4e7b/8d49402e9a8099495c09a33c227b839e.png)
 
 ### java堆
 
@@ -133,5 +133,5 @@ Java堆在JVM启动时创建，作用是：**存放对象实例**
 
 **标记-整理算法的“标记”过程与“标记-清除算法”的标记过程一致，但标记之后不会直接清理。而是将所有存活对象都移动到内存的一端。移动结束后直接清理掉剩余部分。**
 
-![标记-整理算法](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2dcb1edc483949ea8c18e040fd94bb6f~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp)
+![标记-整理算法](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/f2e69943a7177210b2e5fff570bf4e7b/9f54c5467aad11f9dd339ba0f2e05b8e.png)
 

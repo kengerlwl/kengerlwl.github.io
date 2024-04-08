@@ -105,7 +105,7 @@ categories:
 
 ## Spring Bean的生命周期
 
-![image-20210726145441431](https://javaxiaobear.gitee.io/assets/image-20210726145441431-ekROjXBB.png)
+![image-20210726145441431](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/c4045af266103bf0f40c3fa6989e6e59/9013ba7699bd049343060c879ecbc5e8.png)
 
 
 

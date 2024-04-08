@@ -23,7 +23,7 @@ categories:
 
 ### 基本数据类型
 
-![image-20210712152020611](https://www.javaxiaobear.cn/assets/image-20210712152020611-fI3i5edF.png)
+![image-20210712152020611](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/e8da9232c588c9b3f04ef0372addef93/d6d2baff4b0ba2647046bf6d69619806.png)
 
 
 
