@@ -103,6 +103,121 @@ class 文件由 java 文件编译而来，class 文件包含字段表、方法�
 
 
 
+# 反射与注解
+
+注解：`@Override`这样的就是注解，注解本身并不会给类或者方法加入什么新的功能。**注解仅仅只是一个标识，真正逻辑work的是反射。**
+
+**真正给注解实现新的功能的，是反射。通过反射，可以动态获取到目标对象的类的，方法的变量的属性。进而可以判断这个类，方法，变量有没有用到某个注解。进而实现代理调用，执行。**
+
+
+
+[不懂注解？那就自己写一个，安排的明明白白_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1Py4y1Y77P/?spm_id_from=..top_right_bar_window_history.content.click)
+
+## 注解实现
+
+```
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Retention(RetentionPolicy.RUNTIME) // 用于指定注解的保留策略，即注解在何时有效，比如编译后可以被反射获取到
+@Target(ElementType.METHOD)  // 作用域，作用于函数还是变量还是类
+public @interface MyAnnotation {
+    String value();
+}
+
+```
+
+
+
+
+
+
+
+## spring的反射与注解
+
+
+
+### IOC
+
+
+
+Spring框架中的反射通常在应用程序启动时工作**。当Spring容器启动时，它会扫描应用程序中的类和配置，然后根据配置信息实例化和管理相应的对象。**在这个过程中，Spring可能会使用Java的反射机制来动态地创建对象、调用方法以及设置属性。这种动态性使得Spring框架能够在不直接依赖于类的具体实现的情况下，根据配置信息创建和管理对象，从而实现了松耦合和灵活性。
+
+
+
+假设我们有一个名为`UserService`的服务类，我们希望Spring能够管理它，并在需要时注入到其他类中。首先，我们需要**将该类标记为Spring管理的组件，通常使用`@Component`注解来实现：**
+
+```
+javaCopy codeimport org.springframework.stereotype.Component;
+
+@Component
+public class UserService {
+    // 类的具体实现...
+}
+```
+
+在应用程序启动时，Spring框架会扫描类路径以及包名**，寻找标记有`@Component`注解的类，并将它们实例化为bean并加入到Spring容器中**。在这个过程中，Spring可能会使用反射机制来创建类的实例。
+
+另外，假设我们有一个名为`UserController`的控制器类，它需要依赖于`UserService`。我们可以使用构造函数注入的方式告诉Spring容器，**当创建`UserController`实例时，需要注入`UserService`实例**：
+
+```
+javaCopy codeimport org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class UserController {
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    // 控制器的其他方法...
+}
+```
+
+
+
+### AOP
+
+假设我们有一个需求，希望在执行某个方法之前和之后记录日志。我们可以通过定义一个切面来实现这个需求：
+
+```
+javaCopy codeimport org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.stereotype.Component;
+
+@Aspect
+@Component
+public class LoggingAspect {
+
+    @Pointcut("execution(* com.example.service.*.*(..))")
+    private void serviceMethods() {}
+
+    @Before("serviceMethods()")
+    public void logBefore() {
+        System.out.println("Before executing service method");
+    }
+
+    @AfterReturning("serviceMethods()")
+    public void logAfter() {
+        System.out.println("After executing service method");
+    }
+}
+```
+
+下面是Spring AOP使用反射的基本原理：
+
+1. **创建代理对象**：当Spring容器启动时，它会扫描定义的切面，并为匹配切点的bean创建代理对象。Spring AOP通常使用Java动态代理实现代理对象。通过`java.lang.reflect.Proxy`类的`newProxyInstance()`方法创建代理对象。这个代理对象实现了目标类所实现的所有接口，并且可以拦截接口方法的调用。
+2. **拦截方法调用**：代理对象拦截匹配切点的方法调用。当某个被代理的方法被调用时，代理对象会触发`InvocationHandler`接口中的`invoke()`方法。
+3. **调用通知方法**：在`invoke()`方法中，Spring使用反射API来定位并调用与切面匹配的通知方法。这涉及到解析切面中定义的切点表达式，并定位匹配的通知方法。
+4. **执行目标方法**：在通知方法调用之前或之后，代理对象会调用目标方法。它使用反射API定位目标方法，并调用它。
+
 
 
 
