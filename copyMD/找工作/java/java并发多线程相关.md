@@ -82,6 +82,14 @@ public class RunnableCreateThread implements Runnable{
 
 与 Runnable 接口不一样，Callable 接口提供了一个 call() 方法作为线程执行体，call() 方法比 run() 方法功能要强大，比如**：call() 方法可以有返回值、call() 方法可以声明抛出异常。**
 
+为什么要用到这个：
+
+
+
+- **提高并发性和响应性**：通过使用 Future，可以在等待某些操作完成时不阻塞程序的执行，从而提高程序的并发性和响应性。这对于处理大量IO密集型任务非常有用。
+- **异步编程**：Future 是异步编程的基础之一。**在处理需要长时间等待的任务时，异步编程可以使得程序在等待结果的同时继续执行其他任务，而不是被阻塞。**
+- **支持函数式编程**：Callable 对于函数式编程很重要，它允许将函数作为参数传递给其他函数，或者将函数作为返回值返回，这种机制可以极大地增加代码的灵活性和复用性。
+
 ```java
 public class MyCallable implements Callable {
     @Override
@@ -679,6 +687,20 @@ AbstractQueuedSynchronizer
 ```
 
 AQS 核心思想是，**如果被请求的共享资源空闲，则将当前请求资源的线程设置为有效的工作线程，并且将共享资源设置为锁定状态**。
+
+## 结构
+
+![887fafe6f6b282d7443424fce2cadb9](C:\Users\kenger\Documents\WeChat Files\wxid_i60ep1lbq9cl22\FileStorage\Temp\887fafe6f6b282d7443424fce2cadb9.jpg)
+
+相当于给目标资源加了一个state变量判断是否占用了该资源，然后有个队列用来存储当且需要这个资源的线程队列。
+
+如果state >=1 ， 那么就会锁定这个资源。
+
+
+
+
+
+
 
 **`ReentrantLock`，`Semaphore`，其他的诸如 `ReentrantReadWriteLock`，`SynchronousQueue`等等皆是基于 AQS 的**
 
