@@ -171,6 +171,43 @@ categories:
 
 
 
+
+
+## @Bean 和@Component区别
+
+`@Bean` 注解用于手动配置和管理 Bean，通常与 `@Configuration` 注解一起使用；
+
+而 `@Component` 注解用于标识通用的 Spring 组件，并由 Spring 自动扫描和管理。
+
+```java
+// Product.java
+public class Product {
+    private String name;
+    private double price;
+
+    // 省略构造函数、getter 和 setter 方法
+}
+
+// ProductService.java
+@Component
+public class ProductService {
+
+    @Bean // 将product也声明为了一个bean。注入IOC容器
+    public Product createProduct() {
+        // 创建一个商品对象
+        Product product = new Product();
+        product.setName("iPhone");
+        product.setPrice(999.99);
+        return product;
+    }
+}
+
+```
+
+
+
+
+
 ## spring bean的循环依赖问题
 
 当我们注入一个对象A时，需要注入对象A中标记了某些注解的属性，这些属性也就是对象A的依赖，把对象A中的依赖都初始化完成，对象A才算是创建成功。那么，如果对象A中有个属性是对象B，而且对象B中有个属性是对象A，那么对象A和对象B就算是循环依赖，**如果不加处理，就会出现：创建对象A-->处理A的依赖B-->创建对象B-->处理B的对象A-->创建对象A-->处理A的依赖B-->创建对象B......这样无限的循环下去。**

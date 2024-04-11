@@ -75,7 +75,7 @@ categories:
 
 ## Spring Boot核心注解是哪个，由哪几个组成呢？
 
-> 启动类注解`@SpringBootApplication = @Configuration + @EnableAutoConfiguration + @ComponentScan`
+> **启动类注解`@SpringBootApplication = @Configuration + @EnableAutoConfiguration（自动配置） + @ComponentScan（自动扫描注册组件）`**
 >
 > - **@Configuration：标明该类使用Spring基于Java的配置**
 > - **@EnableAutoConfiguration：启动自动配置功能。**简单概括一下就是，借助@Import的支持，**将所有符合自动配置条件的bean定义加载到IoC容器**

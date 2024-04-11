@@ -149,6 +149,10 @@ Spring框架中的反射通常在应用程序启动时工作**。当Spring容器
 
 假设我们有一个名为`UserService`的服务类，我们希望Spring能够管理它，并在需要时注入到其他类中。首先，我们需要**将该类标记为Spring管理的组件，通常使用`@Component`注解来实现：**
 
+注意：
+
+**因此，无论是 `@Component` 还是 `@Service` 注解，它们在实际的反射执行过程中没有任何区别，都可以被Spring框架扫描到并注册为Bean。区别仅在于语义上的意图和约定，以及在编码规范和可读性上的区别。！！！**
+
 ```
 javaCopy codeimport org.springframework.stereotype.Component;
 
