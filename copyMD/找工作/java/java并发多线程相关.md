@@ -262,7 +262,7 @@ try {
 > - **相当于用monitor实现了一个锁的计数器**
 >
 
-![执行 monitorexit 释放锁](https://oss.javaguide.cn/github/javaguide/java/concurrent/synchronized-release-lock-block.png)
+![执行 monitorexit 释放锁](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/bb65bdb9c9fd2ec81565504ae3c020cd/526b027d891fa58c2ee2203ed2484942.png)
 
 **Java 中的 synchronized 有偏向锁、轻量级锁、重量级锁三种形式，分别对应了锁只被一个线程持有、不同线程交替持有锁、多线程竞争锁三种情况。**
 
@@ -456,7 +456,7 @@ public static void doLongTimeTaskE() {
 >
 >    
 
-![image-20231114150834495](https://javaxiaobear-1301481032.cos.ap-guangzhou.myqcloud.com/picture-bed/image-20231114150834495.png)
+![image-20231114150834495](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/bb65bdb9c9fd2ec81565504ae3c020cd/3671a9e49ffb7bce0d3f775cee82f939.png)
 
 
 
@@ -551,7 +551,7 @@ public static void doLongTimeTaskE() {
 
 
 
-![image-20231113221403439](https://javaxiaobear-1301481032.cos.ap-guangzhou.myqcloud.com/picture-bed/image-20231113221403439.png)
+![image-20231113221403439](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/bb65bdb9c9fd2ec81565504ae3c020cd/10481c2c23931c67e9c66056a2dc1a88.png)
 
 
 
@@ -776,7 +776,7 @@ Java 源代码会经历 **编译器优化重排 —> 指令并行重排 —> 内
 
 **对数组的node上锁，最新1.8版本**
 
-![Java8 ConcurrentHashMap 存储结构（图片来自 javadoop）](https://oss.javaguide.cn/github/javaguide/java/collection/java8_concurrenthashmap.png)
+![Java8 ConcurrentHashMap 存储结构（图片来自 javadoop）](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/bb65bdb9c9fd2ec81565504ae3c020cd/f268edb660265d7a82b12875c3d27d81.png)
 
 ### BlockingQueue
 
