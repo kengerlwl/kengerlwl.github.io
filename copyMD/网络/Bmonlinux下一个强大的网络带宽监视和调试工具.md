@@ -1,17 +1,18 @@
 ```
-title: Bmonlinux下一个强大的网络带宽监视和调试工具
+title: Bmon linux下一个强大的网络带宽监视和调试工具
 top: false
 cover: false
 toc: true
 mathjax: true
-date: 2023-03-21 15:27:31
+date: 2023-07-4 15:27:31
 password:
 summary:
 tags:
-- istore
-- bmon
+- 实验室
+- 静态ip
+- route
 categories:
-- 代理
+- 实验室
 ```
 
 
