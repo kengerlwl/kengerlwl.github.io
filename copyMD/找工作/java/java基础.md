@@ -222,6 +222,10 @@ public final void wait() throws InterruptedException
 
 hashCode() 返回哈希值，而 equals() 是用来判断两个对象是否等价。等价的两个对象散列值一定相同，但是**散列值相同的两个对象不一定等价，这是因为计算哈希值具有随机性**，两个值不同的对象可能计算出相同的哈希值。
 
+注意，对于hashmap的使用，如果**内容相等，但是它们的hashCode()不等；所以，HashSet在添加p1和p2的时候，认为它们不相等。**
+
+**因此，应该两者统一。**
+
 ### toString()
 
 默认返回 ToStringExample@4554617c 这种形式，其中 @ 后面的数值为散列码的无符号十六进制表示。

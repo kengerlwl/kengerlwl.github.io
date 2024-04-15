@@ -121,5 +121,13 @@ public class ResourcesConfig implements WebMvcConfigurer
 
 
 
+## spring boot启动流程
 
-
+1. **加载启动类**：Spring Boot 应用程序的入口是一个主启动类，通常带有 `@SpringBootApplication` 注解。在启动过程中，首先会加载这个主启动类。
+2. **创建 Spring 应用程序上下文**：Spring Boot 使用 Spring 应用程序上下文（ApplicationContext）来管理应用程序中的对象和组件。在启动过程中，Spring Boot 会创建一个根应用程序上下文。
+3. **自动配置**：Spring Boot 会根据应用程序的类路径和配置文件自动配置各种功能，例如数据源、Web 容器、安全等。这个过程是通过自动配置机制来实现的，Spring Boot 会根据一定的规则自动配置应用程序的各种组件。
+4. **加载外部配置**：Spring Boot 允许您在外部配置文件（如 application.properties 或 application.yml）中指定应用程序的配置信息。在启动过程中，Spring Boot 会加载这些外部配置文件，并将配置信息加载到应用程序上下文中。
+5. **启动内嵌的 Web 服务器**：如果应用程序是一个 Web 应用程序，Spring Boot 会在启动过程中启动一个内嵌的 Web 服务器（如 Tomcat、Jetty 或 Undertow），并将应用程序部署到 Web 服务器中。
+6. **扫描并加载 Bean**：Spring Boot 会扫描应用程序中的所有类，识别标有特定注解（如 `@Component`、`@Controller`、`@Service` 等）的类，并将这些类注册为 Spring Bean。
+7. **运行应用程序**：一旦所有的配置都加载完成，并且应用程序上下文已经准备好，Spring Boot 就会开始运行应用程序。这包括处理 HTTP 请求（如果是 Web 应用程序）、执行业务逻辑等。
+8. **关闭应用程序上下文**：在应用程序关闭时，Spring Boot 会关闭应用程序上下文，释放资源，并执行一些清理操作。
