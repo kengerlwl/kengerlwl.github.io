@@ -71,8 +71,9 @@ def img_pro(img_url):
     global md_file
     global img_dir_pre
     global md_name_hash
-    new_local_img_path = img_dir_pre + md5.my_md5(img_url) +'.png'
-    new_github_img_path = github_url + '/image/' + md_name_hash +'/' + md5.my_md5(img_url) +'.png'
+    post_format = img_url.split(".")[-1] # 图片格式可能不是png结尾
+    new_local_img_path = img_dir_pre + md5.my_md5(img_url) +'.'+ post_format
+    new_github_img_path = github_url + '/image/' + md_name_hash +'/' + md5.my_md5(img_url) +'.' + post_format
     # http 图片
     if re.findall('http', img_url) != []:
         request_download(new_local_img_path , img_url)
@@ -80,7 +81,7 @@ def img_pro(img_url):
     # 本地的图片
     else:
         img = Image.open(img_url)
-        img.save(new_local_img_path, 'png')
+        img.save(new_local_img_path, post_format)
 
     return new_github_img_path
 

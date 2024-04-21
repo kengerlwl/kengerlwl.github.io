@@ -59,6 +59,16 @@ categories:
 
 
 
+### 简述 Kubernetes kubelet 的作用？
+
+在 Kubernetes 集群中，在**每个 Node（又称 Worker）上都会启动一个 kubelet 服务进程。**
+
+该进程**用于处理 Master 下发到本节点的任务，管理 Pod 及 Pod 中的容器**。
+
+**每个 kubelet 进程都会在 API Server 上注册节点自身的信息，定期向 Master 汇报节点资源的使用情况**，并通过 cAdvisor 监控容器和节点资源。
+
+
+
 ### pod是什么
 
 **Pod 是 k8s 中集群部署应用和服务的最小单元，一个 pod 中可以部署多个容器。**
@@ -66,6 +76,8 @@ categories:
 ### 副本集（Replica Set，RS）
 
 RS 是新一代 RC，提供同样的高可用能力，区别主要在于 RS 后来居上，能支持更多种类的匹配模式。副本集对象一般不单独使用，而是作为 Deployment 的理想状态参数使用。
+
+Replication Controller **是实现弹性伸缩、动态扩容和滚动升级的核心。**
 
 ### 部署（Deployment）
 
@@ -78,6 +90,21 @@ Deployment 提供了一种对 Pod 和 ReplicaSet 的管理方式，每一个 Dep
 答：Pod每次重启或者重新部署，其IP地址都会产生变化，这使得pod间通信和pod与外部通信变得困难，这时候，就需要Service为pod提供一个固定的入口。
 
 Service的Endpoint列表通常绑定了一组相同配置的pod，通过负载均衡的方式把外界请求分配到多个pod上
+
+
+
+#### 简述 kube-proxy ipvs 和 iptables 的异同？
+
+iptables 与 IPVS 都是基于 Netfilter 实现的，但因为定位不同，二者有着本质的差别：**iptables 是为防火墙而设计的；IPVS 则专门用于高性能负载均衡，并使用更高效的数据结构（Hash 表），允许几乎无限的规模扩张。**
+
+与 iptables 相比，IPVS 拥有以下明显优势：
+
+1. 为大型集群提供了更好的可扩展性和性能；
+2. 支持比 iptables 更复杂的复制均衡算法（最小负载、最少连接、加权等）；
+3. 支持服务器健康检查和连接重试等功能；
+4. 可以动态修改 ipset 的集合，即使 iptables 的规则正在使用这个集合。
+
+
 
 ### ingress负载均衡
 
@@ -602,7 +629,7 @@ metadata:
 
 ### **同一个POD上Container通信**
 
-在k8s中每个Pod中管理着一组Docker容器，这些Docker容器共享同一个网络命名空间，Pod中的每个Docker容器拥有与Pod相同的IP和port地址空间，并且由于他们在同一个网络命名空间，**他们之间可以通过localhost相互访问。**
+在k8s中每个Pod中管理着一组Docker容器，**这些Docker容器共享同一个网络命名空间**，Pod中的每个Docker容器拥有与Pod相同的IP和port地址空间，并且由于他们在同一个网络命名空间，**他们之间可以通过localhost相互访问。**
 
 **什么机制让同一个Pod内的多个docker容器相互通信?就是使用Docker的一种网络模型：–net=container**
 
