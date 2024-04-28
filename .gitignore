@@ -1,13 +1,13 @@
-publish_blog/.idea
-publish_blog/./node_modules/*
-publish_blog/node_modules/*/*
-publish_blog/.DS_Store
-publish_blog/Thumbs.db
-publish_blog/*.log
-publish_blog/public/
-publish_blog/.deploy*/
-publish_blog/.vscode/
-publish_blog/source/_posts
+template_blog/.idea
+template_blog/./node_modules/*
+template_blog/node_modules/*/*
+template_blog/.DS_Store
+template_blog/Thumbs.db
+template_blog/*.log
+template_blog/public/
+template_blog/.deploy*/
+template_blog/.vscode/
+template_blog/source/_posts
 
 venv
 .idea

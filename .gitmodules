@@ -1,0 +1,6 @@
+[submodule "template_blog/hugoWithLoveIt"]
+	path = template_blog/hugoWithLoveIt
+	url = https://github.com/kengerlwl/hugoWithLoveIt.git
+[submodule "hugoWithLoveIt"]
+	path = hugoWithLoveIt
+	url = https://github.com/kengerlwl/hugoWithLoveIt.git
