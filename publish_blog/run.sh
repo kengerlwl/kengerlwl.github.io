@@ -1,13 +1,18 @@
+
 # 复制相关文档到带上传文件夹
-rm -rf source/_posts
-mkdir source/_posts
-cp -rf ../copyMD/* ./source/_posts/
+rm -rf content/posts/copyMD
+mkdir content/posts/copyMD
+cp -rf ../copyMD/* ./content/posts/copyMD
+
+# 清除原有静态文件
+rm -rf public/*
 
 # 生成静态页面
-hexo clean
-hexo g
-cd public
 
+hugo
+
+# 进入静态文件夹
+cd public
 
 # 初始化
 git init
@@ -26,3 +31,4 @@ git checkout gh-pages
 
 # 强制上传
 git push --force --quiet "https://kengerlwl:${GITHUB_TOKEN}@github.com/kengerlwl/kengerlwl.github.io.git"  gh-pages    
+

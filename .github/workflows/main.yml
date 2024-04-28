@@ -18,22 +18,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      # 3. 安装nodejs
-      - name: Set node version to ${{ matrix.node_version }}
-        uses: actions/setup-node@v2
+      # 2.设置hugo环境
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
         with:
-          node-version: ${{ matrix.node_version }}
-          cache: "npm" # 缓存
-          cache-dependency-path: publish_blog/package-lock.json
+          hugo-version: 'latest'
 
-
-      # 安装相关依赖
-      - name: Install deps
-        run: |
-          cd publish_blog
-          unzip -o node_modules.zip      
-          npm i hexo-cli -g
-          npm ci
 
 
       # 构建/部署
