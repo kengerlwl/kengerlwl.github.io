@@ -18,6 +18,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      # 2. 初始化和更新子模块
+      - name: Update Submodules
+        run: git submodule update --init --recursive
+
       # 2.设置hugo环境
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
