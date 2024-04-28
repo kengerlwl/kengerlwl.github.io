@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>项目 - 标签 - Kenger`s Blog</title>
+        <link>https://blog.kenger.work/tags/%E9%A1%B9%E7%9B%AE/</link>
+        <description>项目 - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 22 Aug 2023 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://blog.kenger.work/tags/%E9%A1%B9%E7%9B%AE/" rel="self" type="application/rss+xml" /><item>
+    <title>基于深度学习web</title>
+    <link>https://blog.kenger.work/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0web/</link>
+    <pubDate>Tue, 22 Aug 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0web/</guid>
+    <description><![CDATA[关于业务 具体来说，第三方会发送给我们需要用于模型训练的数据，我们针对模型实现增量训练。 同时，我们也会提供接口来实现模型的预测。但是预测的话。]]></description>
+</item>
+</channel>
+</rss>

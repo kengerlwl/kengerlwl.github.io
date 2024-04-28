@@ -1,0 +1,48 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>V2ray - 标签 - Kenger`s Blog</title>
+        <link>https://blog.kenger.work/tags/v2ray/</link>
+        <description>V2ray - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://blog.kenger.work/tags/v2ray/" rel="self" type="application/rss+xml" /><item>
+    <title>frp代理vhost使用ssl加密</title>
+    <link>https://blog.kenger.work/frp%E4%BB%A3%E7%90%86vhost%E4%BD%BF%E7%94%A8ssl%E5%8A%A0%E5%AF%86/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/frp%E4%BB%A3%E7%90%86vhost%E4%BD%BF%E7%94%A8ssl%E5%8A%A0%E5%AF%86/</guid>
+    <description><![CDATA[背景 nginx已经把443端口占用了 为了实现更加优雅的访问，而不是ip:vhost_port的方式- 使用nginx反向代理所有指域名的443]]></description>
+</item>
+<item>
+    <title>v2ray使用基本，校园网代理frp</title>
+    <link>https://blog.kenger.work/vlan%E4%B8%8Etrunk%E4%BB%A5%E5%8F%8Aesxi%E6%8E%A5%E5%85%A5/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/vlan%E4%B8%8Etrunk%E4%BB%A5%E5%8F%8Aesxi%E6%8E%A5%E5%85%A5/</guid>
+    <description><![CDATA[背景需求介绍 有一个机器，要通过一个网口，同时在vlan1和2。 solution 将该端口设置为trunk 将该端口在交换机上加入两个vlan 在esxi上新建不]]></description>
+</item>
+<item>
+    <title>v2ray使用基本，校园网代理frp</title>
+    <link>https://blog.kenger.work/%E9%9D%B6%E6%9C%BA%E4%B8%8E%E4%BB%A3%E7%90%86/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/%E9%9D%B6%E6%9C%BA%E4%B8%8E%E4%BB%A3%E7%90%86/</guid>
+    <description><![CDATA[docker 使用v2ray 思路： 校园网内一台机器，用来做跳板实现代理功能，这台电脑上安装v2ray服务器端代理，以及frpc客户端代理v2ray的入口]]></description>
+</item>
+<item>
+    <title>v2ray与代理，多级代理</title>
+    <link>https://blog.kenger.work/v2ray%E4%B8%8E%E4%BB%A3%E7%90%86%E5%A4%9A%E7%BA%A7%E4%BB%A3%E7%90%86/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/v2ray%E4%B8%8E%E4%BB%A3%E7%90%86%E5%A4%9A%E7%BA%A7%E4%BB%A3%E7%90%86/</guid>
+    <description><![CDATA[代理与V2ray 参考： 反向代理官方v2ray 正向代理 正向代理，实际上就是翻墙的原理 一般设置一个代理服务器，通过这个代理服务器去访问你想访问的]]></description>
+</item>
+<item>
+    <title>基于路由器代理实现异地组网</title>
+    <link>https://blog.kenger.work/%E5%9F%BA%E4%BA%8E%E8%B7%AF%E7%94%B1%E5%99%A8%E4%BB%A3%E7%90%86%E5%AE%9E%E7%8E%B0%E5%BC%82%E5%9C%B0%E7%BB%84%E7%BD%91/</link>
+    <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/%E5%9F%BA%E4%BA%8E%E8%B7%AF%E7%94%B1%E5%99%A8%E4%BB%A3%E7%90%86%E5%AE%9E%E7%8E%B0%E5%BC%82%E5%9C%B0%E7%BB%84%E7%BD%91/</guid>
+    <description><![CDATA[背景 两个地方，一台公网服务器，实现一端能够无缝访问第一端的内网。 方案一：异地组网，zerotier或者通过校内多个公网ip，然后设置路由。 方]]></description>
+</item>
+</channel>
+</rss>

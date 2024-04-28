@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>v2ray与代理，多级代理 - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://blog.kenger.work/v2ray%E4%B8%8E%E4%BB%A3%E7%90%86%E5%A4%9A%E7%BA%A7%E4%BB%A3%E7%90%86/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="v2ray与代理，多级代理">
+  <meta property="og:description" content="代理与V2ray 参考： 反向代理官方v2ray 正向代理 正向代理，实际上就是翻墙的原理 一般设置一个代理服务器，通过这个代理服务器去访问你想访问的">
+  <meta property="og:locale" content="zh-CN">
+  <meta property="og:type" content="article">
+  <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2020-01-15T15:27:31+00:00">
+    <meta property="article:modified_time" content="2020-01-15T15:27:31+00:00">
+    <meta property="article:tag" content="V2ray">
+    <meta property="article:tag" content="代理">
+    <meta property="og:image" content="https://blog.kenger.work/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blog.kenger.work/logo.png"><meta name="twitter:title" content="v2ray与代理，多级代理">
+<meta name="twitter:description" content="代理与V2ray 参考： 反向代理官方v2ray 正向代理 正向代理，实际上就是翻墙的原理 一般设置一个代理服务器，通过这个代理服务器去访问你想访问的">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.kenger.work/v2ray%E4%B8%8E%E4%BB%A3%E7%90%86%E5%A4%9A%E7%BA%A7%E4%BB%A3%E7%90%86/" /><link rel="prev" href="https://blog.kenger.work/vscode%E4%BD%BF%E7%94%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E9%85%8D%E7%BD%AE/" /><link rel="next" href="https://blog.kenger.work/%E9%9D%B6%E6%9C%BA%E4%B8%8E%E4%BB%A3%E7%90%86/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "v2ray与代理，多级代理",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.kenger.work\/v2ray%E4%B8%8E%E4%BB%A3%E7%90%86%E5%A4%9A%E7%BA%A7%E4%BB%A3%E7%90%86\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/blog.kenger.work\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "v2ray, 代理","wordcount":  1550 ,
+        "url": "https:\/\/blog.kenger.work\/v2ray%E4%B8%8E%E4%BB%A3%E7%90%86%E5%A4%9A%E7%BA%A7%E4%BB%A3%E7%90%86\/","datePublished": "2020-01-15T15:27:31+00:00","dateModified": "2020-01-15T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/blog.kenger.work\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/v2ray%E4%B8%8E%E4%BB%A3%E7%90%86%E5%A4%9A%E7%BA%A7%E4%BB%A3%E7%90%86/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/v2ray%E4%B8%8E%E4%BB%A3%E7%90%86%E5%A4%9A%E7%BA%A7%E4%BB%A3%E7%90%86/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">v2ray与代理，多级代理</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.kenger.work/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E4%BB%A3%E7%90%86/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>代理</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2020-01-15">2020-01-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1550 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#正向代理">正向代理</a></li>
+    <li><a href="#反向代理">反向代理</a>
+      <ul>
+        <li><a href="#服务器内网穿透">服务器内网穿透</a></li>
+      </ul>
+    </li>
+    <li><a href="#多级代理提高溯源难度">多级代理提高溯源难度</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="代理与v2ray">代理与V2ray</h1>
+<p>参考：</p>
+<p><a href="https://toutyrater.github.io/app/reverse.html" target="_blank" rel="noopener noreffer ">反向代理官方v2ray</a></p>
+<h2 id="正向代理">正向代理</h2>
+<p>正向代理，实际上就是<strong>翻墙的原理</strong></p>
+<p>一般设置一个代理服务器，通过这个代理服务器去访问你想访问的网站，代理服务器就是客户端和目标服务器之间的跳板，代理服务器接收客户端的请求并发送到目标服务器，同时接收目标服务器的应答结果并返回给客户端，起到一个中介的作用。这就是所谓的正向代理。</p>
+<p><strong>代理的是客户端</strong></p>
+<p>使用v2ray配置，</p>
+<p><strong>服务端：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;log&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;access&#34;</span><span class="p">:</span> <span class="s2">&#34;/var/log/v2ray/access.log&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;error&#34;</span><span class="p">:</span> <span class="s2">&#34;/var/log/v2ray/error.log&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;loglevel&#34;</span><span class="p">:</span> <span class="s2">&#34;warning&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">},</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;inbounds&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;port&#34;</span><span class="p">:</span> <span class="mi">6688</span><span class="p">,</span>   <span class="c1"># 服务器端的用于接受客户端的接口</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;vmess&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;settings&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;clients&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;id&#34;</span><span class="p">:</span> <span class="s2">&#34;8c042a38-71c1-1dcb-00df-54880236e0dc&#34;</span> <span class="c1"># 客户端也要有这个id。</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">],</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;outbounds&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;freedom&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>客户端配置</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/8cb3d7627a138d3e74c02045c2347434/e13d6fa0744082ab7f21973b385bafad.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/8cb3d7627a138d3e74c02045c2347434/e13d6fa0744082ab7f21973b385bafad.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/8cb3d7627a138d3e74c02045c2347434/e13d6fa0744082ab7f21973b385bafad.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/8cb3d7627a138d3e74c02045c2347434/e13d6fa0744082ab7f21973b385bafad.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/8cb3d7627a138d3e74c02045c2347434/e13d6fa0744082ab7f21973b385bafad.png"
+        title="image-20220508111037368" /></p>
+<p><strong>注意：</strong></p>
+<p>客户端和服务端时间要尽量保持一致</p>
+<h2 id="反向代理">反向代理</h2>
+<p>反向代理是代理服务器，具体上是位于 Web 服务器前面的服务器，其将客户端（例如 Web 浏览器）请求转发到这些 Web 服务器。</p>
+<p>比如如果我们客户端A要访问服务器C，不能直接访问，那么可以引入代理服务器B，让B去代理C，我们访问B就相当于访问C。</p>
+<p>反向代理用于：</p>
+<ul>
+<li>服务器负载均衡</li>
+<li>防范服务器攻击</li>
+<li>缓存</li>
+<li>加密</li>
+<li>内网穿透</li>
+</ul>
+<p><strong>和正向代理不同的是：</strong></p>
+<p>反向的代理代理的是服务器，所有服务器端的请求都可以走代理服务器</p>
+<p>正向代理是代理的客户端，所有客户端都可以走代理服务器</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/8cb3d7627a138d3e74c02045c2347434/33f7cefd5f32433ba897e077253b21ef.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/8cb3d7627a138d3e74c02045c2347434/33f7cefd5f32433ba897e077253b21ef.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/8cb3d7627a138d3e74c02045c2347434/33f7cefd5f32433ba897e077253b21ef.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/8cb3d7627a138d3e74c02045c2347434/33f7cefd5f32433ba897e077253b21ef.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/8cb3d7627a138d3e74c02045c2347434/33f7cefd5f32433ba897e077253b21ef.png"
+        title="image-20220508112316782" /></p>
+<h3 id="服务器内网穿透">服务器内网穿透</h3>
+<p>客户端</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">{  
+</span></span><span class="line"><span class="cl">  &#34;reverse&#34;:{ 
+</span></span><span class="line"><span class="cl">    // 这是 A 的反向代理设置，必须有下面的 bridges 对象
+</span></span><span class="line"><span class="cl">    &#34;bridges&#34;:[  
+</span></span><span class="line"><span class="cl">      {  
+</span></span><span class="line"><span class="cl">        &#34;tag&#34;:&#34;bridge&#34;, // 关于 A 的反向代理标签，在路由中会用到
+</span></span><span class="line"><span class="cl">        &#34;domain&#34;:&#34;private.cloud.com&#34; // A 和 B 反向代理通信的域名，可以自己取一个，可以不是自己购买的域名，但必须跟下面 B 中的 reverse 配置的域名一致
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">    ]
+</span></span><span class="line"><span class="cl">  },
+</span></span><span class="line"><span class="cl">  &#34;outbounds&#34;: [
+</span></span><span class="line"><span class="cl">    {  
+</span></span><span class="line"><span class="cl">      //A连接B的outbound  
+</span></span><span class="line"><span class="cl">      &#34;tag&#34;:&#34;tunnel&#34;, // A 连接 B 的 outbound 的标签，在路由中会用到
+</span></span><span class="line"><span class="cl">      &#34;protocol&#34;:&#34;vmess&#34;,
+</span></span><span class="line"><span class="cl">      &#34;settings&#34;:{  
+</span></span><span class="line"><span class="cl">        &#34;vnext&#34;:[  
+</span></span><span class="line"><span class="cl">          {  
+</span></span><span class="line"><span class="cl">            &#34;address&#34;:&#34;110.40.204.239&#34;, // B 地址，IP 或 实际的域名
+</span></span><span class="line"><span class="cl">            &#34;port&#34;:6688,
+</span></span><span class="line"><span class="cl">            &#34;users&#34;:[  
+</span></span><span class="line"><span class="cl">              {  
+</span></span><span class="line"><span class="cl">                &#34;id&#34;:&#34;b831381d-6324-4d53-ad4f-8cda48b30811&#34;,
+</span></span><span class="line"><span class="cl">                &#34;alterId&#34;:0
+</span></span><span class="line"><span class="cl">              }
+</span></span><span class="line"><span class="cl">            ]
+</span></span><span class="line"><span class="cl">          }
+</span></span><span class="line"><span class="cl">        ]
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">    },
+</span></span><span class="line"><span class="cl">    // 另一个 outbound，最终连接本地的内网的服务 
+</span></span><span class="line"><span class="cl">    {  
+</span></span><span class="line"><span class="cl">      &#34;protocol&#34;:&#34;freedom&#34;,
+</span></span><span class="line"><span class="cl">      &#34;settings&#34;:{  
+</span></span><span class="line"><span class="cl">      },
+</span></span><span class="line"><span class="cl">      &#34;tag&#34;:&#34;out&#34;
+</span></span><span class="line"><span class="cl">    }    
+</span></span><span class="line"><span class="cl">  ],
+</span></span><span class="line"><span class="cl">  &#34;routing&#34;:{   
+</span></span><span class="line"><span class="cl">    &#34;rules&#34;:[  
+</span></span><span class="line"><span class="cl">      {  
+</span></span><span class="line"><span class="cl">        // 配置 A 主动连接 B 的路由规则
+</span></span><span class="line"><span class="cl">        &#34;type&#34;:&#34;field&#34;,
+</span></span><span class="line"><span class="cl">        &#34;inboundTag&#34;:[  
+</span></span><span class="line"><span class="cl">          &#34;bridge&#34;
+</span></span><span class="line"><span class="cl">        ],
+</span></span><span class="line"><span class="cl">        &#34;domain&#34;:[  
+</span></span><span class="line"><span class="cl">          &#34;full:private.cloud.com&#34;
+</span></span><span class="line"><span class="cl">        ],
+</span></span><span class="line"><span class="cl">        &#34;outboundTag&#34;:&#34;tunnel&#34;
+</span></span><span class="line"><span class="cl">      },
+</span></span><span class="line"><span class="cl">      {  
+</span></span><span class="line"><span class="cl">        // 反向连接访问内网的规则
+</span></span><span class="line"><span class="cl">        &#34;type&#34;:&#34;field&#34;,
+</span></span><span class="line"><span class="cl">        &#34;inboundTag&#34;:[  
+</span></span><span class="line"><span class="cl">          &#34;bridge&#34;
+</span></span><span class="line"><span class="cl">        ],
+</span></span><span class="line"><span class="cl">        &#34;outboundTag&#34;:&#34;out&#34;
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">    ]
+</span></span><span class="line"><span class="cl">  }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>服务器</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">{  
+</span></span><span class="line"><span class="cl">  &#34;reverse&#34;:{  //这是 B 的反向代理设置，必须有下面的 portals 对象
+</span></span><span class="line"><span class="cl">    &#34;portals&#34;:[  
+</span></span><span class="line"><span class="cl">      {  
+</span></span><span class="line"><span class="cl">        &#34;tag&#34;:&#34;portal&#34;,
+</span></span><span class="line"><span class="cl">        &#34;domain&#34;:&#34;private.cloud.com&#34;        // 必须和上面 A 设定的域名一样，可以是虚拟的
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">    ]
+</span></span><span class="line"><span class="cl">  },
+</span></span><span class="line"><span class="cl">  &#34;inbounds&#34;: [
+</span></span><span class="line"><span class="cl">    {  
+</span></span><span class="line"><span class="cl">      // 接受 C 的inbound
+</span></span><span class="line"><span class="cl">      &#34;tag&#34;:&#34;external&#34;, // 标签，路由中用到
+</span></span><span class="line"><span class="cl">      &#34;port&#34;:80,
+</span></span><span class="line"><span class="cl">      // 开放 80 端口，用于接收外部的 HTTP 访问 
+</span></span><span class="line"><span class="cl">      &#34;protocol&#34;:&#34;dokodemo-door&#34;,
+</span></span><span class="line"><span class="cl">        &#34;settings&#34;:{  
+</span></span><span class="line"><span class="cl">          &#34;address&#34;:&#34;127.0.0.1&#34;,
+</span></span><span class="line"><span class="cl">          &#34;port&#34;:80, //假设 NAS 监听的端口为 80
+</span></span><span class="line"><span class="cl">          &#34;network&#34;:&#34;tcp&#34;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    },
+</span></span><span class="line"><span class="cl">    // 另一个 inbound，接受客户端主动发起的请求  
+</span></span><span class="line"><span class="cl">    {  
+</span></span><span class="line"><span class="cl">      &#34;tag&#34;: &#34;tunnel&#34;,// 标签，路由中用到
+</span></span><span class="line"><span class="cl">      &#34;port&#34;:6688, //用于连接客户端的端口
+</span></span><span class="line"><span class="cl">      &#34;protocol&#34;:&#34;vmess&#34;,
+</span></span><span class="line"><span class="cl">      &#34;settings&#34;:{  
+</span></span><span class="line"><span class="cl">        &#34;clients&#34;:[  
+</span></span><span class="line"><span class="cl">          {  
+</span></span><span class="line"><span class="cl">            &#34;id&#34;:&#34;b831381d-6324-4d53-ad4f-8cda48b30811&#34;,
+</span></span><span class="line"><span class="cl">            &#34;alterId&#34;:0
+</span></span><span class="line"><span class="cl">          }
+</span></span><span class="line"><span class="cl">        ]
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">  ],
+</span></span><span class="line"><span class="cl">  &#34;routing&#34;:{  
+</span></span><span class="line"><span class="cl">    &#34;rules&#34;:[  
+</span></span><span class="line"><span class="cl">      {  //路由规则，接收 C 请求后发给 A
+</span></span><span class="line"><span class="cl">        &#34;type&#34;:&#34;field&#34;,
+</span></span><span class="line"><span class="cl">        &#34;inboundTag&#34;:[  
+</span></span><span class="line"><span class="cl">          &#34;external&#34;
+</span></span><span class="line"><span class="cl">        ],
+</span></span><span class="line"><span class="cl">        &#34;outboundTag&#34;:&#34;portal&#34;
+</span></span><span class="line"><span class="cl">      },
+</span></span><span class="line"><span class="cl">      {  //路由规则，让 B 能够识别这是 A 主动发起的反向代理连接
+</span></span><span class="line"><span class="cl">        &#34;type&#34;:&#34;field&#34;,
+</span></span><span class="line"><span class="cl">        &#34;inboundTag&#34;:[  
+</span></span><span class="line"><span class="cl">          &#34;tunnel&#34;
+</span></span><span class="line"><span class="cl">        ],
+</span></span><span class="line"><span class="cl">        &#34;domain&#34;:[  
+</span></span><span class="line"><span class="cl">          &#34;full:private.cloud.com&#34;
+</span></span><span class="line"><span class="cl">        ],
+</span></span><span class="line"><span class="cl">        &#34;outboundTag&#34;:&#34;portal&#34;
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">    ]
+</span></span><span class="line"><span class="cl">  }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>最后可以通过 <strong>服务器ip：80</strong>访问</p>
+<h2 id="多级代理提高溯源难度">多级代理提高溯源难度</h2>
+<p>如果就一台服务器，那么实际上通过查询那台服务器，可以找回到请求的原始ip。那么，可不可以在全球疯狂的绕几层服务器。大大提高服务器的溯源难度。</p>
+<p>v2ray就可以。v2ray可以实现链式转发。</p>
+<p>例如，如果有多个ssr账户，可以</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">  &#34;outbounds&#34;: [
+</span></span><span class="line"><span class="cl">    {
+</span></span><span class="line"><span class="cl">      &#34;protocol&#34;: &#34;vmess&#34;,
+</span></span><span class="line"><span class="cl">      &#34;settings&#34;: { // settings 的根据实际情况修改
+</span></span><span class="line"><span class="cl">        &#34;vnext&#34;: [
+</span></span><span class="line"><span class="cl">          {
+</span></span><span class="line"><span class="cl">            &#34;address&#34;: &#34;1.1.1.1&#34;,
+</span></span><span class="line"><span class="cl">            &#34;port&#34;: 8888,
+</span></span><span class="line"><span class="cl">            &#34;users&#34;: [
+</span></span><span class="line"><span class="cl">              {
+</span></span><span class="line"><span class="cl">                &#34;alterId&#34;: 64,
+</span></span><span class="line"><span class="cl">                &#34;id&#34;: &#34;b12614c5-5ca4-4eba-a215-c61d642116ce&#34;
+</span></span><span class="line"><span class="cl">              }
+</span></span><span class="line"><span class="cl">            ]
+</span></span><span class="line"><span class="cl">          }
+</span></span><span class="line"><span class="cl">        ]
+</span></span><span class="line"><span class="cl">      },
+</span></span><span class="line"><span class="cl">      &#34;tag&#34;: &#34;DOUS&#34;,
+</span></span><span class="line"><span class="cl">      &#34;proxySettings&#34;: {
+</span></span><span class="line"><span class="cl">          &#34;tag&#34;: &#34;DOSG&#34;  
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    },
+</span></span><span class="line"><span class="cl">    {
+</span></span><span class="line"><span class="cl">      &#34;protocol&#34;: &#34;shadowsocks&#34;,
+</span></span><span class="line"><span class="cl">      &#34;settings&#34;: {
+</span></span><span class="line"><span class="cl">        &#34;servers&#34;: [
+</span></span><span class="line"><span class="cl">          {
+</span></span><span class="line"><span class="cl">            &#34;address&#34;: &#34;2.2.2.2&#34;,
+</span></span><span class="line"><span class="cl">            &#34;method&#34;: &#34;aes-256-cfb&#34;,
+</span></span><span class="line"><span class="cl">            &#34;ota&#34;: false,
+</span></span><span class="line"><span class="cl">            &#34;password&#34;: &#34;password&#34;,
+</span></span><span class="line"><span class="cl">            &#34;port&#34;: 1024
+</span></span><span class="line"><span class="cl">          }
+</span></span><span class="line"><span class="cl">        ]
+</span></span><span class="line"><span class="cl">      },
+</span></span><span class="line"><span class="cl">      &#34;tag&#34;: &#34;AliHK&#34;
+</span></span><span class="line"><span class="cl">    },
+</span></span><span class="line"><span class="cl">    {
+</span></span><span class="line"><span class="cl">      &#34;protocol&#34;: &#34;shadowsocks&#34;,
+</span></span><span class="line"><span class="cl">      &#34;settings&#34;: {
+</span></span><span class="line"><span class="cl">        &#34;servers&#34;: [
+</span></span><span class="line"><span class="cl">          {
+</span></span><span class="line"><span class="cl">            &#34;address&#34;: &#34;3.3.3.3&#34;,
+</span></span><span class="line"><span class="cl">            &#34;method&#34;: &#34;aes-256-cfb&#34;,
+</span></span><span class="line"><span class="cl">            &#34;ota&#34;: false,
+</span></span><span class="line"><span class="cl">            &#34;password&#34;: &#34;password&#34;,
+</span></span><span class="line"><span class="cl">            &#34;port&#34;: 3442
+</span></span><span class="line"><span class="cl">          }
+</span></span><span class="line"><span class="cl">        ]
+</span></span><span class="line"><span class="cl">      },
+</span></span><span class="line"><span class="cl">      &#34;tag&#34;: &#34;AliSG&#34;,
+</span></span><span class="line"><span class="cl">      &#34;proxySettings&#34;: {
+</span></span><span class="line"><span class="cl">          &#34;tag&#34;: &#34;AliHK&#34;  
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">    },
+</span></span><span class="line"><span class="cl">    {
+</span></span><span class="line"><span class="cl">      &#34;protocol&#34;: &#34;vmess&#34;,
+</span></span><span class="line"><span class="cl">      &#34;settings&#34;: {
+</span></span><span class="line"><span class="cl">        &#34;vnext&#34;: [
+</span></span><span class="line"><span class="cl">          {
+</span></span><span class="line"><span class="cl">            &#34;address&#34;: &#34;4.4.4.4&#34;,
+</span></span><span class="line"><span class="cl">            &#34;port&#34;: 8462,
+</span></span><span class="line"><span class="cl">            &#34;users&#34;: [
+</span></span><span class="line"><span class="cl">              {
+</span></span><span class="line"><span class="cl">                &#34;alterId&#34;: 64,
+</span></span><span class="line"><span class="cl">                &#34;id&#34;: &#34;b27c24ab-2b5a-433e-902c-33f1168a7902&#34;
+</span></span><span class="line"><span class="cl">              }
+</span></span><span class="line"><span class="cl">            ]
+</span></span><span class="line"><span class="cl">          }
+</span></span><span class="line"><span class="cl">        ]
+</span></span><span class="line"><span class="cl">      },
+</span></span><span class="line"><span class="cl">      &#34;tag&#34;: &#34;DOSG&#34;,
+</span></span><span class="line"><span class="cl">      &#34;proxySettings&#34;: {
+</span></span><span class="line"><span class="cl">          &#34;tag&#34;: &#34;AliSG&#34;  
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">    },
+</span></span><span class="line"><span class="cl">  ]
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>那么数据包经过的节点依次为： PC -&gt; AliHK -&gt; AliSG -&gt; DOSG -&gt; DOUS -&gt; 目标网站</p>
+<p>这样的代理转发形成了一条链条，我称之为链式代理转发。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-01-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/v2ray%E4%B8%8E%E4%BB%A3%E7%90%86%E5%A4%9A%E7%BA%A7%E4%BB%A3%E7%90%86/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.kenger.work/v2ray%E4%B8%8E%E4%BB%A3%E7%90%86%E5%A4%9A%E7%BA%A7%E4%BB%A3%E7%90%86/" data-title="v2ray与代理，多级代理" data-hashtags="v2ray,代理"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.kenger.work/v2ray%E4%B8%8E%E4%BB%A3%E7%90%86%E5%A4%9A%E7%BA%A7%E4%BB%A3%E7%90%86/" data-hashtag="v2ray"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.kenger.work/v2ray%E4%B8%8E%E4%BB%A3%E7%90%86%E5%A4%9A%E7%BA%A7%E4%BB%A3%E7%90%86/" data-title="v2ray与代理，多级代理"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.kenger.work/v2ray%E4%B8%8E%E4%BB%A3%E7%90%86%E5%A4%9A%E7%BA%A7%E4%BB%A3%E7%90%86/" data-title="v2ray与代理，多级代理"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.kenger.work/v2ray%E4%B8%8E%E4%BB%A3%E7%90%86%E5%A4%9A%E7%BA%A7%E4%BB%A3%E7%90%86/" data-title="v2ray与代理，多级代理"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/v2ray/">V2ray</a>,&nbsp;<a href="/tags/%E4%BB%A3%E7%90%86/">代理</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/vscode%E4%BD%BF%E7%94%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E9%85%8D%E7%BD%AE/" class="prev" rel="prev" title="vscode使用入门与配置"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>vscode使用入门与配置</a>
+            <a href="/%E9%9D%B6%E6%9C%BA%E4%B8%8E%E4%BB%A3%E7%90%86/" class="next" rel="next" title="v2ray使用基本，校园网代理frp">v2ray使用基本，校园网代理frp<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.125.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.kenger.work/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

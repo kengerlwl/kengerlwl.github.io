@@ -1,0 +1,40 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>组网 - 标签 - Kenger`s Blog</title>
+        <link>https://blog.kenger.work/tags/%E7%BB%84%E7%BD%91/</link>
+        <description>组网 - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 15 Sep 2023 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://blog.kenger.work/tags/%E7%BB%84%E7%BD%91/" rel="self" type="application/rss+xml" /><item>
+    <title>异地多局域网互联(详细版)</title>
+    <link>https://blog.kenger.work/%E5%BC%82%E5%9C%B0%E5%A4%9A%E5%B1%80%E5%9F%9F%E7%BD%91%E4%BA%92%E8%81%94/</link>
+    <pubDate>Fri, 15 Sep 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/%E5%BC%82%E5%9C%B0%E5%A4%9A%E5%B1%80%E5%9F%9F%E7%BD%91%E4%BA%92%E8%81%94/</guid>
+    <description><![CDATA[背景 目前面临这么一个问题，有两个局域网需要互联。但是中间并没有直接的网线可以接入内部交换机直接链接。 以下将这两个地方简称为：机房，实验室。 具]]></description>
+</item>
+<item>
+    <title>linux 双网卡内外网访问</title>
+    <link>https://blog.kenger.work/linux-%E5%8F%8C%E7%BD%91%E5%8D%A1%E5%86%85%E5%A4%96%E7%BD%91%E8%AE%BF%E9%97%AE/</link>
+    <pubDate>Mon, 05 Jun 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/linux-%E5%8F%8C%E7%BD%91%E5%8D%A1%E5%86%85%E5%A4%96%E7%BD%91%E8%AE%BF%E9%97%AE/</guid>
+    <description><![CDATA[思路 一张网卡作为主要网卡，默认网关。走外网 另一张则添加路由表仅通向内网的ip走该网卡 ref https://blog.51cto.com/u_15699831/5421980]]></description>
+</item>
+<item>
+    <title>VLAN通过多个交换机传输，实现同VLAN互通，不同VLAN不通</title>
+    <link>https://blog.kenger.work/vlan%E9%80%9A%E8%BF%87%E5%A4%9A%E4%B8%AA%E4%BA%A4%E6%8D%A2%E6%9C%BA%E4%BC%A0%E8%BE%93%E5%AE%9E%E7%8E%B0%E5%90%8Cvlan%E4%BA%92%E9%80%9A%E4%B8%8D%E5%90%8Cvlan%E4%B8%8D%E9%80%9A/</link>
+    <pubDate>Mon, 05 Jun 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/vlan%E9%80%9A%E8%BF%87%E5%A4%9A%E4%B8%AA%E4%BA%A4%E6%8D%A2%E6%9C%BA%E4%BC%A0%E8%BE%93%E5%AE%9E%E7%8E%B0%E5%90%8Cvlan%E4%BA%92%E9%80%9A%E4%B8%8D%E5%90%8Cvlan%E4%B8%8D%E9%80%9A/</guid>
+    <description><![CDATA[说明 网络拓扑图： 思路：LSW1~3每个交换机都创建了两个VLAN，所以交换机连接交换的那个端口应该设置trunk端口，连接PC机的两个端口类]]></description>
+</item>
+<item>
+    <title>基于路由器代理实现异地组网</title>
+    <link>https://blog.kenger.work/%E5%9F%BA%E4%BA%8E%E8%B7%AF%E7%94%B1%E5%99%A8%E4%BB%A3%E7%90%86%E5%AE%9E%E7%8E%B0%E5%BC%82%E5%9C%B0%E7%BB%84%E7%BD%91/</link>
+    <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/%E5%9F%BA%E4%BA%8E%E8%B7%AF%E7%94%B1%E5%99%A8%E4%BB%A3%E7%90%86%E5%AE%9E%E7%8E%B0%E5%BC%82%E5%9C%B0%E7%BB%84%E7%BD%91/</guid>
+    <description><![CDATA[背景 两个地方，一台公网服务器，实现一端能够无缝访问第一端的内网。 方案一：异地组网，zerotier或者通过校内多个公网ip，然后设置路由。 方]]></description>
+</item>
+</channel>
+</rss>

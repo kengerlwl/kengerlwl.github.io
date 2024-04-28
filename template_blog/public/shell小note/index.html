@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>shell小note - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://blog.kenger.work/shell%E5%B0%8Fnote/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="shell小note">
+  <meta property="og:description" content="变量 简单定义一个变量 1 2 3 4 5 url=&amp;#34;http://c.biancheng.net&amp;#34; website1=&amp;#39;C语言中文网：${url}&amp;#39; website2=&amp;#34;C语言中文网：$">
+  <meta property="og:locale" content="zh-CN">
+  <meta property="og:type" content="article">
+  <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2020-01-15T15:27:31+00:00">
+    <meta property="article:modified_time" content="2020-01-15T15:27:31+00:00">
+    <meta property="article:tag" content="服务器">
+    <meta property="article:tag" content="Linux">
+    <meta property="og:image" content="https://blog.kenger.work/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blog.kenger.work/logo.png"><meta name="twitter:title" content="shell小note">
+<meta name="twitter:description" content="变量 简单定义一个变量 1 2 3 4 5 url=&#34;http://c.biancheng.net&#34; website1=&#39;C语言中文网：${url}&#39; website2=&#34;C语言中文网：$">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.kenger.work/shell%E5%B0%8Fnote/" /><link rel="prev" href="https://blog.kenger.work/source%E5%91%BD%E4%BB%A4---%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8conda%E7%8E%AF%E5%A2%83%E8%BF%90%E8%A1%8C%E8%84%9A%E6%9C%AC%E5%9C%A8%E4%B8%80%E4%BA%9B%E4%B9%B1%E4%B8%83%E5%85%AB%E7%B3%9F%E7%9A%84%E7%8E%AF%E5%A2%83%E4%B8%8B/" /><link rel="next" href="https://blog.kenger.work/shell%E5%B0%86%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%BB%93%E6%9E%9C%E8%B5%8B%E5%80%BC%E7%BB%99%E5%8F%98%E9%87%8F/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "shell小note",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.kenger.work\/shell%E5%B0%8Fnote\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/blog.kenger.work\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "服务器, linux","wordcount":  1969 ,
+        "url": "https:\/\/blog.kenger.work\/shell%E5%B0%8Fnote\/","datePublished": "2020-01-15T15:27:31+00:00","dateModified": "2020-01-15T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/blog.kenger.work\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/shell%E5%B0%8Fnote/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/shell%E5%B0%8Fnote/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">shell小note</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.kenger.work/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>服务器</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2020-01-15">2020-01-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1969 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#变量">变量</a></li>
+    <li><a href="#循环">循环</a></li>
+    <li><a href="#判断if">判断if</a></li>
+    <li><a href="#函数">函数</a></li>
+    <li><a href="#各种括号以及方括号">各种括号以及方括号</a></li>
+    <li><a href="#my_shell_scropt">my_shell_scropt</a></li>
+    <li><a href="#grep-命令">grep 命令</a></li>
+    <li><a href="#awk命令">awk命令</a></li>
+    <li><a href="#sed-命令">sed 命令</a></li>
+    <li><a href="#mac-linux常用的命令">Mac /linux常用的命令</a>
+      <ul>
+        <li><a href="#caffeine-防止息屏命令">caffeine 防止息屏命令</a></li>
+        <li><a href="#实时查看网络速度nload">实时查看网络速度nload</a></li>
+        <li><a href="#定时执行">定时执行</a></li>
+        <li><a href="#关于linux用户管理">关于linux用户管理</a></li>
+        <li><a href="#关于用户文件权限管理">关于用户文件权限管理</a>
+          <ul>
+            <li><a href="#查看文件权限"><strong>查看文件权限</strong></a></li>
+            <li><a href="#更改用户权限">更改用户权限</a></li>
+          </ul>
+        </li>
+        <li><a href="#自动输入y-确认">自动输入y 确认</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="变量">变量</h2>
+<ul>
+<li>简单定义一个变量</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">url=&#34;http://c.biancheng.net&#34;
+</span></span><span class="line"><span class="cl">website1=&#39;C语言中文网：${url}&#39;
+</span></span><span class="line"><span class="cl">website2=&#34;C语言中文网：${url}&#34;
+</span></span><span class="line"><span class="cl">echo $website1   
+</span></span><span class="line"><span class="cl">echo $website2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>单引号代表默认全是字符串</strong></p>
+<p><strong>双引号代表会解析内部的变量</strong></p>
+<ul>
+<li>将代码块的输出定义为变量</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">variable</span><span class="o">=$</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">echo</span> <span class="o">$</span><span class="n">variable</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="循环">循环</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 方式一
+</span></span><span class="line"><span class="cl">for i in list:
+</span></span><span class="line"><span class="cl">do
+</span></span><span class="line"><span class="cl">shell_command
+</span></span><span class="line"><span class="cl">done
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#方式二
+</span></span><span class="line"><span class="cl">for((i=1;i&lt;=10;i++));  
+</span></span><span class="line"><span class="cl">do   
+</span></span><span class="line"><span class="cl">echo $(expr $i \* 3 + 1);  
+</span></span><span class="line"><span class="cl">done
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 方式三
+</span></span><span class="line"><span class="cl">while [ true ] 
+</span></span><span class="line"><span class="cl">do
+</span></span><span class="line"><span class="cl">echo test
+</span></span><span class="line"><span class="cl">done
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="判断if">判断if</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># demo 如下
+</span></span><span class="line"><span class="cl">if  condition
+</span></span><span class="line"><span class="cl">then
+</span></span><span class="line"><span class="cl">   statement1
+</span></span><span class="line"><span class="cl">else
+</span></span><span class="line"><span class="cl">   statement2
+</span></span><span class="line"><span class="cl">fi
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 例子
+</span></span><span class="line"><span class="cl">if [ ! &#34;$a&#34; = &#34;&#34; ]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="函数">函数</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="c1"># 手动输入读取参数类型</span>
+</span></span><span class="line"><span class="cl"><span class="n">funWithReturn</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="n">echo</span> <span class="s2">&#34;这个函数会对输入的两个数字进行相加运算...&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">echo</span> <span class="s2">&#34;输入第一个数字: &#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">read</span> <span class="n">aNum</span>
+</span></span><span class="line"><span class="cl">    <span class="n">echo</span> <span class="s2">&#34;输入第二个数字: &#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">read</span> <span class="n">anotherNum</span>
+</span></span><span class="line"><span class="cl">    <span class="n">echo</span> <span class="s2">&#34;两个数字分别为 $aNum 和 $anotherNum !&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="o">$</span><span class="p">((</span><span class="o">$</span><span class="n">aNum</span><span class="o">+$</span><span class="n">anotherNum</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 可以用这种方式捕获echo的内容。（也就说说可以echo结果然后捕获。）另一种方式是用全局变量</span>
+</span></span><span class="line"><span class="cl"><span class="n">var1</span><span class="o">=$</span><span class="p">(</span><span class="n">funWithReturn</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">echo</span> <span class="s2">&#34; $var1&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 输入参数型</span>
+</span></span><span class="line"><span class="cl"><span class="n">funWithParam</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="n">echo</span> <span class="s2">&#34;第一个参数为 $1 !&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">echo</span> <span class="s2">&#34;第二个参数为 $2 !&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">echo</span> <span class="s2">&#34;第十个参数为 $10 !&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">echo</span> <span class="s2">&#34;第十个参数为 ${10} !&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">echo</span> <span class="s2">&#34;第十一个参数为 ${11} !&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">echo</span> <span class="s2">&#34;参数总数有 $# 个!&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">echo</span> <span class="s2">&#34;作为一个字符串输出所有参数 $* !&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">funWithParam</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">34</span> <span class="mi">73</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="各种括号以及方括号">各种括号以及方括号</h2>
+<p><a href="https://blog.csdn.net/taiyang1987912/article/details/39551385" target="_blank" rel="noopener noreffer ">https://blog.csdn.net/taiyang1987912/article/details/39551385</a></p>
+<h2 id="my_shell_scropt">my_shell_scropt</h2>
+<p>Openwrt network 检测</p>
+<p>想来也是傻逼，网络都没了，怎么发送消息报错啊</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl">send_msg<span class="o">(){</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">wget --quiet <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --method GET <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --header <span class="s1">&#39;cache-control: no-cache&#39;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --header <span class="s1">&#39;postman-token: d5c91d47-1f97-6f9a-735d-366f09451895&#39;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --output-document <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  - <span class="s1">&#39;http://110.40.204.239:5700/send_private_msg?user_id=2892211452&amp;message=openwrt%20network%20wrong&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">while</span><span class="o">((</span><span class="nb">true</span><span class="o">))</span>
+</span></span><span class="line"><span class="cl"><span class="k">do</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">sleep <span class="m">120</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># set try 2 times, and timeout is 1 second</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">net_out</span><span class="o">=</span><span class="k">$(</span>ping -c <span class="m">2</span> -i <span class="m">1</span>  baidu.com <span class="p">|</span> grep <span class="nv">ttl</span><span class="o">=</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># iw wlan1 info</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> ! <span class="s2">&#34;</span><span class="nv">$net_out</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span> <span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="k">then</span>
+</span></span><span class="line"><span class="cl">	net_ok
+</span></span><span class="line"><span class="cl">  <span class="c1">#echo &#34;network exist, $net_out&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span>
+</span></span><span class="line"><span class="cl">date
+</span></span><span class="line"><span class="cl">  <span class="c1"># restrat the network service</span>
+</span></span><span class="line"><span class="cl">wifi down <span class="o">&amp;&amp;</span> wifi up   <span class="c1"># 重启wifi</span>
+</span></span><span class="line"><span class="cl">/etc/init.d/network restart  <span class="c1">#重启网络进程</span>
+</span></span><span class="line"><span class="cl">  send_msg
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;network fail&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="grep-命令">grep 命令</h2>
+<p>我们知道grep命令是用来匹配输出的，但是普通的用法是看这行是否含有关键字或者符合正则表达式。</p>
+<p>但是实际操作中经常碰到如果匹配到不仅仅输出该行，还有输出相邻的剩下的行。</p>
+<p><strong>打印后面相邻</strong>n行</p>
+<p>利用<code>-A n</code>达到目的</p>
+<p><strong>打印前面相邻</strong>n行</p>
+<p>利用<code>-B n</code>达到目的</p>
+<p><strong>打印前后相邻</strong>n行</p>
+<p>利用<code>-C n</code>达到目的</p>
+<h2 id="awk命令">awk命令</h2>
+<p>空格输出多个变量</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">echo $(seq 1 9) | awk &#39;{ print $5,$6,$7}&#39; | while read a b c
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>指定分割符</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">awk -F &#39;,&#39; &#39;{print $2, $3}&#39; employee.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>printf格式化输出</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> pip list | awk -F &#39; &#39; &#39;{printf(&#34;%s==%s\n&#34;, $1, $2)}&#39; 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="sed-命令">sed 命令</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#匹配行前加
+</span></span><span class="line"><span class="cl">sed -i &#39;/allow 361way.com   /iallow www.361way.com&#39; the.conf.file
+</span></span><span class="line"><span class="cl">#匹配行前后
+</span></span><span class="line"><span class="cl">sed -i &#39;/allow 361way.com   /aallow www.361way.com&#39; the.conf.file
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>行前后添加</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">在首行前插入一行
+</span></span><span class="line"><span class="cl"># sed -i &#39;1i\AAA&#39; aa.txt
+</span></span><span class="line"><span class="cl">在首行后插入一行
+</span></span><span class="line"><span class="cl"># sed -i &#39;1a\AAA&#39; aa.txt 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">在尾行前插入一行
+</span></span><span class="line"><span class="cl"># sed -i &#39;$i\AAA&#39; aa.txt 
+</span></span><span class="line"><span class="cl">在尾行后插入一样
+</span></span><span class="line"><span class="cl"># sed -i &#39;$a\AAA&#39; aa.txt 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 第n行前添加一行
+</span></span><span class="line"><span class="cl"># sed -i &#39;ni\AAA&#39; aa.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="mac-linux常用的命令">Mac /linux常用的命令</h2>
+<p><strong>大部分linux都能够直接用</strong></p>
+<h3 id="caffeine-防止息屏命令">caffeine 防止息屏命令</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 600000秒不息屏
+</span></span><span class="line"><span class="cl">caffeinate -u -t 600000
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="实时查看网络速度nload">实时查看网络速度nload</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="c1"># en0 代表的是设备，可以通过ip address查看哪些设备</span>
+</span></span><span class="line"><span class="cl"><span class="n">nload</span> <span class="n">device</span> <span class="n">en0</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="定时执行">定时执行</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">实例1：每1分钟执行一次myCommand
+</span></span><span class="line"><span class="cl">* * * * * myCommand
+</span></span><span class="line"><span class="cl">(分钟，小时，日，月，星期)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 星期六的23点执行
+</span></span><span class="line"><span class="cl">0 23 * * 6 cmd
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 每小时的3,15分钟执行
+</span></span><span class="line"><span class="cl">3,15 * * * * myCommand
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 每小时的3到15分钟执行
+</span></span><span class="line"><span class="cl">3-15 * * * * myCommand
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 每小时的3到15分钟内，每隔3分钟执行一次
+</span></span><span class="line"><span class="cl">3-15/3 * * * * myCommand
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>***** 取值范围内的所有数字</li>
+<li><strong>/</strong> 每过多少个数字</li>
+<li><strong>-</strong> 从X到Z</li>
+<li>**，**散列数字</li>
+</ul>
+<h3 id="关于linux用户管理">关于linux用户管理</h3>
+<p>查看所有用户</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cat /etc/passwd
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>添加用户</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">useradd -d /home/test test  # 添加用户test，指定其home目录为/home/test
+</span></span><span class="line"><span class="cl">useradd -s /bin/bash -g group test # 添加用户test，指定用户组
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>删除用户</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">userdel -r test # 加入r是为了删干净，删除了用户和用户的配置文件
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>添加用户组</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">groupadd -g 101  g1  # 添加用户组g1,指定gid为101
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>删除用户组</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">groupdel g1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="关于用户文件权限管理">关于用户文件权限管理</h3>
+<h4 id="查看文件权限"><strong>查看文件权限</strong></h4>
+<p><code>ls -ahl</code></p>
+<p>假设我这里有一个用户kenger（1002），用户组files（1004）</p>
+<p>显示的内容如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/c53b935433a115d5732aa06e1e6ac8ac/40e434fe37e731e20ea912fb2e41d2ad.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/c53b935433a115d5732aa06e1e6ac8ac/40e434fe37e731e20ea912fb2e41d2ad.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/c53b935433a115d5732aa06e1e6ac8ac/40e434fe37e731e20ea912fb2e41d2ad.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/c53b935433a115d5732aa06e1e6ac8ac/40e434fe37e731e20ea912fb2e41d2ad.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/c53b935433a115d5732aa06e1e6ac8ac/40e434fe37e731e20ea912fb2e41d2ad.png"
+        title="image-20221020134132328" /></p>
+<p>其中的kenger.txt表示属于kenger用户，files用户组。同组的具有rwx权限。</p>
+<p><strong>- 10个字符确定不同用户能对文件干什么</strong></p>
+<p><strong>- 第一个字符代表文件（-）、目录（d），链接（l）</strong></p>
+<p><strong>- 其余字符每3个一组（rwx），读（r）、写（w）、执行（x）</strong></p>
+<p><strong>- 第一组rwx：文件所有者的权限是读、写和执行</strong></p>
+<p><strong>- 第二组rw-：与文件所有者同一组的用户的权限是读、写但不能执行</strong></p>
+<p><strong>- 第三组r&ndash;：不与文件所有者同组的其他用户的权限是读不能写和执行</strong></p>
+<h4 id="更改用户权限">更改用户权限</h4>
+<p>建议用chmod =</p>
+<p>chmod 改变文件或目录的权限</p>
+<p>chmod 755 abc：赋予abc权限rwxr-xr-x</p>
+<p><strong>chmod u=rwx，g=rx，o=rx abc</strong>：同上u=用户权限，g=组权限，o=不同组其他用户权限</p>
+<p>chmod u-x，g+w abc：给abc去除用户执行的权限，增加组写的权限</p>
+<p>chmod a+r abc：给所有用户添加读的权限</p>
+<h3 id="自动输入y-确认">自动输入y 确认</h3>
+<h1 id="docker-容器相关的命令">docker 容器相关的命令</h1>
+<p><strong>一些容器没有su命令。</strong></p>
+<p>安装的方式</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-bash/zsh: su: command not found
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">#Debian
+</span></span><span class="line"><span class="cl">apt-get install util-linux
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">#Ubuntu
+</span></span><span class="line"><span class="cl">apt-get install util-linux
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">#Alpine
+</span></span><span class="line"><span class="cl">apk add util-linux
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">#Arch Linux
+</span></span><span class="line"><span class="cl">pacman -S util-linux
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">#Kali Linux
+</span></span><span class="line"><span class="cl">apt-get install util-linux
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">#CentOS
+</span></span><span class="line"><span class="cl">yum install util-linux
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">#Fedora
+</span></span><span class="line"><span class="cl">dnf install util-linux
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">#OS X
+</span></span><span class="line"><span class="cl">brew install util-linux
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">#Raspbian
+</span></span><span class="line"><span class="cl">apt-get install login
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">#Docker
+</span></span><span class="line"><span class="cl">docker run cmd.cat/su su
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-01-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/shell%E5%B0%8Fnote/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.kenger.work/shell%E5%B0%8Fnote/" data-title="shell小note" data-hashtags="服务器,linux"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.kenger.work/shell%E5%B0%8Fnote/" data-hashtag="服务器"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.kenger.work/shell%E5%B0%8Fnote/" data-title="shell小note"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.kenger.work/shell%E5%B0%8Fnote/" data-title="shell小note"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.kenger.work/shell%E5%B0%8Fnote/" data-title="shell小note"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>,&nbsp;<a href="/tags/linux/">Linux</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/source%E5%91%BD%E4%BB%A4---%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8conda%E7%8E%AF%E5%A2%83%E8%BF%90%E8%A1%8C%E8%84%9A%E6%9C%AC%E5%9C%A8%E4%B8%80%E4%BA%9B%E4%B9%B1%E4%B8%83%E5%85%AB%E7%B3%9F%E7%9A%84%E7%8E%AF%E5%A2%83%E4%B8%8B/" class="prev" rel="prev" title="source命令---如何使用conda环境运行脚本（在一些乱七八糟的环境下）"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>source命令---如何使用conda环境运行脚本（在一些乱七八糟的环境下）</a>
+            <a href="/shell%E5%B0%86%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%BB%93%E6%9E%9C%E8%B5%8B%E5%80%BC%E7%BB%99%E5%8F%98%E9%87%8F/" class="next" rel="next" title="shell将命令执行结果赋值给变量">shell将命令执行结果赋值给变量<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.125.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.kenger.work/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

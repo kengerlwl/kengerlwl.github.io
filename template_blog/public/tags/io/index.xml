@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>IO - 标签 - Kenger`s Blog</title>
+        <link>https://blog.kenger.work/tags/io/</link>
+        <description>IO - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 10 Apr 2024 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://blog.kenger.work/tags/io/" rel="self" type="application/rss+xml" /><item>
+    <title>java-IO</title>
+    <link>https://blog.kenger.work/java-io/</link>
+    <pubDate>Wed, 10 Apr 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/java-io/</guid>
+    <description><![CDATA[计算机IO结构 运算器、控制器、存储器、输入设备、输出设备。 冯诺依曼体系结构 **输入设备（比如键盘）和输出设备（比如显示器）**都属于外部设备]]></description>
+</item>
+</channel>
+</rss>

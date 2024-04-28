@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>运维相关面试题 - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://blog.kenger.work/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E9%9D%A2%E8%AF%95%E9%A2%98/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="运维相关面试题">
+  <meta property="og:description" content="操作系统 swap是什么 Linux 的VM（虚拟内存）=RM（物理内存）&#43;SWAP（交换分区） Swap的大小是由你自己决定的。Swap是通过硬盘虚拟出来">
+  <meta property="og:locale" content="zh-CN">
+  <meta property="og:type" content="article">
+  <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-04-11T15:27:31+00:00">
+    <meta property="article:modified_time" content="2024-04-11T15:27:31+00:00">
+    <meta property="article:tag" content="运维">
+    <meta property="og:image" content="https://blog.kenger.work/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blog.kenger.work/logo.png"><meta name="twitter:title" content="运维相关面试题">
+<meta name="twitter:description" content="操作系统 swap是什么 Linux 的VM（虚拟内存）=RM（物理内存）&#43;SWAP（交换分区） Swap的大小是由你自己决定的。Swap是通过硬盘虚拟出来">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.kenger.work/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E9%9D%A2%E8%AF%95%E9%A2%98/" /><link rel="prev" href="https://blog.kenger.work/java-io/" /><link rel="next" href="https://blog.kenger.work/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E5%A4%8D%E7%9B%98/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "运维相关面试题",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.kenger.work\/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E9%9D%A2%E8%AF%95%E9%A2%98\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/blog.kenger.work\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "运维","wordcount":  6945 ,
+        "url": "https:\/\/blog.kenger.work\/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E9%9D%A2%E8%AF%95%E9%A2%98\/","datePublished": "2024-04-11T15:27:31+00:00","dateModified": "2024-04-11T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/blog.kenger.work\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E9%9D%A2%E8%AF%95%E9%A2%98/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E9%9D%A2%E8%AF%95%E9%A2%98/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">运维相关面试题</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.kenger.work/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/find-job/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Find JOB</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-04-11">2024-04-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 6945 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 14 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#swap是什么">swap是什么</a></li>
+    <li><a href="#linux开机自启过程"><strong>Linux开机自启过程？</strong></a></li>
+    <li><a href="#cpu-的-load和idle的区别是什么">CPU 的 load和idle的区别是什么？</a></li>
+    <li><a href="#零拷贝浅拷贝深拷贝"><strong>零拷贝、浅拷贝、深拷贝</strong></a></li>
+    <li><a href="#多核cpu和多cpu的区别">多核CPU和多CPU的区别</a></li>
+    <li><a href="#linux内核参数相关的问题">Linux内核参数相关的问题？</a></li>
+    <li><a href="#进程上下文与中断上下文">进程上下文与中断上下文</a></li>
+    <li><a href="#tcp网络连接的状态有几种">TCP网络连接的状态有几种？</a></li>
+    <li><a href="#什么情况用户态进入内核-具体哪些操作呢">什么情况用户态进入内核 具体哪些操作呢</a></li>
+    <li><a href="#kill-9算什么">kill-9算什么</a></li>
+    <li><a href="#linux-进程内存结构">linux 进程内存结构</a></li>
+    <li><a href="#linux系统内存结构">linux系统内存结构</a></li>
+    <li><a href="#云原生的理解">云原生的理解</a></li>
+    <li><a href="#linux内存中cache和buffer的区别">Linux内存中Cache和Buffer的区别</a></li>
+    <li><a href="#linux删除文件后没有释放空间">linux删除文件后没有释放空间</a></li>
+    <li><a href="#lsof命令">LSOF命令</a></li>
+    <li><a href="#排查定位linux系统的性能瓶颈">排查定位linux系统的性能瓶颈</a></li>
+    <li><a href="#numanon-uniform-memory-access架构">NUMA(Non-Uniform Memory Access)架构</a></li>
+    <li><a href="#内存memory泄露与句柄socket泄露">内存（memory）泄露与句柄（socket）泄露</a></li>
+    <li><a href="#linux查看大文件">linux查看大文件</a></li>
+    <li><a href="#linux虚拟文件系统">linux虚拟文件系统</a></li>
+    <li><a href="#fd文件描述符">fd文件描述符</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#什么是bgp">什么是BGP</a></li>
+    <li><a href="#解释一下ripbgpigp协议">解释一下RIP、BGP、IGP协议</a></li>
+    <li><a href="#负载均衡原理">负载均衡原理</a>
+      <ul>
+        <li><a href="#k8s的代理原理">K8S的代理原理</a></li>
+      </ul>
+    </li>
+    <li><a href="#简述-lvs-的工作模式及其工作过程">简述 LVS 的工作模式及其工作过程</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#k8s集群规模三台机器的作用masterworker">K8S集群规模？三台机器的作用？master+worker</a></li>
+    <li><a href="#proxy部署在哪些节点一般">proxy部署在哪些节点一般</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#数据库表里有100万条数据想要删除80万条数据但是因为锁的原因删除很慢现在想要快速删除怎么办">数据库表里有100万条数据，想要删除80万条数据，但是因为锁的原因，删除很慢，现在想要快速删除怎么办</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="操作系统">操作系统</h1>
+<h2 id="swap是什么">swap是什么</h2>
+<p>Linux 的VM（虚拟内存）=RM（物理内存）+SWAP（交换分区）</p>
+<p>Swap的大小是由你自己决定的。<strong>Swap是通过硬盘虚拟出来的内存空间</strong></p>
+<h2 id="linux开机自启过程"><strong>Linux开机自启过程？</strong></h2>
+<p><strong>1，power on 开机</strong>
+<strong>2，POST开机自检</strong>
+由主板上的<a href="https://so.csdn.net/so/search?q=BIOS&amp;spm=1001.2101.3001.7020" target="_blank" rel="noopener noreffer ">BIOS</a>程序来完成
+<strong>3，BIOS对硬件进行检测</strong>
+BIOS：基本输入输出系统，是个人电脑启动时加载的第一个软件。可从CMOS中读写系统设置的具体信息。</p>
+<p><strong>4，boot启动顺序检查</strong>
+hard drive 硬盘
+cdrom 光驱
+removeable device 可移动设备
+Network 从网络中的服务器启动
+一般从硬盘启动
+<strong>5，硬盘</strong>
+硬盘里有一个MBR分区
+<strong>6，MBR</strong>
+主引导记录，MBR是第一个可开机设备的第一个扇区的引导分区块，内包含引导加载程序，电脑开机的时候，计算机系统会主动去执行BIOS这个程序，然后BIOS会分析计算机上的存储设备，硬盘的话，BIOS会到该硬盘里面去读取第一个扇区的MBR位置，MBR里面放着引导加载程序，加载内核文件
+<strong>7,groub2引导启动程序</strong>
+里面的ext4驱动，可以识别/boot分区里的内容</p>
+<p><strong>8，/boot</strong>
+/boot分区里有vmlinuxz 和initramfs执行这两个文件，将其加载到内存
+<em>vmlinuz-4.18.0-147.el8.x86_64 真正的linux内核程序
+initramfs-4.18.0-147.el8.x86_64.img &ndash;为内核配套的文件系统，存放了很多的驱动</em></p>
+<p><em>注：initramfs文件可以解压：
+cpio -idmv &lt; ./initramfs.img</em></p>
+<p><strong>9.启动systemd进程</strong>
+systemd进程 是linux里的第1个进程
+<strong>10，启动对应的运行级别里的服务</strong></p>
+<p><strong>11，之后进入login登录页面（输入用户名和密码）</strong></p>
+<h2 id="cpu-的-load和idle的区别是什么">CPU 的 load和idle的区别是什么？</h2>
+<p>在Linux系统中，通过top命令可以查看cpu.idle和cpu.load。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/b8003d4e3289cf134b2e95e1215e6485/58e19ae517e1d16c6b09c3c7b4affbbf.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/b8003d4e3289cf134b2e95e1215e6485/58e19ae517e1d16c6b09c3c7b4affbbf.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/b8003d4e3289cf134b2e95e1215e6485/58e19ae517e1d16c6b09c3c7b4affbbf.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/b8003d4e3289cf134b2e95e1215e6485/58e19ae517e1d16c6b09c3c7b4affbbf.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/b8003d4e3289cf134b2e95e1215e6485/58e19ae517e1d16c6b09c3c7b4affbbf.png"
+        title="image-20240417201433580" /></p>
+<p><strong>cpu.idle</strong></p>
+<p><strong>cpu.idle指的是CPU处于空闲状态时间比例</strong>，从时间的角度衡量CPU的空闲程度。</p>
+<p>CPU利用率主要分为用户态，系统态和空闲态，分别表示CPU处于用户态执行的时间，系统内核执行的时间，和空闲系统进程执行的时间，三者之和就是CPU的总时间。</p>
+<p><strong>cpu.load</strong></p>
+<p><strong>cpu.load被定义为在特定时间间隔内运行队列中(在CPU上运行或者等待运行多少进程)的平均进程数</strong>。如果一个进程满足以下条件则其就会位于运行队列中：</p>
+<p><strong>对于cpu.load多少开始出现性能问题，外界有不同的说法，有的认为cpu.load/cores最好不要超过1，有的认为cpu.load/cores最好不要超过3，有的认为cpu.load不超过2*cores-2即可。（具体还是要根据业务来）</strong></p>
+<h2 id="零拷贝浅拷贝深拷贝"><strong>零拷贝、浅拷贝、深拷贝</strong></h2>
+<p><strong>零拷贝（Zero-copy）：</strong></p>
+<p>零拷贝是一种优化技术，旨在减少数据在计算机系统内部传输时的拷贝次数，从而提高数据传输效率和系统性能。<strong>在零拷贝中，数据可以在不涉及拷贝的情况下从一个地方传输到另一个地方。这通常通过内核提供的技术实现，如直接内存访问（DMA）或内存映射（mmap）等</strong>。零拷贝技术<strong>常用于网络数据传输</strong>、文件系统和数据库系统等领域，能够减少数据拷贝带来的性能开销。</p>
+<p><strong>浅拷贝（Shallow copy）：</strong></p>
+<p><strong>浅拷贝是一种拷贝数据的方式，它只复制对象的引用，而不复制对象本身</strong>。这意味着原始对象和浅拷贝后的对象共享相同的内存空间，如果修改了一个对象的属性，另一个对象的属性也会受到影响。在浅拷贝中，通常只复制对象的顶层结构，而不会递归地复制对象的嵌套结构。浅拷贝适用于简单的数据结构，但可能导致数据共享和意外修改的问题。</p>
+<p><strong>深拷贝（Deep copy）：</strong></p>
+<p><strong>深拷贝是一种拷贝数据的方式，它会递归地复制对象的所有嵌套结构，包括对象本身及其所有子对象</strong>。这样，深拷贝后的对象和原始对象是完全独立的，修改一个对象的属性不会影响另一个对象。深拷贝通常会消耗更多的系统资源，因为需要复制对象的所有数据，但它能够确保对象之间的独立性和数据完整性。深拷贝适用于复杂的数据结构，尤其是包含嵌套结构的情况。</p>
+<h2 id="多核cpu和多cpu的区别">多核CPU和多CPU的区别</h2>
+<p><strong>主要在于性能和成本</strong>。</p>
+<ul>
+<li>多核CPU性能最好，但成本最高；多CPU成本小，便宜，但性能相对较差。</li>
+<li>多核CPU包含多个处理器，多个CPU也是多个处理器，<strong>前者之间是集成电路，后者之间是传统电路。 多核CPU共用一组内存，数据共享</strong></li>
+</ul>
+<h2 id="linux内核参数相关的问题">Linux内核参数相关的问题？</h2>
+<h2 id="进程上下文与中断上下文">进程上下文与中断上下文</h2>
+<ul>
+<li>
+<p>所谓“<strong>进程上下文</strong>”，就是一个进程在执行的时候，<strong>CPU的所有寄存器中的值、进程的状态以及堆栈上的内容</strong>，当内核需要切换到另一个进程时，它需要保存当前进程的所有状态，即保存当前进程的进程上下文，以便再次执行该进程时，能够恢复切换时的状态，继续执行。</p>
+</li>
+<li>
+<p>“<strong>中断上下文</strong>”，就是硬件通过触发信号，导致内核调用中断处理程序，进入内核空间。这个过程中，<strong>硬件的一些变量和参数也要传递给内核，内核通过这些参数进行中断处理</strong>。中断上下文，其实也<strong>可以看作就是硬件传递过来的这些参数和内核需要保存的一些其他环境</strong>（主要是当前被中断的进程环境）。</p>
+</li>
+</ul>
+<h2 id="tcp网络连接的状态有几种">TCP网络连接的状态有几种？</h2>
+<ul>
+<li>CLOSED: 初始状态。</li>
+<li>LISTEN: 服务器端的某个SOCKET处于监听状态，可以接受连接。</li>
+<li>SYN_SENT: 客户端执行CONNECT连接时发送SYN报文，等待服务端确认。</li>
+<li>SYN_RCVD: 服务端接受到SYN报文的中间状态，一般很短暂。</li>
+<li><strong>ESTABLISHED: 连接已建立。</strong></li>
+<li>FIN_WAIT_1: 请求终止连接，等待对方的FIN报文。</li>
+<li>FIN_WAIT_2: 半连接，一方请求关闭连接但还有数据传输需求。</li>
+<li><strong>TIME_WAIT: 收到对方的FIN报文并发送ACK报文后等待一段时间后可回到CLOSED状态。</strong></li>
+<li>CLOSING: 双方几乎同时关闭连接，表示双方都在关闭连接。</li>
+<li><strong>CLOSE_WAIT: 等待关闭状态，对方已关闭连接但还有数据需要发送</strong>。</li>
+<li>LAST_ACK: 发送FIN报文后等待对方的ACK报文，收到后进入CLOSED状态。</li>
+</ul>
+<h2 id="什么情况用户态进入内核-具体哪些操作呢">什么情况用户态进入内核 具体哪些操作呢</h2>
+<ul>
+<li><code>系统调用</code>：其实系统调用本身就是中断，但是软件中断，跟硬中断不同。</li>
+<li><code>异常</code>： 当CPU正在执行运行在用户态的程序时，突然发生某些预先不可知的异常事件，这个时候就会触发从当前用户态执行的进程转向内核态执行相关的异常事件，典型的如<code>缺页异常</code>。</li>
+<li><code>外设中断（硬中断）</code>：当外围设备完成用户的请求操作后，会像CPU发出中断信号，此时，CPU就会暂停执行下一条即将要执行的指令，转而去执行中断信号对应的处理程序，如果先前执行的指令是在用户态下，则自然就发生从用户态到内核态的转换。</li>
+</ul>
+<p><strong>为什么不要频繁的设计两个状态的切换</strong></p>
+<ul>
+<li>涉及频繁的进程上下文切换</li>
+<li>IO设备到内核中读取数据，导致数据到内核态中和到用户态中被拷贝了两次（<strong>从IO设备到内核缓冲区的拷贝</strong>：<strong>从内核缓冲区到用户态的拷贝</strong>）</li>
+</ul>
+<h2 id="kill-9算什么">kill-9算什么</h2>
+<p><strong>kill -9则是强制终止进程</strong>，相当于发送信号9，不管进程是否想要退出，都会被迫停止运行。</p>
+<h2 id="linux-进程内存结构">linux 进程内存结构</h2>
+<p>进程占用的用户空间按照访问属性一致的地址空间存放在一起，划分成了5个不同的内存区域：</p>
+<ol>
+<li>
+<p><strong>代码段（Text Segment）</strong>：<strong>存放可执行文件的操作指令</strong>，是程序在内存中的镜像。代码段只允许读取操作，不可写入，以防止在运行时被非法修改。</p>
+</li>
+<li>
+<p><strong>数据段（Data Segment）</strong>：存放可执行文件中已<strong>初始化的全局变量</strong>，即程序静态分配的变量和全局变量。</p>
+</li>
+<li>
+<p><strong>BSS段</strong>：包含了程序中<strong>未初始化的全局变量</strong>，在内存中全部置零。</p>
+</li>
+<li>
+<p><strong>堆（Heap（堆比栈快））</strong>：用于<strong>存放进程运行中被动态分配的内存段</strong>。堆的大小不固定，可以动态扩张或缩减。当进程调用malloc等函数分配内存时，新分配的内存被动态添加到堆上；当利用free等函数释放内存时，被释放的内存从堆中被剔除。</p>
+</li>
+<li>
+<p><strong>栈（Stack）</strong>：<strong>用于存放程序临时创建的局部变量，即函数中定义的变量</strong>。在函数被调用时，其参数被压入栈中，并在函数调用结束后，返回值也被存放回栈中。栈的先进先出特性使其方便用于保存和恢复调用现场，因此栈常用于函数调用和控制流程的临时数据存储。</p>
+</li>
+</ol>
+<h2 id="linux系统内存结构">linux系统内存结构</h2>
+<h2 id="云原生的理解">云原生的理解</h2>
+<p>云原生是一种软件架构的方法，旨在利用云服务的优势来构建、部署和运行应用程序。<strong>它强调容器化、微服务、自动化和持续交付</strong></p>
+<h2 id="linux内存中cache和buffer的区别">Linux内存中Cache和Buffer的区别</h2>
+<p>*<em>内存buffer***<em>与cache区别？</em></em></p>
+<p><strong>Buffer</strong>将数据写入到内存里，这个数据的内存空间在Linux系统里一般被称为缓冲区(buffer)，写入到内存buffer缓冲区，写缓冲。
+<strong>Cache</strong>从内存读取数据，这个数据的内存空间在Linux系统里一般被称为缓存区(cache),从内存cache读取，缓存区，读缓存。
+<strong>Cache一般用于读取数据，Buffer一般用于写入数据。内存一般有两个参数Memory Cache和Memory Buffe</strong>r。
+Linux 命令 free 命令查看的是指的是Memory Cache 不是 CPU Cache.</p>
+<h2 id="linux删除文件后没有释放空间">linux删除文件后没有释放空间</h2>
+<p>在<em>Linux</em>或者<em>Unix</em>系统中，通过<em>rm</em>或者文件管理器删除文件将会从文件系统的目录结构上解除链接*(unlink).<em>然而如果文件是被</em><em><em>打开的（有一个进程正在使用），那么进程将仍然可以读取该文件，磁盘空间也一直被占用。而我删除的是</em>oracle</em>的告警<em>log</em>文件***删除的时候文件应该正在被使用</p>
+<p><strong>解决办法</strong></p>
+<p>首先获得一个已经被删除但是仍然被应用程序占用的文件列表，如下所示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[root@ticketb ~]# lsof |grep deleted
+</span></span><span class="line"><span class="cl">oracle  12639 oracle  5w   REG       253,0     648   215907 /home/oracle/admin/dbticb/udump/dbticb_ora_12637.trc (deleted)
+</span></span><span class="line"><span class="cl">oracle  12639 oracle  6w   REG       253,0 16749822091   215748 /home/oracle/admin/dbticb/bdump/alert_dbticb.log (deleted)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如何让进程释放呢？</p>
+<p>一种方法是<em>kill</em>掉相应的进程，或者停掉使用这个文件的应用，让<em>os</em>自动回收磁盘空间</p>
+<p>我这个环境有很多进程在使用的这个文件，停掉进程有点麻烦，再有就是风险很大</p>
+<p>当<em>linux</em>打开一个文件的时候*,Linux<em>内核会为每一个进程在</em>/proc/* 『<em>/proc/nnnn/fd/<em>目录（<em>nnnn</em>为</em>pid</em>）』建立一个以其<em>pid
+<em>为名的目录用来保存进程的相关信息，而其子目录</em>fd</em>保存的是该进程打开的所有文件的<em>fd</em>（<em>fd</em>：<em>file descriptor</em>）。</p>
+<p><em>kill</em>进程是通过截断<em>proc</em>文件系统中的文件可以强制要求系统回收分配给正在使用的的文件。*
+<em>这是一项高级技术，仅到管理员确定不会对运行中的进程造成影响时使用。应用程序对这种方</em>
+*式支持的并不好，当一个正在使用的文件被截断可能会引发不可预知的问题</p>
+<h2 id="lsof命令">LSOF命令</h2>
+<p><em>lsof</em>全名<em>list opened files</em>，也就是列举系统中已经被打开的文件。我们都知道，<em>linux</em>环境中，任何事物都是文件，
+<em>设备是文件，目录是文件，甚至</em>sockets<em>也是文件。所以，用好</em>lsof<em>命令，对日常的</em>linux*管理非常有帮助。</p>
+<h2 id="排查定位linux系统的性能瓶颈">排查定位linux系统的性能瓶颈</h2>
+<p><strong>CPU，内存，磁盘，网络带宽以及其他设备</strong></p>
+<h2 id="numanon-uniform-memory-access架构">NUMA(Non-Uniform Memory Access)架构</h2>
+<p>即非一致性内存访问，是一种关于多个CPU如何访问内存的架构模型</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/b8003d4e3289cf134b2e95e1215e6485/5804e68ed9872eb213c2d5748e678da3.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/b8003d4e3289cf134b2e95e1215e6485/5804e68ed9872eb213c2d5748e678da3.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/b8003d4e3289cf134b2e95e1215e6485/5804e68ed9872eb213c2d5748e678da3.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/b8003d4e3289cf134b2e95e1215e6485/5804e68ed9872eb213c2d5748e678da3.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/b8003d4e3289cf134b2e95e1215e6485/5804e68ed9872eb213c2d5748e678da3.png"
+        title="image-20240417202651175" /></p>
+<p><strong>在NUMA架构中，将CPU划分到多个NUMA Node中，每个Node有自己独立的内存空间和PCIE总线系统。各个CPU间通过QPI总线进行互通。</strong></p>
+<p>CPU访问不同类型节点内存的速度是不相同的**，访问本地节点的速度最快，访问远端节点的速度最慢，即访问速度与节点的距离有关，距离越远访，问速度越慢，所以叫做非一致性内存访问**，这个访问内存的距离我们称作Node Distance。</p>
+<h2 id="内存memory泄露与句柄socket泄露">内存（memory）泄露与句柄（socket）泄露</h2>
+<p><strong>内存泄露</strong></p>
+<p><strong>内存泄漏是指程序在动态分配内存后，未释放或者未能完全释放该内存空间的情况</strong>。这样会导致内存不断被占用，进而导致程序性能下降、甚至崩溃等问题。</p>
+<p><strong>比如java的<code>theadLocal</code></strong></p>
+<p>注意区分：内存溢出：指分配的内存空间不足以满足当前需要，导致程序崩溃。</p>
+<p><strong>句柄泄露</strong></p>
+<ol>
+<li><strong>文件句柄泄露</strong>：在程序中打开文件后，如果没有正确关闭文件句柄，就会导致文件句柄泄露。例如，在一个循环中反复打开文件而未关闭，最终会耗尽系统的文件描述符资源。</li>
+<li><strong>网络连接句柄泄露</strong>：在网络编程中，如果程序创建了网络连接但未正确关闭连接句柄，就会导致网络连接句柄泄露。例如，在一个长期运行的服务器程序中，未正确释放客户端连接可能会导致连接句柄泄露，最终耗尽系统的网络资源，导致服务不可用或性能下降。</li>
+</ol>
+<h2 id="linux查看大文件">linux查看大文件</h2>
+<p><strong><a href="https://so.csdn.net/so/search?q=vim&amp;spm=1001.2101.3001.7020" target="_blank" rel="noopener noreffer ">vim</a>和cat 会消耗比较多的内存和cpu资源，导致系统死机或者卡顿，因此读取大文件不建议使用；</strong>
+more和less 不会消耗特别多的内存和cpu资源。</p>
+<h2 id="linux虚拟文件系统">linux虚拟文件系统</h2>
+<p>概括地讲，VFS 有两个作用：</p>
+<ol>
+<li>处理与 Unix 标准文件系统相关的所有系统调用</li>
+<li>为各种文件系统提供一个通用的接口</li>
+</ol>
+<p><strong>参考</strong></p>
+<p><a href="https://blog.csdn.net/weixin_35879493/article/details/116864069" target="_blank" rel="noopener noreffer ">linux的文件系统的作用,Linux下的虚拟文件系统究竟起到什么作用?-CSDN博客</a></p>
+<h2 id="fd文件描述符">fd文件描述符</h2>
+<p><strong>fd 是 File descriptor 的缩写，中文名叫做：文件描述符</strong>（ fd 句柄）。文件描述符是一个非负整数，本质上是一个索引值（这句话非常重要）。<strong>由于linux一切皆文件，所以这个还挺重要，网络io磁盘io都是</strong></p>
+<p>用户使用系统调用 open 或者 creat 来打开或创建一个文件，用户态得到的结果值就是 fd ，后续的 IO 操作全都是用 fd 来标识这个文件，可想而知内核做的操作并不简单，我们接下来就是要揭开这层面纱。</p>
+<h1 id="网络">网络</h1>
+<h2 id="什么是bgp">什么是BGP</h2>
+<p>BGP是边界网关协议Border Gateway Protocol的简称，是用来连接Internet上的独立系统的路由选择协议。BGP主要用于互联网AS（自治系统）之间的互联，BGP的最主要功能在于控制路由的传播和选择最好的路由</p>
+<h2 id="解释一下ripbgpigp协议">解释一下RIP、BGP、IGP协议</h2>
+<h2 id="负载均衡原理">负载均衡原理</h2>
+<p><a href="https://blog.csdn.net/yrx420909/article/details/104423334" target="_blank" rel="noopener noreffer ">LVS负载均衡原理及实现（DR、TUN模式）_tun实现是什么-CSDN博客</a></p>
+<p>LVS：是基于四层的转发（<strong>抗负载均衡能力强</strong>）</p>
+<p>HAproxy：是基于四层和七层的转发，是专业的代理服务器</p>
+<p>Nginx：是WEB服务器，缓存服务器，又是反向代理服务器，可以做七层的转发</p>
+<p>区别：<strong>LVS由于是基于四层的转发所以只能做端口的转发、而基于URL的、基于目录的这种转发LVS就做 不了</strong></p>
+<p>工作选择：HAproxy和Nginx由于可以做七层的转发，所以URL和目录的转发都可以做，在很大并发量的 时候我们就要选择LVS，像中小型公司的话并发量没那么大，选择HAproxy或者Nginx足已，由于 HAproxy由是专业的代理服务器，配置简单，所以中小型企业推荐使用HAproxy</p>
+<h3 id="k8s的代理原理">K8S的代理原理</h3>
+<p>kube-proxy 支持多种负载均衡模式，包括以下几种：</p>
+<ol>
+<li><strong>用户空间代理模式（userspace）</strong>：kube-proxy 在每个节点上启动一个 userspace 网络代理进程，通过修改每个节点上的 <strong>iptables 规则，将流量转发到对应的 Service 后端 Pod</strong>。</li>
+<li><strong>IPVS代理模式（IPVS）</strong>：kube-proxy 可以使用 IPVS（IP Virtual Server）技术来实现负载均衡。在这种模式下，kube-proxy 会创建 IPVS 规则和服务转发表，<strong>利用 Linux 内核的 IPVS 功能来进行负载均衡</strong>。</li>
+<li><strong>直接连接模式（Direct）</strong>：kube-proxy 也可以使用直接连接模式，即直接将流量转发到 Service 对应的 Pod 的 IP 地址上，而不通过额外的代理层。</li>
+</ol>
+<h2 id="简述-lvs-的工作模式及其工作过程">简述 LVS 的工作模式及其工作过程</h2>
+<p>LVS 有三种负载均衡的模式，分别是 VS/NAT（nat 模式）、VS/DR（路由模式）、VS/TUN（隧道模式）。</p>
+<ul>
+<li><strong>NAT 模式</strong>（VS-NAT）
+<ul>
+<li><code>原理</code>：首先负载均衡器接收到客户的请求数据包时，根据调度算法决定将请求发送给哪个后端的真实服务器（RS）。然后负载均衡器就把客户端发送的请求数据包的目标 IP 地址及端口改成后端真实服务器的 IP 地址（RIP）。真实服务器响应完请求后，<strong>查看默认路由，把响应后的数据包发送给负载均衡器</strong>，负载均衡器在接收到响应包后，<strong>把包的源地址改成虚拟地址（VIP）然后发送回给客户端</strong>。</li>
+<li><code>优点</code>：集群中的服务器可以使用任何支持 TCP/IP 的操作系统，只要负载均衡器有一个合法的 IP 地址。</li>
+<li><code>缺点</code>：扩展性有限，当服务器节点增长过多时，由于所有的请求和应答都需要经过负载均衡器，因此负载均衡器将成为整个系统的瓶颈。</li>
+</ul>
+</li>
+<li>IP 隧道模式（VS-TUN）
+<ul>
+<li><code>原理</code>：首先负载均衡器接收到客户的请求数据包时，根据调度算法决定将请求发送给哪个后端的真实服务器（RS）<strong>。然后负载均衡器就把客户端发送的请求报文封装一层 IP 隧道（T-IP）转发到真实服务器（RS）。真实服务器响应完请求后，查看默认路由，把响应后的数据包直接发送给客户端，不需要经过负载均衡器。</strong></li>
+<li><code>优点</code>：负载均衡器只负责将请求包分发给后端节点服务器，而 RS 将应答包直接发给用户。所以，减少了负载均衡器的大量数据流动，负载均衡器不再是系统的瓶颈，也能处理很巨大的请求量。</li>
+<li><code>缺点</code>：隧道模式的 RS 节点需要合法 IP，这种方式需要所有的服务器支持“IP Tunneling”。</li>
+</ul>
+</li>
+<li>直接路由模式（VS-DR）
+<ul>
+<li><code>原理</code>：首先负载均衡器接收到客户的请求数据包时，根据调度算法决定将请求发送给哪个后端的真实服务器（RS）。然后负载均衡器就把客户端发送的请求数据包的目标 MAC 地址改成后端真实服务器的 MAC 地址（R-MAC）。真实服务器响应完请求后，查看默认路由，把响应后的数据包直接发送给客户端，不需要经过负载均衡器。</li>
+<li><code>优点</code>：负载均衡器只负责将请求包分发给后端节点服务器，而 RS 将应答包直接发给用户。所以，减少了负载均衡器的大量数据流动，负载均衡器不再是系统的瓶颈，也能处理很巨大的请求量。</li>
+<li><code>缺点</code>：需要负载均衡器与真实服务器 RS 都有一块网卡连接到同一物理网段上，必须在同一个局域网环境。</li>
+</ul>
+</li>
+</ul>
+<h1 id="k8s">K8S</h1>
+<h2 id="k8s集群规模三台机器的作用masterworker">K8S集群规模？三台机器的作用？master+worker</h2>
+<h2 id="proxy部署在哪些节点一般">proxy部署在哪些节点一般</h2>
+<h1 id="其他业务架构题">其他业务架构题</h1>
+<h2 id="数据库表里有100万条数据想要删除80万条数据但是因为锁的原因删除很慢现在想要快速删除怎么办">数据库表里有100万条数据，想要删除80万条数据，但是因为锁的原因，删除很慢，现在想要快速删除怎么办</h2>
+<h1 id="智力题">智力题</h1>
+<p>1 简单做个自我介绍</p>
+<p>2 说一个你觉得最有挑战的项目</p>
+<p>3 说一下难点在哪里</p>
+<p>4 其他人是怎么做的</p>
+<p>5 你觉的你比别人做的好的地方在哪里</p>
+<p>6 xxx技术你是怎么思考的为什么，要什么要用</p>
+<p>7 你平时是否关注业界哪些方向</p>
+<p>8 你是否在写写博客什么的</p>
+<p>9 说一下你的职业规划和思考</p>
+<h1 id="ref">ref</h1>
+<p><a href="https://zhuanlan.zhihu.com/p/569207604?utm_psn=1763945503203880960" target="_blank" rel="noopener noreffer ">运维最常见100道面试题 - 知乎</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-04-11</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E9%9D%A2%E8%AF%95%E9%A2%98/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.kenger.work/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E9%9D%A2%E8%AF%95%E9%A2%98/" data-title="运维相关面试题" data-hashtags="运维"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.kenger.work/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E9%9D%A2%E8%AF%95%E9%A2%98/" data-hashtag="运维"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.kenger.work/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E9%9D%A2%E8%AF%95%E9%A2%98/" data-title="运维相关面试题"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.kenger.work/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E9%9D%A2%E8%AF%95%E9%A2%98/" data-title="运维相关面试题"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.kenger.work/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E9%9D%A2%E8%AF%95%E9%A2%98/" data-title="运维相关面试题"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E8%BF%90%E7%BB%B4/">运维</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/java-io/" class="prev" rel="prev" title="java-IO"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>java-IO</a>
+            <a href="/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E5%A4%8D%E7%9B%98/" class="next" rel="next" title="运维相关复盘">运维相关复盘<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.125.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.kenger.work/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

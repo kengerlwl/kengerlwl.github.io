@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Vscode - 标签 - Kenger`s Blog</title>
+        <link>https://blog.kenger.work/tags/vscode/</link>
+        <description>Vscode - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://blog.kenger.work/tags/vscode/" rel="self" type="application/rss+xml" /><item>
+    <title>vscode使用入门与配置</title>
+    <link>https://blog.kenger.work/vscode%E4%BD%BF%E7%94%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E9%85%8D%E7%BD%AE/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/vscode%E4%BD%BF%E7%94%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E9%85%8D%E7%BD%AE/</guid>
+    <description><![CDATA[为什么需要vscode 以python为例，相较于其他的编辑器（如Pycharm），vscode占用跟小的内存。打开更加迅速。vscode本身]]></description>
+</item>
+</channel>
+</rss>

@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>计数据库 - 标签 - Kenger`s Blog</title>
+        <link>https://blog.kenger.work/tags/%E8%AE%A1%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+        <description>计数据库 - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 14 Mar 2024 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://blog.kenger.work/tags/%E8%AE%A1%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="self" type="application/rss+xml" /><item>
+    <title>SQL编写</title>
+    <link>https://blog.kenger.work/sql%E7%BC%96%E5%86%99/</link>
+    <pubDate>Thu, 14 Mar 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/sql%E7%BC%96%E5%86%99/</guid>
+    <description><![CDATA[基础 1 2 3 4 5 ## 注释 SELECT * FROM mytable; -- 注释 /* 注释1 注释2 */ 数据库创建与使用： 1 2 CREATE DATABASE test; USE test; 创建表 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 CREATE TABLE mytable ( # int 类型，不]]></description>
+</item>
+</channel>
+</rss>

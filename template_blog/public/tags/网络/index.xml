@@ -1,0 +1,32 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>网络 - 标签 - Kenger`s Blog</title>
+        <link>https://blog.kenger.work/tags/%E7%BD%91%E7%BB%9C/</link>
+        <description>网络 - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://blog.kenger.work/tags/%E7%BD%91%E7%BB%9C/" rel="self" type="application/rss+xml" /><item>
+    <title>openwrt mwan 配置多wan复制均衡</title>
+    <link>https://blog.kenger.work/openwrt-mwan-%E9%85%8D%E7%BD%AE%E5%A4%9Awan%E5%A4%8D%E5%88%B6%E5%9D%87%E8%A1%A1/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/openwrt-mwan-%E9%85%8D%E7%BD%AE%E5%A4%9Awan%E5%A4%8D%E5%88%B6%E5%9D%87%E8%A1%A1/</guid>
+    <description><![CDATA[openwrt新建多个wan口 可以采取多线多口的方式。多个物理接口对应多个wan口 或者采取单线多拨的方式，但是运行商不一定支持。 在单个网卡上]]></description>
+</item>
+<item>
+    <title>一些网络测试常用命令</title>
+    <link>https://blog.kenger.work/%E4%B8%80%E4%BA%9B%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/%E4%B8%80%E4%BA%9B%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
+    <description><![CDATA[ping ping 命令每秒发送一个数据报并且为每个接收到的响应显示一行输出。 ping既可以是域名，也可以是ip。 使用 ICMP 传输协议 所以，ping不通可能并不是]]></description>
+</item>
+<item>
+    <title>长连接与短连接</title>
+    <link>https://blog.kenger.work/%E9%95%BF%E8%BF%9E%E6%8E%A5%E4%B8%8E%E7%9F%AD%E8%BF%9E%E6%8E%A5/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/%E9%95%BF%E8%BF%9E%E6%8E%A5%E4%B8%8E%E7%9F%AD%E8%BF%9E%E6%8E%A5/</guid>
+    <description><![CDATA[长连接与短连接 轮询与连接简介 轮询：客户端定时向服务器发送Ajax请求，服务器接到请求后马上返回响应信息并关闭连接。 优点：后端程序编写比较容易]]></description>
+</item>
+</channel>
+</rss>

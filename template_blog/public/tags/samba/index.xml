@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Samba - 标签 - Kenger`s Blog</title>
+        <link>https://blog.kenger.work/tags/samba/</link>
+        <description>Samba - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 05 May 2023 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://blog.kenger.work/tags/samba/" rel="self" type="application/rss+xml" /><item>
+    <title>ldap配合truenas实现smb挂载.md</title>
+    <link>https://blog.kenger.work/ldap%E9%85%8D%E5%90%88truenas%E5%AE%9E%E7%8E%B0smb%E6%8C%82%E8%BD%BD/</link>
+    <pubDate>Fri, 05 May 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/ldap%E9%85%8D%E5%90%88truenas%E5%AE%9E%E7%8E%B0smb%E6%8C%82%E8%BD%BD/</guid>
+    <description><![CDATA[ref https://wdicc.com/ldap-samba/ 这篇文章很详细，这个作者很牛，值得关注]]></description>
+</item>
+</channel>
+</rss>

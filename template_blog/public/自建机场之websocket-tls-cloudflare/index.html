@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>自建机场之websocket&#43;tls&#43;cloudflare - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://blog.kenger.work/%E8%87%AA%E5%BB%BA%E6%9C%BA%E5%9C%BA%E4%B9%8Bwebsocket-tls-cloudflare/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="自建机场之websocket&#43;tls&#43;cloudflare">
+  <meta property="og:description" content="介绍 工具 v2ray，功能强大的请求转发工具（优秀的代理工具） cloudflare：一个不错的cdn白嫖网站，同时也能够用来做一些dns管理。">
+  <meta property="og:locale" content="zh-CN">
+  <meta property="og:type" content="article">
+  <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2020-01-15T15:27:31+00:00">
+    <meta property="article:modified_time" content="2020-01-15T15:27:31+00:00">
+    <meta property="article:tag" content="机场">
+    <meta property="article:tag" content="代理">
+    <meta property="og:image" content="https://blog.kenger.work/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blog.kenger.work/logo.png"><meta name="twitter:title" content="自建机场之websocket&#43;tls&#43;cloudflare">
+<meta name="twitter:description" content="介绍 工具 v2ray，功能强大的请求转发工具（优秀的代理工具） cloudflare：一个不错的cdn白嫖网站，同时也能够用来做一些dns管理。">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.kenger.work/%E8%87%AA%E5%BB%BA%E6%9C%BA%E5%9C%BA%E4%B9%8Bwebsocket-tls-cloudflare/" /><link rel="prev" href="https://blog.kenger.work/x-id-12262026838-type-pullrequestevent-actor-id-281359-login-bjornreppen-display_login-bj/" /><link rel="next" href="https://blog.kenger.work/%E9%95%BF%E8%BF%9E%E6%8E%A5%E4%B8%8E%E7%9F%AD%E8%BF%9E%E6%8E%A5/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "自建机场之websocket+tls+cloudflare",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.kenger.work\/%E8%87%AA%E5%BB%BA%E6%9C%BA%E5%9C%BA%E4%B9%8Bwebsocket-tls-cloudflare\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/blog.kenger.work\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "机场, 代理","wordcount":  1689 ,
+        "url": "https:\/\/blog.kenger.work\/%E8%87%AA%E5%BB%BA%E6%9C%BA%E5%9C%BA%E4%B9%8Bwebsocket-tls-cloudflare\/","datePublished": "2020-01-15T15:27:31+00:00","dateModified": "2020-01-15T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/blog.kenger.work\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/%E8%87%AA%E5%BB%BA%E6%9C%BA%E5%9C%BA%E4%B9%8Bwebsocket-tls-cloudflare/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/%E8%87%AA%E5%BB%BA%E6%9C%BA%E5%9C%BA%E4%B9%8Bwebsocket-tls-cloudflare/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">自建机场之websocket+tls+cloudflare</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.kenger.work/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E4%BB%A3%E7%90%86/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>代理</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2020-01-15">2020-01-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1689 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#工具">工具</a></li>
+    <li><a href="#思路">思路</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#先将域名的dns删除">先将域名的dns删除</a></li>
+    <li><a href="#更改域名的dns的ns值">更改域名的DNS的NS值</a></li>
+    <li><a href="#填入ns值">填入NS值</a></li>
+    <li><a href="#新增dns解析记录">新增DNS解析记录</a></li>
+    <li><a href="#关于cloudflare的cdn代理说明">关于cloudflare的CDN代理说明</a></li>
+    <li><a href="#设置ssl">设置SSL</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#工具-1">工具</a></li>
+    <li><a href="#v2ray">v2ray</a></li>
+    <li><a href="#宝塔nginx">宝塔nginx</a>
+      <ul>
+        <li><a href="#开启ssl">开启ssl</a></li>
+        <li><a href="#配置nginx">配置nginx</a></li>
+      </ul>
+    </li>
+    <li><a href="#搭建伪装网站">搭建伪装网站</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#clash配置">clash配置</a></li>
+    <li><a href="#v2ray填写">v2ray填写</a></li>
+    <li><a href="#完整nginx文件">完整nginx文件</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="介绍">介绍</h1>
+<h2 id="工具">工具</h2>
+<ul>
+<li>
+<p>v2ray，功能强大的请求转发工具（优秀的代理工具）</p>
+</li>
+<li>
+<p>cloudflare：一个不错的cdn白嫖网站，同时也能够用来做一些dns管理。关键是免费加强大</p>
+</li>
+<li>
+<p>racknerk：我的vps购买网站，一个垃圾vps，美国的</p>
+</li>
+</ul>
+<h2 id="思路">思路</h2>
+<p>想要翻越GFW，那么需要有一个境外的服务器，这个服务器能够代理我们的请求，从而访问国外的资源。此外，该服务器还要能够与国内相同，也就是说不在GFW黑名单内。</p>
+<h1 id="思路-1">思路</h1>
+<p>先去买一个域名。</p>
+<p>我是用的<strong>namesilo</strong>，一个全球知名的域名购买网站。</p>
+<h2 id="先将域名的dns删除">先将域名的dns删除</h2>
+<p>如图，我的域名是<code>kenger.top</code></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/631677d165f07cf277602467d7c9d208.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/631677d165f07cf277602467d7c9d208.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/631677d165f07cf277602467d7c9d208.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/631677d165f07cf277602467d7c9d208.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/631677d165f07cf277602467d7c9d208.png"
+        title="image-20230212001120974" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/148bef1878a96f0ad50f9c3146690689.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/148bef1878a96f0ad50f9c3146690689.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/148bef1878a96f0ad50f9c3146690689.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/148bef1878a96f0ad50f9c3146690689.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/148bef1878a96f0ad50f9c3146690689.png"
+        title="image-20230212001750936" /></p>
+<h2 id="更改域名的dns的ns值">更改域名的DNS的NS值</h2>
+<p>NS值，也就是指<strong>nameserver</strong>，域名解析服务器。即DNS服务</p>
+<p>进入cloudflare，新增站点</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/a67e5e4209da493b67ab68151cc79ff6.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/a67e5e4209da493b67ab68151cc79ff6.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/a67e5e4209da493b67ab68151cc79ff6.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/a67e5e4209da493b67ab68151cc79ff6.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/a67e5e4209da493b67ab68151cc79ff6.png"
+        title="image-20230212001827761" /></p>
+<p>可以看到上图出现了<strong>两个NS值</strong>。</p>
+<p>这个就是cloudflare提供给我们的免费dns服务。把这两个贴到namesilo的相应位置。</p>
+<h2 id="填入ns值">填入NS值</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/3d18f0fc84409391c6a5ae604be1857b.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/3d18f0fc84409391c6a5ae604be1857b.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/3d18f0fc84409391c6a5ae604be1857b.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/3d18f0fc84409391c6a5ae604be1857b.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/3d18f0fc84409391c6a5ae604be1857b.png"
+        title="image-20230212002056139" /></p>
+<p>然后提交<strong>submit</strong></p>
+<h2 id="新增dns解析记录">新增DNS解析记录</h2>
+<p>如图。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/eeceb42e0a3f979ef456d15556aec71e.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/eeceb42e0a3f979ef456d15556aec71e.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/eeceb42e0a3f979ef456d15556aec71e.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/eeceb42e0a3f979ef456d15556aec71e.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/eeceb42e0a3f979ef456d15556aec71e.png"
+        title="image-20230212002239985" /></p>
+<h2 id="关于cloudflare的cdn代理说明">关于cloudflare的CDN代理说明</h2>
+<p>CDN实际上就是再帮我们的服务器做一次反向代理。</p>
+<p>如图，当我们访问<code>v.kenger.top</code>时，实际上是先访问cloudflare的服务器，然后cloudflare去访问我们的目标服务器。<strong>优点是非常的安全</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/dae299b69528febbfd9ba822f2d7ae90.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/dae299b69528febbfd9ba822f2d7ae90.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/dae299b69528febbfd9ba822f2d7ae90.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/dae299b69528febbfd9ba822f2d7ae90.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/dae299b69528febbfd9ba822f2d7ae90.png"
+        title="image-20230212002331566" /></p>
+<h2 id="设置ssl">设置SSL</h2>
+<p>这里最好设置成这个，选择灵活的话，好像访问次数多了，会自动判定访问http。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/be5ea4f2f6b73a27e67c543062ab0085.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/be5ea4f2f6b73a27e67c543062ab0085.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/be5ea4f2f6b73a27e67c543062ab0085.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/be5ea4f2f6b73a27e67c543062ab0085.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/be5ea4f2f6b73a27e67c543062ab0085.png"
+        title="image-20230212002502214" /></p>
+<h1 id="v2raywebsockertls设置">v2ray+websocker+tls设置</h1>
+<h2 id="工具-1">工具</h2>
+<ul>
+<li>我用到了宝塔面板的nginx，从而实现tls</li>
+<li>v2ray里面设置了websocket。</li>
+<li>最好再加上一个网页，以假乱真，搞得像我们真的在访问一个网站。</li>
+</ul>
+<h2 id="v2ray">v2ray</h2>
+<p>我用的docker</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">  &#34;log&#34;: {
+</span></span><span class="line"><span class="cl">    &#34;loglevel&#34;: &#34;info&#34;
+</span></span><span class="line"><span class="cl">  },
+</span></span><span class="line"><span class="cl">  &#34;inbounds&#34;: [
+</span></span><span class="line"><span class="cl">    {
+</span></span><span class="line"><span class="cl">      &#34;listen&#34;: &#34;0.0.0.0&#34;,
+</span></span><span class="line"><span class="cl">      &#34;port&#34;: 52333,
+</span></span><span class="line"><span class="cl">      &#34;protocol&#34;: &#34;vmess&#34;,
+</span></span><span class="line"><span class="cl">      &#34;settings&#34;: {
+</span></span><span class="line"><span class="cl">        &#34;clients&#34;: [
+</span></span><span class="line"><span class="cl">          {
+</span></span><span class="line"><span class="cl">            &#34;id&#34;: &#34;8FF6627C-C247-44EB-A9AA-A7EAB8385D4A&#34;,
+</span></span><span class="line"><span class="cl">            &#34;alterId&#34;: 0,
+</span></span><span class="line"><span class="cl">            &#34;security&#34;: &#34;auto&#34;
+</span></span><span class="line"><span class="cl">          }
+</span></span><span class="line"><span class="cl">        ]
+</span></span><span class="line"><span class="cl">      },
+</span></span><span class="line"><span class="cl">      &#34;streamSettings&#34;: {     // 载体配置段，设置为websocket
+</span></span><span class="line"><span class="cl">      &#34;network&#34;: &#34;ws&#34;,
+</span></span><span class="line"><span class="cl">      &#34;wsSettings&#34;: {
+</span></span><span class="line"><span class="cl">        &#34;path&#34;: &#34;/vpath&#34;  // 与nginx中的路径保持一致
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">      
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">  ],
+</span></span><span class="line"><span class="cl">  &#34;outbounds&#34;: [
+</span></span><span class="line"><span class="cl">    {
+</span></span><span class="line"><span class="cl">      &#34;protocol&#34;: &#34;freedom&#34;,
+</span></span><span class="line"><span class="cl">      &#34;settings&#34;: {},
+</span></span><span class="line"><span class="cl">      &#34;tag&#34;: &#34;proxy&#34;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">  ]
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo docker run -it --name v2ray -v $PWD/v2ray/config.json:/etc/v2ray/config.json -p 52333:52333 v2fly/v2fly-core:v4.31.0 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="宝塔nginx">宝塔nginx</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/1f73b282a0a1d91092581e7c6f0f523a.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/1f73b282a0a1d91092581e7c6f0f523a.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/1f73b282a0a1d91092581e7c6f0f523a.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/1f73b282a0a1d91092581e7c6f0f523a.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/1f73b282a0a1d91092581e7c6f0f523a.png"
+        title="image-20230212002943126" /></p>
+<h3 id="开启ssl">开启ssl</h3>
+<p>用免费的就行</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/16bbf7acfcf511abea9dab049eb1666e.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/16bbf7acfcf511abea9dab049eb1666e.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/16bbf7acfcf511abea9dab049eb1666e.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/16bbf7acfcf511abea9dab049eb1666e.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/16bbf7acfcf511abea9dab049eb1666e.png"
+        title="image-20230212003148350" /></p>
+<h3 id="配置nginx">配置nginx</h3>
+<p>关键是这段</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  location /vpath {
+</span></span><span class="line"><span class="cl">      proxy_redirect off;
+</span></span><span class="line"><span class="cl">      proxy_pass http://127.0.0.1:52333;
+</span></span><span class="line"><span class="cl">      proxy_http_version 1.1;
+</span></span><span class="line"><span class="cl">      proxy_set_header Upgrade $http_upgrade;
+</span></span><span class="line"><span class="cl">      proxy_set_header Connection &#34;upgrade&#34;;
+</span></span><span class="line"><span class="cl">      proxy_set_header Host $host;
+</span></span><span class="line"><span class="cl">      # Show real IP in v2ray access.log
+</span></span><span class="line"><span class="cl">      proxy_set_header X-Real-IP $remote_addr;
+</span></span><span class="line"><span class="cl">      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/7827842c01801cb2a5de3931b9358eef.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/7827842c01801cb2a5de3931b9358eef.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/7827842c01801cb2a5de3931b9358eef.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/7827842c01801cb2a5de3931b9358eef.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/7827842c01801cb2a5de3931b9358eef.png"
+        title="image-20230212003053921" /></p>
+<h2 id="搭建伪装网站">搭建伪装网站</h2>
+<p>在<code>v.kenger.top</code>上搭建了代理后，还需要在该域名上做一个伪装的网站。不然空访问一个index页面也很假。</p>
+<p>就宝塔自带的nginx静态资源代理</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/75ef46423362d2abe08fc00f562fd960.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/75ef46423362d2abe08fc00f562fd960.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/75ef46423362d2abe08fc00f562fd960.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/75ef46423362d2abe08fc00f562fd960.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/75ef46423362d2abe08fc00f562fd960.png"
+        title="image-20230212183926877" /></p>
+<p><strong>将网站放入该文件夹下即可。</strong></p>
+<p>效果</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/fc32c1779c3ae6bace7fde7dd64e61b6.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/fc32c1779c3ae6bace7fde7dd64e61b6.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/fc32c1779c3ae6bace7fde7dd64e61b6.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/fc32c1779c3ae6bace7fde7dd64e61b6.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/fc32c1779c3ae6bace7fde7dd64e61b6.png"
+        title="image-20230212183956514" /></p>
+<h1 id="启动bbr加速内核">启动bbr加速内核</h1>
+<p><code>wget -N --no-check-certificate &quot;https://raw.githubusercontent.com/chiakge/Linux-NetSpeed/master/tcp.sh&quot; &amp;&amp; chmod +x tcp.sh &amp;&amp; ./tcp.sh</code></p>
+<ol>
+<li>先在[1 – 3]切换内核（第一次显示为bbr内核也要切换一遍），重启</li>
+</ol>
+<p>有部分系统会出现下面的选项，移动光标选择no</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/f7a1d604dfbcc7eceffa6a1fdd24235a.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/f7a1d604dfbcc7eceffa6a1fdd24235a.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/f7a1d604dfbcc7eceffa6a1fdd24235a.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/f7a1d604dfbcc7eceffa6a1fdd24235a.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/f7a1d604dfbcc7eceffa6a1fdd24235a.png"
+        title="img" /></p>
+<ol start="2">
+<li>重启后输入</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> ./tcp.sh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="一些不知道的问题">一些不知道的问题</h1>
+<ul>
+<li>不知道为什么，第一天搭建好后效果很差，又反复重新搭建了几次，突然又变还不错了。</li>
+<li>延迟可能会很高，但是带宽好像还能跑起来。有点时好时坏的感觉。感觉是这么一种情况，突然用这个节点的话，会很慢，但是如果使用了几分钟后，速度就还行了，至少油管2k可以了。</li>
+<li>可能我买的vps不行，虽然理论上有1gbps的带宽，但是和国内通信只能跑到很有限。反而在套上cloudflare后变快了。</li>
+</ul>
+<h1 id="ref">ref</h1>
+<p><a href="https://sh.tmioe.com/772.html" target="_blank" rel="noopener noreffer ">https://sh.tmioe.com/772.html</a></p>
+<p><a href="https://www.triadprogram.com/v2ray-build-by-yourself/" target="_blank" rel="noopener noreffer ">https://www.triadprogram.com/v2ray-build-by-yourself/</a></p>
+<p><a href="https://www.winhow.top/archives/14/#Joe-8" target="_blank" rel="noopener noreffer ">https://www.winhow.top/archives/14/#Joe-8</a></p>
+<h1 id="附录">附录</h1>
+<h2 id="clash配置">clash配置</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    - {name: my1, server: v.kenger.top, port: 443, type: vmess, uuid: 8FF6627C-C247-44EB-A9AA-A7EAB8385D4A, alterId: 0, cipher: auto, tls: true, network: ws, ws-opts: {path: vpath}}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>注意：clash延迟会很高，可能导致失败</strong></p>
+<h2 id="v2ray填写">v2ray填写</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/a55fc95b24d0dda05ce13eef52b43eba.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/a55fc95b24d0dda05ce13eef52b43eba.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/a55fc95b24d0dda05ce13eef52b43eba.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/a55fc95b24d0dda05ce13eef52b43eba.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cf57b2981859559f5ce35c14818242a9/a55fc95b24d0dda05ce13eef52b43eba.png"
+        title="2802654365" /></p>
+<h2 id="完整nginx文件">完整nginx文件</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">server
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    listen 80;
+</span></span><span class="line"><span class="cl">		listen 443 ssl http2;
+</span></span><span class="line"><span class="cl">    server_name v.kenger.top;
+</span></span><span class="line"><span class="cl">    index index.php index.html index.htm default.php default.htm default.html;
+</span></span><span class="line"><span class="cl">    root /www/wwwroot/v.kenger.top;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    #SSL-START SSL相关配置，请勿删除或修改下一行带注释的404规则
+</span></span><span class="line"><span class="cl">    #error_page 404/404.html;
+</span></span><span class="line"><span class="cl">    #HTTP_TO_HTTPS_START
+</span></span><span class="line"><span class="cl">    if ($server_port !~ 443){
+</span></span><span class="line"><span class="cl">        rewrite ^(/.*)$ https://$host$1 permanent;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    #HTTP_TO_HTTPS_END
+</span></span><span class="line"><span class="cl">    ssl_certificate    /www/server/panel/vhost/cert/v.kenger.top/fullchain.pem;
+</span></span><span class="line"><span class="cl">    ssl_certificate_key    /www/server/panel/vhost/cert/v.kenger.top/privkey.pem;
+</span></span><span class="line"><span class="cl">    ssl_protocols TLSv1.1 TLSv1.2 TLSv1.3;
+</span></span><span class="line"><span class="cl">    ssl_ciphers EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5;
+</span></span><span class="line"><span class="cl">    ssl_prefer_server_ciphers on;
+</span></span><span class="line"><span class="cl">    ssl_session_cache shared:SSL:10m;
+</span></span><span class="line"><span class="cl">    ssl_session_timeout 10m;
+</span></span><span class="line"><span class="cl">    add_header Strict-Transport-Security &#34;max-age=31536000&#34;;
+</span></span><span class="line"><span class="cl">    error_page 497  https://$host$request_uri;
+</span></span><span class="line"><span class="cl">		#SSL-END
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    #ERROR-PAGE-START  错误页配置，可以注释、删除或修改
+</span></span><span class="line"><span class="cl">    #error_page 404 /404.html;
+</span></span><span class="line"><span class="cl">    #error_page 502 /502.html;
+</span></span><span class="line"><span class="cl">    #ERROR-PAGE-END
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    #PHP-INFO-START  PHP引用配置，可以注释或修改
+</span></span><span class="line"><span class="cl">    include enable-php-00.conf;
+</span></span><span class="line"><span class="cl">    #PHP-INFO-END
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    #REWRITE-START URL重写规则引用,修改后将导致面板设置的伪静态规则失效
+</span></span><span class="line"><span class="cl">    include /www/server/panel/vhost/rewrite/v.kenger.top.conf;
+</span></span><span class="line"><span class="cl">    #REWRITE-END
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    #禁止访问的文件或目录
+</span></span><span class="line"><span class="cl">    location ~ ^/(\.user.ini|\.htaccess|\.git|\.env|\.svn|\.project|LICENSE|README.md)
+</span></span><span class="line"><span class="cl">    {
+</span></span><span class="line"><span class="cl">        return 404;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    #一键申请SSL证书验证目录相关设置
+</span></span><span class="line"><span class="cl">    location ~ \.well-known{
+</span></span><span class="line"><span class="cl">        allow all;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    #禁止在证书验证目录放入敏感文件
+</span></span><span class="line"><span class="cl">    if ( $uri ~ &#34;^/\.well-known/.*\.(php|jsp|py|js|css|lua|ts|go|zip|tar\.gz|rar|7z|sql|bak)$&#34; ) {
+</span></span><span class="line"><span class="cl">        return 403;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$
+</span></span><span class="line"><span class="cl">    {
+</span></span><span class="line"><span class="cl">        expires      30d;
+</span></span><span class="line"><span class="cl">        error_log /dev/null;
+</span></span><span class="line"><span class="cl">        access_log /dev/null;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    location ~ .*\.(js|css)?$
+</span></span><span class="line"><span class="cl">    {
+</span></span><span class="line"><span class="cl">        expires      12h;
+</span></span><span class="line"><span class="cl">        error_log /dev/null;
+</span></span><span class="line"><span class="cl">        access_log /dev/null;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    access_log  /www/wwwlogs/v.kenger.top.log;
+</span></span><span class="line"><span class="cl">    error_log  /www/wwwlogs/v.kenger.top.error.log;
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">  location /vpath {
+</span></span><span class="line"><span class="cl">      proxy_redirect off;
+</span></span><span class="line"><span class="cl">      proxy_pass http://127.0.0.1:52333;
+</span></span><span class="line"><span class="cl">      proxy_http_version 1.1;
+</span></span><span class="line"><span class="cl">      proxy_set_header Upgrade $http_upgrade;
+</span></span><span class="line"><span class="cl">      proxy_set_header Connection &#34;upgrade&#34;;
+</span></span><span class="line"><span class="cl">      proxy_set_header Host $host;
+</span></span><span class="line"><span class="cl">      # Show real IP in v2ray access.log
+</span></span><span class="line"><span class="cl">      proxy_set_header X-Real-IP $remote_addr;
+</span></span><span class="line"><span class="cl">      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-01-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E8%87%AA%E5%BB%BA%E6%9C%BA%E5%9C%BA%E4%B9%8Bwebsocket-tls-cloudflare/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.kenger.work/%E8%87%AA%E5%BB%BA%E6%9C%BA%E5%9C%BA%E4%B9%8Bwebsocket-tls-cloudflare/" data-title="自建机场之websocket&#43;tls&#43;cloudflare" data-hashtags="机场,代理"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.kenger.work/%E8%87%AA%E5%BB%BA%E6%9C%BA%E5%9C%BA%E4%B9%8Bwebsocket-tls-cloudflare/" data-hashtag="机场"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.kenger.work/%E8%87%AA%E5%BB%BA%E6%9C%BA%E5%9C%BA%E4%B9%8Bwebsocket-tls-cloudflare/" data-title="自建机场之websocket&#43;tls&#43;cloudflare"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.kenger.work/%E8%87%AA%E5%BB%BA%E6%9C%BA%E5%9C%BA%E4%B9%8Bwebsocket-tls-cloudflare/" data-title="自建机场之websocket&#43;tls&#43;cloudflare"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.kenger.work/%E8%87%AA%E5%BB%BA%E6%9C%BA%E5%9C%BA%E4%B9%8Bwebsocket-tls-cloudflare/" data-title="自建机场之websocket&#43;tls&#43;cloudflare"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E6%9C%BA%E5%9C%BA/">机场</a>,&nbsp;<a href="/tags/%E4%BB%A3%E7%90%86/">代理</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/x-id-12262026838-type-pullrequestevent-actor-id-281359-login-bjornreppen-display_login-bj/" class="prev" rel="prev" title=""><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i></a>
+            <a href="/%E9%95%BF%E8%BF%9E%E6%8E%A5%E4%B8%8E%E7%9F%AD%E8%BF%9E%E6%8E%A5/" class="next" rel="next" title="长连接与短连接">长连接与短连接<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.125.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.kenger.work/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Dhcp - 标签 - Kenger`s Blog</title>
+        <link>https://blog.kenger.work/tags/dhcp/</link>
+        <description>Dhcp - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 09 Sep 2023 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://blog.kenger.work/tags/dhcp/" rel="self" type="application/rss+xml" /><item>
+    <title>openwrt的dhcp绑定与设置详解</title>
+    <link>https://blog.kenger.work/openwrt%E7%9A%84dhcp%E7%BB%91%E5%AE%9A%E4%B8%8E%E8%AE%BE%E7%BD%AE%E8%AF%A6%E8%A7%A3/</link>
+    <pubDate>Sat, 09 Sep 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/openwrt%E7%9A%84dhcp%E7%BB%91%E5%AE%9A%E4%B8%8E%E8%AE%BE%E7%BD%AE%E8%AF%A6%E8%A7%A3/</guid>
+    <description><![CDATA[背景 计划将openwrt作为主路由，然后通过dhcp绑定来绑定ip与mac地址。 方法 我这里使用的esir的高大全固件 设置 客户端刷新 1 2 3 4 5]]></description>
+</item>
+</channel>
+</rss>

@@ -1,0 +1,88 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>学术 - 分类 - Kenger`s Blog</title>
+        <link>https://blog.kenger.work/categories/%E5%AD%A6%E6%9C%AF/</link>
+        <description>学术 - 分类 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 29 May 2023 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://blog.kenger.work/categories/%E5%AD%A6%E6%9C%AF/" rel="self" type="application/rss+xml" /><item>
+    <title>4090&#43;esxi&#43;ubuntu虚拟环境安装</title>
+    <link>https://blog.kenger.work/4090-esxi-ubuntu%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85/</link>
+    <pubDate>Mon, 29 May 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/4090-esxi-ubuntu%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85/</guid>
+    <description><![CDATA[添加PCIE设备 直接all in NVIDIA驱动 参考相关博客，要注意一些虚拟机的参数添加问题。 官网链接 去官网下载驱动 wget https://us.download.nvidia.com/XFree86/Linux-x86_64/525.116.04/NVIDIA-Linux-x86_64-525.116.04.run 下载run文件后，先别着]]></description>
+</item>
+<item>
+    <title>docker实践自部署Overleaf</title>
+    <link>https://blog.kenger.work/docker%E5%AE%9E%E8%B7%B5%E8%87%AA%E9%83%A8%E7%BD%B2overleaf/</link>
+    <pubDate>Wed, 19 Apr 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/docker%E5%AE%9E%E8%B7%B5%E8%87%AA%E9%83%A8%E7%BD%B2overleaf/</guid>
+    <description><![CDATA[安装overleaf的社区版 github 链接 上面是github的链接，访问然后里面有个docker compose.yml文件。 集成了overleaf，]]></description>
+</item>
+<item>
+    <title>latex第一次实践</title>
+    <link>https://blog.kenger.work/latex%E5%AE%9E%E8%B7%B5/</link>
+    <pubDate>Sat, 15 Apr 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/latex%E5%AE%9E%E8%B7%B5/</guid>
+    <description><![CDATA[latex 会议常用模板 单列模板 sample-acmsmall 顾名思义，就是单栏的模板。 双列模板 sample-sigconf 就是双栏的模板，这是大多数时候都适用的模板。下面也是以这个展开 关于CFF 会议论文]]></description>
+</item>
+<item>
+    <title>关于cpu与gpu的不同阶段使用以及变量的存放</title>
+    <link>https://blog.kenger.work/%E5%85%B3%E4%BA%8Ecpu%E4%B8%8Egpu%E7%9A%84%E4%B8%8D%E5%90%8C%E9%98%B6%E6%AE%B5%E4%BD%BF%E7%94%A8/</link>
+    <pubDate>Mon, 13 Mar 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/%E5%85%B3%E4%BA%8Ecpu%E4%B8%8Egpu%E7%9A%84%E4%B8%8D%E5%90%8C%E9%98%B6%E6%AE%B5%E4%BD%BF%E7%94%A8/</guid>
+    <description><![CDATA[描述 最近在自己编写一个深度学习代码的时候想到了一些问题。由此有了一些思考。 情况： 我把数据分为了训练集，验证集，测试集 由于gpu不够大，而训练]]></description>
+</item>
+<item>
+    <title>cuda环境的配置</title>
+    <link>https://blog.kenger.work/dl%E7%8E%AF%E5%A2%83cuda/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/dl%E7%8E%AF%E5%A2%83cuda/</guid>
+    <description><![CDATA[cuda环境的配置 分为不同的系统，把环境变量的搞好就行 cuda版本可以向下兼容 比如我的cuda是11.0. 如果我安装需要cuda11.1的库]]></description>
+</item>
+<item>
+    <title>echarts 网络图的绘制</title>
+    <link>https://blog.kenger.work/echarts-%E7%BD%91%E7%BB%9C%E5%9B%BE%E7%9A%84%E7%BB%98%E5%88%B6/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/echarts-%E7%BD%91%E7%BB%9C%E5%9B%BE%E7%9A%84%E7%BB%98%E5%88%B6/</guid>
+    <description><![CDATA[echarts 网络图的绘制 文档与相关资源 官方的文档 官方样例网站 不错的教程 数据 基本demo 代码,这里是指输入到jupyter中的输出框中 1 2 3 4 5 6 7 8 9]]></description>
+</item>
+<item>
+    <title>jupyter 的js控制使用摸索</title>
+    <link>https://blog.kenger.work/jupyter-%E7%9A%84js%E6%8E%A7%E5%88%B6%E4%BD%BF%E7%94%A8%E6%91%B8%E7%B4%A2/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/jupyter-%E7%9A%84js%E6%8E%A7%E5%88%B6%E4%BD%BF%E7%94%A8%E6%91%B8%E7%B4%A2/</guid>
+    <description><![CDATA[jupyter 为了方便在js里面实现一些例如goto之类的功能。 比如我调参的时候，需要返回到某一行更改参数后重新开始往下执行。 众所周知，python是不]]></description>
+</item>
+<item>
+    <title>neo4j知识图谱环境搭建</title>
+    <link>https://blog.kenger.work/neo4j%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/neo4j%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</guid>
+    <description><![CDATA[neo4j图数据库 这是一个知识图谱搭建并可视化的优秀平台 前置&mdash;&mdash;-java环境安装 不同的neo4j版本对应不同的ja]]></description>
+</item>
+<item>
+    <title>pytorch调参经验汇总</title>
+    <link>https://blog.kenger.work/pytorch%E8%B0%83%E5%8F%82%E7%BB%8F%E9%AA%8C%E6%B1%87%E6%80%BB/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/pytorch%E8%B0%83%E5%8F%82%E7%BB%8F%E9%AA%8C%E6%B1%87%E6%80%BB/</guid>
+    <description><![CDATA[关于train loss 降低不下去 第一步简单的：更换各种参数 例如，lr, weight_decay, batch, loss_fun, optim_fun 看看会不会有有效果的。 学习率非常重要的参数 1 神经网络的优化器选取一般]]></description>
+</item>
+<item>
+    <title>表格数据处理pandas与numpy</title>
+    <link>https://blog.kenger.work/%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86pandas%E4%B8%8Enumpy/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86pandas%E4%B8%8Enumpy/</guid>
+    <description><![CDATA[pandas 行列 1 2 3 4 5 # 获取某一列 data[&#39;key&#39;] # 获取多列 data[[&#39;key1&#39;, &#39;key2&#39;]] 数据条件筛选 通过[]进行基本的行筛选 1 2 3 4 5 # 筛选出key属性等于1的所有行，也可以用&gt;]]></description>
+</item>
+</channel>
+</rss>

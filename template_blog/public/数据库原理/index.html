@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>数据库原理 - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://blog.kenger.work/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="数据库原理">
+  <meta property="og:description" content="事务 事务指的是满足 ACID 特性的一组操作，可以通过 Commit 提交一个事务，也可以使用 Rollback 进行回滚。 ACID 1. 原子性（Atomicity） 事务被视为不可分割的最小单">
+  <meta property="og:locale" content="zh-CN">
+  <meta property="og:type" content="article">
+  <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-03-12T15:27:31+00:00">
+    <meta property="article:modified_time" content="2024-03-12T15:27:31+00:00">
+    <meta property="article:tag" content="数据库">
+    <meta property="og:image" content="https://blog.kenger.work/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blog.kenger.work/logo.png"><meta name="twitter:title" content="数据库原理">
+<meta name="twitter:description" content="事务 事务指的是满足 ACID 特性的一组操作，可以通过 Commit 提交一个事务，也可以使用 Rollback 进行回滚。 ACID 1. 原子性（Atomicity） 事务被视为不可分割的最小单">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.kenger.work/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/" /><link rel="prev" href="https://blog.kenger.work/win%E4%B8%8A%E4%BD%BF%E7%94%A8mklink%E5%88%9B%E5%BB%BA%E8%BD%AF%E8%BF%9E%E6%8E%A5%E5%AE%9E%E7%8E%B0%E8%B7%A8%E7%9B%98%E5%85%B1%E4%BA%AB/" /><link rel="next" href="https://blog.kenger.work/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "数据库原理",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.kenger.work\/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/blog.kenger.work\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "数据库","wordcount":  12321 ,
+        "url": "https:\/\/blog.kenger.work\/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86\/","datePublished": "2024-03-12T15:27:31+00:00","dateModified": "2024-03-12T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/blog.kenger.work\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据库原理</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.kenger.work/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/find-job/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Find JOB</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-03-12">2024-03-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 12321 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 25 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#事务">事务</a>
+      <ul>
+        <li><a href="#acid">ACID</a>
+          <ul>
+            <li><a href="#1-原子性atomicity">1. 原子性（Atomicity）</a></li>
+            <li><a href="#2-一致性consistency事务前后一直">2. 一致性（Consistency）（事务前后一直）</a></li>
+            <li><a href="#3-隔离性isolation事务之间隔离">3. 隔离性（Isolation）（事务之间隔离）</a></li>
+            <li><a href="#4-持久性durability">4. 持久性（Durability）</a></li>
+            <li><a href="#mysql事务一致性原子性是如何实现的">MySQL事务一致性，原子性是如何实现的？</a></li>
+            <li><a href="#事务的持久性是如何实现的">事务的持久性是如何实现的？</a></li>
+          </ul>
+        </li>
+        <li><a href="#并发一致性问题丢脏不换">并发一致性问题（丢脏不换）</a>
+          <ul>
+            <li><a href="#丢失修改同时修改被覆盖">丢失修改（同时修改被覆盖）</a></li>
+            <li><a href="#读脏数据读一次读到了一个失败的write的脏数据">读脏数据（读一次读到了一个失败的write的脏数据）</a></li>
+            <li><a href="#不可重复读多次读读到了一个成功的write的前后两次数据">不可重复读（多次读，读到了一个成功的write的前后两次数据）</a></li>
+            <li><a href="#幻影读针对的集合等类型属性变化的不可重复读">幻影读（针对的集合等类型（属性变化）的不可重复读）</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#锁">锁</a>
+      <ul>
+        <li><a href="#粒度">粒度</a></li>
+        <li><a href="#行级锁的类型主要有三四类">行级锁的类型主要有三（四）类：</a>
+          <ul>
+            <li><a href="#间隙锁">间隙锁</a></li>
+            <li><a href="#next-key-lock">Next-Key Lock</a></li>
+            <li><a href="#插入意向锁">插入意向锁</a></li>
+          </ul>
+        </li>
+        <li><a href="#封锁类型">封锁类型</a>
+          <ul>
+            <li><a href="#读写锁">读写锁</a></li>
+            <li><a href="#意向锁">意向锁</a></li>
+            <li><a href="#乐观锁与悲观锁">乐观锁与悲观锁</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#mysql是怎么加锁的">Mysql是怎么加锁的</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#不走索引导致全表上锁">不走索引导致全表上锁</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#事务隔离级别两提两可">事务隔离级别(两提两可)</a></li>
+    <li><a href="#innodb数据行结构">innodb数据行结构</a></li>
+    <li><a href="#多版本并发控制-mvcc">多版本并发控制 (MVCC)</a>
+      <ul>
+        <li><a href="#不同隔离级别怎么实现的">不同隔离级别怎么实现的。</a>
+          <ul>
+            <li><a href="#可重复读是如何工作的">可重复读是如何工作的？</a></li>
+            <li><a href="#读提交是如何工作的">读提交是如何工作的？</a></li>
+          </ul>
+        </li>
+        <li><a href="#快照读与当前读"><strong>快照读与当前读</strong></a></li>
+        <li><a href="#当前读和快照读分别是什么如何解决幻读">当前读和快照读分别是什么？如何解决幻读</a></li>
+        <li><a href="#mvcc原理">MVCC原理</a></li>
+      </ul>
+    </li>
+    <li><a href="#update-如果没加索引会锁全表">update 如果没加索引会锁全表</a></li>
+    <li><a href="#mysql死锁怎么办">mysql死锁怎么办</a></li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#函数依赖">函数依赖</a></li>
+        <li><a href="#范式">范式</a>
+          <ul>
+            <li>
+              <ul>
+                <li><a href="#第一范式-1nf">第一范式 (1NF)</a></li>
+                <li><a href="#第二范式-2nf">第二范式 (2NF)</a></li>
+                <li><a href="#第三范式-3nf--消除传递依赖-">第三范式 (3NF)** <strong>[ 消除传递依赖 ]</strong>**</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#索引工作原理">索引工作原理</a></li>
+    <li><a href="#索引递增原理">索引递增原理</a></li>
+    <li><a href="#一张表最多创建多少索引">一张表最多创建多少索引？</a></li>
+    <li><a href="#字段类型">字段类型</a></li>
+    <li><a href="#mysql-基础架构">MySQL 基础架构</a></li>
+    <li><a href="#mysql引擎">Mysql引擎</a></li>
+    <li><a href="#myisam-和-innodb-有什么区别">MyISAM 和 InnoDB 有什么区别？</a></li>
+    <li><a href="#能否单独为一张表设置存储引擎">能否单独为一张表设置存储引擎？</a></li>
+    <li><a href="#mysql-的隔离级别是基于锁实现的吗">MySQL 的隔离级别是基于锁实现的吗？</a></li>
+    <li><a href="#mysql-的默认隔离级别是什么">MySQL 的默认隔离级别是什么?</a></li>
+    <li><a href="#能用-mysql-直接存储文件比如图片吗">能用 MySQL 直接存储文件（比如图片）吗？</a></li>
+    <li><a href="#mysql-如何存储-ip-地址">MySQL 如何存储 IP 地址？</a></li>
+    <li><a href="#msyql缓存查询原理">msyql缓存查询原理</a></li>
+    <li><a href="#优化器">优化器</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#读写分离">读写分离</a></li>
+    <li><a href="#分库分表">分库分表</a>
+      <ul>
+        <li><a href="#如何对数据水平切分">如何对数据水平切分</a></li>
+        <li><a href="#分库分表会带来什么问题呢">分库分表会带来什么问题呢？</a></li>
+      </ul>
+    </li>
+    <li><a href="#mysql死锁问题">Mysql死锁问题</a>
+      <ul>
+        <li><a href="#mysql死锁的原因和处理方法">MySQL死锁的原因和处理方法</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#bin-log作用是什么">bin log作用是什么？</a></li>
+        <li><a href="#redo-log作用是什么">redo log作用是什么？</a></li>
+        <li><a href="#undo-log作用是什么">undo log作用是什么？</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#sql注入问题">sql注入问题</a></li>
+    <li><a href="#如何防止sql注入">如何防止SQL注入</a></li>
+    <li><a href="#sql-和-nosql-有什么区别">SQL 和 NoSQL 有什么区别</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="事务">事务</h2>
+<p>事务指的是<strong>满足 ACID 特性的一组操作</strong>，可以通过 Commit 提交一个事务，也可以使用 Rollback 进行回滚。</p>
+<h3 id="acid">ACID</h3>
+<h4 id="1-原子性atomicity">1. 原子性（Atomicity）</h4>
+<p>事务被视为不可分割的最小单元，<strong>事务的所有操作要么全部提交成功，要么全部失败回滚。</strong></p>
+<p>回滚可以用回滚日志（Undo Log）来实现，回滚日志记录着事务所执行的修改操作，在回滚时反向执行这些修改操作即可。</p>
+<h4 id="2-一致性consistency事务前后一直">2. 一致性（Consistency）（事务前后一直）</h4>
+<p><strong>数据库在事务执行前后都保持一致性状态</strong>。在一致性状态下，所有事务对同一个数据的读取结果都是相同的。</p>
+<p><strong>一个有意思的说法</strong>：AID都是手段，C是目的。再结合上这个回答言简意赅的表达。一致性究竟是什么就很清晰了，一致性是指：数据库状态与真实业务状态相一致。为了达成一致性，需要在事务中保证原子性、隔离性和持久性</p>
+<p>分布式理论CAP理想的一致性模型是：当一条更新出现时，所有的观察者都能“看到”这个更新。</p>
+<h4 id="3-隔离性isolation事务之间隔离">3. 隔离性（Isolation）（事务之间隔离）</h4>
+<p><strong>一个事务所做的修改在最终提交以前，对其它事务是不可见的。</strong></p>
+<h4 id="4-持久性durability">4. 持久性（Durability）</h4>
+<p>**一旦事务提交，则其所做的修改将会永远保存到数据库中。**即使系统发生崩溃，事务执行的结果也不能丢失。</p>
+<h4 id="mysql事务一致性原子性是如何实现的">MySQL事务一致性，原子性是如何实现的？</h4>
+<blockquote>
+<p>首先是通过锁和mvcc实现了执行过程中的一致性和原子性</p>
+</blockquote>
+<h4 id="事务的持久性是如何实现的">事务的持久性是如何实现的？</h4>
+<blockquote>
+<p>使用Redo log保证了事务的持久性。当事务提交时，必须先将事务的所有日志写入日志文件进行持久化</p>
+</blockquote>
+<h3 id="并发一致性问题丢脏不换">并发一致性问题（丢脏不换）</h3>
+<h4 id="丢失修改同时修改被覆盖">丢失修改（同时修改被覆盖）</h4>
+<p>指一个事务的更新操作被另一个事务的更新操作替换。常见情况是一个事务先提交，然后另一个事务覆盖了它的修改。</p>
+<h4 id="读脏数据读一次读到了一个失败的write的脏数据">读脏数据（读一次读到了一个失败的write的脏数据）</h4>
+<p>在不同的事务下，当前事务可以读取到另一个事务未提交的数据，导致读取到的数据不准确。</p>
+<h4 id="不可重复读多次读读到了一个成功的write的前后两次数据">不可重复读（多次读，读到了一个成功的write的前后两次数据）</h4>
+<p><strong>在一个事务内多次读取同一数据集合</strong>，但在事务结束前，另一个事务修改了数据，导致多次读取结果不一致。</p>
+<h4 id="幻影读针对的集合等类型属性变化的不可重复读">幻影读（针对的集合等类型（属性变化）的不可重复读）</h4>
+<p>类似于不可重复读，但是是针对数据集合范围的操作。一个事务读取某个范围的数据，另一个事务在该范围内插入新数据，导致第一次和第二次读取结果不同。</p>
+<p>并发不一致性问题的主要原因是事务隔离性的破坏，解决方法包括通过并发控制和事务隔离级别来保证数据的一致性。</p>
+<h2 id="锁">锁</h2>
+<p>详见： <a href="https://www.xiaolincoding.com/mysql/lock/mysql_lock.html#%E5%85%83%E6%95%B0%E6%8D%AE%E9%94%81" target="_blank" rel="noopener noreffer ">MySQL 有哪些锁？ | 小林coding</a></p>
+<p><strong>分类</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/318ef29e551ab1f18d7fa474e9653dce.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/318ef29e551ab1f18d7fa474e9653dce.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/318ef29e551ab1f18d7fa474e9653dce.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/318ef29e551ab1f18d7fa474e9653dce.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/318ef29e551ab1f18d7fa474e9653dce.png"
+        title="img" /></p>
+<h3 id="粒度">粒度</h3>
+<p>MySQL 中提供了两种封锁粒度：<strong>行级锁以及表级锁，页面锁</strong>。</p>
+<p><code>表级锁</code>： 开销小， 加锁快； 不会出现死锁； 锁定粒度大， 发生锁冲突的概率最高， 并发度最低。</p>
+<p><code>行级锁</code>： 开销大， 加锁慢； 会出现死锁； 锁定粒度最小， 发生锁冲突的概率最低， 并发度也最高。</p>
+<p><code>页面锁</code>： 开销和加锁时间界于表锁和行锁之间； 会出现死锁； 锁定粒度界于表锁和行锁之间， 并发度一般。</p>
+<p>应该尽量只锁定需要修改的那部分数据，而不是所有的资源。<strong>锁定的数据量越少，发生锁争用的可能就越小，系统的并发程度就越高。</strong></p>
+<h3 id="行级锁的类型主要有三四类">行级锁的类型主要有三（四）类：</h3>
+<ul>
+<li><strong>Record Lock，记录锁，也就是仅仅把一条记录锁上；（无法对记录进行修改）</strong></li>
+<li><strong>Gap Lock，间隙锁，锁定一个范围，但是不包含记录本身；（记录之间不可以加入）</strong></li>
+<li><strong>Next-Key Lock：Record Lock + Gap Lock 的组合，锁定一个范围，并且锁定记录本身。（前面两个会和）</strong></li>
+<li><strong>插入意向锁</strong>：一<strong>个事务在插入一条记录的时候，需要判断插入位置是否已被其他事务加了间隙锁（next-key lock 也包含间隙锁</strong>）。（插入意向锁名字虽然有意向锁，但是它并<strong>不是意向锁，它是一种特殊的间隙锁，属于行级别锁</strong>。）</li>
+</ul>
+<p><strong>注意</strong>：<strong>Next-Key Lock 是 Record Lock 和 Gap Lock 的组合，它既锁定了索引记录本身，也锁定了索引记录之间的间隙，这样可以有效地防止幻读等并发问题的发生。</strong>(也就是说，这些锁是针对索引进行了锁。 InnoDB 存储引擎的行级锁是通过索引来实现的)</p>
+<h4 id="间隙锁">间隙锁</h4>
+<p>Gap Lock 称为间隙锁，只存在于可重复读隔离级别，目的是为了解决可重复读隔离级别下幻读的现象。</p>
+<p>假设，表中有一个范围 id 为（3，5）间隙锁，那么其他事务就无法插入 id = 4 这条记录了，这样就有效的防止幻读现象的发生。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/caa9c66a49591e5ca7a3c05dd1a5e5e6.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/caa9c66a49591e5ca7a3c05dd1a5e5e6.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/caa9c66a49591e5ca7a3c05dd1a5e5e6.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/caa9c66a49591e5ca7a3c05dd1a5e5e6.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/caa9c66a49591e5ca7a3c05dd1a5e5e6.png"
+        title="img" /></p>
+<p>间隙锁虽然存在 X 型间隙锁和 S 型间隙锁，但是并没有什么区别，<strong>间隙锁之间是兼容的，即两个事务可以同时持有包含共同间隙范围的间隙锁，并不存在互斥关系，因为间隙锁的目的是防止插入幻影记录而提出的</strong>。</p>
+<h4 id="next-key-lock">Next-Key Lock</h4>
+<p><strong>可以有多个事务同时对某个范围上next key锁</strong></p>
+<p>因为：间隙锁（Gap Lock）不是独占锁，它是一种特殊的锁类型，用于在数据库中保护索引范围而不是具体的数据行。<strong>而间隙锁与间隙锁之间是兼容的，所以所以两个事务中 <code>select ... for update</code> 语句并不会相互影响</strong></p>
+<p>Next-Key Lock 称为临键锁，是 Record Lock + Gap Lock 的组合，锁定一个范围，并且锁定记录本身。</p>
+<p>假设，表中有一个范围 id 为（3，5] 的 next-key lock，那么其他事务即不能插入 id = 4 记录，也不能修改 id = 5 这条记录。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/d272229d643696dd3027b4b761cfe39c.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/d272229d643696dd3027b4b761cfe39c.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/d272229d643696dd3027b4b761cfe39c.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/d272229d643696dd3027b4b761cfe39c.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/d272229d643696dd3027b4b761cfe39c.png"
+        title="img" /></p>
+<p>所以，next-key lock 即能保护该记录，又能阻止其他事务将新纪录插入到被保护记录前面的间隙中。</p>
+<h4 id="插入意向锁">插入意向锁</h4>
+<p>一个事务在插入一条记录的时候，<strong>需要判断插入位置是否已被其他事务加了间隙锁（next-key lock 也包含间隙锁）。</strong></p>
+<p>如果有的话，插入操作就会发生<strong>阻塞</strong>，直到拥有间隙锁的那个事务提交为止（释放间隙锁的时刻），在此期间会生成一个<strong>插入意向锁</strong>，表明有事务想在某个区间插入新记录，但是现在处于等待状态。</p>
+<p>那么「插入意向锁」<strong>锁住的就是一个点（不是一个间隙范围）</strong>。因而从这个角度来说，插入意向锁确实是一种特殊的间隙锁。</p>
+<h3 id="封锁类型">封锁类型</h3>
+<h4 id="读写锁">读写锁</h4>
+<ul>
+<li>X 锁（Exclusive互斥锁）：又称写锁，一个事务对数据对象 A 加了 X 锁，就可以对 A 进行读取和更新。加锁期间其它事务不能对 A 加任何锁。，<strong>期间其他事务不能对该数据对象加锁（其他事务不可读写）。</strong></li>
+<li>S 锁（Shared共享锁）：又称读锁，一个事务对数据对象 A 加了 S 锁，可以对 A 进行读取操作，但是不能进行更新操作。加锁期间其它事务能对 A 加 S 锁，但是不能加 X 锁，<strong>允许对数据对象进行读取操作，但不允许更新操作</strong>，<strong>期间其他事务可以对该数据对象加 S 锁，但不能加 X 锁。</strong></li>
+</ul>
+<p>因此，<strong>读写锁可以做到读读并行，但是无法做到写读、写写并行。</strong></p>
+<h4 id="意向锁">意向锁</h4>
+<p><strong>（需要强调一下，意向锁是一种<code>不与行级锁冲突表级锁</code>，这一点非常重要。意向锁分为两种：）</strong></p>
+<p>我们先来看一下百度百科上对意向锁存在意义的描述：</p>
+<blockquote>
+<p><strong>如果另一个任务试图在该表级别上应用共享或排它锁，则受到由第一个任务控制的表级别意向锁的阻塞。第二个任务在锁定该表前不必检查各个页或行锁，而只需检查表上的意向锁。</strong></p>
+<p>比如某个表里面已经有行共享锁了，当前想要给该表加入独占锁（这俩锁互斥），那么不需要一行行的扫描，只需要判断意向锁就行。</p>
+<p>需要知道意向锁之间的兼容互斥性：即<strong>意向锁之间是互相兼容的</strong>。<strong>意向锁不会与行级的共享 / 排他锁互斥！！！</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>意向共享锁（IS）</th>
+<th>意向排他锁（IX）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>意向共享锁（IS）</strong></td>
+<td>兼容</td>
+<td>兼容</td>
+</tr>
+<tr>
+<td><strong>意向排他锁（IX）</strong></td>
+<td>兼容</td>
+<td>兼容</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<p>意向锁（Intention Locks）支持多粒度封锁，引入了 IX/IS 锁。</p>
+<ul>
+<li>IS 锁：表示事务想要在表中的<strong>某个数据行上</strong>加 S 锁。</li>
+<li>IX 锁：表示事务想要在表中的某个数据行上加 X 锁。</li>
+</ul>
+<p>意向锁的引入简化了对表级封锁的管理，使得事务能够更高效地加锁。</p>
+<h4 id="乐观锁与悲观锁">乐观锁与悲观锁</h4>
+<ul>
+<li><strong>悲观锁</strong>：认为数据在并发环境下会发生冲突，因此在读取数据时会先加锁，确保其他事务无法修改数据，直到当前事务完成操作。</li>
+<li><strong>乐观锁</strong>：认为数据在大多数情况下不会发生冲突，所以在操作数据时不加锁，而是在更新数据时检查是否有其他事务对数据进行了修改，若无修改则更新成功，否则进行相应的处理。</li>
+</ul>
+<h2 id="mysql是怎么加锁的">Mysql是怎么加锁的</h2>
+<p>唯一索引等值查询（<strong>next-key怎么退化的</strong>）：</p>
+<ul>
+<li>当查询的记录是「存在」的，在索引树上定位到这一条记录后，将该记录的索引中的 next-key lock 会<strong>退化成「记录锁」</strong>。</li>
+<li>当查询的记录是「不存在」的，在索引树找到第一条大于该查询记录的记录后，将该记录的索引中的 next-key lock 会<strong>退化成「间隙锁」</strong>。</li>
+</ul>
+<p>非唯一索引等值查询：</p>
+<ul>
+<li>当查询的记录「存在」时，由于不是唯一索引，所以肯定存在索引值相同的记录，于是非唯一索引等值查询的过程是一个扫描的过程，直到扫描到第一个不符合条件的二级索引记录就停止扫描，然后<strong>在扫描的过程中，对扫描到的二级索引记录加的是 next-key 锁，而对于第一个不符合条件的二级索引记录，该二级索引的 next-key 锁会退化成间隙锁。同时，在符合查询条件的记录的主键索引上加记录锁</strong>。</li>
+<li>当查询的记录「不存在」时，<strong>扫描到第一条不符合条件的二级索引记录，该二级索引的 next-key 锁会退化成间隙锁。因为不存在满足查询条件的记录，所以不会对主键索引加锁</strong>。</li>
+</ul>
+<p>非唯一索引和主键索引的范围查询的加锁规则不同之处在于：</p>
+<ul>
+<li>唯一索引在满足一些条件的时候，索引的 next-key lock 退化为间隙锁或者记录锁。</li>
+<li>非唯一索引范围查询，索引的 next-key lock 不会退化为间隙锁和记录锁。</li>
+</ul>
+<h4 id="不走索引导致全表上锁">不走索引导致全表上锁</h4>
+<p>还有一件很重要的事情，在线上在执行 update、delete、select &hellip; for update 等具有加锁性质的语句，一定要检查语句是否走了索引，<strong>如果是全表扫描的话，会对每一个索引加 next-key 锁，相当于把整个表锁住了</strong>，这是挺严重的问题。</p>
+<p><strong>一般来说，增删改都会加锁，要谨慎考虑</strong></p>
+<h2 id="事务隔离级别两提两可">事务隔离级别(两提两可)</h2>
+<p><strong>未提交读 (READ UNCOMMITTED)</strong>
+修改在事务中即使未提交，也对其他事务可见。</p>
+<p><strong>已提交读 (READ COMMITTED)</strong>
+事务只能读取已提交的修改，未提交的修改对其他事务不可见。</p>
+<p><strong>可重复读 (REPEATABLE READ)</strong>
+同一事务中多次读取数据结果一致。</p>
+<p><strong>可串行化 (SERIALIZABLE)</strong>
+强制事务串行执行，防止并发一致性问题，需加锁实现。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/45294bb9d60cfc2b07ffb63f8c3b4538.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/45294bb9d60cfc2b07ffb63f8c3b4538.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/45294bb9d60cfc2b07ffb63f8c3b4538.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/45294bb9d60cfc2b07ffb63f8c3b4538.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/45294bb9d60cfc2b07ffb63f8c3b4538.png"
+        title="img" /></p>
+<ul>
+<li>对于「已读提交」和「可重复读」隔离级别的事务来说，它们是通过 <strong>Read View *<em>来实现的，它们的区别在于创建 Read View 的时机不同，大家可以把 Read View 理解成一个数据快照，就像相机拍照那样，定格某一时刻的风景。*</em>「读提交」隔离级别是在「每个语句执行前」都会重新生成一个 Read View，而「可重复读」隔离级别是「启动事务时」生成一个 Read View，然后整个事务期间都在用这个 Read View</strong>。</li>
+</ul>
+<h2 id="innodb数据行结构">innodb数据行结构</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/e1cc83850525b46bccd4d19faf92d3f7.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/e1cc83850525b46bccd4d19faf92d3f7.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/e1cc83850525b46bccd4d19faf92d3f7.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/e1cc83850525b46bccd4d19faf92d3f7.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/e1cc83850525b46bccd4d19faf92d3f7.png"
+        title="img" /></p>
+<p><strong>数据行隐藏字段（这个隐藏字段的trx_id配置readview的四个字段实现了快照读）</strong></p>
+<p>在内部，<code>InnoDB</code> 存储引擎为每行数据添加了三个 <a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-multi-versioning.html" target="_blank" rel="noopener noreffer ">隐藏字段open in new window</a>：</p>
+<ul>
+<li>
+<p><code>DB_TRX_ID（6字节）</code>：<strong>表示最后一次插入或更新该行的事务 id</strong>。此外，<code>delete</code> 操作在内部被视为更新，只不过会在记录头 <code>Record header</code> 中的 <code>deleted_flag</code> 字段将其标记为已删除</p>
+</li>
+<li>
+<p><code>DB_ROLL_PTR（7字节）</code> <strong>回滚指针，指向该行的 <code>undo log</code> 。如果该行未被更新，则为空</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/1b4b345edbf12495ca3115fabe0da384.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/1b4b345edbf12495ca3115fabe0da384.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/1b4b345edbf12495ca3115fabe0da384.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/1b4b345edbf12495ca3115fabe0da384.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/1b4b345edbf12495ca3115fabe0da384.png"
+        title="image-20240415215445820" /></p>
+</li>
+<li>
+<p><code>DB_ROW_ID（6字节）</code>：如果没有设置主键且该表没有唯一非空索引时，<code>InnoDB</code> 会使用该 id 来生成聚簇索引</p>
+</li>
+</ul>
+<h2 id="多版本并发控制-mvcc">多版本并发控制 (MVCC)</h2>
+<p>多版本并发控制（MVCC，Multiversion concurrency control）<strong>可以看作是乐观控制的模式。</strong></p>
+<p><strong>参考</strong>：<a href="https://javaguide.cn/database/mysql/innodb-implementation-of-mvcc.html" target="_blank" rel="noopener noreffer ">InnoDB存储引擎对MVCC的实现 | JavaGuide</a></p>
+<p><strong>基本思想</strong></p>
+<p>背景：<strong>在实际场景中读操作往往多于写操作</strong>，因此又引入了读写锁来避免不必要的加锁操作，例如读和读没有互斥关系。读写锁中读和写操作仍然是互斥的，而 MVCC 利用了多版本的思想，<strong>写操作更新最新的版本快照，而读操作去读旧版本快照，没有互斥关系，这一点和 CopyOnWrite 类似。</strong></p>
+<p><strong>在 MVCC 中事务的修改操作（DELETE、INSERT、UPDATE）会为数据行新增一个版本快照。</strong></p>
+<p>脏读和不可重复读最根本的原因是事务读取到其它事务未提交的修改。在事务进行读取操作时，为了解决脏读和不可重复读问题，MVCC 规定只能读取已经提交的快照。当然一个事务可以读取自身未提交的快照，这不算是脏读</p>
+<p>MVCC （Multi-Version Concurrency Control, MVCC）利用多版本的思想，通过快照来实现并发控制，避免了不必要的加锁操作。事务的修改操作会为数据行创建新的版本快照，而读操作则可以读取旧版本快照。</p>
+<p><strong>Undo 日志（Undo log）</strong></p>
+<p><strong>Undo 日志存储了数据行的多个版本快照</strong>，通过回滚指针将它们连接起来。INSERT、UPDATE、DELETE 操作都会创建日志，并记录事务版本号。</p>
+<p><strong>ReadView</strong></p>
+<p><strong>用来判断当前版本数据的可见性。</strong></p>
+<p>MVCC 维护了一个 ReadView 结构，包含了当前系统未提交的事务列表和最小、最大事务版本号。在进行 SELECT 操作时，<strong>根据快照的事务版本号和 ReadView 进行判断，决定是否可以使用该快照</strong>。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/3b25be11607bbc8a3b1ca9217b25d38b.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/3b25be11607bbc8a3b1ca9217b25d38b.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/3b25be11607bbc8a3b1ca9217b25d38b.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/3b25be11607bbc8a3b1ca9217b25d38b.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/3b25be11607bbc8a3b1ca9217b25d38b.png"
+        title="image-20240414130736136" /></p>
+<p><strong>可见性原理是</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/0d5d17593c62cd40d636076f2a57557e.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/0d5d17593c62cd40d636076f2a57557e.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/0d5d17593c62cd40d636076f2a57557e.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/0d5d17593c62cd40d636076f2a57557e.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/0d5d17593c62cd40d636076f2a57557e.png"
+        title="image-20240414130947355" /></p>
+<p><strong>主要看行记录的字段trx_id和这几个字段的关系实现可见性</strong></p>
+<ul>
+<li>
+<p>如果记录的 trx_id 值小于 Read View 中的 <code>min_trx_id</code> 值，表示这个版本的记录是在创建 Read View <strong>前</strong>已经提交的事务生成的，所以该版本的记录对当前事务<strong>可见</strong>。</p>
+</li>
+<li>
+<p>如果记录的 trx_id 值大于等于 Read View 中的 <code>max_trx_id</code> 值，表示这个版本的记录是在创建 Read View <strong>后</strong>才启动的事务生成的，所以该版本的记录对当前事务<strong>不可见</strong>。</p>
+</li>
+<li>
+<p>如果记录的 trx_id 值在 Read View 的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">min_trx_id
+</span></span><span class="line"><span class="cl">max_trx_id
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>之间，需要判断 trx_id 是否在 m_ids 列表中：</p>
+<ul>
+<li>如果记录的 trx_id <strong>在</strong> <code>m_ids</code> 列表中，表示生成该版本记录的活跃事务依然活跃着（还没提交事务），所以该版本的记录对当前事务<strong>不可见</strong>。</li>
+<li>如果记录的 trx_id <strong>不在</strong> <code>m_ids</code>列表中，<strong>表示生成该版本记录的活跃事务已经被提交</strong>，所以该版本的记录对当前事务<strong>可见</strong>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="不同隔离级别怎么实现的">不同隔离级别怎么实现的。</h3>
+<h4 id="可重复读是如何工作的">可重复读是如何工作的？</h4>
+<p><strong>可重复读隔离级别是启动事务时生成一个 Read View，然后整个事务期间都在用这个 Read View</strong>。</p>
+<h4 id="读提交是如何工作的">读提交是如何工作的？</h4>
+<p><strong>读提交隔离级别是在每次读取数据时，都会生成一个新的 Read View</strong>。</p>
+<h3 id="快照读与当前读"><strong>快照读与当前读</strong></h3>
+<p><strong>SELECT 操作是快照读，不需要加锁</strong>；读取某个时间节点的数据</p>
+<p>**而INSERT、UPDATE、DELETE 操作需要加锁，以读取最新数据。**读取最新的</p>
+<h3 id="当前读和快照读分别是什么如何解决幻读">当前读和快照读分别是什么？如何解决幻读</h3>
+<blockquote>
+<p><strong>当前读 ：在锁定读（使用锁隔离事物）的时候读到的是最新版本的数据</strong><code>select for update</code></p>
+<p>​	<strong>通过 next-key lock（记录锁+间隙锁）方式解决了幻读</strong>，</p>
+<p>**快照读：可重复读（repeatable-read）下 mvcc生效读取的是数据的快照，并不是最新版本的数据（未提交事物的数据	**	<code>select 普通</code></p>
+<p>​	<strong>快照读读情况下，mysql通过mvcc来避免幻读</strong></p>
+</blockquote>
+<h3 id="mvcc原理">MVCC原理</h3>
+<p>**隔离级别实现是通过「事务的 Read View 里的字段」和「记录中的两个隐藏列（trx_id 和 roll_pointer）」的比对，如果不满足可见行，就会顺着 undo log 版本链里找到满足其可见性的记录，从而控制并发事务访问同一个记录时的行为，**这就叫 MVCC（多版本并发控制）</p>
+<h2 id="update-如果没加索引会锁全表">update 如果没加索引会锁全表</h2>
+<p><strong>InnoDB 存储引擎自己实现了行锁，通过 next-key 锁（记录锁和间隙锁的组合）来锁住记录本身和记录之间的“间隙”，防止其他事务在这个记录之间插入新的记录，从而避免了幻读现象。</strong></p>
+<p>当我们执行 update 语句时，实际上是会对记录加独占锁（X 锁）的</p>
+<p><strong>在 update 语句的 where 条件没有使用索引，就会全表扫描，于是就会对所有记录加上 next-key 锁（记录锁 + 间隙锁），相当于把整个表锁住了</strong>。</p>
+<p><strong>解决办法</strong></p>
+<p>update 语句必须满足如下条件之一才能执行成功：</p>
+<ul>
+<li><strong>使用 where，并且 where 条件中必须有索引列；</strong></li>
+<li>使用 limit；</li>
+<li>同时使用 where 和 limit，此时 where 条件中可以没有索引列；</li>
+</ul>
+<h2 id="mysql死锁怎么办">mysql死锁怎么办</h2>
+<ul>
+<li>
+<p><strong>设置事务等待锁的超时时间</strong>。当一个事务的等待时间超过该值后，就对这个事务进行回滚，于是锁就释放了，另一个事务就可以继续执行了。在 InnoDB 中，参数 <code>innodb_lock_wait_timeout</code> 是用来设置超时时间的，默认值时 50 秒。</p>
+<p>当发生超时后，就出现下面这个提示：</p>
+</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/4e97c1b958da196eeb54ac9b4c30aae9.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/4e97c1b958da196eeb54ac9b4c30aae9.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/4e97c1b958da196eeb54ac9b4c30aae9.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/4e97c1b958da196eeb54ac9b4c30aae9.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/4e97c1b958da196eeb54ac9b4c30aae9.png"
+        title="图片" /></p>
+<ul>
+<li>
+<p><strong>开启主动死锁检测</strong>。主动死锁检测在发现死锁后，主动回滚死锁链条中的某一个事务，让其他事务得以继续执行。将参数 <code>innodb_deadlock_detect</code> 设置为 on，表示开启这个逻辑，默认就开启。</p>
+<p>当检测到死锁后，就会出现下面这个提示：</p>
+</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/d4f369459bd4dcae9b4680cc54d22141.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/d4f369459bd4dcae9b4680cc54d22141.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/d4f369459bd4dcae9b4680cc54d22141.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/d4f369459bd4dcae9b4680cc54d22141.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/d4f369459bd4dcae9b4680cc54d22141.png"
+        title="图片" /></p>
+<p>上面这个两种策略是「当有死锁发生时」的避免方式。</p>
+<h1 id="关系数据库">关系数据库</h1>
+<h3 id="函数依赖">函数依赖</h3>
+<p>记 A-&gt;B 表示 A 函数决定 B，也可以说 B 函数依赖于 A。</p>
+<p><strong>如果 {A1，A2，&hellip; ，An} 是关系的一个或多个属性的集合，该集合函数决定了关系的其它所有属性并且是最小的，那么该集合就称为键码。(Primary Key)</strong></p>
+<p><strong>对于 A-&gt;B，如果能找到 A 的真子集 A&rsquo;，使得 A&rsquo;-&gt; B，那么 A-&gt;B 就是部分函数依赖，否则就是完全函数依赖。</strong></p>
+<p><strong>对于 A-&gt;B，B-&gt;C，则 A-&gt;C 是一个传递函数依赖</strong></p>
+<h3 id="范式">范式</h3>
+<p>范式理论旨在解决数据库中的异常情况，其中高级别的范式依赖于低级别的范式。第一范式是最低级别的范式。</p>
+<h5 id="第一范式-1nf">第一范式 (1NF)</h5>
+<p>属性不可再分。</p>
+<h5 id="第二范式-2nf">第二范式 (2NF)</h5>
+<p>每个非主属性<strong>完全依赖于键码（消除部分依赖）</strong>。（就是非主属性完全依赖于主关键字。）（必须有个建码能够完全区分每一行）</p>
+<p>可以通过分解表来解决</p>
+<h5 id="第三范式-3nf--消除传递依赖-">第三范式 (3NF)** <strong>[ 消除传递依赖 ]</strong>**</h5>
+<p>非主属性不传递依赖于键码。</p>
+<p><strong>需要注意的是，可以通过分解关系来满足第二范式和第三范式的要求。</strong></p>
+<h1 id="其他问题">其他问题</h1>
+<h2 id="索引工作原理">索引工作原理</h2>
+<blockquote>
+<p>索引的实现通常使用B树及其变种B+树</p>
+</blockquote>
+<h2 id="索引递增原理">索引递增原理</h2>
+<p>一张表，里面有ID自增主键，当insert了17条记录之后，删除了第15,16,17条记录，再把Mysql重启，再insert一条记录，这条记录的ID是18还是15 ？</p>
+<blockquote>
+<ol>
+<li>
+<p>如果表的类型为</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">MyISAM
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>，ID为18</p>
+<ul>
+<li>因为MyISAM表会把自增主键的最大ID记录到数据文件里，重启MySQL自增主键的最大ID也不会丢失</li>
+</ul>
+</li>
+<li>
+<p>如果表的类型是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">InnoDB
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>，ID是15</p>
+<ul>
+<li>InnoDB表只是把自增主键的最大ID记录到内存中，所以重启数据库或者是对表进行OPTIMIZE操作，都会导致最大ID丢失</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+<h2 id="一张表最多创建多少索引">一张表最多创建多少索引？</h2>
+<blockquote>
+<p>任何标准表最多可以创建16个索引列。</p>
+</blockquote>
+<h2 id="字段类型">字段类型</h2>
+<p>MySQL 字段类型可以简单分为三大类：</p>
+<ul>
+<li><strong>数值类型</strong>：整型（TINYINT、SMALLINT、MEDIUMINT、INT 和 BIGINT）、浮点型（FLOAT 和 DOUBLE）、定点型（DECIMAL）</li>
+<li><strong>字符串类型</strong>：CHAR、VARCHAR、TINYTEXT、TEXT、MEDIUMTEXT、LONGTEXT、TINYBLOB、BLOB、MEDIUMBLOB 和 LONGBLOB 等，最常用的是 CHAR 和 VARCHAR。</li>
+<li><strong>日期时间类型</strong>：YEAR、TIME、DATE、DATETIME 和 TIMESTAMP 等。</li>
+</ul>
+<h2 id="mysql-基础架构">MySQL 基础架构</h2>
+<p><strong>先连接，再查询（先查询，查不到就进行1语法分析，然后2mysql优化器优化执行方案，最后3执行器执行，从存储引擎获取数据）</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/d76d8487602f99397c83879c99b5cabc.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/d76d8487602f99397c83879c99b5cabc.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/d76d8487602f99397c83879c99b5cabc.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/d76d8487602f99397c83879c99b5cabc.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/d76d8487602f99397c83879c99b5cabc.png"
+        title="img" /></p>
+<p>， MySQL 主要由下面几部分构成：</p>
+<ul>
+<li><strong>连接器：</strong> 身份认证和权限相关(登录 MySQL 的时候)。</li>
+<li><strong>查询缓存：</strong> 执行查询语句的时候，会先查询缓存（<strong>MySQL 8.0 版本后移除，因为这个功能不太实用</strong>）。</li>
+<li><strong>分析器：</strong> 没有命中缓存的话，SQL 语句就会经过分析器，分析器说白了就是要先看你的 SQL 语句要干嘛，再检查你的 SQL 语句语法是否正确。</li>
+<li><strong>优化器：</strong> 按照 MySQL 认为最优的方案去执行。</li>
+<li><strong>执行器：</strong> 执行语句，然后从存储引擎返回数据。 执行语句之前会先判断是否有权限，如果没有权限的话，就会报错。</li>
+<li><strong>插件式存储引擎</strong>：主要负责数据的存储和读取，采用的是插件式架构，支持 InnoDB、MyISAM、Memory 等多种存储引擎
+<ul>
+<li>MySQL 存储引擎采用的是 <strong>插件式架构</strong> ，支持多种存储引擎，我们甚至可以为不同的数据库表设置不同的存储引擎以适应不同场景的需要。<strong>存储引擎是基于表的，而不是数据库。</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="mysql引擎">Mysql引擎</h2>
+<p>MySQL 当前默认的存储引擎是 InnoDB。并且，所有的存储引擎中只有 InnoDB 是事务性存储引擎，也就是说只有 InnoDB 支持事务。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/03acd5676d184db54f3ea3dedb217546.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/03acd5676d184db54f3ea3dedb217546.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/03acd5676d184db54f3ea3dedb217546.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/03acd5676d184db54f3ea3dedb217546.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/03acd5676d184db54f3ea3dedb217546.png"
+        title="查看 MySQL 提供的所有存储引擎" /></p>
+<h2 id="myisam-和-innodb-有什么区别">MyISAM 和 InnoDB 有什么区别？</h2>
+<p>MySQL 5.5 版本之后，InnoDB 是 MySQL 的默认存储引擎。（InnoDB从社区转正了）</p>
+<hr>
+<p>InnoDB 支持<strong>行级别的锁粒度</strong>，MyISAM 不支持，只支持表级别的锁粒度。</p>
+<p>MyISAM 不提供事务支持。InnoDB <strong>提供事务支持</strong>，实现了 SQL 标准定义了四个隔离级别。</p>
+<p>MyISAM 不支持<strong>外键</strong>，而 InnoDB 支持。</p>
+<p>MyISAM 不支持 <strong>MVCC</strong>，而 InnoDB 支持。</p>
+<p>虽然 MyISAM 引擎和 InnoDB 引擎都是使用 B+Tree 作为索引结构，但是两者的实现方式不太一样。</p>
+<p>MyISAM 不支持<strong>数据库异常崩溃后的安全恢复</strong>，而 InnoDB 支持。</p>
+<p>InnoDB 的<strong>性能</strong>比 MyISAM 更强大。</p>
+<hr>
+<p>考虑需求高低，灵活选择存储引擎</p>
+<h2 id="能否单独为一张表设置存储引擎">能否单独为一张表设置存储引擎？</h2>
+<p>可以。我们可以为 不同的表设置不同的存储引擎</p>
+<h2 id="mysql-的隔离级别是基于锁实现的吗">MySQL 的隔离级别是基于锁实现的吗？</h2>
+<p><strong>MySQL 的隔离级别基于锁和 MVCC 机制共同实现的。</strong></p>
+<h2 id="mysql-的默认隔离级别是什么">MySQL 的默认隔离级别是什么?</h2>
+<p>MySQL <strong>InnoDB 存储引擎的默认支持的隔离级别是 REPEATABLE-READ（可重读）</strong></p>
+<h2 id="能用-mysql-直接存储文件比如图片吗">能用 MySQL 直接存储文件（比如图片）吗？</h2>
+<p>可以是可以，直接存储文件对应的二进制数据即可。不过，还是建议不要在数据库中存储文件，会严重影响数据库性能，消耗过多存储空间。
+建议用第三方对象存储服务OBS</p>
+<h2 id="mysql-如何存储-ip-地址">MySQL 如何存储 IP 地址？</h2>
+<p>可以将 IP 地址转换成整形数据存储，性能更好，占用空间也更小。</p>
+<h2 id="msyql缓存查询原理">msyql缓存查询原理</h2>
+<p>SQL 是<strong>查询语句（select 语句），MySQL 就会先去查询缓存（ Query Cache ）里查找缓存数据</strong>，看看之前有没有执行过这一条命令，这个<strong>查询缓存是以 key-value 形式保存在内存中的，key 为 SQL 查询语句，value 为 SQL 语句查询的结果。</strong></p>
+<p><strong>只要一个表有更新操作，那么这个表的查询缓存就会被清空。</strong></p>
+<p>MySQL 8.0 版本直接将查询缓存删掉了，也就是说 MySQL 8.0 开始，执行一条 SQL 查询语句，不会再走到查询缓存这个阶段了。</p>
+<h2 id="优化器">优化器</h2>
+<p><strong>优化器主要负责将 SQL 查询语句的执行方案确定下来</strong>，比如在表里面有多个索引的时候，优化器会基于查询成本的考虑，来决定选择使用哪个索引。</p>
+<p>要想知道优化器选择了哪个索引，我们可以在查询语句最前面<strong>加个 <code>explain</code></strong> 命令，这样就会输出这条 SQL 语句的执行计划</p>
+<h1 id="读写分离和分库分表详解">读写分离和分库分表详解</h1>
+<h2 id="读写分离">读写分离</h2>
+<p><strong>读写分离主要是为了将对数据库的读写操作分散到不同的数据库节点上。</strong> 这样的话，就能够小幅提升写性能，大幅提升读性能。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/699cf6d943a71dabf299988d715cd34b.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/699cf6d943a71dabf299988d715cd34b.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/699cf6d943a71dabf299988d715cd34b.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/699cf6d943a71dabf299988d715cd34b.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/699cf6d943a71dabf299988d715cd34b.png"
+        title="读写分离示意图" /></p>
+<p><strong>主节点是写，从节点是读，要保证数据一致性。</strong></p>
+<p><strong>主从复制原理：</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/37ccd07a71ef90bbfbb027b28c90d60a.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/37ccd07a71ef90bbfbb027b28c90d60a.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/37ccd07a71ef90bbfbb027b28c90d60a.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/37ccd07a71ef90bbfbb027b28c90d60a.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/37ccd07a71ef90bbfbb027b28c90d60a.png"
+        title="MySQL主从复制" />MySQL主从复制</p>
+<ol>
+<li><strong>主库将数据库中数据的变化写入到 binlog</strong></li>
+<li>从库连接主库</li>
+<li><strong>从库会创建一个 I/O 线程向主库请求更新的 binlog</strong></li>
+<li>主库会创建一个 binlog dump 线程来发送 binlog ，从库中的 I/O 线程负责接收</li>
+<li><strong>从库的 I/O 线程将接收的 binlog 写入到 relay log 中。</strong></li>
+<li><strong>从库的 SQL 线程读取 relay log 同步数据本地</strong>（<strong>也就是再执行一遍 SQL</strong> ）</li>
+</ol>
+<p>由于主从更新会有延迟，最终会出现主从延迟问题。</p>
+<h2 id="分库分表">分库分表</h2>
+<p><strong>分库</strong> 就是将数据库中的数据分散到不同的数据库上，可以垂直分库，也可以水平分库。（业务拆分和表的页拆分）</p>
+<p><strong>垂直分库</strong> 就是把单一数据库<strong>按照业务进行划分，不同的业务使用不同的数据库</strong>，进而将一个数据库的压力分担到多个数据库。</p>
+<p><strong>水平分库</strong> 是<strong>把同一个表按一定规则拆分到不同的数据库中</strong>，每个库可以位于不同的服务器上，这样就实现了水平扩展，解决了单表的存储和性能瓶颈的问题。</p>
+<p><strong>分表</strong> 就是对单表的数据进行拆分，可以是垂直拆分，也可以是水平拆分。（<strong>列拆分和行拆分</strong>）</p>
+<p><strong>垂直分表</strong> 是对数据表列的拆分，把一张列比较多的表拆分为多张表。</p>
+<p>举个例子：我们可以将用户信息表中的一些列单独抽出来作为一个表。</p>
+<p><strong>水平分表</strong> 是对数据表行的拆分，把一张行比较多的表拆分为多张表，可以解决单一表数据量过大的问题。</p>
+<h3 id="如何对数据水平切分">如何对数据水平切分</h3>
+<p>常见的分片算法有：</p>
+<ul>
+<li><strong>哈希分片</strong>：求指定分片键的哈希，然后根据哈希值确定数据应被放置在哪个表中。哈希分片比较适合随机读写的场景，不太适合经常需要范围查询的场景。哈希分片可以使每个表的数据分布相对均匀，但对动态伸缩（例如新增一个表或者库）不友好。</li>
+<li><strong>范围分片</strong>：按照特定的范围区间（比如时间区间、ID 区间）来分配数据，比如 将 <code>id</code> 为 <code>1~299999</code> 的记录分到第一个表， <code>300000~599999</code> 的分到第二个表。范围分片适合需要经常进行范围查找且数据分布均匀的场景，不太适合随机读写的场景（数据未被分散，容易出现热点数据的问题）。</li>
+<li><strong>映射表分片</strong>：使用一个单独的表（称为映射表）来存储分片键和分片位置的对应关系。映射表分片策略可以支持任何类型的分片算法，如哈希分片、范围分片等。映射表分片策略是可以灵活地调整分片规则，不需要修改应用程序代码或重新分布数据。不过，这种方式需要维护额外的表，还增加了查询的开销和复杂度。</li>
+<li><strong>一致性哈希分片</strong>：将哈希空间组织成一个环形结构，将分片键和节点（数据库或表）都映射到这个环上，然后根据顺时针的规则确定数据或请求应该分配到哪个节点上，解决了传统哈希对动态伸缩不友好的问题。</li>
+<li><strong>地理位置分片</strong>：很多 NewSQL 数据库都支持地理位置分片算法，也就是根据地理位置（如城市、地域）来分配数据。</li>
+<li><strong>融合算法分片</strong>：灵活组合多种分片算法，比如将哈希分片和范围分片组合。</li>
+</ul>
+<h3 id="分库分表会带来什么问题呢">分库分表会带来什么问题呢？</h3>
+<p><strong>join 操作</strong>：同一个数据库中的表分布在了不同的数据库中，导致无法使用 join 操作。</p>
+<p><strong>跨库聚合查询问题</strong>：分库分表会导致常规聚合查询操作，如 group by，order by 等变得异常复杂。</p>
+<p><strong>事务问题</strong>：同一个数据库中的表分布在了不同的数据库中，如果单个操作涉及到多个数据库，那么数据库自带的事务就无法满足我们的要求了。<strong>需要引入分布式事务</strong></p>
+<p><strong>分布式 ID</strong>：分库之后， 数据遍布在不同服务器上的数据库，数据库的自增主键已经没办法满足生成的主键唯一了。我们如何为不同的数据节点生成全局唯一主键</p>
+<h2 id="mysql死锁问题">Mysql死锁问题</h2>
+<h3 id="mysql死锁的原因和处理方法">MySQL死锁的原因和处理方法</h3>
+<p>出现死锁的例子</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">事务 a
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">表 t  id=100 更新  加行锁
+</span></span><span class="line"><span class="cl">表 t  id=200 更新  已加锁
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">事务 b
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">表 t  id=200 更新 加行锁
+</span></span><span class="line"><span class="cl">表 t  id=100 更新 已加锁
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>死锁与锁等待是两个概念
+<ul>
+<li>如未开启事务，多个客户端执行的insert操作</li>
+</ul>
+</li>
+<li>当多个事务同时持有和请求同一资源上的锁而产生循环依赖的时候就产生了死锁</li>
+</ul>
+<p><strong>办法</strong></p>
+<ul>
+<li><strong>充分利用索引，优化索引，尽量把有风险的事务sql使用上覆盖索</strong></li>
+<li><strong>kill id 杀死进程</strong></li>
+<li><strong>拆分sql，严禁大事务</strong></li>
+<li><strong>事务超时机制</strong></li>
+<li><strong>死锁检测算法</strong></li>
+</ul>
+<h1 id="mysql-的各种log">mysql 的各种log</h1>
+<h3 id="bin-log作用是什么">bin log作用是什么？</h3>
+<blockquote>
+<p>MySQL的<strong>bin log日志是用来记录MySQL中增删改时的记录日志。</strong></p>
+<p>当你的一条sql操作对数据库中的内容进行了更新，就会增加一条bin log日志。<strong>查询操作不会记录到bin log中。</strong></p>
+<p><strong>bin log最大的用处就是进行</strong>主从复制，以及数据库的恢复。</p>
+<p>binlog 是 MySQL 的 Server 层实现的日志，所有存储引擎都可以使用</p>
+<p>常用于主从复制，全量恢复</p>
+</blockquote>
+<h3 id="redo-log作用是什么">redo log作用是什么？</h3>
+<blockquote>
+<p>redo log是一种基于磁盘的数据结构，<strong>用来在MySQL宕机情况下将不完整的事务执行数据纠正，</strong></p>
+<p><strong>redo log 记录了此次事务「<strong>完成后</strong>」的数据状态，记录的是更新</strong>之后<strong>的值</strong></p>
+<blockquote>
+<p><strong>redo log就是为了恢复更新了内存但是由于宕机等原因没有刷入磁盘中的那部分数据</strong></p>
+</blockquote>
+<p>实现了事务中的<strong>持久性</strong>，主要<strong>用于掉电等故障恢复</strong>；</p>
+<p>为什么数据本身要写入磁盘，还要redo log</p>
+<p>写入 redo log 的方式使用了追加操作， 所以磁盘操作是<strong>顺序写</strong>，而写入数据需要先找到写入位置，然后才写到磁盘，所以磁盘操作是<strong>随机写</strong>。</p>
+<p>磁盘的「顺序写 」比「随机写」 高效的多，因此 redo log 写入磁盘的开销更小。</p>
+<p><strong>redo log写满了日志，那就回重新回到文件头覆盖着再写一遍。</strong></p>
+</blockquote>
+<p><strong>bin和redo的区别</strong></p>
+<ul>
+<li><strong>日志是否全量</strong>：binlog 文件保存的是全量的日志，也就是保存了所有数据变更的情况，理论上只要记录在 binlog 上的数据，都可以恢复，所以如果不小心整个数据库的数据被删除了，得用 binlog 文件恢复数据。</li>
+<li><em>用途不同：</em>
+<ul>
+<li>binlog 用于备份恢复、主从复制；</li>
+<li>redo log 用于掉电等故障恢复。</li>
+</ul>
+</li>
+<li>层级不同
+<ul>
+<li>bin log是数据库生成的</li>
+<li>undo log 和 redo log 这两个日志都是 Innodb 存储引擎生成的。</li>
+</ul>
+</li>
+</ul>
+<h3 id="undo-log作用是什么">undo log作用是什么？</h3>
+<blockquote>
+<p><strong>undo log主要用来回滚到某一个版本，是一种逻辑日志。</strong></p>
+<p><strong>undo log记录的是修改之前的数据，比如：当delete一条记录时，<strong>undolog中</strong>会记录一条对应的insert记录，从而保证能恢复到数据修改之前</strong>。在执行事务回滚的时候，就可以通过undo log中的记录内容并以此进行回滚。</p>
+<p><strong>存储的是执行前的记录，方便实现快照的历史记录</strong></p>
+<p>现了事务中的<strong>原子性</strong>，主要<strong>用于事务回滚和 MVCC</strong>。</p>
+</blockquote>
+<h1 id="buffer-pool知识">Buffer Pool知识</h1>
+<p><strong>结构</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/6feed9d92630a13b83433cdccbc6f0b3.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/6feed9d92630a13b83433cdccbc6f0b3.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/6feed9d92630a13b83433cdccbc6f0b3.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/6feed9d92630a13b83433cdccbc6f0b3.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/aa0132ae2b9d0d0ad91f916847ff026a/6feed9d92630a13b83433cdccbc6f0b3.png"
+        title="img" /></p>
+<p><strong>Buffer Pool 的作用是什么？</strong></p>
+<ul>
+<li>说明 Buffer Pool 的作用是<strong>在内存中缓存热点数据，以减少对磁盘的访问次数，提高数据库的性能和响应速度。</strong></li>
+<li><strong>有了缓冲池后：</strong>
+<ul>
+<li>当读取数据时，如果数据存在于 Buffer Pool 中，客户端就会直接读取 Buffer Pool 中的数据，否则再去磁盘中读取。</li>
+<li><strong>当修改数据时，首先是修改 Buffer Pool 中数据所在的页，然后将其页设置为脏页，最后由后台线程将脏页写入到磁盘</strong></li>
+</ul>
+</li>
+<li>以页为单位进行数据存储，和内存换页机制。</li>
+</ul>
+<p><strong>Buffer Pool 的命中率是什么？</strong></p>
+<ul>
+<li>
+<p>解释 Buffer Pool 的命中率是指在数据访问中缓冲池命中数据的比例，高命中率表示大部分数据都在缓冲池中，减少了对磁盘的访问。</p>
+</li>
+<li>
+<p>如何提高：</p>
+<ul>
+<li>LRU算法</li>
+</ul>
+</li>
+</ul>
+<p><strong>Buffer Pool 中的脏页是什么？</strong>（<strong>WAL【Write-Ahead Logging】 技术</strong>）</p>
+<ul>
+<li>解释 Buffer Pool 中的脏页是指已经被修改但尚未写回磁盘的数据页，说明脏页对数据库性能的影响和处理方法。</li>
+<li>为了解决宕机没有写入磁盘的问题，<strong>InnoDB 的更新操作采用的是 Write Ahead Log 策略，即先写日志，再写入磁盘，通过 redo log 日志让 MySQL 拥有了崩溃恢复能力。</strong></li>
+</ul>
+<h1 id="mysql实际使用守则">mysql实际使用守则</h1>
+<p><a href="https://javaxiaobear.gitee.io/interview/database/150mysql/development.html" target="_blank" rel="noopener noreffer ">MySQL开发 | 小熊学Java 全能学习+面试指南</a></p>
+<h1 id="其他问题-1">其他问题</h1>
+<h2 id="sql注入问题">sql注入问题</h2>
+<p><strong>定义</strong>： SQL 注入攻击是通过将恶意的 SQL 语句如添加、删除等插入到应用的输入参数中，经过后台解析 后发送到数据库服务器上解析执行进行的攻击</p>
+<p><strong>为什么会出现SQL注入</strong></p>
+<p>Web 应用程序对于用户输入的数据和合法性没有严谨的判断，前端用户的输入直接传输给后端， 攻击者通过构造不同的参数，形成不同的 SQL 语句来实现对数据库的任意操作。</p>
+<p>SQL 注入产生需要满足两个条件：</p>
+<ul>
+<li><strong>参数用户可控：前端传给后端的参数内容是用户可以控制的</strong></li>
+<li><strong>参数带入数据库查询：传入的参数直接拼接到SQL语句，且带入数据库查询</strong></li>
+</ul>
+<h2 id="如何防止sql注入">如何防止SQL注入</h2>
+<p>在开发时应该秉持一种 外部参数皆不可信 的原则来进行开发。</p>
+<ul>
+<li>
+<p><strong>加强参数验证</strong>: 开发时，<strong>验证所有来自前端的输入，必须是符合要求的数据类型</strong>，符合指定规则的数据才允许继续往下执行。</p>
+<ul>
+<li>
+<p>预编译语句是一种在发送到数据库执行之前已经预先编译的SQL语句模板。<strong>与直接拼接SQL查询字符串不同，预编译语句将参数作为独立的输入，而不是将它们与SQL语句混合在一起。这样可以防止攻击者通过注入恶意SQL代码来执行攻击。</strong></p>
+</li>
+<li>
+<p>在Java中，可以使用<code>PreparedStatement</code>来创建预编译语句：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">javaCopy codeString sql = &#34;SELECT * FROM users WHERE username = ? AND password = ?&#34;;
+</span></span><span class="line"><span class="cl">PreparedStatement statement = connection.prepareStatement(sql);
+</span></span><span class="line"><span class="cl">statement.setString(1, username);
+</span></span><span class="line"><span class="cl">statement.setString(2, password);
+</span></span><span class="line"><span class="cl">ResultSet result = statement.executeQuery();
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>
+<p><strong>SQL语句参数化处理</strong>: 减少使用或不使用字符串拼接的方式执行SQL，而是将用户输入当着参数传给执行SQL的方法， 如Django中的cursor.execute()函数就支持在SQL语句中使用占位符，将输入作为参数传递给方 法执行。</p>
+</li>
+<li>
+<p><strong>存储过程</strong>: 使用存储过程也可以有效防止SQL注入，不过在存储过程中，需使用占位符，并且使用输入参数来预编译SQL语句后再执行。</p>
+</li>
+<li>
+<p>目前很多框架都自带了防止，例如mybatis plus</p>
+</li>
+</ul>
+<h2 id="sql-和-nosql-有什么区别">SQL 和 NoSQL 有什么区别</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th>SQL 数据库</th>
+<th>NoSQL 数据库</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">数据存储模型</td>
+<td><strong>结构化存储，具有固定行和列的表格</strong></td>
+<td>非结<strong>构化存储。文档：JSON 文档</strong>，<strong>键值</strong>：<strong>键值对</strong>，宽列：包含行和动态列的表，<strong>图</strong>：节点和边</td>
+</tr>
+<tr>
+<td style="text-align:left">发展历程</td>
+<td>开发于 1970 年代，重点是减少数据重复</td>
+<td>开发于 2000 年代后期，重点是提升可扩展性，减少大规模数据的存储成本</td>
+</tr>
+<tr>
+<td style="text-align:left">例子</td>
+<td>Oracle、MySQL、Microsoft SQL Server、PostgreSQL</td>
+<td>文档：MongoDB、CouchDB，键值：Redis、DynamoDB，宽列：Cassandra、 HBase，图表：Neo4j、 Amazon Neptune、Giraph</td>
+</tr>
+<tr>
+<td style="text-align:left">ACID 属性</td>
+<td>提供原子性、一致性、隔离性和持久性 (ACID) 属性</td>
+<td><strong>通常不支持 ACID 事务</strong>，为了可扩展、高性能进行了权衡，少部分支持比如 MongoDB 。不过，MongoDB 对 ACID 事务 的支持和 MySQL 还是有所区别的。</td>
+</tr>
+<tr>
+<td style="text-align:left">性能</td>
+<td>性能通常取决于磁盘子系统。要获得最佳性能，通常需要优化查询、索引和表结构。</td>
+<td>性能通常由底层硬件集群大小、网络延迟以及调用应用程序来决定。</td>
+</tr>
+<tr>
+<td style="text-align:left">扩展</td>
+<td>垂直（使用性能更强大的服务器进行扩展）、读写分离、分库分表</td>
+<td>横向（增加服务器的方式横向扩展，通常是基于分片机制）</td>
+</tr>
+<tr>
+<td style="text-align:left">用途</td>
+<td>普通企业级的项目的数据存储</td>
+<td>用途广泛比如图数据库支持分析和遍历连接数据之间的关系、键值数据库可以处理大量数据扩展和极高的状态变化</td>
+</tr>
+<tr>
+<td style="text-align:left">查询语法</td>
+<td>结构化查询语言 (SQL)</td>
+<td>数据访问语法可能因数据库而异</td>
+</tr>
+</tbody>
+</table>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-03-12</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.kenger.work/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/" data-title="数据库原理" data-hashtags="数据库"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.kenger.work/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/" data-hashtag="数据库"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.kenger.work/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/" data-title="数据库原理"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.kenger.work/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/" data-title="数据库原理"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.kenger.work/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/" data-title="数据库原理"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/win%E4%B8%8A%E4%BD%BF%E7%94%A8mklink%E5%88%9B%E5%BB%BA%E8%BD%AF%E8%BF%9E%E6%8E%A5%E5%AE%9E%E7%8E%B0%E8%B7%A8%E7%9B%98%E5%85%B1%E4%BA%AB/" class="prev" rel="prev" title="win上使用mklink创建软连接实现跨盘共享"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>win上使用mklink创建软连接实现跨盘共享</a>
+            <a href="/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="next" rel="next" title="秒杀系统概述">秒杀系统概述<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.125.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.kenger.work/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

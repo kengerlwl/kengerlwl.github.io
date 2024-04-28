@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>交换机 - 标签 - Kenger`s Blog</title>
+        <link>https://blog.kenger.work/tags/%E4%BA%A4%E6%8D%A2%E6%9C%BA/</link>
+        <description>交换机 - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 24 Mar 2023 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://blog.kenger.work/tags/%E4%BA%A4%E6%8D%A2%E6%9C%BA/" rel="self" type="application/rss+xml" /><item>
+    <title>交换机科普</title>
+    <link>https://blog.kenger.work/%E4%BA%A4%E6%8D%A2%E6%9C%BA/</link>
+    <pubDate>Fri, 24 Mar 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/%E4%BA%A4%E6%8D%A2%E6%9C%BA/</guid>
+    <description><![CDATA[傻瓜交换机 傻瓜交换机又称为不可网管交换机，功能上，不能进行配置和管理。应用上，对于网络安全性要求不高可以选用不可网管交换机，并且这种交换机被]]></description>
+</item>
+</channel>
+</rss>

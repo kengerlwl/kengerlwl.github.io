@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>数据库索引 - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://blog.kenger.work/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="数据库索引">
+  <meta property="og:description" content="索引介绍分类 索引是一种用于快速查询和检索数据的数据结构，其本质可以看成是一种排序好的数据结构。 我们可以按照四个角度来分类索引。 按「数据结构」">
+  <meta property="og:locale" content="zh-CN">
+  <meta property="og:type" content="article">
+  <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-03-26T15:27:31+00:00">
+    <meta property="article:modified_time" content="2024-03-26T15:27:31+00:00">
+    <meta property="article:tag" content="数据库">
+    <meta property="og:image" content="https://blog.kenger.work/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blog.kenger.work/logo.png"><meta name="twitter:title" content="数据库索引">
+<meta name="twitter:description" content="索引介绍分类 索引是一种用于快速查询和检索数据的数据结构，其本质可以看成是一种排序好的数据结构。 我们可以按照四个角度来分类索引。 按「数据结构」">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.kenger.work/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/" /><link rel="prev" href="https://blog.kenger.work/java-jvm/" /><link rel="next" href="https://blog.kenger.work/spring%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "数据库索引",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.kenger.work\/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/blog.kenger.work\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "数据库","wordcount":  5336 ,
+        "url": "https:\/\/blog.kenger.work\/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95\/","datePublished": "2024-03-26T15:27:31+00:00","dateModified": "2024-03-26T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/blog.kenger.work\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据库索引</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.kenger.work/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/find-job/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Find JOB</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-03-26">2024-03-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 5336 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 11 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#索引介绍分类">索引介绍分类</a></li>
+    <li><a href="#索引分类">索引分类</a>
+      <ul>
+        <li><a href="#数据结构分类">数据结构分类</a></li>
+        <li><a href="#逻辑区分"><strong>逻辑区分</strong></a></li>
+        <li><a href="#实际列数区分">实际列数区分</a></li>
+      </ul>
+    </li>
+    <li><a href="#聚簇索引">聚簇索引</a></li>
+    <li><a href="#非聚簇索引">非聚簇索引</a></li>
+    <li><a href="#聚簇二者区别">聚簇二者区别</a></li>
+    <li><a href="#mysql如何实现的索引机制">MySQL如何实现的索引机制？</a></li>
+    <li><a href="#b-树和-b-树的差异"><strong>B+</strong> <strong>树和</strong> <strong>B</strong> <strong>树的差异：</strong></a></li>
+    <li><a href="#索引数据结构">索引数据结构</a>
+      <ul>
+        <li><a href="#平衡二叉树">平衡二叉树</a>
+          <ul>
+            <li><a href="#avl的缺点">AVL的缺点</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#红黑树">红黑树</a></li>
+    <li><a href="#b-树和-b-树的差异-1"><strong>B+</strong> <strong>树和</strong> <strong>B</strong> <strong>树的差异</strong></a></li>
+    <li><a href="#什么是2-3树-2-3-4树">什么是2-3树 2-3-4树？</a></li>
+    <li><a href="#为什么官方建议使用自增长主键作为索引说一下自增主键和字符串类型主键的区别和影响">为什么官方建议使用自增长主键作为索引？（说一下自增主键和字符串类型主键的区别和影响）</a></li>
+    <li><a href="#索引的代价"><strong>索引的代价</strong></a></li>
+    <li><a href="#什么是回表操作">什么是回表操作？</a></li>
+    <li><a href="#什么是覆盖索引">什么是覆盖索引？</a></li>
+    <li><a href="#什么是联合索引组合索引复合索引">什么是联合索引，组合索引，复合索引？</a>
+      <ul>
+        <li><a href="#最左前缀原则">最左前缀原则</a></li>
+        <li><a href="#索引区分度">索引区分度</a></li>
+      </ul>
+    </li>
+    <li><a href="#唯一索引">唯一索引</a></li>
+    <li><a href="#什么时候适合创建索引什么时候不适合创建索引">什么时候适合创建索引，什么时候不适合创建索引？</a></li>
+    <li><a href="#有哪些情况会导致索引失效">有哪些情况会导致索引失效？</a></li>
+    <li><a href="#为什么like以开头索引会失效">为什么LIKE以%开头索引会失效？</a></li>
+    <li><a href="#一个表有多个索引的时候能否手动选择使用哪个索引">一个表有多个索引的时候，能否手动选择使用哪个索引？</a></li>
+    <li><a href="#多个索引优先级是如何匹配的">多个索引优先级是如何匹配的？</a></li>
+    <li><a href="#group-order-与索引">group order 与索引</a>
+      <ul>
+        <li><a href="#使用order-by时能否通过索引排序">使用Order By时能否通过索引排序？</a></li>
+        <li><a href="#group-by-分组和order-by在索引使用上有什么区别">group by 分组和order by在索引使用上有什么区别？</a></li>
+        <li><a href="#有字段为null索引是否会失效">有字段为null索引是否会失效？</a></li>
+      </ul>
+    </li>
+    <li><a href="#数据页与索引">数据页与索引</a></li>
+    <li><a href="#mysql-单表不要超过-2000w-行靠谱吗">MySQL 单表不要超过 2000W 行，靠谱吗？</a></li>
+    <li><a href="#count效率问题">count效率问题</a>
+      <ul>
+        <li><a href="#小结">小结</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="索引介绍分类">索引介绍分类</h2>
+<p>索引是一种<strong>用于快速查询和检索数据的数据结构</strong>，其本质可以看成是一种排序好的数据结构。</p>
+<p>我们可以按照四个角度来分类索引。</p>
+<ul>
+<li>按「数据结构」分类：<strong>B+tree索引、Hash索引、Full-text索引</strong>。</li>
+<li>按「物理存储」分类：<strong>聚簇索引（主键索引）、二级索引（辅助索引）</strong>。</li>
+<li>按「字段特性」分类：<strong>主键索引、唯一索引、普通索引、前缀索引</strong>。</li>
+<li>按「字段个数」分类：<strong>单列索引、联合索引</strong>。</li>
+</ul>
+<h2 id="索引分类">索引分类</h2>
+<h3 id="数据结构分类">数据结构分类</h3>
+<p><strong>B-树索引</strong></p>
+<p>B-树索引又称为 BTREE 索引</p>
+<p><strong>哈希索引</strong></p>
+<p>哈希（Hash）一般翻译为“散列”，也有直接音译成“哈希”的，就是把任意长度的输入（又叫作预映射，pre-image）通过散列算法变换成固定长度的输出，该输出就是散列值。</p>
+<h3 id="逻辑区分"><strong>逻辑区分</strong></h3>
+<p>根据索引的具体用途，MySQL 中的索引在逻辑上分为以下 5 类：</p>
+<p><strong>普通索引</strong></p>
+<p>普通索引是 MySQL 中最基本的索引类型，它没有任何限制，少数任务就是加快系统对数据的访问速度。</p>
+<p><strong>主键索引</strong></p>
+<p>顾名思义，主键索引就是专门为主键字段创建的索引，也属于索引的一种。</p>
+<p><strong>全文索引</strong></p>
+<p><strong>全文索引主要用来查找文本中的关键字</strong>，只能在 CHAR、VARCHAR 或 TEXT 类型的列上创建。在 MySQL 中只有 MyISAM 存储引擎支持全文索引。</p>
+<p><strong>全文索引一般使用倒排索引实现，它记录着关键词到其所在文档的映射。</strong></p>
+<p><strong>唯一索引</strong>
+与前面的普通索引类似，不同的就是：<strong>索引列的值必须唯一</strong>，但允许有空值。如果是组合索引，则列值的组合必须唯一</p>
+<p><strong>少数索引</strong></p>
+<h3 id="实际列数区分">实际列数区分</h3>
+<ul>
+<li>单列索引</li>
+<li>多列索引（组合索引）</li>
+</ul>
+<h2 id="聚簇索引">聚簇索引</h2>
+<ul>
+<li><strong>聚簇索引：将<a href="https://cloud.tencent.com/product/cdcs?from_column=20065&amp;from=20065" target="_blank" rel="noopener noreffer ">数据存储</a>与索引放到了一块，找到索引也就找到了数据</strong></li>
+</ul>
+<p>聚簇索引需要具有唯一性，一般要根据这个表最常用的 SQL 查询方式来进行选择，某个字段作为聚簇索引，或组合聚簇索引。</p>
+<p>聚簇索引默认是主键，如果表中没有定义主键，InnoDB 会选择一个唯一的非空索引代替。如果没有这样的索引，InnoDB 会隐式定义一个主键来作为聚簇索引。InnoDB 只聚集在同一个页面中的记录。包含相邻健值的页面可能相距甚远。</p>
+<h2 id="非聚簇索引">非聚簇索引</h2>
+<ul>
+<li>非聚簇索引：<strong>将数据存储于索引分开结构，索引结构的叶子节点指向了数据的对应行，（相当于只是该列的索引，然后通过该索引找到主键的可以，再去聚簇索引找到目标数据行）</strong>，myisam通过key_buffer把索引先缓存到内存中，当需要访问数据时（通过索引访问数据），在内存中直接搜索索引，然后通过索引找到磁盘相应数据，这也就是为什么索引不在key buffer命中时，速度慢的原因</li>
+</ul>
+<h2 id="聚簇二者区别">聚簇二者区别</h2>
+<ul>
+<li>聚簇数据访问更快 ，因为<code>索引和数据保存在同一个B+树中</code>，因此从聚簇索引中获取数据比非聚簇索引更快。</li>
+</ul>
+<h2 id="mysql如何实现的索引机制">MySQL如何实现的索引机制？</h2>
+<blockquote>
+<p>MySQL中索引分三类：B+树索引、Hash索引、全文索引</p>
+</blockquote>
+<h2 id="b-树和-b-树的差异"><strong>B+</strong> <strong>树和</strong> <strong>B</strong> <strong>树的差异：</strong></h2>
+<ul>
+<li><strong>B+树中非叶子节点的关键字也会同时存在在子节点中</strong>，并且是在子节点中所有关键字的最大值（或最小）。</li>
+<li><strong>B+树中非叶子节点仅用于索引，不保存数据记录</strong>，跟记录有关的信息都放在叶子节点中。而B树中， 非叶子节点既保存索引，也保存数据记录 。</li>
+<li><strong>B+树中所有关键字都在叶子节点出现，叶子节点构成一个有序链表，支持顺序查找</strong>，而且叶子节点本身按照关键字的大小从小到大顺序链接。</li>
+</ul>
+<h2 id="索引数据结构">索引数据结构</h2>
+<h3 id="平衡二叉树">平衡二叉树</h3>
+<ul>
+<li>基础数据结构</li>
+<li>它是一棵空树或<strong>它的左右两个子树的高度差的绝对值不超过1</strong></li>
+<li><strong>并且左右两个子树都是一棵平衡二叉树。</strong></li>
+<li>每个节点记录一个数据</li>
+</ul>
+<h4 id="avl的缺点">AVL的缺点</h4>
+<p>如果我们利用二叉树作为索引结构，<strong><code>那么磁盘的IO次数和索引树的高度是相关的</code>。平衡二叉树由于树深度过大而造成磁盘IO读写过于频繁，进而导致效率低下。</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7c8ae45e99bc3c1baa93d33fce13dd28/0cf7b2a3e96aec18e6e6e9b8ee153c9c.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7c8ae45e99bc3c1baa93d33fce13dd28/0cf7b2a3e96aec18e6e6e9b8ee153c9c.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7c8ae45e99bc3c1baa93d33fce13dd28/0cf7b2a3e96aec18e6e6e9b8ee153c9c.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7c8ae45e99bc3c1baa93d33fce13dd28/0cf7b2a3e96aec18e6e6e9b8ee153c9c.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7c8ae45e99bc3c1baa93d33fce13dd28/0cf7b2a3e96aec18e6e6e9b8ee153c9c.png"
+        title="image-20240413215425452" />为了提高查询效率，就需要 减少磁盘IO数 。<code>为了减少磁盘IO的次数，就需要尽量降低树的高度</code> ，需要把原来“瘦高”的树结构变的“矮胖”，</p>
+<h2 id="红黑树">红黑树</h2>
+<ul>
+<li>hashmap存储</li>
+<li>两次旋转达到平衡</li>
+<li>分为红黑节点</li>
+</ul>
+<h2 id="b-树和-b-树的差异-1"><strong>B+</strong> <strong>树和</strong> <strong>B</strong> <strong>树的差异</strong></h2>
+<ul>
+<li>B+树中非叶子节点的关键字也会同时存在在子节点中，并且是在子节点中所有关键字的最大值（或最小）。</li>
+<li><strong>B+树中非叶子节点仅用于索引，不保存数据记录，（因此可以存储更多节点，让树更矮胖，提高效率）</strong>，跟记录有关的信息都放在叶子节点中。而B树中， 非叶子节点既保存索引，也保存数据记录 。</li>
+<li><strong>B+树中所有关键字都在叶子节点出现，叶子节点构成一个有序链表（适用于范围查询）</strong>，而且叶子节点本身按照关键字的大小从小到大顺序链接。</li>
+</ul>
+<h2 id="什么是2-3树-2-3-4树">什么是2-3树 2-3-4树？</h2>
+<p>多叉树（multiway tree）<strong>允许<code>每个节点可以有更多的数据项和更多的子节点</code></strong>。2-3树，2-3-4树就是多叉树，<strong>多叉树通过<code>重新组织节点，减少节点数量，增加分叉，减少树的高度</code></strong>，能对二叉树进行优化</p>
+<h2 id="为什么官方建议使用自增长主键作为索引说一下自增主键和字符串类型主键的区别和影响">为什么官方建议使用自增长主键作为索引？（说一下自增主键和字符串类型主键的区别和影响）</h2>
+<blockquote>
+<ul>
+<li>自增主键能够维持底层数据顺序写入</li>
+<li>读取可以由b+树的二分查找定位</li>
+<li><strong>支持范围查找，范围数据自带顺序</strong></li>
+</ul>
+</blockquote>
+<h2 id="索引的代价"><strong>索引的代价</strong></h2>
+<p>索引是个好东西，可不能乱建，它在空间和时间上都会有消耗：</p>
+<ul>
+<li><strong>空间上的代价</strong></li>
+</ul>
+<p>每建立一个索引都要为它建立一棵B+树，<code>每一棵B+树的每一个节点都是一个数据页，一个页默认会占用 16KB 的存储空间</code>，一棵很大的B+树由许多数据页组成，那就是很大的一片存储空间。</p>
+<ul>
+<li><strong>时间上的代价</strong></li>
+</ul>
+<p><strong><code>每次对表中的数据进行 增、删、改 操作时，都需要去修改各个B+树索引</code>。而增、删、改操作可能会对节点和记录的排序造成破坏</strong><code>，所以存储引擎需要额外的时间进行一些记录移位、页面分裂、页面回收等操作来维护好节点和记录的排序。</code>如果我们建了许多索引，每个索引对应的B+树都要进行相关的维护操作，会给性能拖后腿。</p>
+<p>B 树和 B+ 树都可以作为索引的数据结构，在 <strong>MySQL 中采用的是 B+ 树</strong></p>
+<h2 id="什么是回表操作">什么是回表操作？</h2>
+<blockquote>
+<p>通俗的讲就是，如果索引的列在 select 所需获得的列中（因为在 MySQL 中索引是根据索引列的值进行排序的，所以索引节点中存在该列中的部分值）或者根据一次索引查询就能获得记录就不需要回表，<strong>如果 select 所需获得列中有大量的非索引列，索引就需要到表中找到相应的列的信息，这就叫回表。</strong></p>
+</blockquote>
+<h2 id="什么是覆盖索引">什么是覆盖索引？</h2>
+<blockquote>
+<p><strong>只需要在一棵索引树上就能获取SQL所需的所有列数据，无需回表，速度更快。</strong></p>
+<p>explain的输出结果Extra字段为Using index时，能够触发索引覆盖</p>
+<ul>
+<li><strong>覆盖索引包含查询中涉及的所有列，可以直接从索引中获取查询结果。</strong></li>
+</ul>
+</blockquote>
+<p><strong>实现覆盖索引</strong>：常见的方法是将被查询的字段，建立到联合索引里去</p>
+<p>示例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>第一次 取回id，第二次（回表）根据id拿到完整数据</p>
+<p><strong>使用联合索引</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">age</span><span class="p">,</span><span class="n">name</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">index</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="err">执行下面语句</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="o">&gt;</span><span class="mi">20</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">like</span><span class="s2">&#34;张%&#34;</span><span class="w"> </span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>单列索引升级成了联合索引后，索引的叶子节点存储了节点值，都能够命中，不会回表查询，查询效率也是比较高的</strong></p>
+<p><strong>索引下推</strong></p>
+<p>如果<strong>查询条件涉及到了索引字段</strong>，数据库系统可以将这些条件下推到存储引擎层面进行处理。这样，存储引擎就可以利用索引来快速定位符合条件的数据，而不必将所有数据加载到内存中再进行过滤。</p>
+<p><strong>就是先在where那边把能筛选的就筛选了，减少查询的结果，进而减少回表的次数</strong></p>
+<h2 id="什么是联合索引组合索引复合索引">什么是联合索引，组合索引，复合索引？</h2>
+<p><strong>最左前缀原则指的是，如果查询的时候查询条件精确匹配索引的左边连续一列或几列，则此列就可以被用到</strong>。</p>
+<h3 id="最左前缀原则">最左前缀原则</h3>
+<p>注意：假设有（a,b,c）索引，因为有查询优化器，所以 a 字段在 where 子句的顺序并不重要。例如</p>
+<p><strong><code>where b = ? and a = ?</code>也可以。</strong></p>
+<p>此外，<strong>对于b和c列，在索引里面，是全局无序，局部有序</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7c8ae45e99bc3c1baa93d33fce13dd28/ada0e57b41d4e50e45f7dd7ae0d12bed.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7c8ae45e99bc3c1baa93d33fce13dd28/ada0e57b41d4e50e45f7dd7ae0d12bed.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7c8ae45e99bc3c1baa93d33fce13dd28/ada0e57b41d4e50e45f7dd7ae0d12bed.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7c8ae45e99bc3c1baa93d33fce13dd28/ada0e57b41d4e50e45f7dd7ae0d12bed.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7c8ae45e99bc3c1baa93d33fce13dd28/ada0e57b41d4e50e45f7dd7ae0d12bed.png"
+        title="img" /></p>
+<h3 id="索引区分度">索引区分度</h3>
+<p>另外，建立联合索引时的字段顺序，对索引效率也有很大影响。越靠前的字段被用于索引过滤的概率越高，实际开发工作中<strong>建立联合索引时，要把区分度大的字段排在前面，这样区分度大的字段越有可能被更多的 SQL 使用到</strong>。</p>
+<p><strong>区分度越大，代表该索引能够被分的节点更多，更细，定位更加精准</strong></p>
+<p>区分度就是某个字段 column 不同值的个数「除以」表的总行数，计算公式如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7c8ae45e99bc3c1baa93d33fce13dd28/34967c1d775620a8fa4b421c64311030.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7c8ae45e99bc3c1baa93d33fce13dd28/34967c1d775620a8fa4b421c64311030.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7c8ae45e99bc3c1baa93d33fce13dd28/34967c1d775620a8fa4b421c64311030.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7c8ae45e99bc3c1baa93d33fce13dd28/34967c1d775620a8fa4b421c64311030.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7c8ae45e99bc3c1baa93d33fce13dd28/34967c1d775620a8fa4b421c64311030.png"
+        title="区分度计算公式" /></p>
+<p>比如，性别的区分度就很小，不适合建立索引或不适合排在联合索引列的靠前的位置，而 UUID 这类字段就比较适合做索引或排在联合索引列的靠前的位置。</p>
+<h2 id="唯一索引">唯一索引</h2>
+<p><strong>唯一索引，一种索引，不允许具有索引值相同的行</strong>，从而禁止重复的索引或<a href="https://baike.baidu.com/item/%e9%94%ae%e5%80%bc/10086175?fromModule=lemma_inlink" target="_blank" rel="noopener noreffer ">键值</a>。系统在创建该索引时检查是否有重复的键值，并在每次使用 INSERT 或 UPDATE 语句添加数据时进行检查。</p>
+<p><strong>什么时候使用唯一索引</strong>？</p>
+<blockquote>
+<p>业务需求唯一字段的时候，一般不考虑性能问题</p>
+</blockquote>
+<h2 id="什么时候适合创建索引什么时候不适合创建索引">什么时候适合创建索引，什么时候不适合创建索引？</h2>
+<blockquote>
+<p><strong>适合创建索引</strong></p>
+<ul>
+<li><strong>频繁作为where条件语句查询字段</strong></li>
+<li>关联字段需要建立索引</li>
+<li>排序字段可以建立索引</li>
+<li>分组字段可以建立索引(因为分组前提是排序)</li>
+<li>统计字段可以建立索引（如.count(),max()）</li>
+</ul>
+<p><strong>不适合创建索引</strong></p>
+<ul>
+<li><strong>频繁更新的字段不适合建立索引</strong></li>
+<li>where，分组，排序中用不到的字段不必要建立索引</li>
+<li>可以确定表<strong>数据非常少</strong>不需要建立索引</li>
+<li>参与MySQL函数计算的列不适合建索引</li>
+<li>字段中存在大量重复数据，不需要创建索引</li>
+</ul>
+</blockquote>
+<h2 id="有哪些情况会导致索引失效">有哪些情况会导致索引失效？</h2>
+<ul>
+<li>**计算、函数导致索引失效（ where length(name)=6;） **</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">-- 显示查询分析
+</span></span><span class="line"><span class="cl">EXPLAIN SELECT * FROM emp WHERE emp.name  LIKE &#39;abc%&#39;;
+</span></span><span class="line"><span class="cl">EXPLAIN SELECT * FROM emp WHERE LEFT(emp.name,3) = &#39;abc&#39;; --索引失效
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>LIKE以%，_ 开头索引失效（左模糊开始like）</strong></li>
+</ul>
+<blockquote>
+<p><strong>拓展：Alibaba《Java开发手册》</strong></p>
+<p>【强制】页面搜索严禁左模糊或者全模糊，如果需要请走搜索引擎来解决。</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">EXPLAIN SELECT * FROM emp WHERE name LIKE &#39;%ab%&#39;; --索引失效
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>不等于(!= 或者&lt;&gt;)索引失效（表达式计算：where id + 1 = 10;）</strong></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">EXPLAIN SELECT SQL_NO_CACHE * FROM emp WHERE emp.name = &#39;abc&#39; ;
+</span></span><span class="line"><span class="cl">EXPLAIN SELECT SQL_NO_CACHE * FROM emp WHERE emp.name &lt;&gt; &#39;abc&#39; ; --索引失效
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>使用or，又想索引生效，只能将or条件中的每个列都加上索引（如果在 OR 前的条件列是索引列，而在 OR 后的条件列不是索引列，那么索引会失效。）</strong></li>
+<li><strong>IS NOT NULL 失效 和 IS NULL</strong></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">EXPLAIN SELECT * FROM emp WHERE emp.name IS NULL;
+</span></span><span class="line"><span class="cl">EXPLAIN SELECT * FROM emp WHERE emp.name IS NOT NULL; --索引失效
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>**注意：**当数据库中的数据的索引列的<code>NULL值达到比较高的比例的时候</code>，即使在IS NOT NULL 的情况下 MySQL的查询优化器会选择使用索引，<code>此时type的值是range（范围查询）</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="c1">-- 将 id&gt;20000 的数据的 name 值改为 NULL
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">UPDATE</span><span class="w"> </span><span class="n">emp</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="o">`</span><span class="n">name</span><span class="o">`</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">20000</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">-- 执行查询分析，可以发现 IS NOT NULL 使用了索引
+</span></span></span><span class="line"><span class="cl"><span class="c1">-- 具体多少条记录的值为NULL可以使索引在IS NOT NULL的情况下生效，由查询优化器的算法决定
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">EXPLAIN</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">emp</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">emp</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>类型转换导致索引失效（WHERE name= 123）</strong></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">EXPLAIN</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">emp</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;123&#39;</span><span class="p">;</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">EXPLAIN</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">emp</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="o">=</span><span class="w"> </span><span class="mi">123</span><span class="p">;</span><span class="w"> </span><span class="c1">--索引失效
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>复合索引未用左列字段失效</strong></li>
+<li>如果MySQL觉得全表扫描更快时（数据少</li>
+</ul>
+<h2 id="为什么like以开头索引会失效">为什么LIKE以%开头索引会失效？</h2>
+<p>没有高效使用索引是因为字符串索引会逐个转换成accii码，生成b+树时按首个字符串顺序排序，<strong>类似复合索引未用左列字段失效一样，跳过开始部分也就无法使用生成的b+树了</strong></p>
+<h2 id="一个表有多个索引的时候能否手动选择使用哪个索引">一个表有多个索引的时候，能否手动选择使用哪个索引？</h2>
+<blockquote>
+<p><strong>不可用手动直接干预，只能通过MySQL优化器自动选择</strong></p>
+</blockquote>
+<h2 id="多个索引优先级是如何匹配的">多个索引优先级是如何匹配的？</h2>
+<blockquote>
+<ol>
+<li>主键（唯一索引）匹配</li>
+<li>全值匹配（单值匹配）</li>
+<li>最左前缀匹配</li>
+<li>范围匹配</li>
+<li>索引扫描</li>
+<li>全表扫描</li>
+</ol>
+</blockquote>
+<h2 id="group-order-与索引">group order 与索引</h2>
+<h3 id="使用order-by时能否通过索引排序">使用Order By时能否通过索引排序？</h3>
+<blockquote>
+<p>没有过滤条件不走索引</p>
+</blockquote>
+<h3 id="group-by-分组和order-by在索引使用上有什么区别">group by 分组和order by在索引使用上有什么区别？</h3>
+<blockquote>
+<p>group by 使用索引的原则几乎跟order by一致 ，唯一区别：</p>
+<ul>
+<li>group by 先排序再分组，遵照索引建的最佳左前缀法则</li>
+<li>group by没有过滤条件，也可以用上索引。Order By 必须有过滤条件才能使用上索引。</li>
+</ul>
+</blockquote>
+<h3 id="有字段为null索引是否会失效">有字段为null索引是否会失效？</h3>
+<blockquote>
+<p><strong>不一定会失效</strong>，每一条sql具体有没有使用索引 可以通过trace追踪一下</p>
+<p><strong>最好还是给上默认值</strong></p>
+<p>数字类型的给0，字符串给个空串“”</p>
+</blockquote>
+<h2 id="数据页与索引">数据页与索引</h2>
+<p>因此，<strong>InnoDB 的数据是按「数据页」为单位来读写的</strong>，也就是说，当需要读一条记录的时候，并不是将这个记录本身从磁盘读出来，而是以页为单位，将其整体读入内存。</p>
+<p>数据库的 I/O 操作的最小单位是页，<strong>InnoDB 数据页的默认大小是 16KB</strong></p>
+<p><strong>我们在数据库中要做的，就是尽量减少读取IO的次数，进而实现优化的目的</strong>。</p>
+<p>InnoDB 里的 B+ 树中的<strong>每个节点都是一个数据页</strong>，结构示意图如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7c8ae45e99bc3c1baa93d33fce13dd28/7c1854e4e1fe0aaebe1f3ce9c68a12e3.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7c8ae45e99bc3c1baa93d33fce13dd28/7c1854e4e1fe0aaebe1f3ce9c68a12e3.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7c8ae45e99bc3c1baa93d33fce13dd28/7c1854e4e1fe0aaebe1f3ce9c68a12e3.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7c8ae45e99bc3c1baa93d33fce13dd28/7c1854e4e1fe0aaebe1f3ce9c68a12e3.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7c8ae45e99bc3c1baa93d33fce13dd28/7c1854e4e1fe0aaebe1f3ce9c68a12e3.png"
+        title="图片" /></p>
+<p><strong>innodb的B+树和普通B+树的区别：</strong></p>
+<ul>
+<li>B+ 树的叶子节点之间是用「双向链表」进行连接，这样的好处是既能向右遍历，也能向左遍历。</li>
+<li><strong>B+ 树点节点内容是数据页，数据页里存放了用户的记录以及各种信息</strong>，每个数据页默认大小是 16 KB。</li>
+</ul>
+<p><strong>我们再看看 B+ 树如何实现快速查找主键为 6 的记录，以上图为例子：</strong></p>
+<ul>
+<li>从根节点开始，通过<strong>二分法快速定位到符合页内范围包含查询值的页</strong>，因为查询的主键值为 6，在[1, 7)范围之间，所以到页 30 中查找更详细的目录项；</li>
+<li>在非叶子节点（页30）中，继续通过二分法快速定位到符合页内范围包含查询值的页，主键值大于 5，所以就到叶子节点（页16）查找记录；</li>
+<li>接着，<strong>在叶子节点（页16）中，通过槽查找记录时，使用二分法快速定位要查询的记录在哪个槽</strong>（哪个记录分组），定位到槽后，再遍历槽内的所有记录，找到主键为 6 的记录。</li>
+</ul>
+<h2 id="mysql-单表不要超过-2000w-行靠谱吗">MySQL 单表不要超过 2000W 行，靠谱吗？</h2>
+<p>2000W 也只是推荐值，<strong>超过了这个值可能会导致 B + 树层级更高，影响查询性能。</strong></p>
+<h2 id="count效率问题">count效率问题</h2>
+<h3 id="小结">小结</h3>
+<p><strong>count(1)、 count(*)、 count(主键字段)在执行的时候，如果表里存在二级索引，优化器就会选择二级索引进行扫描。</strong></p>
+<p>所以，如果要执行 count(1)、 count(*)、 count(主键字段) 时，尽量在数据表上建立二级索引，这样优化器会自动采用 key_len 最小的二级索引进行扫描，相比于扫描主键索引效率会高一些。</p>
+<p>再来，就是<strong>不要使用 count(字段) 来统计记录个数，因为它的效率是最差的，会采用全表扫描的方式来统计</strong>。如果你非要统计表中该字段不为 NULL 的记录个数，建议给这个字段建立一个二级索引。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-03-26</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.kenger.work/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/" data-title="数据库索引" data-hashtags="数据库"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.kenger.work/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/" data-hashtag="数据库"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.kenger.work/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/" data-title="数据库索引"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.kenger.work/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/" data-title="数据库索引"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.kenger.work/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/" data-title="数据库索引"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/java-jvm/" class="prev" rel="prev" title="java-JVM学习"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>java-JVM学习</a>
+            <a href="/spring%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" class="next" rel="next" title="Spring常见问题">Spring常见问题<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.125.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.kenger.work/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

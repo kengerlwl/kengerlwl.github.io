@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>关于web服务中的认证，授权，会话 - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://blog.kenger.work/%E5%85%B3%E4%BA%8Eweb%E6%9C%8D%E5%8A%A1%E4%B8%AD%E7%9A%84%E8%AE%A4%E8%AF%81%E6%8E%88%E6%9D%83%E4%BC%9A%E8%AF%9D/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="关于web服务中的认证，授权，会话">
+  <meta property="og:description" content="背景 在学习过程中，认证与授权通常是绕不过去的一部分，很多服务都有身份限制，不是特定的用户不能执行部分的资源操作，也不能访问到其他用户。 个人在">
+  <meta property="og:locale" content="zh-CN">
+  <meta property="og:type" content="article">
+  <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-09-01T15:27:31+00:00">
+    <meta property="article:modified_time" content="2023-09-01T15:27:31+00:00">
+    <meta property="article:tag" content="Web">
+    <meta property="article:tag" content="Spring">
+    <meta property="article:tag" content="Session">
+    <meta property="og:image" content="https://blog.kenger.work/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blog.kenger.work/logo.png"><meta name="twitter:title" content="关于web服务中的认证，授权，会话">
+<meta name="twitter:description" content="背景 在学习过程中，认证与授权通常是绕不过去的一部分，很多服务都有身份限制，不是特定的用户不能执行部分的资源操作，也不能访问到其他用户。 个人在">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.kenger.work/%E5%85%B3%E4%BA%8Eweb%E6%9C%8D%E5%8A%A1%E4%B8%AD%E7%9A%84%E8%AE%A4%E8%AF%81%E6%8E%88%E6%9D%83%E4%BC%9A%E8%AF%9D/" /><link rel="prev" href="https://blog.kenger.work/ai-agent%E5%85%AB%E8%82%A1/" /><link rel="next" href="https://blog.kenger.work/%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84openwrt%E9%95%9C%E5%83%8F%E8%B8%A9%E5%9D%91%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "关于web服务中的认证，授权，会话",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.kenger.work\/%E5%85%B3%E4%BA%8Eweb%E6%9C%8D%E5%8A%A1%E4%B8%AD%E7%9A%84%E8%AE%A4%E8%AF%81%E6%8E%88%E6%9D%83%E4%BC%9A%E8%AF%9D\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/blog.kenger.work\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "web, Spring, Session","wordcount":  1423 ,
+        "url": "https:\/\/blog.kenger.work\/%E5%85%B3%E4%BA%8Eweb%E6%9C%8D%E5%8A%A1%E4%B8%AD%E7%9A%84%E8%AE%A4%E8%AF%81%E6%8E%88%E6%9D%83%E4%BC%9A%E8%AF%9D\/","datePublished": "2023-09-01T15:27:31+00:00","dateModified": "2023-09-01T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/blog.kenger.work\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/%E5%85%B3%E4%BA%8Eweb%E6%9C%8D%E5%8A%A1%E4%B8%AD%E7%9A%84%E8%AE%A4%E8%AF%81%E6%8E%88%E6%9D%83%E4%BC%9A%E8%AF%9D/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/%E5%85%B3%E4%BA%8Eweb%E6%9C%8D%E5%8A%A1%E4%B8%AD%E7%9A%84%E8%AE%A4%E8%AF%81%E6%8E%88%E6%9D%83%E4%BC%9A%E8%AF%9D/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">关于web服务中的认证，授权，会话</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.kenger.work/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%8A%80%E6%9C%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>技术</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-09-01">2023-09-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1423 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#cookie">Cookie</a></li>
+        <li><a href="#session">Session</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#什么是-jwt"><strong>什么是 JWT</strong></a></li>
+    <li><a href="#token-和-jwt-的区别"><strong>Token 和 JWT 的区别</strong></a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="背景">背景</h1>
+<p>在学习过程中，认证与授权通常是绕不过去的一部分，很多服务都有身份限制，不是特定的用户不能执行部分的资源操作，也不能访问到其他用户。</p>
+<p>个人在学习过程中对这个学的还不够透彻，经常是一知半解。需要深入的学习一下里面的常见的技术以及整体的架构。</p>
+<p>故有本文，来解决这个问题。</p>
+<h1 id="web服务说明场景需求">web服务（说明场景需求）</h1>
+<p>在基础的web服务中，我们的会话往往是无状态的，也就是说，上一次的访问时的结果等信息这一次并不知道，每次都是一次独立的访问。（<strong>HTTP 是无状态的协议（对于事务处理没有记忆能力，每次客户端和服务端会话完成时，服务端不会保存任何会话信息</strong>））</p>
+<p>而在常见的用户会话中，我上次登陆后，这次应该知道我已经登陆，并开放部分权限。</p>
+<p>这就会设计到很多常见的概念，例如Cookie，Session和Token等等。</p>
+<h3 id="cookie">Cookie</h3>
+<p>Cookie本身可以理解为一个键值对</p>
+<p><strong>cookie 存储在客户端：</strong> cookie 是服务器发送到用户浏览器并保存在本地的一小块数据，它会在浏览器下次向同一服务器再发起请求时被携带并发送到服务器上。</p>
+<p><strong>服务器端修改客户端的Cookie</strong>：服务器端可以通过设置setCookie的Response的header来修改客户端的Cookie。</p>
+<h3 id="session">Session</h3>
+<ul>
+<li><strong>session 是另一种记录服务器和客户端会话状态的机制</strong></li>
+</ul>
+<p>注意，Session仅仅只是一种机制，实现方式有很多，</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/1c96dc0740678a515e90ba0f3ee8ff6f/b5b07d10863a53a4cb4e74fd08677838.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/1c96dc0740678a515e90ba0f3ee8ff6f/b5b07d10863a53a4cb4e74fd08677838.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/1c96dc0740678a515e90ba0f3ee8ff6f/b5b07d10863a53a4cb4e74fd08677838.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/1c96dc0740678a515e90ba0f3ee8ff6f/b5b07d10863a53a4cb4e74fd08677838.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/1c96dc0740678a515e90ba0f3ee8ff6f/b5b07d10863a53a4cb4e74fd08677838.png"
+        title="v2-369c25ea411974a1cd4d6ed69d533bcb_b" /></p>
+<ul>
+<li>
+<p><strong>session 认证流程：</strong></p>
+</li>
+<li>
+<ul>
+<li>用户第一次请求服务器的时候，服务器根据用户提交的相关信息，创建对应的 Session</li>
+<li>请求返回时将此 Session 的唯一标识信息 SessionID 返回给浏览器</li>
+<li>浏览器接收到服务器返回的 SessionID 信息后，会将此信息存入到 Cookie 中，同时 Cookie 记录此 SessionID 属于哪个域名</li>
+<li>当用户第二次访问服务器的时候，请求会自动判断此域名下是否存在 Cookie 信息，如果存在自动将 Cookie 信息也发送给服务端，服务端会从 Cookie 中获取 SessionID，再根据 SessionID 查找对应的 Session 信息，如果没有找到说明用户没有登录或者登录失效，如果找到 Session 证明用户已经登录可执行后面操作。</li>
+</ul>
+</li>
+</ul>
+<p>根据以上流程可知，<strong>SessionID 是连接 Cookie 和 Session 的一道桥梁</strong>，大部分系统也是根据此原理来验证用户登录状态。</p>
+<ul>
+<li>
+<p><strong>Session是一种链式的</strong></p>
+</li>
+<li>
+<p>注意：Sessionid是存储在服务器端的，服务器端也可以对Sessionid记录一些信息在服务器上类似Cookie记录当前会话的信息在客户端上。</p>
+</li>
+</ul>
+<h1 id="关于token">关于Token</h1>
+<p>Token和前面提到的Cookie和Sessionid很像，都是为了验证鉴权整出来的东西。</p>
+<p><strong>是一种令牌机制。Token 使服务端无状态化，不会存储会话信息。Token认证适用于分布式系统和跨域认证场景</strong></p>
+<ul>
+<li>
+<p><strong>访问资源接口（API）时所需要的资源凭证</strong></p>
+</li>
+<li>
+<p><strong>特点：</strong></p>
+</li>
+<li>
+<ul>
+<li><strong>服务端无状态化、可扩展性好</strong></li>
+<li><strong>支持移动端设备</strong></li>
+<li>安全</li>
+<li>支持跨程序调用</li>
+<li>通常也是放header里面传递</li>
+</ul>
+</li>
+<li>
+<p><strong>移动端对 cookie 的支持不是很好，而 session 需要基于 cookie 实现，所以移动端常用的是 token</strong></p>
+</li>
+</ul>
+<h2 id="什么是-jwt"><strong>什么是 JWT</strong></h2>
+<ul>
+<li>
+<ul>
+<li>JSON Web Token（简称 JWT）是目前最流行的<strong>跨域认证</strong>解决方案。</li>
+<li>是一种<strong>认证授权机制</strong>。</li>
+<li>JWT 是为了在网络应用环境间<strong>传递声明</strong>而执行的一种基于 JSON 的开放标准（RFC 7519）</li>
+</ul>
+</li>
+</ul>
+<h2 id="token-和-jwt-的区别"><strong>Token 和 JWT 的区别</strong></h2>
+<p><strong>区别：</strong></p>
+<ul>
+<li>Token：服务端验证客户端发送过来的 Token 时，还需要查询数据库获取用户信息，然后验证 Token 是否有效。</li>
+<li>JWT：将 Token 和 Payload 加密后存储于客户端，服务端只需要使用密钥解密进行校验（校验也是 JWT 自己实现的）即可，不需要查询或者减少查询数据库，因为 JWT 自包含了用户信息和加密的数据。</li>
+</ul>
+<h1 id="分布式架构下-session-共享方案"><strong>分布式架构下 session 共享方案</strong></h1>
+<ul>
+<li>基于持久化第三方组件，例如Redis，mysql。Spring Session就支持Redis存储</li>
+</ul>
+<h1 id="ref">ref</h1>
+<p><a href="https://zhuanlan.zhihu.com/p/164696755" target="_blank" rel="noopener noreffer ">还分不清 Cookie、Session、Token、JWT？</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-09-01</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E5%85%B3%E4%BA%8Eweb%E6%9C%8D%E5%8A%A1%E4%B8%AD%E7%9A%84%E8%AE%A4%E8%AF%81%E6%8E%88%E6%9D%83%E4%BC%9A%E8%AF%9D/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.kenger.work/%E5%85%B3%E4%BA%8Eweb%E6%9C%8D%E5%8A%A1%E4%B8%AD%E7%9A%84%E8%AE%A4%E8%AF%81%E6%8E%88%E6%9D%83%E4%BC%9A%E8%AF%9D/" data-title="关于web服务中的认证，授权，会话" data-hashtags="web,Spring,Session"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.kenger.work/%E5%85%B3%E4%BA%8Eweb%E6%9C%8D%E5%8A%A1%E4%B8%AD%E7%9A%84%E8%AE%A4%E8%AF%81%E6%8E%88%E6%9D%83%E4%BC%9A%E8%AF%9D/" data-hashtag="web"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.kenger.work/%E5%85%B3%E4%BA%8Eweb%E6%9C%8D%E5%8A%A1%E4%B8%AD%E7%9A%84%E8%AE%A4%E8%AF%81%E6%8E%88%E6%9D%83%E4%BC%9A%E8%AF%9D/" data-title="关于web服务中的认证，授权，会话"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.kenger.work/%E5%85%B3%E4%BA%8Eweb%E6%9C%8D%E5%8A%A1%E4%B8%AD%E7%9A%84%E8%AE%A4%E8%AF%81%E6%8E%88%E6%9D%83%E4%BC%9A%E8%AF%9D/" data-title="关于web服务中的认证，授权，会话"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.kenger.work/%E5%85%B3%E4%BA%8Eweb%E6%9C%8D%E5%8A%A1%E4%B8%AD%E7%9A%84%E8%AE%A4%E8%AF%81%E6%8E%88%E6%9D%83%E4%BC%9A%E8%AF%9D/" data-title="关于web服务中的认证，授权，会话"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/web/">Web</a>,&nbsp;<a href="/tags/spring/">Spring</a>,&nbsp;<a href="/tags/session/">Session</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/ai-agent%E5%85%AB%E8%82%A1/" class="prev" rel="prev" title="ai-agent八股"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>ai-agent八股</a>
+            <a href="/%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84openwrt%E9%95%9C%E5%83%8F%E8%B8%A9%E5%9D%91%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/" class="next" rel="next" title="关于我的openwrt镜像踩坑注意事项">关于我的openwrt镜像踩坑注意事项<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.125.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.kenger.work/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

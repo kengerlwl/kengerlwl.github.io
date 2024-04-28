@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>K8S学习 - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://blog.kenger.work/k8s%E5%AD%A6%E4%B9%A0/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="K8S学习">
+  <meta property="og:description" content="K8S学习 ref kubernetes面试题汇总详解-腾讯云开发者社区-腾讯云 Document - K8S 教程 - 易文档 为什么需要K8S 传统的docker应用，虽然能够直">
+  <meta property="og:locale" content="zh-CN">
+  <meta property="og:type" content="article">
+  <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-04-11T15:27:31+00:00">
+    <meta property="article:modified_time" content="2024-04-11T15:27:31+00:00">
+    <meta property="article:tag" content="运维">
+    <meta property="og:image" content="https://blog.kenger.work/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blog.kenger.work/logo.png"><meta name="twitter:title" content="K8S学习">
+<meta name="twitter:description" content="K8S学习 ref kubernetes面试题汇总详解-腾讯云开发者社区-腾讯云 Document - K8S 教程 - 易文档 为什么需要K8S 传统的docker应用，虽然能够直">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.kenger.work/k8s%E5%AD%A6%E4%B9%A0/" /><link rel="prev" href="https://blog.kenger.work/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E5%A4%8D%E7%9B%98/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "K8S学习",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.kenger.work\/k8s%E5%AD%A6%E4%B9%A0\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/blog.kenger.work\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "运维","wordcount":  5661 ,
+        "url": "https:\/\/blog.kenger.work\/k8s%E5%AD%A6%E4%B9%A0\/","datePublished": "2024-04-11T15:27:31+00:00","dateModified": "2024-04-11T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/blog.kenger.work\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/k8s%E5%AD%A6%E4%B9%A0/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/k8s%E5%AD%A6%E4%B9%A0/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">K8S学习</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.kenger.work/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/find-job/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Find JOB</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-04-11">2024-04-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 5661 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 12 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#ref">ref</a></li>
+    <li><a href="#为什么需要k8s">为什么需要K8S</a></li>
+    <li><a href="#整体结构">整体结构</a>
+      <ul>
+        <li><a href="#简述-kubernetes-kubelet-的作用">简述 Kubernetes kubelet 的作用？</a></li>
+        <li><a href="#pod是什么">pod是什么</a></li>
+        <li><a href="#副本集replica-setrs">副本集（Replica Set，RS）</a></li>
+        <li><a href="#部署deployment">部署（Deployment）</a></li>
+        <li><a href="#k8s的service是什么">K8s的Service是什么？</a>
+          <ul>
+            <li><a href="#简述-kube-proxy-ipvs-和-iptables-的异同">简述 kube-proxy ipvs 和 iptables 的异同？</a></li>
+          </ul>
+        </li>
+        <li><a href="#ingress负载均衡">ingress负载均衡</a></li>
+        <li><a href="#命名空间namespace">命名空间（Namespace）</a></li>
+      </ul>
+    </li>
+    <li><a href="#数据持久化方案">数据持久化方案</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#emptydir空目录">EmptyDir（空目录）</a></li>
+            <li><a href="#2hostpath">2）Hostpath</a></li>
+            <li><a href="#3persistentvolume简称pv">3）PersistentVolume（简称PV）</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#基本的hello-world应用">基本的hello world应用</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#创建一个简单的http-web应用">创建一个简单的http web应用</a></li>
+            <li><a href="#暴露端口">暴露端口</a></li>
+          </ul>
+        </li>
+        <li><a href="#介绍k8s的服务暴露方式">介绍K8S的服务暴露方式</a>
+          <ul>
+            <li>
+              <ul>
+                <li><a href="#clusterip">ClusterIP</a></li>
+                <li><a href="#nodeport">NodePort</a></li>
+                <li><a href="#loadbalancer">LoadBalancer</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#配置文件使用">配置文件使用</a>
+      <ul>
+        <li><a href="#pod">pod</a></li>
+        <li><a href="#deployment">Deployment</a></li>
+        <li><a href="#service">Service</a></li>
+        <li><a href="#configmap">ConfigMap</a></li>
+        <li><a href="#secret">Secret</a></li>
+        <li><a href="#persistentvolume">PersistentVolume</a></li>
+        <li><a href="#namespace">Namespace</a></li>
+      </ul>
+    </li>
+    <li><a href="#常见命令">常见命令</a></li>
+    <li><a href="#minikube使用">minikube使用</a></li>
+    <li><a href="#pod-通信">pod 通信</a>
+      <ul>
+        <li><a href="#同一个pod上container通信"><strong>同一个POD上Container通信</strong></a></li>
+        <li><a href="#同一个node不同pod"><strong>同一个Node，不同Pod</strong></a></li>
+        <li><a href="#不同node的pod通信">不同node的pod通信</a></li>
+      </ul>
+    </li>
+    <li><a href="#pod-的分配">pod 的分配</a></li>
+    <li><a href="#将-pod-指派给节点">将 Pod 指派给节点</a></li>
+    <li><a href="#为什么有了容器还需要pod">为什么有了容器还需要Pod：</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="k8s学习">K8S学习</h1>
+<h2 id="ref">ref</h2>
+<p><a href="https://cloud.tencent.com/developer/article/1628686" target="_blank" rel="noopener noreffer ">kubernetes面试题汇总详解-腾讯云开发者社区-腾讯云</a></p>
+<p><a href="https://k8s.easydoc.net/docs/dRiQjyTY/28366845/6GiNOzyZ/puf7fjYr" target="_blank" rel="noopener noreffer ">Document - K8S 教程 - 易文档</a></p>
+<h2 id="为什么需要k8s">为什么需要K8S</h2>
+<p>传统的docker应用，虽然能够直接将服务打包，快速部署，但是当涉及多个机器，多个容器一起编排运维的时候，就会很麻烦，docker-compose一般也只在一台机器上work。多个机器就会很困难。因此，<strong>需要K8S实现多台机器的自动部署，弹性伸缩。</strong></p>
+<h2 id="整体结构">整体结构</h2>
+<p>主要由以下几个核心组件组成：</p>
+<ul>
+<li><strong>etcd（key-value）</strong> <strong>负责存储集群中各种资源对象的信息</strong>。；</li>
+<li><strong>apiserver 提供了资源操作的唯一入口</strong>，并提供认证、授权、访问控制、API 注册和发现等机制；</li>
+<li>controller manager 负责维护集群的状态，比如故障检测、自动扩展、滚动更新等；</li>
+<li><strong>scheduler 负责资源的调度</strong>，按照预定的调度策略<strong>将 Pod 调度到相应的机器上</strong>；</li>
+<li>kubelet 负责维护容器的生命周期，同时也负责 Volume（CSI）和网络（CNI）的管理；</li>
+<li><strong>Container runtime（支持docker等常见的的CRI） 负责镜像管理以及 Pod 和容器的真正运行（CRI）</strong>；</li>
+<li><strong>kube-proxy 负责为 Service 提供 cluster 内部的服务发现和负载均衡</strong>；</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/6a942e0fbd78bbacf026b27ac02bef3b/b3309a121a94959a6874384cd23a45f7.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/6a942e0fbd78bbacf026b27ac02bef3b/b3309a121a94959a6874384cd23a45f7.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/6a942e0fbd78bbacf026b27ac02bef3b/b3309a121a94959a6874384cd23a45f7.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/6a942e0fbd78bbacf026b27ac02bef3b/b3309a121a94959a6874384cd23a45f7.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/6a942e0fbd78bbacf026b27ac02bef3b/b3309a121a94959a6874384cd23a45f7.png"
+        title="Kuberentes 架构（图片来自于网络）" /></p>
+<p>结构构成</p>
+<ul>
+<li><strong>master节点，主控节点</strong></li>
+<li><strong>node，实际运行服务的节点</strong></li>
+<li>pod是实际的容器，运行在node里面。<strong>Pod 是在 Kubernetes 集群中运行部署应用或服务的最小单元</strong>，它是可以<strong>支持多容器</strong>的</li>
+</ul>
+<h3 id="简述-kubernetes-kubelet-的作用">简述 Kubernetes kubelet 的作用？</h3>
+<p>在 Kubernetes 集群中，在<strong>每个 Node（又称 Worker）上都会启动一个 kubelet 服务进程。</strong></p>
+<p>该进程<strong>用于处理 Master 下发到本节点的任务，管理 Pod 及 Pod 中的容器</strong>。</p>
+<p><strong>每个 kubelet 进程都会在 API Server 上注册节点自身的信息，定期向 Master 汇报节点资源的使用情况</strong>，并通过 cAdvisor 监控容器和节点资源。</p>
+<h3 id="pod是什么">pod是什么</h3>
+<p><strong>Pod 是 k8s 中集群部署应用和服务的最小单元，一个 pod 中可以部署多个容器。</strong></p>
+<h3 id="副本集replica-setrs">副本集（Replica Set，RS）</h3>
+<p>RS 是新一代 RC，提供同样的高可用能力，区别主要在于 RS 后来居上，能支持更多种类的匹配模式。副本集对象一般不单独使用，而是作为 Deployment 的理想状态参数使用。</p>
+<p>Replication Controller <strong>是实现弹性伸缩、动态扩容和滚动升级的核心。</strong></p>
+<h3 id="部署deployment">部署（Deployment）</h3>
+<p>Deployment 提供了一种对 Pod 和 ReplicaSet 的管理方式，每一个 Deployment 都对应集群中的一次部署，是非常常见的 Kubernetes 对象。<strong>用于管理 Pod 的部署和扩展</strong></p>
+<h3 id="k8s的service是什么">K8s的Service是什么？</h3>
+<p>答：Pod每次重启或者重新部署，其IP地址都会产生变化，这使得pod间通信和pod与外部通信变得困难，这时候，就需要Service为pod提供一个固定的入口。</p>
+<p>Service的Endpoint列表通常绑定了一组相同配置的pod，通过负载均衡的方式把外界请求分配到多个pod上</p>
+<h4 id="简述-kube-proxy-ipvs-和-iptables-的异同">简述 kube-proxy ipvs 和 iptables 的异同？</h4>
+<p>iptables 与 IPVS 都是基于 Netfilter 实现的，但因为定位不同，二者有着本质的差别：<strong>iptables 是为防火墙而设计的；IPVS 则专门用于高性能负载均衡，并使用更高效的数据结构（Hash 表），允许几乎无限的规模扩张。</strong></p>
+<p>与 iptables 相比，IPVS 拥有以下明显优势：</p>
+<ol>
+<li>为大型集群提供了更好的可扩展性和性能；</li>
+<li>支持比 iptables 更复杂的复制均衡算法（最小负载、最少连接、加权等）；</li>
+<li>支持服务器健康检查和连接重试等功能；</li>
+<li>可以动态修改 ipset 的集合，即使 iptables 的规则正在使用这个集合。</li>
+</ol>
+<h3 id="ingress负载均衡">ingress负载均衡</h3>
+<p><strong>但是一般智能用于一些无状态的分发</strong></p>
+<p>Ingress 是反向代理规则，用来规定 HTTP/S 请求应该被转发到哪个 Service 上，比如根据请求中不同的 Host 和 url 路径让请求落到不同的 Service 上。</p>
+<h3 id="命名空间namespace">命名空间（Namespace）</h3>
+<p><strong>命名空间为 Kubernetes 集群提供虚拟的隔离作用</strong>，Kubernetes 集群初始有两个命名空间，分别是默认命名空间 default 和系统命名空间 kube-system，除此以外，管理员可以可以创建新的命名空间满足需要。</p>
+<p>名字空间适用于存在很多跨多个团队或项目的用户的场景。对于只有几到几十个用户的集群，根本不需要创建或考虑名字空间。</p>
+<h2 id="数据持久化方案">数据持久化方案</h2>
+<h4 id="emptydir空目录">EmptyDir（空目录）</h4>
+<p>没有指定要挂载宿主机上的某个目录，直接由Pod内部映射到宿主机上。类似于docker中的manager volume。</p>
+<p><strong>主要使用场景</strong>：</p>
+<ul>
+<li>只需要临时将数据保存在磁盘上，比如在合并/排序算法中；</li>
+<li><strong>作为两个容器的共享存储</strong>，使得第一个内容管理的容器可以将生成的数据存入其中，同时由同一个webserver容器对外提供这些页面。</li>
+</ul>
+<p><strong>emptyDir</strong>的<strong>特性</strong>：</p>
+<p>同个pod里面的不同容器，共享同一个持久化目录，当pod节点删除时，volume的数据也会被删除。如果仅仅是容器被销毁，pod还在，则不会影响volume中的数据。</p>
+<p>总结来说：emptyDir的数据持久化的生命周期和使用的pod一致。一般是作为临时存储使用。</p>
+<h4 id="2hostpath">2）Hostpath</h4>
+<p><strong>将宿主机上已存在的目录或文件挂载到容器内部</strong>。类似于docker中的bind mount挂载方式。</p>
+<p>这种数据持久化方式，运用场景不多，因为它增加了pod与节点之间的耦合。</p>
+<p>一般对于k8s集群本身的数据持久化和docker本身的数据持久化会使用这种方式，可以自行参考apiService的yaml文件，位于：/etc/kubernetes/main…目录下。</p>
+<h4 id="3persistentvolume简称pv">3）PersistentVolume（简称PV）</h4>
+<ul>
+<li><strong>PV/PVC</strong>：PV 和 PVC 提供了一个抽象层级，<strong>使得存储资源可以被抽象和独立于 Pod 使用。PV 和 PVC 的存在使得存储的管理更加灵活，可以动态地分配和释放存储资源。</strong></li>
+<li><strong>使得存储资源可以在不同的环境中进行移植和重用，而不受底层存储技术的限制。</strong></li>
+</ul>
+<p><strong>基于NFS服务的PV，也可以基于GFS的PV。它的作用是统一数据持久化目录，方便管理</strong>。</p>
+<p>在一个PV的yaml文件中，可以对其配置PV的大小，指定PV的访问模式：</p>
+<ul>
+<li>ReadWriteOnce：只能以读写的方式挂载到单个节点；</li>
+<li>ReadOnlyMany：能以只读的方式挂载到多个节点；</li>
+<li>ReadWriteMany：能以读写的方式挂载到多个节点。以及指定pv的回收策略：</li>
+<li>recycle：清除PV的数据，然后自动回收；</li>
+<li>Retain：需要手动回收；</li>
+<li>delete：删除云存储资源，云存储专用；</li>
+</ul>
+<h2 id="基本的hello-world应用">基本的hello world应用</h2>
+<p>我这里使用minikube。初步搭建一个玩玩</p>
+<h4 id="创建一个简单的http-web应用">创建一个简单的http web应用</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl create deployment hello-minikube1 --image=registry.cn-hangzhou.aliyuncs.com/google_containers/echoserver:1.10
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 也可以选择run
+</span></span><span class="line"><span class="cl">kubectl run hello-minikube --image=tomcat:8.0 --port=8001
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个会创建一个简单的提供一个hello world的web服务应用。并提供一个内部的端口</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/6a942e0fbd78bbacf026b27ac02bef3b/522cdda19a744e4f30963e5e4251f4ed.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/6a942e0fbd78bbacf026b27ac02bef3b/522cdda19a744e4f30963e5e4251f4ed.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/6a942e0fbd78bbacf026b27ac02bef3b/522cdda19a744e4f30963e5e4251f4ed.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/6a942e0fbd78bbacf026b27ac02bef3b/522cdda19a744e4f30963e5e4251f4ed.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/6a942e0fbd78bbacf026b27ac02bef3b/522cdda19a744e4f30963e5e4251f4ed.png"
+        title="image-20240412140417684" /></p>
+<p><strong>192这个就是k8s的内部节点ip。宿主机是不能直接curl访问的。pod的ip一般是10开的。</strong></p>
+<p><strong>相当于在你的电脑上搭建了一个局域网，然后某个节点ip是192。</strong></p>
+<p>在 Kubernetes 中，<code>Deployment</code> 和 <code>Run</code> 是两种不同的方式来管理应用程序的运行。</p>
+<ol>
+<li><strong>Deployment</strong>：
+<ul>
+<li><code>Deployment</code> 是 Kubernetes 中用来创建和管理 Pod 的一种资源对象。</li>
+<li>通过 Deployment，你可以定义应用程序的期望状态，并让 Kubernetes 管理和保持该状态，即使在节点故障或者应用程序需要更新时也是如此。</li>
+<li>Deployment 提供了滚动更新和回滚功能，使得你可以方便地进行应用程序的版本管理。</li>
+<li>通常，建议使用 Deployment 来管理长期运行的应用程序。</li>
+</ul>
+</li>
+<li><strong>Run</strong>：
+<ul>
+<li><code>Run</code> 是 Kubernetes 提供的一种快速创建 Pod 的命令行工具，用于快速部署容器。</li>
+<li>通过 <code>kubectl run</code> 命令，你可以快速创建一个 Pod，并指定容器镜像和其他配置参数。</li>
+<li><code>Run</code> 创建的 Pod 没有复杂的控制器或者管理功能，它们只是简单地创建并运行，不会进行自动的故障恢复或者滚动更新。</li>
+<li><code>Run</code> 主要用于临时任务、快速测试或者一次性作业。</li>
+</ul>
+</li>
+</ol>
+<h4 id="暴露端口">暴露端口</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl expose deployment hello-minikube1 --type=LoadBalancer --port=8000
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后就可以通过<strong>宿主机ip：8000</strong> 端口访问了</p>
+<h3 id="介绍k8s的服务暴露方式">介绍K8S的服务暴露方式</h3>
+<h5 id="clusterip">ClusterIP</h5>
+<p>默认的，仅在集群内可用</p>
+<h5 id="nodeport">NodePort</h5>
+<p>暴露端口到节点，提供了集群外部访问的入口
+端口范围固定 30000 ~ 32767</p>
+<h5 id="loadbalancer">LoadBalancer</h5>
+<p>需要负载均衡器（通常都需要云服务商提供，裸机可以安装 <a href="https://metallb.universe.tf/" target="_blank" rel="noopener noreffer ">METALLB</a> 测试）
+会额外生成一个 IP 对外服务
+K8S 支持的负载均衡器：<a href="https://kubernetes.io/zh/docs/concepts/services-networking/service/#internal-load-balancer" target="_blank" rel="noopener noreffer ">负载均衡器</a></p>
+<h2 id="配置文件使用">配置文件使用</h2>
+<p>当编写 YAML 文件时，对于不同的 Kubernetes 资源种类（kind），你需要根据其特定的规范来填写字段。下面是一些常见 Kubernetes 资源种类的示例 YAML 文件：</p>
+<h3 id="pod">pod</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Pod</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">test-pod</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">containers</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">test-container</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">ccr.ccs.tencentyun.com/k8s-tutorial/test-k8s:v1</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="deployment">Deployment</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">apps/v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Deployment</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">test-deployment</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">test-app</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">test-app</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">containers</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">test-container</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">ccr.ccs.tencentyun.com/k8s-tutorial/test-k8s:v1</span><span class="w"> </span><span class="c"># 开启一个8080的web页面</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过exec进入pod容器内部访问目标端口</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">服务的默认类型是ClusterIP，只能在集群内部访问，我们可以进入到 Pod 里面访问：
+</span></span><span class="line"><span class="cl">kubectl exec -it pod-name -- bash
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/6a942e0fbd78bbacf026b27ac02bef3b/dd2639162ad1bb2ffa4ce6f3e75e43e4.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/6a942e0fbd78bbacf026b27ac02bef3b/dd2639162ad1bb2ffa4ce6f3e75e43e4.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/6a942e0fbd78bbacf026b27ac02bef3b/dd2639162ad1bb2ffa4ce6f3e75e43e4.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/6a942e0fbd78bbacf026b27ac02bef3b/dd2639162ad1bb2ffa4ce6f3e75e43e4.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/6a942e0fbd78bbacf026b27ac02bef3b/dd2639162ad1bb2ffa4ce6f3e75e43e4.png"
+        title="image-20240413191151261" /></p>
+<h3 id="service">Service</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Service</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">test-service</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">test-app</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">NodePort</span><span class="w"> </span><span class="c"># 默认是ClusterIP， 只有集群内部才能访问。我们可以使用NodePort和Loadbalancer 让外部访问</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">8080</span><span class="w">        </span><span class="c"># 本 Service 的端口</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">targetPort</span><span class="p">:</span><span class="w"> </span><span class="m">8080</span><span class="w">  </span><span class="c"># 容器端口</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">nodePort</span><span class="p">:</span><span class="w"> </span><span class="m">31000</span><span class="w">   </span><span class="c"># 节点端口，范围固定 30000 ~ 32767, 暴露给外部的node:ip</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><strong>注意！！！：如果你是用 minikube，因为是模拟集群，你的电脑并不是节点，节点是 minikube 模拟出来的，所以你并不能直接在电脑上访问到服务</strong></p>
+<p>要先获取node的ip。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">❯ minikube ip
+</span></span><span class="line"><span class="cl">192.168.49.2
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 注意，ubuntu上可以直接访问，但是我的mac上node有防火墙（好像是路由不对，反正不行），只有进入容器内部能够直接访问，应该线进入node内部关闭防火墙，或者直接进入节点内部查看端口是否开启了相关服务
+</span></span><span class="line"><span class="cl">❯ curl 192.168.49.2:31000
+</span></span><span class="line"><span class="cl">index page 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">IP lo10.244.0.12, hostname: test-deployment-84757bcf57-nmfts
+</span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
+<h3 id="configmap">ConfigMap</h3>
+<p><strong>ConfigMap 用于存储非敏感的配置数据</strong>，例如应用程序的配置文件、环境变量、命令行参数等。</p>
+<p><strong>config map 不支持热加载</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">ConfigMap</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">test-config</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">data</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">key1</span><span class="p">:</span><span class="w"> </span><span class="l">value1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">key2</span><span class="p">:</span><span class="w"> </span><span class="l">value2</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>可以直接用于生成pod环境变量，也可以挂载为数据卷</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 启动配置
+</span></span><span class="line"><span class="cl">kubectl apply -f test-configmap.yaml
+</span></span><span class="line"><span class="cl"># 重新加载所有pod
+</span></span><span class="line"><span class="cl">ubectl delete -f test-deployment.yaml
+</span></span><span class="line"><span class="cl">kubectl apply -f test-deployment.yaml
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>只需要在pod配置加上</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">apiVersion: v1
+</span></span><span class="line"><span class="cl">kind: Pod
+</span></span><span class="line"><span class="cl">metadata:
+</span></span><span class="line"><span class="cl">  name: mypod
+</span></span><span class="line"><span class="cl">spec:
+</span></span><span class="line"><span class="cl">  containers:
+</span></span><span class="line"><span class="cl">    - name: mycontainer
+</span></span><span class="line"><span class="cl">      image: myimage
+</span></span><span class="line"><span class="cl">      envFrom:
+</span></span><span class="line"><span class="cl">        - configMapRef:
+</span></span><span class="line"><span class="cl">            name: my-config
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>结果</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/6a942e0fbd78bbacf026b27ac02bef3b/97ef58e1c2455b172a40bf37ec99de16.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/6a942e0fbd78bbacf026b27ac02bef3b/97ef58e1c2455b172a40bf37ec99de16.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/6a942e0fbd78bbacf026b27ac02bef3b/97ef58e1c2455b172a40bf37ec99de16.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/6a942e0fbd78bbacf026b27ac02bef3b/97ef58e1c2455b172a40bf37ec99de16.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/6a942e0fbd78bbacf026b27ac02bef3b/97ef58e1c2455b172a40bf37ec99de16.png"
+        title="image-20240414164048526" /></p>
+<h3 id="secret">Secret</h3>
+<p><strong>用于存储敏感的配置数据，例如密码、证书、API 密钥等。</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Secret</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">test-secret</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">Opaque</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">data</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l">&lt;base64-encoded-username&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l">&lt;base64-encoded-password&gt;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="persistentvolume">PersistentVolume</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">PersistentVolume</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">test-pv</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">capacity</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l">1Gi</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">accessModes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="l">ReadWriteOnce</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">persistentVolumeReclaimPolicy</span><span class="p">:</span><span class="w"> </span><span class="l">Retain</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">hostPath</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l">/data</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="namespace">Namespace</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Namespace</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">test-namespace</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这些示例可以作为你编写 YAML 文件时的参考。记住根据你的需求调整各个字段。</p>
+<h2 id="常见命令">常见命令</h2>
+<p>以下是一些常用的 kubectl 命令：</p>
+<ol>
+<li>
+<p><strong>查看资源列表</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kubectl get pods <span class="c1"># 查看 Pod 列表</span>
+</span></span><span class="line"><span class="cl">kubectl get deployments <span class="c1"># 查看 Deployment 列表</span>
+</span></span><span class="line"><span class="cl">kubectl get services <span class="c1"># 查看 Service 列表</span>
+</span></span><span class="line"><span class="cl">kubectl get configmaps <span class="c1"># 查看 ConfigMap 列表</span>
+</span></span><span class="line"><span class="cl">kubectl get secrets <span class="c1"># 查看 Secret 列表</span>
+</span></span><span class="line"><span class="cl">kubectl get namespaces <span class="c1"># 查看 Namespace 列表</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>查看资源详细信息</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kubectl describe pod &lt;pod-name&gt; <span class="c1"># 查看 Pod 的详细信息</span>
+</span></span><span class="line"><span class="cl">kubectl describe deployment &lt;deployment-name&gt; <span class="c1"># 查看 Deployment 的详细信息</span>
+</span></span><span class="line"><span class="cl">kubectl describe service &lt;service-name&gt; <span class="c1"># 查看 Service 的详细信息</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>创建资源</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kubectl create -f &lt;yaml-file&gt; <span class="c1"># 从 YAML 文件创建资源</span>
+</span></span><span class="line"><span class="cl">kubectl apply -f &lt;yaml-file&gt; <span class="c1"># 应用 YAML 文件中定义的配置（支持创建和更新）</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>删除资源</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kubectl delete pod &lt;pod-name&gt; <span class="c1"># 删除 Pod</span>
+</span></span><span class="line"><span class="cl">kubectl delete deployment &lt;deployment-name&gt; <span class="c1"># 删除 Deployment</span>
+</span></span><span class="line"><span class="cl">kubectl delete service &lt;service-name&gt; <span class="c1"># 删除 Service</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>修改资源</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kubectl edit pod &lt;pod-name&gt; <span class="c1"># 编辑 Pod 配置</span>
+</span></span><span class="line"><span class="cl">kubectl edit deployment &lt;deployment-name&gt; <span class="c1"># 编辑 Deployment 配置</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>执行命令</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kubectl <span class="nb">exec</span> -it &lt;pod-name&gt; -- &lt;command&gt; <span class="c1"># 在 Pod 中执行命令</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>日志查看</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kubectl logs &lt;pod-name&gt; <span class="c1"># 查看 Pod 日志</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>管理命名空间</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kubectl create namespace &lt;namespace-name&gt; <span class="c1"># 创建命名空间</span>
+</span></span><span class="line"><span class="cl">kubectl delete namespace &lt;namespace-name&gt; <span class="c1"># 删除命名空间及其所有资源</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>设置上下文</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kubectl config get-contexts <span class="c1"># 查看可用上下文</span>
+</span></span><span class="line"><span class="cl">kubectl config use-context &lt;context-name&gt; <span class="c1"># 切换上下文</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>其他</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kubectl apply -f &lt;directory&gt; <span class="c1"># 应用目录中所有 YAML 文件</span>
+</span></span><span class="line"><span class="cl">kubectl get events <span class="c1"># 查看集群事件</span>
+</span></span><span class="line"><span class="cl">kubectl version <span class="c1"># 查看 Kubernetes 版本信息</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<p>这些是一些基本的 kubectl 命令，可以帮助你管理 Kubernetes 集群中的资源。</p>
+<h2 id="minikube使用">minikube使用</h2>
+<ol>
+<li>
+<p><strong>启动 Minikube 集群</strong>：使用 Minikube 命令启动一个新的 Minikube 集群，并指定你想要的节点数量。例如，要创建一个具有 3 个节点的集群，可以使用以下命令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">minikube start --nodes=3
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>等待集群启动</strong>：等待 Minikube 集群启动完成。这可能需要一些时间，取决于你的计算机性能和网络状况。</p>
+</li>
+<li>
+<p><strong>验证节点</strong>：一旦集群启动完成，你可以使用 <code>kubectl get nodes</code> 命令来验证集群中的节点数量。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl get nodes
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>停止节点</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 启动集群
+</span></span><span class="line"><span class="cl">minikube start
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 停止集群
+</span></span><span class="line"><span class="cl">minikube stop
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 清空集群
+</span></span><span class="line"><span class="cl">minikube delete --all
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>添加节点</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-p 指定的目标集群，默认集群叫做minikube，可以通过`minikube profile list`查看
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">minikube start -p minikube #创建主集群
+</span></span><span class="line"><span class="cl">minikube node add -p minikube #增加节点
+</span></span><span class="line"><span class="cl">minikube node list -p minikube #查看节点
+</span></span><span class="line"><span class="cl">minikube dashboard -p minikube #启动主节点仪表盘
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>进入相关节点.</strong></p>
+<p>注意：minikube不同node之间是相互通信的。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Minikube 常用命令
+</span></span><span class="line"><span class="cl">进入节点服务器：
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">minikube ssh
+</span></span><span class="line"><span class="cl">执行节点服务器命令，例如查看节点 docker info：
+</span></span><span class="line"><span class="cl">使用，查看当且节点列表
+</span></span><span class="line"><span class="cl">```
+</span></span><span class="line"><span class="cl">❯ kubectl get nodes
+</span></span><span class="line"><span class="cl">NAME           STATUS   ROLES           AGE   VERSION
+</span></span><span class="line"><span class="cl">minikube       Ready    control-plane   31h   v1.28.3
+</span></span><span class="line"><span class="cl">minikube-m02   Ready    &lt;none&gt;          16m   v1.28.3 # 登录从节点
+</span></span><span class="line"><span class="cl">```
+</span></span><span class="line"><span class="cl">连接从节点
+</span></span><span class="line"><span class="cl">```
+</span></span><span class="line"><span class="cl">❯ minikube ssh --node=minikube-m02
+</span></span><span class="line"><span class="cl">```
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">minikube ssh -- docker info
+</span></span><span class="line"><span class="cl">删除集群, 删除 ~/.minikube 目录缓存的文件：
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">minikube delete
+</span></span><span class="line"><span class="cl">关闭集群：
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">minikube stop
+</span></span><span class="line"><span class="cl">销毁集群：
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">minikube stop &amp;&amp; minikube delete
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>宿主机转发 dashboard</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">nohup</span> <span class="n">minikube</span> <span class="n">dashboard</span> <span class="o">&amp;</span> <span class="c1"># 后台开启管理面板</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">kubectl</span> <span class="n">proxy</span> <span class="o">--</span><span class="n">port</span><span class="o">=</span><span class="mi">10080</span> <span class="o">--</span><span class="n">address</span><span class="o">=</span><span class="s1">&#39;10.20.208.22&#39;</span> <span class="o">--</span><span class="n">accept</span><span class="o">-</span><span class="n">hosts</span><span class="o">=</span><span class="s1">&#39;^.*&#39;</span> <span class="c1"># 启动宿主机转发到面板</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">--</span><span class="n">port</span> <span class="err">需要暴露的端口号</span>
+</span></span><span class="line"><span class="cl"><span class="o">--</span><span class="n">address</span> <span class="err">服务器外网</span><span class="ne">IP</span><span class="err">（宿主机</span><span class="ne">IP</span><span class="err">）</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">--</span><span class="n">accept</span><span class="o">-</span><span class="n">hosts</span> <span class="err">外部访问服务器的</span><span class="ne">IP</span><span class="err">（白名单）</span>
+</span></span><span class="line"><span class="cl"><span class="err">然后就可以访问了</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">10.20</span><span class="o">.</span><span class="mf">208.22</span><span class="p">:</span><span class="mi">10082</span><span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="n">v1</span><span class="o">/</span><span class="n">namespaces</span><span class="o">/</span><span class="n">kubernetes</span><span class="o">-</span><span class="n">dashboard</span><span class="o">/</span><span class="n">services</span><span class="o">/</span><span class="n">http</span><span class="p">:</span><span class="n">kubernetes</span><span class="o">-</span><span class="n">dashboard</span><span class="p">:</span><span class="o">/</span><span class="n">proxy</span><span class="o">/</span><span class="c1">#/workloads?namespace=default</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>其他</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 安装集群可视化 Web UI 控制台
+</span></span><span class="line"><span class="cl">minikube dashboard
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 在浏览器自动打开应用
+</span></span><span class="line"><span class="cl">minikube sercive 服务的名字
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">查看内置的附加组件
+</span></span><span class="line"><span class="cl">minikube addons list
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h2 id="pod-通信">pod 通信</h2>
+<h3 id="同一个pod上container通信"><strong>同一个POD上Container通信</strong></h3>
+<p>在k8s中每个Pod中管理着一组Docker容器，<strong>这些Docker容器共享同一个网络命名空间</strong>，Pod中的每个Docker容器拥有与Pod相同的IP和port地址空间，并且由于他们在同一个网络命名空间，<strong>他们之间可以通过localhost相互访问。</strong></p>
+<p><strong>什么机制让同一个Pod内的多个docker容器相互通信?就是使用Docker的一种网络模型：–net=container</strong></p>
+<h3 id="同一个node不同pod"><strong>同一个Node，不同Pod</strong></h3>
+<p><strong>同一个node内部的pod之间，可以直接使用pod的10开的ip直接通信。</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/6a942e0fbd78bbacf026b27ac02bef3b/781eaaa73ce58d43abedc39285678487.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/6a942e0fbd78bbacf026b27ac02bef3b/781eaaa73ce58d43abedc39285678487.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/6a942e0fbd78bbacf026b27ac02bef3b/781eaaa73ce58d43abedc39285678487.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/6a942e0fbd78bbacf026b27ac02bef3b/781eaaa73ce58d43abedc39285678487.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/6a942e0fbd78bbacf026b27ac02bef3b/781eaaa73ce58d43abedc39285678487.png"
+        title="Kubernetes之POD、容器之间的网络通信" /></p>
+<h3 id="不同node的pod通信">不同node的pod通信</h3>
+<p>可以考虑通过service来实现不同node之间的服务通信。</p>
+<p><strong>方法一：Service 抽象</strong>：Kubernetes 中的 **Service 为一组执行相同功能的 Pods 提供一个稳定的访问地址。即使后端 Pod 发生变化，Service 的 IP 和端口保持不变。**如果pod变化了，service也会自动变化</p>
+<ul>
+<li>当一个 Pod 尝试连接到另一个 Service 时，它实际上是连接到一个固定的虚拟 IP（即 Service IP），这个 IP 是由集群内部 DNS 服务解析的。这个请求被 kube-proxy 捕获并重定向到正确的 Pod。</li>
+</ul>
+<p><strong>方法二：使用CNI 插件</strong></p>
+<ul>
+<li><strong>Calico</strong>：提供高性能网络和网络策略。Calico 通过使用 BGP (Border Gateway Protocol) 或封装模式（如 VXLAN）来管理跨节点的网络流量。</li>
+</ul>
+<h2 id="pod-的分配">pod 的分配</h2>
+<p>一般默认是均匀分配到所有节点</p>
+<h2 id="将-pod-指派给节点">将 Pod 指派给节点</h2>
+<p>可以通过亲和性来实现分配给指定节点，具体来说，依赖的是lable标签的办法来指定节点。</p>
+<h2 id="为什么有了容器还需要pod">为什么有了容器还需要Pod：</h2>
+<ul>
+<li><strong>多容器协同</strong>：Pod可以包含多个容器，这些<strong>容器可以共享相同的网络、存储等资源</strong>，方便多容器之间的协同工作。</li>
+<li><strong>资源共享</strong>：Pod中的容器可以共享相同的网络命名空间、IPC命名空间和存储卷，方便它们之间进行通信和共享数据。</li>
+<li><strong>扩展性和灵活性</strong>：Pod可以方便地扩展为多容器架构，从而实现更灵活的部署和管理。</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-04-11</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/k8s%E5%AD%A6%E4%B9%A0/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.kenger.work/k8s%E5%AD%A6%E4%B9%A0/" data-title="K8S学习" data-hashtags="运维"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.kenger.work/k8s%E5%AD%A6%E4%B9%A0/" data-hashtag="运维"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.kenger.work/k8s%E5%AD%A6%E4%B9%A0/" data-title="K8S学习"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.kenger.work/k8s%E5%AD%A6%E4%B9%A0/" data-title="K8S学习"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.kenger.work/k8s%E5%AD%A6%E4%B9%A0/" data-title="K8S学习"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E8%BF%90%E7%BB%B4/">运维</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E5%A4%8D%E7%9B%98/" class="prev" rel="prev" title="运维相关复盘"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>运维相关复盘</a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.125.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.kenger.work/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>linux 临时设置ip网关路由.md - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://blog.kenger.work/linux-%E4%B8%B4%E6%97%B6%E8%AE%BE%E7%BD%AEip%E7%BD%91%E5%85%B3%E8%B7%AF%E7%94%B1/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="linux 临时设置ip网关路由.md">
+  <meta property="og:description" content="背景 目前在配一台机器，不对劲。接入了交换机，该亮的已经亮了。驱动也确保安装好了。但是就是没有dhcp分配ip。 于是决定手动设置静态ip，先试">
+  <meta property="og:locale" content="zh-CN">
+  <meta property="og:type" content="article">
+  <meta property="article:section" content="posts">
+    <meta property="article:tag" content="实验室">
+    <meta property="article:tag" content="静态ip">
+    <meta property="article:tag" content="Route">
+    <meta property="og:image" content="https://blog.kenger.work/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blog.kenger.work/logo.png"><meta name="twitter:title" content="linux 临时设置ip网关路由.md">
+<meta name="twitter:description" content="背景 目前在配一台机器，不对劲。接入了交换机，该亮的已经亮了。驱动也确保安装好了。但是就是没有dhcp分配ip。 于是决定手动设置静态ip，先试">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.kenger.work/linux-%E4%B8%B4%E6%97%B6%E8%AE%BE%E7%BD%AEip%E7%BD%91%E5%85%B3%E8%B7%AF%E7%94%B1/" /><link rel="prev" href="https://blog.kenger.work/openai%E5%AE%98%E6%96%B9%E6%8E%A5%E5%8F%A3%E4%BB%A5%E5%8F%8A%E5%B0%81%E8%A3%85/" /><link rel="next" href="https://blog.kenger.work/cors%E8%B7%A8%E5%9F%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E8%A7%A3%E5%86%B3/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "linux 临时设置ip网关路由.md",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.kenger.work\/linux-%E4%B8%B4%E6%97%B6%E8%AE%BE%E7%BD%AEip%E7%BD%91%E5%85%B3%E8%B7%AF%E7%94%B1\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/blog.kenger.work\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "实验室, 静态ip, route","wordcount":  633 ,
+        "url": "https:\/\/blog.kenger.work\/linux-%E4%B8%B4%E6%97%B6%E8%AE%BE%E7%BD%AEip%E7%BD%91%E5%85%B3%E8%B7%AF%E7%94%B1\/","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/blog.kenger.work\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/linux-%E4%B8%B4%E6%97%B6%E8%AE%BE%E7%BD%AEip%E7%BD%91%E5%85%B3%E8%B7%AF%E7%94%B1/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/linux-%E4%B8%B4%E6%97%B6%E8%AE%BE%E7%BD%AEip%E7%BD%91%E5%85%B3%E8%B7%AF%E7%94%B1/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">linux 临时设置ip网关路由.md</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.kenger.work/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%AE%9E%E9%AA%8C%E5%AE%A4/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>实验室</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="0001-01-01">0001-01-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 633 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#配置网关">配置网关</a></li>
+    <li><a href="#配置dns">配置DNS</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="背景">背景</h1>
+<p>目前在配一台机器，不对劲。接入了交换机，该亮的已经亮了。驱动也确保安装好了。但是就是没有dhcp分配ip。</p>
+<p>于是决定手动设置静态ip，先试试能不能链接交换机管理，然后试试能不能链接实验室路由。</p>
+<h1 id="solution">solution</h1>
+<p><strong>配置IP地址</strong>
+使用ifconfig命令：
+格式：ifconfig &lt;接口名&gt; &lt;ip地址&gt; netmask &lt;子网掩码&gt; up
+命令：<code>ifconfig ens33 192.168.191.138 netmask 255.255.255.0 up</code>
+<strong>查看ip地址</strong>
+ip地址已经修改为192.168.191.138
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/d7b7336e97cc0a77510139991a2013eb.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/d7b7336e97cc0a77510139991a2013eb.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/d7b7336e97cc0a77510139991a2013eb.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/d7b7336e97cc0a77510139991a2013eb.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/d7b7336e97cc0a77510139991a2013eb.png"
+        title="在这里插入图片描述" /></p>
+<p>使用ip命令：
+格式：ip addr add &lt;ip地址&gt;/掩码 dev &lt;接口名&gt;
+命令：<code>ip addr add 192.168.191.137/24 dev ens33</code>
+查看ip地址
+新增了一个192.168.191.137的IP地址
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/998f1846ac0a72b8a055532dfc8fa6ad.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/998f1846ac0a72b8a055532dfc8fa6ad.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/998f1846ac0a72b8a055532dfc8fa6ad.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/998f1846ac0a72b8a055532dfc8fa6ad.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/998f1846ac0a72b8a055532dfc8fa6ad.png"
+        title="在这里插入图片描述" />
+<strong>注：以上关于IP地址的配置在重启之后会失效</strong></p>
+<h2 id="配置网关">配置网关</h2>
+<p>临时配置，重启失效
+<strong>查看网关</strong>
+查看网关的命令有很多，route –n, ip route show等
+命令：<code>route -n</code>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/ec66e15b0a77c1c382beac8481f209d6.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/ec66e15b0a77c1c382beac8481f209d6.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/ec66e15b0a77c1c382beac8481f209d6.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/ec66e15b0a77c1c382beac8481f209d6.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/ec66e15b0a77c1c382beac8481f209d6.png"
+        title="在这里插入图片描述" />
+<strong>配置网关</strong>
+命令：<code>route add default gw 192.168.191.1</code>
+查看网关
+使用<code>route –n</code>命令可以看到新增了一个192.168.191.1的网关
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/48ab2498532b9d5f1c9306c85aa0e0fe.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/48ab2498532b9d5f1c9306c85aa0e0fe.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/48ab2498532b9d5f1c9306c85aa0e0fe.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/48ab2498532b9d5f1c9306c85aa0e0fe.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/48ab2498532b9d5f1c9306c85aa0e0fe.png"
+        title="在这里插入图片描述" /></p>
+<p><strong>删除网关</strong>
+命令：<code>route del default gw 192.168.191.1</code>
+查看网关
+使用<code>route –n</code>命令可以看到192.168.191.1的网关已经被删除
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/6b12de69682be8bab079a225d7c109cb.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/6b12de69682be8bab079a225d7c109cb.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/6b12de69682be8bab079a225d7c109cb.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/6b12de69682be8bab079a225d7c109cb.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/6b12de69682be8bab079a225d7c109cb.png"
+        title="在这里插入图片描述" /></p>
+<p><strong>注：以上关于网关的配置在重启之后会失效</strong></p>
+<h2 id="配置dns">配置DNS</h2>
+<p>临时配置，重启失效
+<strong>查看DNS</strong>
+命令：<code>cat /etc/resolv.conf</code>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/10c0dc7327c5c3e23ba8ef5bc85f98c0.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/10c0dc7327c5c3e23ba8ef5bc85f98c0.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/10c0dc7327c5c3e23ba8ef5bc85f98c0.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/10c0dc7327c5c3e23ba8ef5bc85f98c0.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/10c0dc7327c5c3e23ba8ef5bc85f98c0.png"
+        title="在这里插入图片描述" />
+<strong>配置DNS</strong>
+直接修改resolv.conf文件
+命令：<code>vi /etc/resolv.conf</code>
+添加</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nameserver 8.8.8.8
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>重启网络</strong>
+配置完成，使用命令<code>/etc/init.d/networking restart</code>重启网络，也可以不重启
+<strong>注意：以上关于DNS的配置在重启之后会失效</strong></p>
+<h1 id="ref">ref</h1>
+<p><a href="https://blog.csdn.net/QJing_shijia/article/details/116448245" target="_blank" rel="noopener noreffer ">good md</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 0001-01-01</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/linux-%E4%B8%B4%E6%97%B6%E8%AE%BE%E7%BD%AEip%E7%BD%91%E5%85%B3%E8%B7%AF%E7%94%B1/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.kenger.work/linux-%E4%B8%B4%E6%97%B6%E8%AE%BE%E7%BD%AEip%E7%BD%91%E5%85%B3%E8%B7%AF%E7%94%B1/" data-title="linux 临时设置ip网关路由.md" data-hashtags="实验室,静态ip,route"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.kenger.work/linux-%E4%B8%B4%E6%97%B6%E8%AE%BE%E7%BD%AEip%E7%BD%91%E5%85%B3%E8%B7%AF%E7%94%B1/" data-hashtag="实验室"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.kenger.work/linux-%E4%B8%B4%E6%97%B6%E8%AE%BE%E7%BD%AEip%E7%BD%91%E5%85%B3%E8%B7%AF%E7%94%B1/" data-title="linux 临时设置ip网关路由.md"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.kenger.work/linux-%E4%B8%B4%E6%97%B6%E8%AE%BE%E7%BD%AEip%E7%BD%91%E5%85%B3%E8%B7%AF%E7%94%B1/" data-title="linux 临时设置ip网关路由.md"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.kenger.work/linux-%E4%B8%B4%E6%97%B6%E8%AE%BE%E7%BD%AEip%E7%BD%91%E5%85%B3%E8%B7%AF%E7%94%B1/" data-title="linux 临时设置ip网关路由.md"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%AE%9E%E9%AA%8C%E5%AE%A4/">实验室</a>,&nbsp;<a href="/tags/%E9%9D%99%E6%80%81ip/">静态ip</a>,&nbsp;<a href="/tags/route/">Route</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/openai%E5%AE%98%E6%96%B9%E6%8E%A5%E5%8F%A3%E4%BB%A5%E5%8F%8A%E5%B0%81%E8%A3%85/" class="prev" rel="prev" title="openai官方接口以及封装"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>openai官方接口以及封装</a>
+            <a href="/cors%E8%B7%A8%E5%9F%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E8%A7%A3%E5%86%B3/" class="next" rel="next" title="cors跨域，原理与解决">cors跨域，原理与解决<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.125.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.kenger.work/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

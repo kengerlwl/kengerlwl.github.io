@@ -1,0 +1,24 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>机架 - 标签 - Kenger`s Blog</title>
+        <link>https://blog.kenger.work/tags/%E6%9C%BA%E6%9E%B6/</link>
+        <description>机架 - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 25 Apr 2023 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://blog.kenger.work/tags/%E6%9C%BA%E6%9E%B6/" rel="self" type="application/rss+xml" /><item>
+    <title>关于使用机架服务器经验</title>
+    <link>https://blog.kenger.work/%E5%85%B3%E4%BA%8E%E4%BD%BF%E7%94%A8%E6%9C%BA%E6%9E%B6%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BB%8F%E9%AA%8C/</link>
+    <pubDate>Tue, 25 Apr 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/%E5%85%B3%E4%BA%8E%E4%BD%BF%E7%94%A8%E6%9C%BA%E6%9E%B6%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BB%8F%E9%AA%8C/</guid>
+    <description><![CDATA[软件构成方面 ipmi等管理面板 （有些服务器的管理面板不叫座ipmi，也有叫做IBMC） 服务器IPMI（Intelligent Platform Management Interf]]></description>
+</item>
+<item>
+    <title>关于服务器持续监控</title>
+    <link>https://blog.kenger.work/%E5%85%B3%E4%BA%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%81%E7%BB%AD%E7%9B%91%E6%8E%A7/</link>
+    <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/%E5%85%B3%E4%BA%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%81%E7%BB%AD%E7%9B%91%E6%8E%A7/</guid>
+    <description><![CDATA[前置环境安装 使用docker安装服务器端的nagios 1.拉取nagios的docker镜像 1 docker pull jasonrivers/nagios 2.运行docker 其实/opt/nag]]></description>
+</item>
+</channel>
+</rss>

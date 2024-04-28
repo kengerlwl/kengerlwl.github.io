@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>监督，无监督，半监督等学习方式 - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://blog.kenger.work/%E7%9B%91%E7%9D%A3%E6%97%A0%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E7%AD%89%E5%AD%A6%E4%B9%A0%E6%96%B9%E5%BC%8F/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="监督，无监督，半监督等学习方式">
+  <meta property="og:description" content="有监督 有x，也有y。建立一个x-&amp;gt;y的映射模型。 最常见的模型 无监督 只有x，无y。 一般是利用x自身的数据来做一些聚类啥的。 例如：k-me">
+  <meta property="og:locale" content="zh-CN">
+  <meta property="og:type" content="article">
+  <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2020-01-15T15:27:31+00:00">
+    <meta property="article:modified_time" content="2020-01-15T15:27:31+00:00">
+    <meta property="article:tag" content="Pytorch">
+    <meta property="og:image" content="https://blog.kenger.work/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blog.kenger.work/logo.png"><meta name="twitter:title" content="监督，无监督，半监督等学习方式">
+<meta name="twitter:description" content="有监督 有x，也有y。建立一个x-&gt;y的映射模型。 最常见的模型 无监督 只有x，无y。 一般是利用x自身的数据来做一些聚类啥的。 例如：k-me">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.kenger.work/%E7%9B%91%E7%9D%A3%E6%97%A0%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E7%AD%89%E5%AD%A6%E4%B9%A0%E6%96%B9%E5%BC%8F/" /><link rel="prev" href="https://blog.kenger.work/%E7%AE%80%E5%8D%95%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2/" /><link rel="next" href="https://blog.kenger.work/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%AE%AD%E7%BB%83loss%E5%8F%98%E6%88%90nan%E5%80%BC/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "监督，无监督，半监督等学习方式",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.kenger.work\/%E7%9B%91%E7%9D%A3%E6%97%A0%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E7%AD%89%E5%AD%A6%E4%B9%A0%E6%96%B9%E5%BC%8F\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/blog.kenger.work\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "pytorch","wordcount":  1516 ,
+        "url": "https:\/\/blog.kenger.work\/%E7%9B%91%E7%9D%A3%E6%97%A0%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E7%AD%89%E5%AD%A6%E4%B9%A0%E6%96%B9%E5%BC%8F\/","datePublished": "2020-01-15T15:27:31+00:00","dateModified": "2020-01-15T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/blog.kenger.work\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/%E7%9B%91%E7%9D%A3%E6%97%A0%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E7%AD%89%E5%AD%A6%E4%B9%A0%E6%96%B9%E5%BC%8F/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/%E7%9B%91%E7%9D%A3%E6%97%A0%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E7%AD%89%E5%AD%A6%E4%B9%A0%E6%96%B9%E5%BC%8F/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">监督，无监督，半监督等学习方式</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.kenger.work/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%AD%A6%E6%9C%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>学术</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2020-01-15">2020-01-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1516 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#需要的原因">需要的原因</a></li>
+    <li><a href="#用法">用法</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#特点">特点</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="有监督">有监督</h1>
+<p>有x，也有y。建立一个x-&gt;y的映射模型。</p>
+<p>最常见的模型</p>
+<h1 id="无监督">无监督</h1>
+<p>只有x，无y。</p>
+<p>一般是利用x自身的数据来做一些聚类啥的。</p>
+<p>例如：k-means</p>
+<h1 id="半监督学习semi-supervised-learning">半监督学习（Semi-supervised Learning）</h1>
+<p>在<strong>有标签数据+无标签数据混合成的训练数据</strong>中使用的机器学习算法。</p>
+<p>一般假设，<strong>无标签数据比有标签数据多，甚至多得多。</strong></p>
+<h2 id="需要的原因">需要的原因</h2>
+<ul>
+<li>有标记样本难以获取：需要专门的人员，特别的设备，额外的开销&hellip;&hellip;</li>
+<li>无标记的样本相对而言是很廉价的</li>
+</ul>
+<h2 id="用法">用法</h2>
+<p>很多半监督学习算法中用的训练数据还有挺多要求的，一般默认的有：无标签数据一般是有标签数据中的某一个类别的（不要不属于的，也不要属于多个类别的）；有标签数据的标签应该都是对的；无标签数据一般是类别平衡的（即每一类的样本数差不多）；无标签数据的分布应该和有标签的相同或类似 等等。</p>
+<p>简单介绍如下：</p>
+<p>1.<strong>简单自训练</strong>（simple self-training）：用有标签数据训练一个分类器，然后用这个分类器对无标签数据进行分类，这样就会产生伪标签（pseudo label）或软标签（soft label），挑选你认为分类正确的无标签样本（此处应该有一个<strong>挑选准则</strong>），把选出来的无标签样本用来训练分类器。</p>
+<p>2.<strong>协同训练</strong>（co-training）：其实也是 self-training 的一种，但其思想是好的。假设每个数据可以从不同的角度（view）进行分类，不同角度可以训练出不同的分类器，然后用这些从不同角度训练出来的分类器对无标签样本进行分类，再选出认为可信的无标签样本加入训练集中。由于这些分类器从不同角度训练出来的，可以形成一种互补，而提高分类精度；就如同从不同角度可以更好地理解事物一样。</p>
+<p>3.<strong>半监督字典学习</strong>：其实也是 self-training 的一种，先是用有标签数据作为字典，对无标签数据进行分类，挑选出你认为分类正确的无标签样本，加入字典中（此时的字典就变成了半监督字典了）</p>
+<p>4.<strong>标签传播算法</strong>（Label Propagation Algorithm）：是一种基于图的半监督算法，通过构造图结构（数据点为顶点，点之间的相似性为边）来寻找<strong>训练数据</strong>中有标签数据和无标签数据的关系。是的，只是训练数据中，这是一种直推式的半监督算法，即只对训练集中的无标签数据进行分类，这其实感觉很像一个有监督分类算法&hellip;，但其实并不是，因为其标签传播的过程，会流经无标签数据，即有些无标签数据的标签的信息，是从另一些无标签数据中流过来的，这就用到了无标签数据之间的联系</p>
+<h1 id="自监督-self-supervised">自监督 (self-supervised)</h1>
+<p><strong>从大规模的无监督数据中挖掘自身的监督信息</strong>，通过这种构造的监督信息对网络进行训练，从而可以学习到对下游任务有价值的表征。（也就是说自监督学习的监督信息不是人工标注的，而是算法在大规模无监督数据中自动构造监督信息，来进行监督学习或训练。因此，大多数时候，我们称之为无监督预训练方法或无监督学习方法，严格上讲，他应该叫自监督学习）。</p>
+<h2 id="特点">特点</h2>
+<ul>
+<li><strong>从数据x，y上来说</strong>，属于无监督学习，因为没有标签数据y</li>
+<li><strong>从训练过程来说</strong>，属于有监督学习，因为自动构造了loss。</li>
+</ul>
+<h1 id="弱监督学习">弱监督学习</h1>
+<p>机器学习，深度学习在很多任务中获得很大的成功，尤其是在监督学习中，深度学习，机器学习取得了突破性的进展。 例如分类和回归的监督任务中，预测模型需要从大量有标注训练样本中学习，训练样本包含两部分：第一部分是对象的特征向量，第二部分是真值标签。在分类任务中，label表示训练样本的类别，在回归任务中，标签是一个与样本相对应的实数值。这些模型依赖强监督信息，例如深度学习模型依赖大量的标注数据，在实际生产中，数据的标注成本很高，获取大量的有标注样本难度大。 因此利用弱监督学习，利用大量无标注或者粗糙标注的样本来进行模型的学习，这样能够有效的利用数据，提升模型的性能</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-01-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E7%9B%91%E7%9D%A3%E6%97%A0%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E7%AD%89%E5%AD%A6%E4%B9%A0%E6%96%B9%E5%BC%8F/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.kenger.work/%E7%9B%91%E7%9D%A3%E6%97%A0%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E7%AD%89%E5%AD%A6%E4%B9%A0%E6%96%B9%E5%BC%8F/" data-title="监督，无监督，半监督等学习方式" data-hashtags="pytorch"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.kenger.work/%E7%9B%91%E7%9D%A3%E6%97%A0%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E7%AD%89%E5%AD%A6%E4%B9%A0%E6%96%B9%E5%BC%8F/" data-hashtag="pytorch"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.kenger.work/%E7%9B%91%E7%9D%A3%E6%97%A0%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E7%AD%89%E5%AD%A6%E4%B9%A0%E6%96%B9%E5%BC%8F/" data-title="监督，无监督，半监督等学习方式"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.kenger.work/%E7%9B%91%E7%9D%A3%E6%97%A0%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E7%AD%89%E5%AD%A6%E4%B9%A0%E6%96%B9%E5%BC%8F/" data-title="监督，无监督，半监督等学习方式"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.kenger.work/%E7%9B%91%E7%9D%A3%E6%97%A0%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E7%AD%89%E5%AD%A6%E4%B9%A0%E6%96%B9%E5%BC%8F/" data-title="监督，无监督，半监督等学习方式"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/pytorch/">Pytorch</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E7%AE%80%E5%8D%95%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2/" class="prev" rel="prev" title="简单前后端分离项目部署"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>简单前后端分离项目部署</a>
+            <a href="/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%AE%AD%E7%BB%83loss%E5%8F%98%E6%88%90nan%E5%80%BC/" class="next" rel="next" title="记一次训练loss变成nan值">记一次训练loss变成nan值<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.125.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.kenger.work/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

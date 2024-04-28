@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Web - 标签 - Kenger`s Blog</title>
+        <link>https://blog.kenger.work/tags/web/</link>
+        <description>Web - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 01 Sep 2023 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://blog.kenger.work/tags/web/" rel="self" type="application/rss+xml" /><item>
+    <title>关于web服务中的认证，授权，会话</title>
+    <link>https://blog.kenger.work/%E5%85%B3%E4%BA%8Eweb%E6%9C%8D%E5%8A%A1%E4%B8%AD%E7%9A%84%E8%AE%A4%E8%AF%81%E6%8E%88%E6%9D%83%E4%BC%9A%E8%AF%9D/</link>
+    <pubDate>Fri, 01 Sep 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/%E5%85%B3%E4%BA%8Eweb%E6%9C%8D%E5%8A%A1%E4%B8%AD%E7%9A%84%E8%AE%A4%E8%AF%81%E6%8E%88%E6%9D%83%E4%BC%9A%E8%AF%9D/</guid>
+    <description><![CDATA[背景 在学习过程中，认证与授权通常是绕不过去的一部分，很多服务都有身份限制，不是特定的用户不能执行部分的资源操作，也不能访问到其他用户。 个人在]]></description>
+</item>
+</channel>
+</rss>

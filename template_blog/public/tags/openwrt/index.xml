@@ -1,0 +1,88 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Openwrt - 标签 - Kenger`s Blog</title>
+        <link>https://blog.kenger.work/tags/openwrt/</link>
+        <description>Openwrt - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 09 Sep 2023 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://blog.kenger.work/tags/openwrt/" rel="self" type="application/rss+xml" /><item>
+    <title>openclash的进阶详解</title>
+    <link>https://blog.kenger.work/openclash%E7%9A%84%E8%BF%9B%E9%98%B6%E8%AF%A6%E8%A7%A3/</link>
+    <pubDate>Sat, 09 Sep 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/openclash%E7%9A%84%E8%BF%9B%E9%98%B6%E8%AF%A6%E8%A7%A3/</guid>
+    <description><![CDATA[背景 最近使用openclash遇到了很多问题 过程 OpenClash 运行模式： Fake-IP（增强）模式： 1 2 3 4 5 6 7 客户端进行通讯时会先进行DNS查询目标]]></description>
+</item>
+<item>
+    <title>openwrt的dhcp绑定与设置详解</title>
+    <link>https://blog.kenger.work/openwrt%E7%9A%84dhcp%E7%BB%91%E5%AE%9A%E4%B8%8E%E8%AE%BE%E7%BD%AE%E8%AF%A6%E8%A7%A3/</link>
+    <pubDate>Sat, 09 Sep 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/openwrt%E7%9A%84dhcp%E7%BB%91%E5%AE%9A%E4%B8%8E%E8%AE%BE%E7%BD%AE%E8%AF%A6%E8%A7%A3/</guid>
+    <description><![CDATA[背景 计划将openwrt作为主路由，然后通过dhcp绑定来绑定ip与mac地址。 方法 我这里使用的esir的高大全固件 设置 客户端刷新 1 2 3 4 5]]></description>
+</item>
+<item>
+    <title>openwrt系统镜像打包</title>
+    <link>https://blog.kenger.work/openwrt%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F%E6%89%93%E5%8C%85/</link>
+    <pubDate>Sat, 09 Sep 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/openwrt%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F%E6%89%93%E5%8C%85/</guid>
+    <description><![CDATA[背景 我已经有了一台openwrt的系统，我想将目前的配置打包为img镜像。 下次刷入即用。为什么不考虑esxi虚拟机直接迁移呢，因为想打包成精]]></description>
+</item>
+<item>
+    <title>关于我的openwrt镜像踩坑注意事项</title>
+    <link>https://blog.kenger.work/%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84openwrt%E9%95%9C%E5%83%8F%E8%B8%A9%E5%9D%91%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</link>
+    <pubDate>Sat, 09 Sep 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84openwrt%E9%95%9C%E5%83%8F%E8%B8%A9%E5%9D%91%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</guid>
+    <description><![CDATA[背景 目前我已经把我的openwrt打包成了一个img镜像，但是在如何使用该镜像方面有一些需要注意的坑如下 重大踩坑事项 最好不要通过中间交换机中]]></description>
+</item>
+<item>
+    <title>openwrt 添加开机自动启动脚本</title>
+    <link>https://blog.kenger.work/openwrt-%E6%B7%BB%E5%8A%A0%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC/</link>
+    <pubDate>Sat, 22 Apr 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/openwrt-%E6%B7%BB%E5%8A%A0%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC/</guid>
+    <description><![CDATA[背景 需要再openwrt上实现一个开机后一段时间再执行某个脚本 于是决定使用开机自动启动脚本机制。 为什么 不考虑/etc/rc.local 执行时]]></description>
+</item>
+<item>
+    <title>iptables学习</title>
+    <link>https://blog.kenger.work/iptables%E5%AD%A6%E4%B9%A0/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/iptables%E5%AD%A6%E4%B9%A0/</guid>
+    <description><![CDATA[背景 很多地方都要用到iptables。深入学习一下 例子 在已知链末尾添加规则（举例，拒绝某个ip的访问） 1 iptables -t filter -A INPUT -s 59.45.175.62 -j REJECT -A 表示Append]]></description>
+</item>
+<item>
+    <title>openwrt docker旁路由</title>
+    <link>https://blog.kenger.work/openwrt-docker%E6%97%81%E8%B7%AF%E7%94%B1/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/openwrt-docker%E6%97%81%E8%B7%AF%E7%94%B1/</guid>
+    <description><![CDATA[openwrt docker 提要 我这里只有一台linux主机，单网口，一台路由器（但是不可以科学）。 需要让所有流量都走linux里面的openwrt接口。（实现各种]]></description>
+</item>
+<item>
+    <title>openwrt防火墙使用</title>
+    <link>https://blog.kenger.work/openwrt%E9%98%B2%E7%81%AB%E5%A2%99%E4%BD%BF%E7%94%A8/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/openwrt%E9%98%B2%E7%81%AB%E5%A2%99%E4%BD%BF%E7%94%A8/</guid>
+    <description><![CDATA[防火墙 linux防火墙组成 iptables：用户空间工具 netfilter：内核里的工具 iptables 主要用来配置防火墙规则 关键是几个概念 入站，出站，转]]></description>
+</item>
+<item>
+    <title>关于R6300与小米AX3600刷openwrt教程</title>
+    <link>https://blog.kenger.work/%E5%85%B3%E4%BA%8Er6300%E4%B8%8E%E5%B0%8F%E7%B1%B3ax3600%E5%88%B7openwrt%E6%95%99%E7%A8%8B/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/%E5%85%B3%E4%BA%8Er6300%E4%B8%8E%E5%B0%8F%E7%B1%B3ax3600%E5%88%B7openwrt%E6%95%99%E7%A8%8B/</guid>
+    <description><![CDATA[关于R6300与小米AX3600刷openwrt教程 R6300教程 需要用到的资源如下百度云 提取码：s87z 刷机文件： R6300V2_back-to-ofw.trx 由梅林刷到原厂的固件 factory-to-dd-wrt.chk]]></description>
+</item>
+<item>
+    <title>解决openwrt 总是dns指向127.0.0.1</title>
+    <link>https://blog.kenger.work/%E8%A7%A3%E5%86%B3openwrt-%E6%80%BB%E6%98%AFdns%E6%8C%87%E5%90%91127.0.0.1/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/%E8%A7%A3%E5%86%B3openwrt-%E6%80%BB%E6%98%AFdns%E6%8C%87%E5%90%91127.0.0.1/</guid>
+    <description><![CDATA[背景 有一个openwrt，其每次开机后的 /tmp/resolv.conf文件一直自动生成将dns指定为本地的127.0.0.1. 导致以该op]]></description>
+</item>
+</channel>
+</rss>

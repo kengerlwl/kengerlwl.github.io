@@ -1,0 +1,32 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Ldap - 标签 - Kenger`s Blog</title>
+        <link>https://blog.kenger.work/tags/ldap/</link>
+        <description>Ldap - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 05 May 2023 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://blog.kenger.work/tags/ldap/" rel="self" type="application/rss+xml" /><item>
+    <title>ldap服务搭建</title>
+    <link>https://blog.kenger.work/ldap%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/</link>
+    <pubDate>Fri, 05 May 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/ldap%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/</guid>
+    <description><![CDATA[需求 需要一套ldap服务来将我的各种平台实现统一登录以及管理 方案 docker安装好openldap docker安装管理界面， ldapaccountmanager/lam - 该管理界面的]]></description>
+</item>
+<item>
+    <title>ldap配合truenas实现smb挂载.md</title>
+    <link>https://blog.kenger.work/ldap%E9%85%8D%E5%90%88truenas%E5%AE%9E%E7%8E%B0smb%E6%8C%82%E8%BD%BD/</link>
+    <pubDate>Fri, 05 May 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/ldap%E9%85%8D%E5%90%88truenas%E5%AE%9E%E7%8E%B0smb%E6%8C%82%E8%BD%BD/</guid>
+    <description><![CDATA[ref https://wdicc.com/ldap-samba/ 这篇文章很详细，这个作者很牛，值得关注]]></description>
+</item>
+<item>
+    <title>linux同步身份认证</title>
+    <link>https://blog.kenger.work/linux%E5%90%8C%E6%AD%A5%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/linux%E5%90%8C%E6%AD%A5%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81/</guid>
+    <description><![CDATA[ldap 在linux上同步身份认证 安装ldap及其管理器环境 参考compose文件 安装完成后，可以看到管理界面 具体如何进行账号添加，小组管理可以翻]]></description>
+</item>
+</channel>
+</rss>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>openwrt docker旁路由 - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://blog.kenger.work/openwrt-docker%E6%97%81%E8%B7%AF%E7%94%B1/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="openwrt docker旁路由">
+  <meta property="og:description" content="openwrt docker 提要 我这里只有一台linux主机，单网口，一台路由器（但是不可以科学）。 需要让所有流量都走linux里面的openwrt接口。（实现各种">
+  <meta property="og:locale" content="zh-CN">
+  <meta property="og:type" content="article">
+  <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2020-01-15T15:27:31+00:00">
+    <meta property="article:modified_time" content="2020-01-15T15:27:31+00:00">
+    <meta property="article:tag" content="Openwrt">
+    <meta property="article:tag" content="代理">
+    <meta property="og:image" content="https://blog.kenger.work/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blog.kenger.work/logo.png"><meta name="twitter:title" content="openwrt docker旁路由">
+<meta name="twitter:description" content="openwrt docker 提要 我这里只有一台linux主机，单网口，一台路由器（但是不可以科学）。 需要让所有流量都走linux里面的openwrt接口。（实现各种">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.kenger.work/openwrt-docker%E6%97%81%E8%B7%AF%E7%94%B1/" /><link rel="prev" href="https://blog.kenger.work/openwrt-mwan-%E9%85%8D%E7%BD%AE%E5%A4%9Awan%E5%A4%8D%E5%88%B6%E5%9D%87%E8%A1%A1/" /><link rel="next" href="https://blog.kenger.work/opengl%E5%AD%A6%E4%B9%A0/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "openwrt docker旁路由",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.kenger.work\/openwrt-docker%E6%97%81%E8%B7%AF%E7%94%B1\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/blog.kenger.work\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "openwrt, 代理","wordcount":  473 ,
+        "url": "https:\/\/blog.kenger.work\/openwrt-docker%E6%97%81%E8%B7%AF%E7%94%B1\/","datePublished": "2020-01-15T15:27:31+00:00","dateModified": "2020-01-15T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/blog.kenger.work\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/openwrt-docker%E6%97%81%E8%B7%AF%E7%94%B1/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/openwrt-docker%E6%97%81%E8%B7%AF%E7%94%B1/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">openwrt docker旁路由</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.kenger.work/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E4%BB%A3%E7%90%86/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>代理</a>&nbsp;<a href="/categories/openwrt/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Openwrt</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2020-01-15">2020-01-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 473 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#提要">提要</a></li>
+    <li><a href="#正文">正文</a></li>
+    <li><a href="#容器内部配置">容器内部配置</a></li>
+    <li><a href="#配置科学以及一些配置">配置科学以及一些配置</a></li>
+    <li><a href="#设置主路由的dhcp">设置主路由的dhcp</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="openwrt-docker">openwrt docker</h1>
+<h2 id="提要">提要</h2>
+<p>我这里只有一台linux主机，单网口，一台路由器（但是不可以科学）。</p>
+<p>需要让所有流量都走linux里面的openwrt接口。（实现各种操作）</p>
+<h2 id="正文">正文</h2>
+<p>我的路由器网关192.168.0.1。子网掩码24位</p>
+<p><strong>eth0是网卡名，根据具体情况更改配置</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 开启混杂模式
+</span></span><span class="line"><span class="cl">ip link set  eth0 promisc on
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">docker network create -d macvlan --subnet=192.168.0.0/24 --gateway=192.168.0.1 -o parent=eth0 macnet
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我的linux网络本机ip是：192.168.0.208</p>
+<p>openwrt要设置为一个与本机ip不同的，且在同一个网段的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker run -d \
+</span></span><span class="line"><span class="cl">--restart always \
+</span></span><span class="line"><span class="cl">--network macnet \
+</span></span><span class="line"><span class="cl">--privileged \
+</span></span><span class="line"><span class="cl">--name openwrt_lwl \
+</span></span><span class="line"><span class="cl">sulinggg/openwrt:x86_64 /sbin/init
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>容器版本得与本机一致。</strong></p>
+<h2 id="容器内部配置">容器内部配置</h2>
+<p>Openwrt容器内配置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">vim /etc/config/network 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>具体的配置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">config interface &#39;loopback&#39;
+</span></span><span class="line"><span class="cl">        option ifname &#39;lo&#39;
+</span></span><span class="line"><span class="cl">        option proto &#39;static&#39;
+</span></span><span class="line"><span class="cl">        option ipaddr &#39;127.0.0.1&#39;
+</span></span><span class="line"><span class="cl">        option netmask &#39;255.0.0.0&#39;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">config globals &#39;globals&#39;
+</span></span><span class="line"><span class="cl">        option packet_steering &#39;1&#39;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">config interface &#39;lan&#39;
+</span></span><span class="line"><span class="cl">        option type &#39;bridge&#39;
+</span></span><span class="line"><span class="cl">        option ifname &#39;eth0&#39;
+</span></span><span class="line"><span class="cl">        option proto &#39;static&#39;
+</span></span><span class="line"><span class="cl">        option netmask &#39;255.255.255.0&#39;
+</span></span><span class="line"><span class="cl">        option ip6assign &#39;60&#39;
+</span></span><span class="line"><span class="cl">        option ipaddr &#39;192.168.0.2&#39;
+</span></span><span class="line"><span class="cl">        option gateway &#39;192.168.0.1&#39;
+</span></span><span class="line"><span class="cl">        option dns &#39;8.8.8.8&#39;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">config interface &#39;vpn0&#39;
+</span></span><span class="line"><span class="cl">        option ifname &#39;tun0&#39;
+</span></span><span class="line"><span class="cl">        option proto &#39;none&#39;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>重启网络</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/etc/init.d/network restart
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后就可以通过192.168.0.2访问openwrt了。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/fe1a21ac19801f2fc6a8da0c4ddb5a7f/3d19efd0e078458cccfa68203f8e20e8.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/fe1a21ac19801f2fc6a8da0c4ddb5a7f/3d19efd0e078458cccfa68203f8e20e8.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/fe1a21ac19801f2fc6a8da0c4ddb5a7f/3d19efd0e078458cccfa68203f8e20e8.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/fe1a21ac19801f2fc6a8da0c4ddb5a7f/3d19efd0e078458cccfa68203f8e20e8.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/fe1a21ac19801f2fc6a8da0c4ddb5a7f/3d19efd0e078458cccfa68203f8e20e8.png"
+        title="image-20221113144733240" /></p>
+<h2 id="配置科学以及一些配置">配置科学以及一些配置</h2>
+<p>做这个之前，先检查openwrt的网络是否通畅，我之前因为dns配置错了，导致一直没搞定。</p>
+<p>就是clash，ssr</p>
+<h2 id="设置主路由的dhcp">设置主路由的dhcp</h2>
+<p>让连接主路由的设备默认走旁路由网关</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/fe1a21ac19801f2fc6a8da0c4ddb5a7f/83418a8dd78659c8a6b72dff32c71c4c.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/fe1a21ac19801f2fc6a8da0c4ddb5a7f/83418a8dd78659c8a6b72dff32c71c4c.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/fe1a21ac19801f2fc6a8da0c4ddb5a7f/83418a8dd78659c8a6b72dff32c71c4c.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/fe1a21ac19801f2fc6a8da0c4ddb5a7f/83418a8dd78659c8a6b72dff32c71c4c.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/fe1a21ac19801f2fc6a8da0c4ddb5a7f/83418a8dd78659c8a6b72dff32c71c4c.png"
+        title="image-20221113144137125" /></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-01-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/openwrt-docker%E6%97%81%E8%B7%AF%E7%94%B1/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.kenger.work/openwrt-docker%E6%97%81%E8%B7%AF%E7%94%B1/" data-title="openwrt docker旁路由" data-hashtags="openwrt,代理"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.kenger.work/openwrt-docker%E6%97%81%E8%B7%AF%E7%94%B1/" data-hashtag="openwrt"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.kenger.work/openwrt-docker%E6%97%81%E8%B7%AF%E7%94%B1/" data-title="openwrt docker旁路由"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.kenger.work/openwrt-docker%E6%97%81%E8%B7%AF%E7%94%B1/" data-title="openwrt docker旁路由"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.kenger.work/openwrt-docker%E6%97%81%E8%B7%AF%E7%94%B1/" data-title="openwrt docker旁路由"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/openwrt/">Openwrt</a>,&nbsp;<a href="/tags/%E4%BB%A3%E7%90%86/">代理</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/openwrt-mwan-%E9%85%8D%E7%BD%AE%E5%A4%9Awan%E5%A4%8D%E5%88%B6%E5%9D%87%E8%A1%A1/" class="prev" rel="prev" title="openwrt mwan 配置多wan复制均衡"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>openwrt mwan 配置多wan复制均衡</a>
+            <a href="/opengl%E5%AD%A6%E4%B9%A0/" class="next" rel="next" title="opengl学习">opengl学习<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.125.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.kenger.work/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

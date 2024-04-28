@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>秒杀系统 - 标签 - Kenger`s Blog</title>
+        <link>https://blog.kenger.work/tags/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F/</link>
+        <description>秒杀系统 - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 12 Mar 2024 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://blog.kenger.work/tags/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F/" rel="self" type="application/rss+xml" /><item>
+    <title>秒杀系统概述</title>
+    <link>https://blog.kenger.work/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/</link>
+    <pubDate>Tue, 12 Mar 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://blog.kenger.work/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/</guid>
+    <description><![CDATA[1 2 3 4 【流量控制】: 使用Nginx从网关服务器反向代理，实现将请求分发到不同的服务器上，使用spring-session-redis来实现]]></description>
+</item>
+</channel>
+</rss>

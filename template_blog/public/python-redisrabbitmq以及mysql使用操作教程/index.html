@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Python Redis，rabbitMQ以及Mysql使用操作教程 - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://blog.kenger.work/python-redisrabbitmq%E4%BB%A5%E5%8F%8Amysql%E4%BD%BF%E7%94%A8%E6%93%8D%E4%BD%9C%E6%95%99%E7%A8%8B/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="Python Redis，rabbitMQ以及Mysql使用操作教程">
+  <meta property="og:description" content="Python Redis，rabbitMQ以及Mysql使用操作教程 先redis Redis知识点 Redis的数据通常是存储在内存之中的，但是Redis支">
+  <meta property="og:locale" content="zh-CN">
+  <meta property="og:type" content="article">
+  <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2020-01-15T15:27:31+00:00">
+    <meta property="article:modified_time" content="2020-01-15T15:27:31+00:00">
+    <meta property="article:tag" content="Python">
+    <meta property="og:image" content="https://blog.kenger.work/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blog.kenger.work/logo.png"><meta name="twitter:title" content="Python Redis，rabbitMQ以及Mysql使用操作教程">
+<meta name="twitter:description" content="Python Redis，rabbitMQ以及Mysql使用操作教程 先redis Redis知识点 Redis的数据通常是存储在内存之中的，但是Redis支">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.kenger.work/python-redisrabbitmq%E4%BB%A5%E5%8F%8Amysql%E4%BD%BF%E7%94%A8%E6%93%8D%E4%BD%9C%E6%95%99%E7%A8%8B/" /><link rel="prev" href="https://blog.kenger.work/python-%E8%AF%B7%E6%B1%82%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6tenacity/" /><link rel="next" href="https://blog.kenger.work/ps%E5%AD%A6%E4%B9%A0/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Python Redis，rabbitMQ以及Mysql使用操作教程",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.kenger.work\/python-redisrabbitmq%E4%BB%A5%E5%8F%8Amysql%E4%BD%BF%E7%94%A8%E6%93%8D%E4%BD%9C%E6%95%99%E7%A8%8B\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/blog.kenger.work\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "python","wordcount":  2630 ,
+        "url": "https:\/\/blog.kenger.work\/python-redisrabbitmq%E4%BB%A5%E5%8F%8Amysql%E4%BD%BF%E7%94%A8%E6%93%8D%E4%BD%9C%E6%95%99%E7%A8%8B\/","datePublished": "2020-01-15T15:27:31+00:00","dateModified": "2020-01-15T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/blog.kenger.work\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/python-redisrabbitmq%E4%BB%A5%E5%8F%8Amysql%E4%BD%BF%E7%94%A8%E6%93%8D%E4%BD%9C%E6%95%99%E7%A8%8B/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/python-redisrabbitmq%E4%BB%A5%E5%8F%8Amysql%E4%BD%BF%E7%94%A8%E6%93%8D%E4%BD%9C%E6%95%99%E7%A8%8B/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python Redis，rabbitMQ以及Mysql使用操作教程</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.kenger.work/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%BB%BC%E5%90%88/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>综合</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2020-01-15">2020-01-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2630 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#redis知识点">Redis知识点</a>
+      <ul>
+        <li><a href="#redis-除了做缓存还能做什么">Redis 除了做缓存，还能做什么？</a></li>
+      </ul>
+    </li>
+    <li><a href="#安装以及配置">安装以及配置</a></li>
+    <li><a href="#python-进行连接使用">Python 进行连接使用</a>
+      <ul>
+        <li><a href="#过期">过期</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#rabbitmq的使用demo">rabbitMQ的使用demo</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#首先有个文件目录如下">首先有个文件目录如下</a></li>
+    <li><a href="#几个文件的配置">几个文件的配置</a></li>
+    <li><a href="#运行与配置">运行与配置</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="python-redisrabbitmq以及mysql使用操作教程">Python Redis，rabbitMQ以及Mysql使用操作教程</h1>
+<p>先redis</p>
+<h2 id="redis知识点">Redis知识点</h2>
+<p>Redis的数据通常是存储在内存之中的，但是Redis支持数据的持久化，可以将内存的数据保存在磁盘中。
+Redis 除了做缓存之外，也经常用来做分布式锁，甚至是消息队列。</p>
+<h3 id="redis-除了做缓存还能做什么">Redis 除了做缓存，还能做什么？</h3>
+<ul>
+<li>分布式锁 ： 通过 Redis 来做分布式锁是一种比较常见的方式。通常情况下，我们都是基于 Redisson 来实现分布式锁。相关阅读：《分布式锁中的王者方案 - Redisson》open in new window。</li>
+<li>限流 ：一般是通过 Redis + Lua 脚本的方式来实现限流。相关阅读：《我司用了 6 年的 Redis 分布式限流器，可以说是非常厉害了！》open in new window。</li>
+<li>消息队列 ：Redis 自带的 list 数据结构可以作为一个简单的队列使用。Redis5.0 中增加的 Stream 类型的数据结构更加适合用来做消息队列。它比较类似于 Kafka，有主题和消费组的概念，支持消息持久化以及 ACK 机制。</li>
+<li>复杂业务场景 ：通过 Redis 以及 Redis 扩展（比如 Redisson）提供的数据结构，我们可以很方便地完成很多复杂的业务场景比如通过 bitmap 统计活跃用户、通过 sorted set 维护排行榜。</li>
+</ul>
+<h2 id="安装以及配置">安装以及配置</h2>
+<ol>
+<li>
+<p>下载源码或者可执行文件地址<a href="https://github.com/tporadowski/redis/releases" target="_blank" rel="noopener noreffer ">link</a></p>
+</li>
+<li>
+<p>进行配置redis.conf文件（不同系统上可能有一定区别）
+2.1 添加密码：在文件中加入<code>requirepass 123456   #这个是密码</code>
+2.2 如果发现连接不上，需要修改redis.conf中的bind地址，bind意思是允许访问的主机：
+<code> 0.0.0.0：允许任意外部主机访问（推荐） 127.0.0.1：只允许本机访问 </code></p>
+</li>
+<li>
+<p>启动redis。在可执行文件目录下执行<code>redis-server.exe redis.windows.conf</code>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/28ad227c312ac77ff864ee30af2ad98b/4f24fd2e8b702adb095a8b9fe44a44e1.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/28ad227c312ac77ff864ee30af2ad98b/4f24fd2e8b702adb095a8b9fe44a44e1.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/28ad227c312ac77ff864ee30af2ad98b/4f24fd2e8b702adb095a8b9fe44a44e1.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/28ad227c312ac77ff864ee30af2ad98b/4f24fd2e8b702adb095a8b9fe44a44e1.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/28ad227c312ac77ff864ee30af2ad98b/4f24fd2e8b702adb095a8b9fe44a44e1.png"
+        title="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/28ad227c312ac77ff864ee30af2ad98b/4f24fd2e8b702adb095a8b9fe44a44e1.png" /></p>
+</li>
+<li>
+<p>用redis的客户端查看</p>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 在服务器开始运行之后，运行命令
+</span></span><span class="line"><span class="cl">redis-cli.exe
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/28ad227c312ac77ff864ee30af2ad98b/fe998a7f2c7a3e77e75dcd1dd50b6917.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/28ad227c312ac77ff864ee30af2ad98b/fe998a7f2c7a3e77e75dcd1dd50b6917.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/28ad227c312ac77ff864ee30af2ad98b/fe998a7f2c7a3e77e75dcd1dd50b6917.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/28ad227c312ac77ff864ee30af2ad98b/fe998a7f2c7a3e77e75dcd1dd50b6917.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/28ad227c312ac77ff864ee30af2ad98b/fe998a7f2c7a3e77e75dcd1dd50b6917.png"
+        title="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/28ad227c312ac77ff864ee30af2ad98b/fe998a7f2c7a3e77e75dcd1dd50b6917.png" /></p>
+<ol start="5">
+<li>最终的配置文件</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#这个是密码
+</span></span><span class="line"><span class="cl">requirepass 123456  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 允许访问主机地址
+</span></span><span class="line"><span class="cl">bind 0.0.0.0 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="python-进行连接使用">Python 进行连接使用</h2>
+<p>我们使用类<code>StrictRedis</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">from redis import StrictRedis
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">redis = StrictRedis(host=&#39;localhost&#39;, port=6379, db=0, password=&#39;123456&#39;)
+</span></span><span class="line"><span class="cl">redis.set(&#39;name&#39;, &#39;GEJI&#39;)
+</span></span><span class="line"><span class="cl">print(redis.get(&#39;name&#39;))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样连接好后，就可以进行正常使用了。我们可以把redis当做一个离线的hashmap进行使用</p>
+<p>总得来说，redis是比较灵活的。和python的map类似。里面可以有不同类型的value</p>
+<ul>
+<li>键操作</li>
+<li>列表操作</li>
+<li>集合操作</li>
+<li>有序集合操作</li>
+<li>散列操作</li>
+</ul>
+<h3 id="过期">过期</h3>
+<p>默认是永不过期</p>
+<p>一些常见的函数操作可以参考<a href="https://cloud.tencent.com/developer/article/1151834" target="_blank" rel="noopener noreffer ">链接</a></p>
+<h1 id="rabbitmq使用操作教程">rabbitMQ使用操作教程</h1>
+<p><a href="https://xie.infoq.cn/article/02f4007cb22f991ee49882efa" target="_blank" rel="noopener noreffer ">rabbitmq的几大工作模式</a></p>
+<p>我这里已经把redis和rabbitmq打包到docker里面去了。
+可以去pull下来</p>
+<p>关于rabbitmq的启动：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/root/Lib/RabbitMQ/bin/rabbitmq-server start &amp;  # 启动rabbitmq
+</span></span><span class="line"><span class="cl">/root/Lib/RabbitMQ/bin/rabbitmq-plugins enable rabbitmq_management &amp; # 打开web服务界面
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 停止过服务
+</span></span><span class="line"><span class="cl"># rabbitmqctl stop
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对rabbitmq进行用户添加以及设置权限分组</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> rabbitmqctl add_user developer（用户名） 123456（密码） #新增用户以及密码
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> rabbitmqctl delete_user developer  # 删除服务用户
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> rabbitmqctl set_user_tags developer administrator（用户的权限组）#进行管理权限分组
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">rabbitmqctl set_permissions -p / developer（用户名） &#34;.*&#34; &#34;.*&#34; &#34;.*&#34; # 设置访问权限
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="rabbitmq的使用demo">rabbitMQ的使用demo</h2>
+<p>send.py</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># coding:utf-8
+</span></span><span class="line"><span class="cl">import pika
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">username = &#39;&#39;
+</span></span><span class="line"><span class="cl">password = &#39;&#39;
+</span></span><span class="line"><span class="cl">host = &#39;&#39;
+</span></span><span class="line"><span class="cl">credentials = pika.PlainCredentials(username, password)
+</span></span><span class="line"><span class="cl">connection = pika.BlockingConnection(pika.ConnectionParameters(host=host, credentials=credentials, port=5672))
+</span></span><span class="line"><span class="cl">channel = connection.channel()
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">channel.queue_declare(queue=&#39;qr_list&#39;,durable = True)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">channel.basic_publish(exchange=&#39;&#39;,
+</span></span><span class="line"><span class="cl">                      routing_key=&#39;qr_list&#39;,
+</span></span><span class="line"><span class="cl">                      body=&#39;Hello World!&#39;)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">print(&#34;[x] Sent &#39;Hello World!&#39;&#34;)
+</span></span><span class="line"><span class="cl">connection.close()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>revieve.py</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># coding:utf-8
+</span></span><span class="line"><span class="cl">import pika
+</span></span><span class="line"><span class="cl">import time
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">username = &#39;&#39;
+</span></span><span class="line"><span class="cl">password = &#39;&#39;
+</span></span><span class="line"><span class="cl">host = &#39;&#39;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">credentials = pika.PlainCredentials(username, password)
+</span></span><span class="line"><span class="cl">connection = pika.BlockingConnection(pika.ConnectionParameters(
+</span></span><span class="line"><span class="cl">    host=host, credentials=credentials, port=5672
+</span></span><span class="line"><span class="cl">))
+</span></span><span class="line"><span class="cl">channel = connection.channel()
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">channel.queue_declare(queue=&#39;qr_list&#39;,durable = True)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">def callback(ch, method, properties, body):
+</span></span><span class="line"><span class="cl">    print(&#34; [x] Received %r&#34; % (body,))
+</span></span><span class="line"><span class="cl">    time.sleep(3)
+</span></span><span class="line"><span class="cl">    print(&#34; [x] Done&#34;)
+</span></span><span class="line"><span class="cl">    # 确认消息
+</span></span><span class="line"><span class="cl">    ch.basic_ack(delivery_tag = method.delivery_tag)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">if __name__ == &#39;__main__&#39;:   
+</span></span><span class="line"><span class="cl">    channel.basic_consume(&#39;qr_list&#39;,callback,auto_ack = False)
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    print(&#39; [*] Waiting for messages. To exit press CTRL+C&#39;)
+</span></span><span class="line"><span class="cl">    channel.start_consuming()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="mqsql-的安装使用">mqsql 的安装使用</h1>
+<p>执行命令启动容器</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker run -it -p 0122:22 -p 6379:6379 -p 5672:5672 -p 15672:15672 --privileged centos_redis_and_rabbitmq init
+</span></span><span class="line"><span class="cl">解释：
+</span></span><span class="line"><span class="cl">-p： 进行端口映射
+</span></span><span class="line"><span class="cl">--privileged：优先级
+</span></span><span class="line"><span class="cl">init，设置/usr/sbin/init 为一号进程，方便后序的systemctl使用。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/28ad227c312ac77ff864ee30af2ad98b/9585f9e11f0ef4d8c61535a036d6b8b8.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/28ad227c312ac77ff864ee30af2ad98b/9585f9e11f0ef4d8c61535a036d6b8b8.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/28ad227c312ac77ff864ee30af2ad98b/9585f9e11f0ef4d8c61535a036d6b8b8.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/28ad227c312ac77ff864ee30af2ad98b/9585f9e11f0ef4d8c61535a036d6b8b8.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/28ad227c312ac77ff864ee30af2ad98b/9585f9e11f0ef4d8c61535a036d6b8b8.png"
+        title="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/28ad227c312ac77ff864ee30af2ad98b/9585f9e11f0ef4d8c61535a036d6b8b8.png" /></p>
+<h1 id="docker-compose使用">docker compose使用</h1>
+<p>上面介绍的是三个服务装在一个docker容器里面运行，实际上这并不符合docker的运行规则。</p>
+<p>docker的设计思路是每个容器运行一个程序，不同的程序分隔开来。</p>
+<p>所以为了管理多个容器，引入了docker-compose。</p>
+<p>这里简单讲讲我的配置文件吧。</p>
+<h2 id="首先有个文件目录如下">首先有个文件目录如下</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">.
+</span></span><span class="line"><span class="cl">├── docker-compose.yml
+</span></span><span class="line"><span class="cl">├── mysql
+</span></span><span class="line"><span class="cl">│   ├── data
+</span></span><span class="line"><span class="cl">│   └── my.cnf
+</span></span><span class="line"><span class="cl">└── redis
+</span></span><span class="line"><span class="cl">    ├── data  
+</span></span><span class="line"><span class="cl">    └── redis.conf
+</span></span><span class="line"><span class="cl">#里面的两个data目录可以不用管，后面生成的
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="几个文件的配置">几个文件的配置</h2>
+<p><strong>mysql.my.cnf</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="p">[</span><span class="n">client</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"> <span class="n">port</span> <span class="o">=</span> <span class="mi">3306</span>
+</span></span><span class="line"><span class="cl"> <span class="n">socket</span> <span class="o">=</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">sock</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">mysqld</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"> <span class="c1"># 针对5.7版本执行group by字句出错问题解决</span>
+</span></span><span class="line"><span class="cl"> <span class="n">sql_mode</span><span class="o">=</span><span class="s1">&#39;STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION&#39;</span>
+</span></span><span class="line"><span class="cl"> <span class="c1"># 一般配置选项</span>
+</span></span><span class="line"><span class="cl"> <span class="n">basedir</span> <span class="o">=</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mysql</span>
+</span></span><span class="line"><span class="cl"> <span class="n">datadir</span> <span class="o">=</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">data</span>
+</span></span><span class="line"><span class="cl"> <span class="n">port</span> <span class="o">=</span> <span class="mi">3306</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Accept connections from any IP address</span>
+</span></span><span class="line"><span class="cl"> <span class="n">bind</span><span class="o">-</span><span class="n">address</span>	            <span class="o">=</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>
+</span></span><span class="line"><span class="cl"> <span class="n">socket</span> <span class="o">=</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">sock</span>
+</span></span><span class="line"><span class="cl"> <span class="n">lc</span><span class="o">-</span><span class="n">messages</span><span class="o">-</span><span class="n">dir</span> <span class="o">=</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">mysql</span> <span class="c1"># 务必配置此项，否则执行sql出错时，只能显示错误代码而不显示具体错误消息</span>
+</span></span><span class="line"><span class="cl"> <span class="n">character</span><span class="o">-</span><span class="n">set</span><span class="o">-</span><span class="n">server</span><span class="o">=</span><span class="n">utf8</span>
+</span></span><span class="line"><span class="cl"> <span class="n">back_log</span> <span class="o">=</span> <span class="mi">300</span>
+</span></span><span class="line"><span class="cl"> <span class="n">max_connections</span> <span class="o">=</span> <span class="mi">3000</span>
+</span></span><span class="line"><span class="cl"> <span class="n">max_connect_errors</span> <span class="o">=</span> <span class="mi">50</span>
+</span></span><span class="line"><span class="cl"> <span class="n">table_open_cache</span> <span class="o">=</span> <span class="mi">4096</span>
+</span></span><span class="line"><span class="cl"> <span class="n">max_allowed_packet</span> <span class="o">=</span> <span class="mi">32</span><span class="n">M</span>
+</span></span><span class="line"><span class="cl"> <span class="c1">#binlog_cache_size = 4M</span>
+</span></span><span class="line"><span class="cl"> <span class="n">max_heap_table_size</span> <span class="o">=</span> <span class="mi">128</span><span class="n">M</span>
+</span></span><span class="line"><span class="cl"> <span class="n">read_rnd_buffer_size</span> <span class="o">=</span> <span class="mi">16</span><span class="n">M</span>
+</span></span><span class="line"><span class="cl"> <span class="n">sort_buffer_size</span> <span class="o">=</span> <span class="mi">16</span><span class="n">M</span>
+</span></span><span class="line"><span class="cl"> <span class="n">join_buffer_size</span> <span class="o">=</span> <span class="mi">16</span><span class="n">M</span>
+</span></span><span class="line"><span class="cl"> <span class="n">thread_cache_size</span> <span class="o">=</span> <span class="mi">16</span>
+</span></span><span class="line"><span class="cl"> <span class="n">query_cache_size</span> <span class="o">=</span> <span class="mi">64</span><span class="n">M</span>
+</span></span><span class="line"><span class="cl"> <span class="n">query_cache_limit</span> <span class="o">=</span> <span class="mi">4</span><span class="n">M</span>
+</span></span><span class="line"><span class="cl"> <span class="n">ft_min_word_len</span> <span class="o">=</span> <span class="mi">8</span>
+</span></span><span class="line"><span class="cl"> <span class="n">thread_stack</span> <span class="o">=</span> <span class="mi">512</span><span class="n">K</span>
+</span></span><span class="line"><span class="cl"> <span class="n">transaction_isolation</span> <span class="o">=</span> <span class="n">REPEATABLE</span><span class="o">-</span><span class="n">READ</span>
+</span></span><span class="line"><span class="cl"> <span class="n">tmp_table_size</span> <span class="o">=</span> <span class="mi">64</span><span class="n">M</span>
+</span></span><span class="line"><span class="cl"> <span class="c1">#log-bin=mysql-bin</span>
+</span></span><span class="line"><span class="cl"> <span class="n">long_query_time</span> <span class="o">=</span> <span class="mi">6</span>
+</span></span><span class="line"><span class="cl"> <span class="n">server_id</span><span class="o">=</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl"> <span class="n">innodb_buffer_pool_size</span> <span class="o">=</span> <span class="mi">256</span><span class="n">M</span>
+</span></span><span class="line"><span class="cl"> <span class="n">innodb_thread_concurrency</span> <span class="o">=</span> <span class="mi">16</span>
+</span></span><span class="line"><span class="cl"> <span class="n">innodb_log_buffer_size</span> <span class="o">=</span> <span class="mi">16</span><span class="n">M</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>redis.redis.conf</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">daemonize no     ## 若使用开机启动，生成pid，该项必须设置为诶yes，否则redis将不能够正常执行开机启动(systemctl start redis,执行后一直卡着，直到超时)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">protected-mode no  ## 允许其他机器上的客户端连接当前redis，配置文件设置该项，则开机启动处就可以去掉--protected no 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#这个是密码
+</span></span><span class="line"><span class="cl">requirepass 123456
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 允许访问主机地址
+</span></span><span class="line"><span class="cl">bind 0.0.0.0 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>docker-compose.yml</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">version</span><span class="p">:</span> <span class="s1">&#39;3&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">services</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="n">mysql</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">hostname</span><span class="p">:</span> <span class="n">mysql</span>
+</span></span><span class="line"><span class="cl">    <span class="n">image</span><span class="p">:</span> <span class="n">mysql</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="n">server</span><span class="p">:</span><span class="mf">5.7</span><span class="o">.</span><span class="mi">26</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># network_mode: &#34;host&#34; # 如果需要容器使用宿主机IP(内网IP)，则可以配置此项,默认桥接模式</span>
+</span></span><span class="line"><span class="cl">    <span class="n">container_name</span><span class="p">:</span> <span class="n">mysql</span> <span class="c1"># 指定容器名称，如果不设置此参数，则由系统自动生成</span>
+</span></span><span class="line"><span class="cl">    <span class="n">restart</span><span class="p">:</span> <span class="n">always</span> <span class="c1"># 设置容器自启模式</span>
+</span></span><span class="line"><span class="cl">    <span class="n">command</span><span class="p">:</span> <span class="n">mysqld</span> <span class="o">--</span><span class="n">character</span><span class="o">-</span><span class="n">set</span><span class="o">-</span><span class="n">server</span><span class="o">=</span><span class="n">utf8mb4</span> <span class="o">--</span><span class="n">collation</span><span class="o">-</span><span class="n">server</span><span class="o">=</span><span class="n">utf8mb4_unicode_ci</span> <span class="c1"># 设置utf8字符集</span>
+</span></span><span class="line"><span class="cl">    <span class="n">environment</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="n">TZ</span><span class="o">=</span><span class="n">Asia</span><span class="o">/</span><span class="n">Shanghai</span> <span class="c1"># 设置容器时区与宿主机保持一致</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="n">MYSQL_ROOT_PASSWORD</span><span class="o">=</span><span class="mi">123456</span> <span class="c1"># 设置root密码</span>
+</span></span><span class="line"><span class="cl">    <span class="n">volumes</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">       <span class="o">-</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">localtime</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">localtime</span><span class="p">:</span><span class="n">ro</span> <span class="c1"># 设置容器时区与宿主机保持一致</span>
+</span></span><span class="line"><span class="cl">       <span class="o">-</span> <span class="o">./</span><span class="n">mysql</span><span class="o">/</span><span class="n">data</span><span class="p">:</span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">data</span> <span class="c1"># 映射数据库保存目录到宿主机，防止数据丢失</span>
+</span></span><span class="line"><span class="cl">       <span class="o">-</span> <span class="o">./</span><span class="n">mysql</span><span class="o">/</span><span class="n">my</span><span class="o">.</span><span class="n">cnf</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">my</span><span class="o">.</span><span class="n">cnf</span> <span class="c1"># 映射数据库配置文件</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ports</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="o">-</span> <span class="s2">&#34;3306:3306&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="n">redis</span><span class="p">:</span>  
+</span></span><span class="line"><span class="cl">    <span class="n">hostname</span><span class="p">:</span> <span class="n">redis</span>
+</span></span><span class="line"><span class="cl">    <span class="n">image</span><span class="p">:</span> <span class="n">redis</span><span class="p">:</span><span class="mf">5.0</span><span class="o">.</span><span class="mi">4</span>
+</span></span><span class="line"><span class="cl">    <span class="n">container_name</span><span class="p">:</span> <span class="n">redis</span>
+</span></span><span class="line"><span class="cl">    <span class="n">restart</span><span class="p">:</span> <span class="n">always</span>
+</span></span><span class="line"><span class="cl">    <span class="n">command</span><span class="p">:</span> <span class="n">redis</span><span class="o">-</span><span class="n">server</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">redis</span><span class="o">.</span><span class="n">conf</span> <span class="c1"># 启动redis命令</span>
+</span></span><span class="line"><span class="cl">    <span class="n">environment</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="n">TZ</span><span class="o">=</span><span class="n">Asia</span><span class="o">/</span><span class="n">Shanghai</span>
+</span></span><span class="line"><span class="cl">    <span class="n">volumes</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">localtime</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">localtime</span><span class="p">:</span><span class="n">ro</span> <span class="c1"># 设置容器时区与宿主机保持一致</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="o">./</span><span class="n">redis</span><span class="o">/</span><span class="n">data</span><span class="p">:</span><span class="o">/</span><span class="n">data</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="o">./</span><span class="n">redis</span><span class="o">/</span><span class="n">redis</span><span class="o">.</span><span class="n">conf</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">redis</span><span class="o">.</span><span class="n">conf</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ports</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="o">-</span> <span class="s2">&#34;6379:6379&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="n">rabbitmq</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">image</span><span class="p">:</span> <span class="n">rabbitmq</span><span class="p">:</span><span class="n">management</span><span class="o">-</span><span class="n">alpine</span>
+</span></span><span class="line"><span class="cl">    <span class="n">container_name</span><span class="p">:</span> <span class="n">rabbitmq</span>
+</span></span><span class="line"><span class="cl">    <span class="n">environment</span><span class="p">:</span>                      <span class="c1">#设置用户名和密码</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="n">RABBITMQ_DEFAULT_USER</span><span class="o">=</span><span class="n">lwl</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="n">RABBITMQ_DEFAULT_PASS</span><span class="o">=</span><span class="mi">123456</span>
+</span></span><span class="line"><span class="cl">    <span class="n">restart</span><span class="p">:</span> <span class="n">always</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ports</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="s2">&#34;15672:15672&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="s2">&#34;5672:5672&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">logging</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">driver</span><span class="p">:</span> <span class="s2">&#34;json-file&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="n">options</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">max</span><span class="o">-</span><span class="n">size</span><span class="p">:</span> <span class="s2">&#34;200k&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">max</span><span class="o">-</span><span class="n">file</span><span class="p">:</span> <span class="s2">&#34;10&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="运行与配置">运行与配置</h2>
+<p>在这个目录下运行<code>docker-compose -f docker-compose.yml up -d</code></p>
+<p>可以看到三个容器和镜像</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">❯ docker ps -a
+</span></span><span class="line"><span class="cl">CONTAINER ID   IMAGE                        COMMAND                  CREATED             STATUS                      PORTS     NAMES
+</span></span><span class="line"><span class="cl">67e41a460801   rabbitmq:management-alpine   &#34;docker-entrypoint.s…&#34;   About an hour ago   Exited (0) 14 minutes ago             rabbitmq
+</span></span><span class="line"><span class="cl">532bb3a9f99d   redis:5.0.4                  &#34;docker-entrypoint.s…&#34;   About an hour ago   Exited (1) 15 minutes ago             redis
+</span></span><span class="line"><span class="cl">ef1306403160   mysql/mysql-server:5.7.26    &#34;/entrypoint.sh mysq…&#34;   About an hour ago   Exited (0) 15 minutes ago             mysql
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果有哪个容器不对劲，按照之前的办法，可以通过<code>docker exec -it xxxxxxxx</code>命令去进行调试。</p>
+<p>关于mysql没有链接上的问题,可以查看<a href="https://blog.51cto.com/u_14349334/3485237" target="_blank" rel="noopener noreffer ">link</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">GRANT USAGE ON *.* TO &#39;lwl&#39;@&#39;%&#39; IDENTIFIED BY &#39;123456&#39; WITH GRANT OPTION;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="docker-compose的具体配置文件">docker compose的具体配置文件</h1>
+<p>具体参考详见<a href="https://www.jianshu.com/p/2217cfed29d7" target="_blank" rel="noopener noreffer ">link</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-01-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/python-redisrabbitmq%E4%BB%A5%E5%8F%8Amysql%E4%BD%BF%E7%94%A8%E6%93%8D%E4%BD%9C%E6%95%99%E7%A8%8B/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.kenger.work/python-redisrabbitmq%E4%BB%A5%E5%8F%8Amysql%E4%BD%BF%E7%94%A8%E6%93%8D%E4%BD%9C%E6%95%99%E7%A8%8B/" data-title="Python Redis，rabbitMQ以及Mysql使用操作教程" data-hashtags="python"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.kenger.work/python-redisrabbitmq%E4%BB%A5%E5%8F%8Amysql%E4%BD%BF%E7%94%A8%E6%93%8D%E4%BD%9C%E6%95%99%E7%A8%8B/" data-hashtag="python"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.kenger.work/python-redisrabbitmq%E4%BB%A5%E5%8F%8Amysql%E4%BD%BF%E7%94%A8%E6%93%8D%E4%BD%9C%E6%95%99%E7%A8%8B/" data-title="Python Redis，rabbitMQ以及Mysql使用操作教程"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.kenger.work/python-redisrabbitmq%E4%BB%A5%E5%8F%8Amysql%E4%BD%BF%E7%94%A8%E6%93%8D%E4%BD%9C%E6%95%99%E7%A8%8B/" data-title="Python Redis，rabbitMQ以及Mysql使用操作教程"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.kenger.work/python-redisrabbitmq%E4%BB%A5%E5%8F%8Amysql%E4%BD%BF%E7%94%A8%E6%93%8D%E4%BD%9C%E6%95%99%E7%A8%8B/" data-title="Python Redis，rabbitMQ以及Mysql使用操作教程"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/python/">Python</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/python-%E8%AF%B7%E6%B1%82%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6tenacity/" class="prev" rel="prev" title="python 请求重试机制tenacity"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>python 请求重试机制tenacity</a>
+            <a href="/ps%E5%AD%A6%E4%B9%A0/" class="next" rel="next" title="ps学习">ps学习<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.125.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.kenger.work/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

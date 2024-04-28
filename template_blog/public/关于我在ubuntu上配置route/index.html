@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>关于我在Ubuntu上配置route - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://blog.kenger.work/%E5%85%B3%E4%BA%8E%E6%88%91%E5%9C%A8ubuntu%E4%B8%8A%E9%85%8D%E7%BD%AEroute/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="关于我在Ubuntu上配置route">
+  <meta property="og:description" content="关于我在Ubuntu上配置route 前言 查看当前所有路由表，并进行管理 ip rule list输出所有的路由表 1 2 3 4 labot@core-labot:~$ ip rule list 0: from all lookup local 32766: from all lookup main 32767: from all">
+  <meta property="og:locale" content="zh-CN">
+  <meta property="og:type" content="article">
+  <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2020-01-15T15:27:31+00:00">
+    <meta property="article:modified_time" content="2020-01-15T15:27:31+00:00">
+    <meta property="article:tag" content="实验室">
+    <meta property="article:tag" content="路由表">
+    <meta property="article:tag" content="Route">
+    <meta property="og:image" content="https://blog.kenger.work/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blog.kenger.work/logo.png"><meta name="twitter:title" content="关于我在Ubuntu上配置route">
+<meta name="twitter:description" content="关于我在Ubuntu上配置route 前言 查看当前所有路由表，并进行管理 ip rule list输出所有的路由表 1 2 3 4 labot@core-labot:~$ ip rule list 0: from all lookup local 32766: from all lookup main 32767: from all">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.kenger.work/%E5%85%B3%E4%BA%8E%E6%88%91%E5%9C%A8ubuntu%E4%B8%8A%E9%85%8D%E7%BD%AEroute/" /><link rel="prev" href="https://blog.kenger.work/%E5%9F%BA%E4%BA%8E%E5%AE%9D%E5%A1%94nginx%E7%9A%84%E5%A4%9A%E7%AB%99%E7%82%B9%E7%AE%A1%E7%90%86/" /><link rel="next" href="https://blog.kenger.work/%E5%85%B3%E4%BA%8Er6300%E4%B8%8E%E5%B0%8F%E7%B1%B3ax3600%E5%88%B7openwrt%E6%95%99%E7%A8%8B/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "关于我在Ubuntu上配置route",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.kenger.work\/%E5%85%B3%E4%BA%8E%E6%88%91%E5%9C%A8ubuntu%E4%B8%8A%E9%85%8D%E7%BD%AEroute\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/blog.kenger.work\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "实验室, 路由表, route","wordcount":  1844 ,
+        "url": "https:\/\/blog.kenger.work\/%E5%85%B3%E4%BA%8E%E6%88%91%E5%9C%A8ubuntu%E4%B8%8A%E9%85%8D%E7%BD%AEroute\/","datePublished": "2020-01-15T15:27:31+00:00","dateModified": "2020-01-15T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/blog.kenger.work\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/%E5%85%B3%E4%BA%8E%E6%88%91%E5%9C%A8ubuntu%E4%B8%8A%E9%85%8D%E7%BD%AEroute/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/%E5%85%B3%E4%BA%8E%E6%88%91%E5%9C%A8ubuntu%E4%B8%8A%E9%85%8D%E7%BD%AEroute/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">关于我在Ubuntu上配置route</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.kenger.work/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%AE%9E%E9%AA%8C%E5%AE%A4/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>实验室</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2020-01-15">2020-01-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1844 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#查看当前所有路由表并进行管理">查看当前所有路由表，并进行管理</a></li>
+    <li><a href="#关于路由表解释route--n">关于路由表解释route -n</a>
+      <ul>
+        <li><a href="#一条条具体理解">一条条具体理解</a></li>
+        <li><a href="#和ip-route的区别">和ip route的区别</a></li>
+      </ul>
+    </li>
+    <li><a href="#路由表">路由表</a></li>
+    <li><a href="#一些route常见命令">一些route常见命令</a></li>
+    <li><a href="#关于ip-route-addappend-命令使用">关于ip route add/append 命令使用</a></li>
+    <li><a href="#sys-test">SYS test</a></li>
+    <li><a href="#ref">ref</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="关于我在ubuntu上配置route">关于我在Ubuntu上配置route</h1>
+<h2 id="前言">前言</h2>
+<h2 id="查看当前所有路由表并进行管理">查看当前所有路由表，并进行管理</h2>
+<p><code>ip rule list</code>输出所有的路由表</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">labot@core-labot:~$ ip rule list
+</span></span><span class="line"><span class="cl">0:	from all lookup local
+</span></span><span class="line"><span class="cl">32766:	from all lookup main
+</span></span><span class="line"><span class="cl">32767:	from all lookup default
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>新增路由表</p>
+<p>修改**/etc/iproute2/rt_tables**</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl"># reserved values
+</span></span><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl">255     local
+</span></span><span class="line"><span class="cl">254     main
+</span></span><span class="line"><span class="cl">253     default
+</span></span><span class="line"><span class="cl">0       unspec
+</span></span><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl"># local
+</span></span><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl">#1      inr.ruhep
+</span></span><span class="line"><span class="cl">211     net_0 # 这是我们新增的路由表，前面的数据越小代表优先级越高。范围是0-255
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>前面的数字越小代表优先级越高。范围是0-255</strong></p>
+<p>但是并不代表一修改后就立刻可以通过ip rule查看到。</p>
+<p>可能需要对该表新增一些路由配置后才能显示有</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">第1步：
+</span></span><span class="line"><span class="cl">  把路由表序号(10、11)和路由表名字(net_0、net_1)添加到/etc/iproute2/rt_tables中
+</span></span><span class="line"><span class="cl">第2步：
+</span></span><span class="line"><span class="cl">  （1）ip route add 192.168.2.0/24 dev eth0 src 192.168.2.10 table net_0
+</span></span><span class="line"><span class="cl">    从192.168.2.10发送到192.168.2.0/24网段的数据从eth0发出，把该路由项添加到路由表net_0中
+</span></span><span class="line"><span class="cl">  （2）ip route add default dev eth0 table net_0
+</span></span><span class="line"><span class="cl">    在路由表中添加默认路由，默认路由从eth0进出
+</span></span><span class="line"><span class="cl">  （3）ip rule add from 192.168.2.0/24 table net_0
+</span></span><span class="line"><span class="cl">    添加路由策略，来自192.168.2.10的路由要求使用net_0
+</span></span><span class="line"><span class="cl">  （4） ip route flush cache
+</span></span><span class="line"><span class="cl">    把新添加的路由策略和路由表刷新到缓存中，即时生效
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="关于路由表解释route--n">关于路由表解释route -n</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">labot@core-labot:~$ route -n
+</span></span><span class="line"><span class="cl">Kernel IP routing table
+</span></span><span class="line"><span class="cl">Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+</span></span><span class="line"><span class="cl">0.0.0.0         10.10.10.10     0.0.0.0         UG    0      0        0 ens160
+</span></span><span class="line"><span class="cl">0.0.0.0         10.10.10.10     0.0.0.0         UG    100    0        0 ens160
+</span></span><span class="line"><span class="cl">10.10.0.0       0.0.0.0         255.255.0.0     U     0      0        0 ens160
+</span></span><span class="line"><span class="cl">10.10.10.10     0.0.0.0         255.255.255.255 UH    100    0        0 ens160
+</span></span><span class="line"><span class="cl">10.11.0.0       0.0.0.0         255.255.0.0     U     0      0        0 ens192
+</span></span><span class="line"><span class="cl">172.17.0.0      0.0.0.0         255.255.0.0     U     0      0        0 docker0
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>destination 目的网段</strong>
+<strong><a href="https://so.csdn.net/so/search?q=mask&amp;spm=1001.2101.3001.7020" target="_blank" rel="noopener noreffer ">mask</a> 子网掩码</strong>
+<strong>interface 到达该目的地的本<a href="https://so.csdn.net/so/search?q=%e8%b7%af%e7%94%b1%e5%99%a8&amp;spm=1001.2101.3001.7020" target="_blank" rel="noopener noreffer ">路由器</a>的出口ip</strong>
+<strong>gateway 下一跳路由器入口的ip</strong>，路由器通过interface和gateway定义一调到下一个路由器的链路，通常情况下，interface和gateway是同一网段的
+<strong>metric 跳数，该条路由记录的质量</strong>，一般情况下，如果有多条到达相同目的地的路由记录，路由器<strong>会采用metric值小</strong>的那条路由</p>
+<h3 id="一条条具体理解">一条条具体理解</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+</span></span><span class="line"><span class="cl"># 缺省路由，如果目标网段找不到，那么就从这走。一般有default gateway决定。本例中，如果目标网段找不到，那么就从ens160设备，到10.10.10.10网关。交给网关去处理
+</span></span><span class="line"><span class="cl">0.0.0.0         10.10.10.10     0.0.0.0         UG    0      0        0 ens160
+</span></span><span class="line"><span class="cl">0.0.0.0         10.10.10.10     0.0.0.0         UG    100    0        0 ens160
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#直联网段的路由记录，如果目的网段是10.10.0.0/16，那么从ens160出发，送到0.0.0.0。最后0.0.0.0又会发给10.10.10.10
+</span></span><span class="line"><span class="cl">10.10.0.0       0.0.0.0         255.255.0.0     U     0      0        0 ens160
+</span></span><span class="line"><span class="cl">10.10.10.10     0.0.0.0         255.255.255.255 UH    100    0        0 ens160
+</span></span><span class="line"><span class="cl">10.11.0.0       0.0.0.0         255.255.0.0     U     0      0        0 ens192
+</span></span><span class="line"><span class="cl">172.17.0.0      0.0.0.0         255.255.0.0     U     0      0        0 docker0
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="和ip-route的区别">和ip route的区别</h3>
+<p>显示格式不一样</p>
+<h2 id="路由表">路由表</h2>
+<p><strong>一个linux主机可以有多张路由表</strong></p>
+<ul>
+<li>查看所有路由表</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># in
+</span></span><span class="line"><span class="cl">ip rule
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># out
+</span></span><span class="line"><span class="cl">0:      from all lookup local
+</span></span><span class="line"><span class="cl">32766:  from all lookup main
+</span></span><span class="line"><span class="cl">32767:  from all lookup default
+</span></span><span class="line"><span class="cl"># 可以看到有三张路由表，local，main，default。
+</span></span><span class="line"><span class="cl"># local：路由表 local 包含本机路由及广播信息。
+</span></span><span class="line"><span class="cl"># main：使用传统命令 route -n 所看到的路由表就是 main 的内容。
+</span></span><span class="line"><span class="cl"># default：default 路由表在默认情况下内容为空；除非有特别的要求，否则保持其内容为空即可。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>删除一个路由表</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ip rule del table out3 prio 32763
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>添加路由表</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ sudo echo &#34;4 out4&#34; &gt;&gt; /etc/iproute2/rt_tables
+</span></span><span class="line"><span class="cl"># 此时 ip rule 不能显示新增路由表
+</span></span><span class="line"><span class="cl"># 在新路由表添加应用规则后才能显示出来
+</span></span><span class="line"><span class="cl"># 给 out4 路由表添加应用规则： 来自 192.168.111.111 的数据使用 out4 路由表
+</span></span><span class="line"><span class="cl">$ sudo ip rule add from 192.168.111.111/32 table out4
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="一些route常见命令">一些route常见命令</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    ip route show + 表名（et，main）：显示路由表； 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    ip route add：添加路由； 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    ip route append是追加   #追加一个指定网络的路由，为了平滑切换网关使用
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    ip route change：修改路由；
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    ip route replace：修改路由或添加路由；
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    ip route delete：删除路由；
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    ip route get：获得单条路由的详细信息；
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    ip route flush：清空路由表；
+</span></span><span class="line"><span class="cl">    
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="关于ip-route-addappend-命令使用">关于ip route add/append 命令使用</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">sudo ip route append 10.10.0.0/16 via 0.0.0.0 dev ens160 src 10.10.114.32 protocol kernel  metric 100 table main
+</span></span><span class="line"><span class="cl">上面的意思是，到10.10.0.0/16这个范围的目的地，经过0.0.0.0 从src 10.10.114.32 出发，使用ens160网卡
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">- via 制定网关，经过哪
+</span></span><span class="line"><span class="cl">- dev 制定网卡
+</span></span><span class="line"><span class="cl">- src 源地址
+</span></span><span class="line"><span class="cl">- protocol  是该路由的路由协议标识符。proto kernel的意思是: 在自动配置过程中由内核安装的路由。
+</span></span><span class="line"><span class="cl">- metric 路由开销
+</span></span><span class="line"><span class="cl">- scope 指的是路由前缀覆盖的目标地址范围。 scope link表示在设备的网段内允许通过该路由进行通信
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="sys-test">SYS test</h2>
+<p>对ax3600添加默认路由，默认路由从ens192，且网关为10.11.11.11</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo ip route add default dev ens192 via 10.11.11.11 table ax3600
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>给某个表添加路由策略</p>
+<p>给10.10段添加路由</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">for((i=1; i&lt;=3; i++));
+</span></span><span class="line"><span class="cl">do 
+</span></span><span class="line"><span class="cl">	sudo ip route append 10.10.0.0/16 dev ens34 src 10.10.114.3$i protocol kernel  metric 100 table main
+</span></span><span class="line"><span class="cl">done
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>给10.11段添加路由</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">for((i=1; i&lt;=6; i++));
+</span></span><span class="line"><span class="cl">do 
+</span></span><span class="line"><span class="cl">	sudo ip route append 10.11.0.0/16 dev ens37 src 10.11.114.3$i protocol kernel  metric 101 table main
+</span></span><span class="line"><span class="cl">done
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="ref">ref</h2>
+<p><a href="https://blog.csdn.net/yimenglin/article/details/107182098" target="_blank" rel="noopener noreffer ">route -n路由表理解</a></p>
+<p><a href="https://segmentfault.com/a/1190000022752866" target="_blank" rel="noopener noreffer ">路由表设置详解</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-01-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E5%85%B3%E4%BA%8E%E6%88%91%E5%9C%A8ubuntu%E4%B8%8A%E9%85%8D%E7%BD%AEroute/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.kenger.work/%E5%85%B3%E4%BA%8E%E6%88%91%E5%9C%A8ubuntu%E4%B8%8A%E9%85%8D%E7%BD%AEroute/" data-title="关于我在Ubuntu上配置route" data-hashtags="实验室,路由表,route"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.kenger.work/%E5%85%B3%E4%BA%8E%E6%88%91%E5%9C%A8ubuntu%E4%B8%8A%E9%85%8D%E7%BD%AEroute/" data-hashtag="实验室"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.kenger.work/%E5%85%B3%E4%BA%8E%E6%88%91%E5%9C%A8ubuntu%E4%B8%8A%E9%85%8D%E7%BD%AEroute/" data-title="关于我在Ubuntu上配置route"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.kenger.work/%E5%85%B3%E4%BA%8E%E6%88%91%E5%9C%A8ubuntu%E4%B8%8A%E9%85%8D%E7%BD%AEroute/" data-title="关于我在Ubuntu上配置route"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.kenger.work/%E5%85%B3%E4%BA%8E%E6%88%91%E5%9C%A8ubuntu%E4%B8%8A%E9%85%8D%E7%BD%AEroute/" data-title="关于我在Ubuntu上配置route"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%AE%9E%E9%AA%8C%E5%AE%A4/">实验室</a>,&nbsp;<a href="/tags/%E8%B7%AF%E7%94%B1%E8%A1%A8/">路由表</a>,&nbsp;<a href="/tags/route/">Route</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E5%9F%BA%E4%BA%8E%E5%AE%9D%E5%A1%94nginx%E7%9A%84%E5%A4%9A%E7%AB%99%E7%82%B9%E7%AE%A1%E7%90%86/" class="prev" rel="prev" title="基于宝塔nginx的多站点管理"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>基于宝塔nginx的多站点管理</a>
+            <a href="/%E5%85%B3%E4%BA%8Er6300%E4%B8%8E%E5%B0%8F%E7%B1%B3ax3600%E5%88%B7openwrt%E6%95%99%E7%A8%8B/" class="next" rel="next" title="关于R6300与小米AX3600刷openwrt教程">关于R6300与小米AX3600刷openwrt教程<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.125.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.kenger.work/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
