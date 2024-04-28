@@ -4,7 +4,7 @@ top: false
 cover: false
 toc: true
 mathjax: true
-hidden: true
+draft: true
 date: 2024-03-14 15:27:31
 password:
 summary:
