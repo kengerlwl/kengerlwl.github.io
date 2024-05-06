@@ -1,5 +1,5 @@
 ```
-title: hugo博客搭建踩坑LoveIt
+title: hugo加loveit博客
 top: false
 cover: false
 toc: true
