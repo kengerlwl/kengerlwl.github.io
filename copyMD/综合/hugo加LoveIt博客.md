@@ -1,5 +1,5 @@
-```
-title: hugo加loveit博客
+---
+title: hugo博客搭建踩坑LoveIt
 top: false
 cover: false
 toc: true
@@ -12,7 +12,7 @@ tags:
 - 博客
 categories:
 - 综合
-```
+---
 
 
 
