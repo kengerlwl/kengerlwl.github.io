@@ -42,10 +42,15 @@ def init():
     global img_dir_pre
     global md_name_hash
 
-    github_url = 'https://github.com/' + conf['username'] + '/' + conf['repository']
-    github_url = github_url.replace('https://github.com/', '')
-    github_url = 'https://raw.githubusercontent.com/' + github_url
-    github_url = github_url + '/master'
+    # github_url = 'https://github.com/' + conf['username'] + '/' + conf['repository']
+    # github_url = github_url.replace('https://github.com/', '')
+    # github_url = 'https://raw.githubusercontent.com/' + github_url
+   
+    # github_url = github_url + '/master'
+
+
+    github_url = "https://cdn.jsdelivr.net/gh/" +  conf['username'] + '/' + conf['repository']
+
     print('github image url 的链接前缀 ： ' + github_url)
 
     md_name = conf['md_name']
@@ -103,7 +108,13 @@ def main():
                 print(image_url)
                 if image_url.find("raw.githubusercontent.com") != -1:
                     # print(image_url.find("raw.githubusercontent.com"))
+                    line = line.replace("raw.githubusercontent.com", "cdn.jsdelivr.net/gh")
+                    line = line.replace("master/", "")
                     raise Exception("已经是github图源了")
+
+                if image_url.find("cdn.jsdelivr.net") != -1:
+                    raise Exception("已经是github的cdn图源了")
+                
 
                 git_url = img_pro(image_url)
                 print(git_url)

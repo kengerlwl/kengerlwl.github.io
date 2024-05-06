@@ -91,7 +91,7 @@ dd if=/cdrom/op.img of=/dev/sda   #将img文件写入到硬盘中
 
 `vi /etc/config/network`
 
-[![最强软路由系统iStoreOS_X86安装体验，极简化设置、一键旁路由、小白强烈推荐](https://qnam.smzdm.com/202205/07/62761ff381ca43592.png_e1080.jpg)](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/5983908472625ebc769d6753cd4062a4/4e4db73fbc922244899f840ce1fcc74b.png)
+[![最强软路由系统iStoreOS_X86安装体验，极简化设置、一键旁路由、小白强烈推荐](https://qnam.smzdm.com/202205/07/62761ff381ca43592.png_e1080.jpg)](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/5983908472625ebc769d6753cd4062a4/4e4db73fbc922244899f840ce1fcc74b.png)
 
 更改ip和mask到主路由同一网段，方便在主路由网段进行访问。
 
@@ -105,15 +105,15 @@ dd if=/cdrom/op.img of=/dev/sda   #将img文件写入到硬盘中
 
 1、不同于其他openwrt的复杂配置。 iStoreOS进行了深度定制，在某些基础功能上都有对小白极其友好的向导设置，点击网络向导。
 
-[![最强软路由系统iStoreOS_X86安装体验，极简化设置、一键旁路由、小白强烈推荐](https://qnam.smzdm.com/202205/07/62761ff410d712913.png_e1080.jpg)](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/5983908472625ebc769d6753cd4062a4/cedc20c4e21949b386304e70c4ad0ec9.png)
+[![最强软路由系统iStoreOS_X86安装体验，极简化设置、一键旁路由、小白强烈推荐](https://qnam.smzdm.com/202205/07/62761ff410d712913.png_e1080.jpg)](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/5983908472625ebc769d6753cd4062a4/cedc20c4e21949b386304e70c4ad0ec9.png)
 
 2、根据自身需求选择配置，我这里选择配置为旁路由。
 
-[![最强软路由系统iStoreOS_X86安装体验，极简化设置、一键旁路由、小白强烈推荐](https://qnam.smzdm.com/202205/07/62761ff4341e22968.png_e1080.jpg)](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/5983908472625ebc769d6753cd4062a4/bd50cb647804ee660a3e10a69502b3ba.png)
+[![最强软路由系统iStoreOS_X86安装体验，极简化设置、一键旁路由、小白强烈推荐](https://qnam.smzdm.com/202205/07/62761ff4341e22968.png_e1080.jpg)](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/5983908472625ebc769d6753cd4062a4/bd50cb647804ee660a3e10a69502b3ba.png)
 
 3、进入旁路由配置选项，只需要修改两个选项，将ip地址修改为旁路由登录ip，网管地址修改为主路由ip，根据自身需要选择是否关闭旁路由dhcp功能，我这里选择关闭，点击保存配置。
 
-[![最强软路由系统iStoreOS_X86安装体验，极简化设置、一键旁路由、小白强烈推荐](https://qnam.smzdm.com/202205/07/62761ff431d787474.png_e1080.jpg)](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/5983908472625ebc769d6753cd4062a4/e09ffad009cb129455cfc0b25597495b.png)
+[![最强软路由系统iStoreOS_X86安装体验，极简化设置、一键旁路由、小白强烈推荐](https://qnam.smzdm.com/202205/07/62761ff431d787474.png_e1080.jpg)](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/5983908472625ebc769d6753cd4062a4/e09ffad009cb129455cfc0b25597495b.png)
 
 
 

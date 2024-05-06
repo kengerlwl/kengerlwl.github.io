@@ -50,7 +50,7 @@ HTTP 使用 URL（ **U** niform **R**esource **L**ocator，统一资源定位符
 
 ## 连接管理
 
-![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/ed53a3aa17a1cf23e8379348caea6edb/53720c06c1bd4f7c1fa348986f980963.png)
+![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/ed53a3aa17a1cf23e8379348caea6edb/53720c06c1bd4f7c1fa348986f980963.png)
 
 
 
@@ -99,7 +99,7 @@ HTTPS 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）�
 
 通过使用 SSL，HTTPS 具有了加密（防窃听）、认证（防伪装）和完整性保护（防篡改）。
 
-![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/ed53a3aa17a1cf23e8379348caea6edb/f944d0286c4c355f70cb81283241bd24.png)
+![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/ed53a3aa17a1cf23e8379348caea6edb/f944d0286c4c355f70cb81283241bd24.png)
 
 ### 认证
 

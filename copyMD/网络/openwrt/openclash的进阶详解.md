@@ -92,7 +92,7 @@ Fake-IP 模式在客户端发起DNS请求时会立即返回一个保留地址（
 
 通过如下方式设置dns。
 
-![image-20230924135537598](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/dcbf708235ccb7410a7dabaf4b4d275c/e08ae1b99c500569ed648b7ab1742d73.png)
+![image-20230924135537598](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/dcbf708235ccb7410a7dabaf4b4d275c/e08ae1b99c500569ed648b7ab1742d73.png)
 
 
 

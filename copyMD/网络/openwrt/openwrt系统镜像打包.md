@@ -24,7 +24,7 @@ categories:
 
 先看看目前占用的内存，这将决定后面导出的img包的大小
 
-![image-20230909224156157](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/00ae1fc546ca2c05ae298424b8e9632b/8e9413f7058186ee23805e9e4f82286e.png)
+![image-20230909224156157](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/00ae1fc546ca2c05ae298424b8e9632b/8e9413f7058186ee23805e9e4f82286e.png)
 
 从图中我们不难看出。目前系统是在/dev/sda上面的。
 

@@ -27,7 +27,7 @@ categories:
 
 **一个更加清晰的结构图**
 
-![Java 运行时数据区域（JDK1.8 ）](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/f2e69943a7177210b2e5fff570bf4e7b/ab3aa96730a25c95c8e9a6b6c184d643.png)
+![Java 运行时数据区域（JDK1.8 ）](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f2e69943a7177210b2e5fff570bf4e7b/ab3aa96730a25c95c8e9a6b6c184d643.png)
 
 **线程私有的：**
 
@@ -52,7 +52,7 @@ categories:
 
 ### java内存分区
 
-![image-20221026100332889](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/f2e69943a7177210b2e5fff570bf4e7b/8d49402e9a8099495c09a33c227b839e.png)
+![image-20221026100332889](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f2e69943a7177210b2e5fff570bf4e7b/8d49402e9a8099495c09a33c227b839e.png)
 
 ### java堆
 
@@ -92,7 +92,7 @@ Java堆在JVM启动时创建，作用是：**存放对象实例**
 >
 > **引用计数器**：在Java 中如果要操作对象，就必须先获取该对象的引用，因此可以通过引用计数法来判断一个对象是否可以被回收。在为对象添加一个引用时，引用计数加l ；在为对象删除一个引用时， 引进计数减l ；如果一个对象的引用计数为0 ，则表示此刻该对象没有被引用，可以被回收。
 >
-> **存在的问题：如果两个互相引用，则不会回收**![对象之间循环引用](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/f2e69943a7177210b2e5fff570bf4e7b/33861af6e976624ec2f601443ee6fc7c.png)
+> **存在的问题：如果两个互相引用，则不会回收**![对象之间循环引用](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f2e69943a7177210b2e5fff570bf4e7b/33861af6e976624ec2f601443ee6fc7c.png)
 >
 > **可达性分析**：为了解决引用计数器方法的循环引用问题，首先定义一些GC Root s 对象，然后**以这些GC Roots 对象作为起点向下搜索，如果在GC roots 和一个对象之间没有可达路径， 则称该对象是不可达的**。不可达对象要经过至少两次标记才能判定其是否可以被回收，如果在两次标记后该对象仍然是不可达的，则将被垃圾收集器回收。
 >
@@ -111,7 +111,7 @@ Java堆在JVM启动时创建，作用是：**存放对象实例**
 
 ### java引用类型总结
 
-![Java 引用类型总结](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/f2e69943a7177210b2e5fff570bf4e7b/5cd2eb63ab7866a1bedaa5f6f31a4656.png)
+![Java 引用类型总结](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f2e69943a7177210b2e5fff570bf4e7b/5cd2eb63ab7866a1bedaa5f6f31a4656.png)
 
 1. **强引用（StrongReference）**
 
@@ -207,7 +207,7 @@ Java堆在JVM启动时创建，作用是：**存放对象实例**
 
 **标记-整理算法的“标记”过程与“标记-清除算法”的标记过程一致，但标记之后不会直接清理。而是将所有存活对象都移动到内存的一端。移动结束后直接清理掉剩余部分。**
 
-![标记-整理算法](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/f2e69943a7177210b2e5fff570bf4e7b/9f54c5467aad11f9dd339ba0f2e05b8e.png)
+![标记-整理算法](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f2e69943a7177210b2e5fff570bf4e7b/9f54c5467aad11f9dd339ba0f2e05b8e.png)
 
 
 
@@ -306,7 +306,7 @@ G1重新定义了堆空间，打破了原有的分代模型，将堆划分为一
 
 
 
-![JMM(Java 内存模型)](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/f2e69943a7177210b2e5fff570bf4e7b/afaf5bed55fe5835ca70005914a9db2c.png)
+![JMM(Java 内存模型)](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f2e69943a7177210b2e5fff570bf4e7b/afaf5bed55fe5835ca70005914a9db2c.png)
 
 **什么是主内存？什么是本地内存？**
 
@@ -375,7 +375,7 @@ Java 程序通过栈上的 reference 数据来操作堆上的具体对象。对�
 - 类加载过程：**加载->连接->初始化**。
 - 连接过程又可分为三步：**验证->准备->解析**。
 
-![类加载过程](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/f2e69943a7177210b2e5fff570bf4e7b/d5c27259d176f877f8a4947266957d28.png)
+![类加载过程](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f2e69943a7177210b2e5fff570bf4e7b/d5c27259d176f877f8a4947266957d28.png)
 
 
 
@@ -401,7 +401,7 @@ JVM 启动的时候，并不会一次性加载所有的类，而是根据需要�
 
 **类加载器分类，以及加载流程**
 
-![类加载器层次关系图](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/f2e69943a7177210b2e5fff570bf4e7b/cb10529e430edb743c6cdbc89aebc247.png)
+![类加载器层次关系图](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f2e69943a7177210b2e5fff570bf4e7b/cb10529e430edb743c6cdbc89aebc247.png)
 
 
 

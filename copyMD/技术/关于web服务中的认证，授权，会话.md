@@ -55,7 +55,7 @@ Cookie本身可以理解为一个键值对
 
 注意，Session仅仅只是一种机制，实现方式有很多，
 
-![v2-369c25ea411974a1cd4d6ed69d533bcb_b](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/1c96dc0740678a515e90ba0f3ee8ff6f/b5b07d10863a53a4cb4e74fd08677838.png)
+![v2-369c25ea411974a1cd4d6ed69d533bcb_b](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/1c96dc0740678a515e90ba0f3ee8ff6f/b5b07d10863a53a4cb4e74fd08677838.png)
 
 
 

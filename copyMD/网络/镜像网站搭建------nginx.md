@@ -55,7 +55,7 @@ categories:
 
 只有使用灵活模式才能申请宝塔的免费ssl
 
-![image-20230407222716842](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/9d912c55b95bf6659a9d54cba521cd3f/f8c694ef52aacee0ebeea1988ec1a14a.png)
+![image-20230407222716842](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/9d912c55b95bf6659a9d54cba521cd3f/f8c694ef52aacee0ebeea1988ec1a14a.png)
 
 
 

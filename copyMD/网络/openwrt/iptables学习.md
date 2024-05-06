@@ -20,7 +20,7 @@ categories:
 
 
 
-![image-20230923120614113](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/dc9807ef471018a8a65a3d4d15e27f92/aafce896aada7b5170b28fbe1fd42128.png)
+![image-20230923120614113](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/dc9807ef471018a8a65a3d4d15e27f92/aafce896aada7b5170b28fbe1fd42128.png)
 
 例子
 
@@ -42,7 +42,7 @@ iptables 允许系统管理员定义哪些数据包可以**进入系统、离开
 
 ### 结构
 
-![image-20230923115927378](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/dc9807ef471018a8a65a3d4d15e27f92/4e0d1e7a8556d67c4c4df7e888ad8d15.png)
+![image-20230923115927378](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/dc9807ef471018a8a65a3d4d15e27f92/4e0d1e7a8556d67c4c4df7e888ad8d15.png)
 
 。iptables 的主要组成结构包括：
 
@@ -61,7 +61,7 @@ iptables 允许系统管理员定义哪些数据包可以**进入系统、离开
 
 **具体的表与链的结构如下**
 
-![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/dc9807ef471018a8a65a3d4d15e27f92/2a8d3d0aa0d83dab2f9093940b20e8b0.png)
+![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/dc9807ef471018a8a65a3d4d15e27f92/2a8d3d0aa0d83dab2f9093940b20e8b0.png)
 
 ​			**mangle表中的链有：**
 

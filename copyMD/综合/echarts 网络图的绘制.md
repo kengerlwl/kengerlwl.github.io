@@ -57,7 +57,7 @@ c.render_notebook()
 ```
 结果
 
-![](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/74d9467d0f68679807eade1929f22c8e/44eb9740961a90efe652fa93d1e5864e.png)
+![](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/74d9467d0f68679807eade1929f22c8e/44eb9740961a90efe652fa93d1e5864e.png)
 
 ## 各种属性设置
 
@@ -185,7 +185,7 @@ label_opts=opts.LabelOpts(is_show=True),
 edge_label=opts.LabelOpts(is_show=True, position='middle', formatter='{b}的数据{c}')
 
 ```
-![](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/74d9467d0f68679807eade1929f22c8e/8e8115090e999dd1e671e4bb73d0509c.png)
+![](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/74d9467d0f68679807eade1929f22c8e/8e8115090e999dd1e671e4bb73d0509c.png)
 
 
 ### 显示侧边种类
@@ -195,14 +195,14 @@ G.set_global_opts(
 
 )
 ```
-![](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/74d9467d0f68679807eade1929f22c8e/034e94080610e103e3b3ab841a721d87.png)
+![](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/74d9467d0f68679807eade1929f22c8e/034e94080610e103e3b3ab841a721d87.png)
 
 
 ### 重力的设置
 重力是控制所有的节点向中心聚集的引力
 
 默认是0.2，我们改成1
-![](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/74d9467d0f68679807eade1929f22c8e/a6aa5afab6aa4c0e5f48c995648b8b0c.png)
+![](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/74d9467d0f68679807eade1929f22c8e/a6aa5afab6aa4c0e5f48c995648b8b0c.png)
 
 ### 关于斥力的设置
 repulsion=50：节点之间的斥力因子，支持设置成数组表达斥力的范围，此时不同大小的值会线性映射到不同的斥力。值越大则斥力越大

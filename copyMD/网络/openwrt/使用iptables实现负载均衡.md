@@ -143,7 +143,7 @@ net.ipv4.conf.default.rp_filter = 0
 
 聚合后。
 
-![image-20230923222820553](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/d9a3a496f237da2003ac56f66c87928a/a688cb7bcb73473e4da3b14d18f9853e.png)
+![image-20230923222820553](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/d9a3a496f237da2003ac56f66c87928a/a688cb7bcb73473e4da3b14d18f9853e.png)
 
 
 

@@ -18,7 +18,7 @@ categories:
 
 直接all in
 
-![image-20230529224127732](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/469505aeb3a2f52330266433c225d6f2/5fb3a451989202d0dddb2d877933e9a6.png)
+![image-20230529224127732](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/469505aeb3a2f52330266433c225d6f2/5fb3a451989202d0dddb2d877933e9a6.png)
 
 
 
@@ -32,7 +32,7 @@ categories:
 
 去官网下载驱动
 
-![image-20230601000105656](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/469505aeb3a2f52330266433c225d6f2/e525db42ac109a6dffaaf2658360ffaf.png)
+![image-20230601000105656](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/469505aeb3a2f52330266433c225d6f2/e525db42ac109a6dffaaf2658360ffaf.png)
 
 
 
@@ -126,7 +126,7 @@ CUDA官网:https://developer.nvidia.com/cuda-toolkit-archive
 
 
 
-![image-20230601002603316](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/469505aeb3a2f52330266433c225d6f2/e4fb240f5670dd45caceaac8db614d5f.png)
+![image-20230601002603316](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/469505aeb3a2f52330266433c225d6f2/e4fb240f5670dd45caceaac8db614d5f.png)
 
 
 
@@ -146,7 +146,7 @@ accept 同意 取消Driver，因为我们前面已经安装过显示驱动了，
 
 
 
-![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/fd10750a9216e7e8481fa986baad00c8/80e31a36d5f762ad8c5c23c146db4f38.png)
+![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/fd10750a9216e7e8481fa986baad00c8/80e31a36d5f762ad8c5c23c146db4f38.png)
 
 
 
@@ -156,7 +156,7 @@ accept 同意 取消Driver，因为我们前面已经安装过显示驱动了，
 
 
 
-![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/fd10750a9216e7e8481fa986baad00c8/1aa9c7f087059a817bb0debaffa0acfa.png)
+![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/fd10750a9216e7e8481fa986baad00c8/1aa9c7f087059a817bb0debaffa0acfa.png)
 
 ****
 

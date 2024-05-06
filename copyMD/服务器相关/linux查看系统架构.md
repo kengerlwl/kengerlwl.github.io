@@ -47,7 +47,7 @@ uname -a
 
 
 
-![image-20230116215725688](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/658b2b5c183fcf1e9130b23aa3785369/b83c61174520b3b3288c88d09df55db4.png)
+![image-20230116215725688](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/658b2b5c183fcf1e9130b23aa3785369/b83c61174520b3b3288c88d09df55db4.png)
 
 
 

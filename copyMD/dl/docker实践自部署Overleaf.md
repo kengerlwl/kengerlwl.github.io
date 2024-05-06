@@ -24,7 +24,7 @@ categories:
 
 我修改了一下数据的挂载，改成相对目录
 
-![image-20230413234939354](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/72eba7038b7a0441bc4cabfa1b6703c9/ad50ab79944109ff4ada7a17760076a3.png)
+![image-20230413234939354](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/72eba7038b7a0441bc4cabfa1b6703c9/ad50ab79944109ff4ada7a17760076a3.png)
 
 ```
 docker-compose -f docker-compose.yml up
@@ -143,7 +143,7 @@ root@e038eb2407e0:/usr/share/fonts/windows# fc-cache
 root@e038eb2407e0:/usr/share/fonts/windows# fc-list
 ```
 
-![image-20230419160545910](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/72eba7038b7a0441bc4cabfa1b6703c9/8fb75c02b80f49fb798ddce6769a67ad.png)
+![image-20230419160545910](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/72eba7038b7a0441bc4cabfa1b6703c9/8fb75c02b80f49fb798ddce6769a67ad.png)
 
 
 

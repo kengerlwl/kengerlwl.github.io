@@ -34,14 +34,14 @@ categories:
 命令：`ifconfig ens33 192.168.191.138 netmask 255.255.255.0 up`
 **查看ip地址**
 ip地址已经修改为192.168.191.138
-![在这里插入图片描述](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/d7b7336e97cc0a77510139991a2013eb.png)
+![在这里插入图片描述](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7350ba19c0fe09009479d4ff4f4fcffb/d7b7336e97cc0a77510139991a2013eb.png)
 
 使用ip命令：
 格式：ip addr add <ip地址>/掩码 dev <接口名>
 命令：`ip addr add 192.168.191.137/24 dev ens33`
 查看ip地址
 新增了一个192.168.191.137的IP地址
-![在这里插入图片描述](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/998f1846ac0a72b8a055532dfc8fa6ad.png)
+![在这里插入图片描述](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7350ba19c0fe09009479d4ff4f4fcffb/998f1846ac0a72b8a055532dfc8fa6ad.png)
 **注：以上关于IP地址的配置在重启之后会失效**
 
 ## 配置网关
@@ -50,18 +50,18 @@ ip地址已经修改为192.168.191.138
 **查看网关**
 查看网关的命令有很多，route –n, ip route show等
 命令：`route -n`
-![在这里插入图片描述](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/ec66e15b0a77c1c382beac8481f209d6.png)
+![在这里插入图片描述](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7350ba19c0fe09009479d4ff4f4fcffb/ec66e15b0a77c1c382beac8481f209d6.png)
 **配置网关**
 命令：`route add default gw 192.168.191.1`
 查看网关
 使用`route –n`命令可以看到新增了一个192.168.191.1的网关
-![在这里插入图片描述](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/48ab2498532b9d5f1c9306c85aa0e0fe.png)
+![在这里插入图片描述](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7350ba19c0fe09009479d4ff4f4fcffb/48ab2498532b9d5f1c9306c85aa0e0fe.png)
 
 **删除网关**
 命令：`route del default gw 192.168.191.1`
 查看网关
 使用`route –n`命令可以看到192.168.191.1的网关已经被删除
-![在这里插入图片描述](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/6b12de69682be8bab079a225d7c109cb.png)
+![在这里插入图片描述](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7350ba19c0fe09009479d4ff4f4fcffb/6b12de69682be8bab079a225d7c109cb.png)
 
 **注：以上关于网关的配置在重启之后会失效**
 
@@ -70,7 +70,7 @@ ip地址已经修改为192.168.191.138
 临时配置，重启失效
 **查看DNS**
 命令：`cat /etc/resolv.conf`
-![在这里插入图片描述](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7350ba19c0fe09009479d4ff4f4fcffb/10c0dc7327c5c3e23ba8ef5bc85f98c0.png)
+![在这里插入图片描述](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7350ba19c0fe09009479d4ff4f4fcffb/10c0dc7327c5c3e23ba8ef5bc85f98c0.png)
 **配置DNS**
 直接修改resolv.conf文件
 命令：`vi /etc/resolv.conf`

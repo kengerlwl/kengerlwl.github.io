@@ -29,7 +29,7 @@ categories:
 ## 一、增加虚拟机磁盘并创建分区
 
 1. 首先当然是在ESXi（我是vSphere）中修改对应虚拟机的磁盘空间啦：
-![image-20210825200149158](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/d81e205c81c7a10b039aeb2ce7b85667/20bf9e4b2c26f318a056aa009ea36d6f.png)
+![image-20210825200149158](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/d81e205c81c7a10b039aeb2ce7b85667/20bf9e4b2c26f318a056aa009ea36d6f.png)
 
 
 
@@ -106,7 +106,7 @@ categories:
 
    截图：
 
-   [![image-20210825204858687](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/d81e205c81c7a10b039aeb2ce7b85667/d81a49051e4362a9450638a54c0824ce.png)](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/d81e205c81c7a10b039aeb2ce7b85667/d81a49051e4362a9450638a54c0824ce.png)
+   [![image-20210825204858687](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/d81e205c81c7a10b039aeb2ce7b85667/d81a49051e4362a9450638a54c0824ce.png)](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/d81e205c81c7a10b039aeb2ce7b85667/d81a49051e4362a9450638a54c0824ce.png)
 
    
 

@@ -21,7 +21,7 @@ categories:
 [参考compose文件](https://github.com/2892211452/docker_demo/tree/main/ldap_compose)
 
 安装完成后，可以看到管理界面
-![](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/4ecf958df4cd734532cd81636478dda9/97410357ff4fb49376f6f07bf569c866.png)
+![](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/4ecf958df4cd734532cd81636478dda9/97410357ff4fb49376f6f07bf569c866.png)
 
 
 具体如何进行账号添加，小组管理可以翻阅相关文档。这里不作展开。
@@ -129,7 +129,7 @@ authconfig --enableldap --enableldapauth --ldapserver="110.40.*.*" --ldapbasedn=
 我们要查看目前有多少用户或者用户组需要用getent命令这个命令可以查看当前的所有信息。包括在线的ldap的数据库里面的用户。
 `getent passwd`
 
-![](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/4ecf958df4cd734532cd81636478dda9/c439758e4c46329ff2b1d974f379f9fd.png)
+![](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/4ecf958df4cd734532cd81636478dda9/c439758e4c46329ff2b1d974f379f9fd.png)
 
 
 

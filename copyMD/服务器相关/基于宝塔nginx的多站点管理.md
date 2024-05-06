@@ -34,31 +34,31 @@ categories:
 
 先直接将域名指向服务器ip。或者服务器www域名也可以。总之就是直接到80端口。
 
-![image-20221217203603861](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7d3fdd730213faafd876f5c39adc98ca/7c600b883827b37010c4aa5fd5a6ad04.png)
+![image-20221217203603861](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7d3fdd730213faafd876f5c39adc98ca/7c600b883827b37010c4aa5fd5a6ad04.png)
 
 ## 设置宝塔面板nginx
 
 然后去宝塔
 
-![image-20221217203731037](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7d3fdd730213faafd876f5c39adc98ca/4478ddcc4224e5f5fa0ba799d09c245e.png)
+![image-20221217203731037](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7d3fdd730213faafd876f5c39adc98ca/4478ddcc4224e5f5fa0ba799d09c245e.png)
 
 
 
 添加一个站点
 
-![image-20221217203751574](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7d3fdd730213faafd876f5c39adc98ca/96411d22da4f6290b0c8645b93df94af.png)
+![image-20221217203751574](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7d3fdd730213faafd876f5c39adc98ca/96411d22da4f6290b0c8645b93df94af.png)
 
 
 
 设置反向代理到本地
 
-![image-20221217204302535](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7d3fdd730213faafd876f5c39adc98ca/0a0df8a8546b32df15f96a5226a75713.png)
+![image-20221217204302535](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7d3fdd730213faafd876f5c39adc98ca/0a0df8a8546b32df15f96a5226a75713.png)
 
 ### 错误注意
 
 尽量不要用localhost。用127.0.0.1更好。
 
-![image-20221217203808588](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7d3fdd730213faafd876f5c39adc98ca/d1fb124357b45b2d75a26dcfa362255f.png)
+![image-20221217203808588](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7d3fdd730213faafd876f5c39adc98ca/d1fb124357b45b2d75a26dcfa362255f.png)
 
 
 
@@ -66,7 +66,7 @@ categories:
 
 
 
-![image-20221217204312605](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7d3fdd730213faafd876f5c39adc98ca/510f3b91cd60dcc1840fc5194894106a.png)
+![image-20221217204312605](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7d3fdd730213faafd876f5c39adc98ca/510f3b91cd60dcc1840fc5194894106a.png)
 
 
 
@@ -93,4 +93,35 @@ server {
     rewrite  ^/(\w+).html$   http://www.baidu.com/index_wd_v5.html permanent;
 }
 ```
+
+
+
+
+
+# 基于nginx实现不同前缀代理到不同的页面
+
+
+
+
+
+```
+#PROXY-START/
+
+location /yuedu
+{
+    proxy_pass http://127.0.0.1:58080/;  # 注意，这个/不能省略
+}
+```
+
+
+
+然后就可以通过`服务器域名/yuedu`访问到`58080`这个端口的内容了。
+
+**注意：`proxy_pass`的/不能省略，nginx用到的是简单的替换！！！！！！！！**
+
+参考：
+
+[Nginx代理proxy pass配置去除前缀 - Ryan.Miao - 博客园](https://www.cnblogs.com/woshimrf/p/nginx-proxy-rewrite-url.html)
+
+
 

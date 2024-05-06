@@ -33,7 +33,7 @@ mwan是一个openwrt上的插件，可以实现多wan口的上网流量管理。
 
 **前置wan注意点**
 
-![image-20221123161720081](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/daa0b5992d6a9fb3beceed9958bce7d2/c6023b7600b77f4a35908dd079d9b432.png)
+![image-20221123161720081](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/daa0b5992d6a9fb3beceed9958bce7d2/c6023b7600b77f4a35908dd079d9b432.png)
 
 - 网关跳跃点必须要有且不能重复
 
@@ -53,7 +53,7 @@ mwan是一个openwrt上的插件，可以实现多wan口的上网流量管理。
 
 中文界面如图
 
-![image-20221123162109769](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/daa0b5992d6a9fb3beceed9958bce7d2/9a17fdd2ace3c1d3ff8b772a5d1fdfbe.png)
+![image-20221123162109769](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/daa0b5992d6a9fb3beceed9958bce7d2/9a17fdd2ace3c1d3ff8b772a5d1fdfbe.png)
 
 
 
@@ -61,7 +61,7 @@ mwan是一个openwrt上的插件，可以实现多wan口的上网流量管理。
 
 **如何查看mwan的界面情况**
 
-![image-20221123162154984](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/daa0b5992d6a9fb3beceed9958bce7d2/6b165289c29de018e7e20912490f1eff.png)
+![image-20221123162154984](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/daa0b5992d6a9fb3beceed9958bce7d2/6b165289c29de018e7e20912490f1eff.png)
 
 在这个界面可以看到各个接口的在线情况
 
@@ -95,7 +95,7 @@ mwan是一个openwrt上的插件，可以实现多wan口的上网流量管理。
 
 **不过这里策略多出了一些单wan口直连的，用于后序的网络断开重连维护**
 
-![image-20221123162711423](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/daa0b5992d6a9fb3beceed9958bce7d2/edc22a6499e598bd5288f9e5907c7da1.png)
+![image-20221123162711423](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/daa0b5992d6a9fb3beceed9958bce7d2/edc22a6499e598bd5288f9e5907c7da1.png)
 
 
 
@@ -122,7 +122,7 @@ mwan是一个openwrt上的插件，可以实现多wan口的上网流量管理。
 
 如图
 
-![image-20221124131230129](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/daa0b5992d6a9fb3beceed9958bce7d2/808da81abd8ed21979deb4014431b709.png)
+![image-20221124131230129](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/daa0b5992d6a9fb3beceed9958bce7d2/808da81abd8ed21979deb4014431b709.png)
 
 
 

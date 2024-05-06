@@ -24,7 +24,7 @@ categories:
 
 我个人常用插件如下。
 
-![image-20230130164706188](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/5e3a7dea6422dfb6e1a0f6a1406b2905/6d6cb97738f5835770c576482478b748.png)
+![image-20230130164706188](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/5e3a7dea6422dfb6e1a0f6a1406b2905/6d6cb97738f5835770c576482478b748.png)
 
 
 
@@ -32,7 +32,7 @@ categories:
 
 配置如下，我这里使用的是秘钥登录，可以避免每次输入密码。
 
-![image-20230130164811532](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/5e3a7dea6422dfb6e1a0f6a1406b2905/08c0bfe580f9ea6da7ea01250707281d.png)
+![image-20230130164811532](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/5e3a7dea6422dfb6e1a0f6a1406b2905/08c0bfe580f9ea6da7ea01250707281d.png)
 
 相较于ssh链接的优点，有缓存机制，能够高效的进行文件编写。
 
@@ -46,11 +46,11 @@ categories:
 
 搜索栏，输入**select interpret**
 
-![image-20230130165153810](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/5e3a7dea6422dfb6e1a0f6a1406b2905/8e81711169c2e34591c4feacd96a466b.png)
+![image-20230130165153810](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/5e3a7dea6422dfb6e1a0f6a1406b2905/8e81711169c2e34591c4feacd96a466b.png)
 
 选择需要的解释器
 
-![image-20230130165247326](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/5e3a7dea6422dfb6e1a0f6a1406b2905/7e437e82feeb9ae2983ca68e3632097b.png)
+![image-20230130165247326](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/5e3a7dea6422dfb6e1a0f6a1406b2905/7e437e82feeb9ae2983ca68e3632097b.png)
 
 
 

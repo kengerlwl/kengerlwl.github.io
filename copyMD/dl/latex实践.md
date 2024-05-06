@@ -24,7 +24,7 @@ categories:
 
 顾名思义，就是单栏的模板。
 
-![34e8d716411043c08c7ffba9fbba23de.png](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7f588d14531a9e2231c0950d124be9df/793e82e3ab7d848ddec0d1f3b1ace133.png)
+![34e8d716411043c08c7ffba9fbba23de.png](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7f588d14531a9e2231c0950d124be9df/793e82e3ab7d848ddec0d1f3b1ace133.png)
 
 ## 双列模板 sample-sigconf
 
@@ -66,7 +66,7 @@ categories:
 
 例如，202就是我的id
 
-![image-20230420111132042](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7f588d14531a9e2231c0950d124be9df/952ed478d7e14957e6efe698d26563b9.png)
+![image-20230420111132042](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7f588d14531a9e2231c0950d124be9df/952ed478d7e14957e6efe698d26563b9.png)
 
 
 
@@ -84,7 +84,7 @@ CCS CONCEPTS这个东西简单来说可以看作一个论文的分类索引，**
 
 例如：
 
-![image-20230416214128225](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7f588d14531a9e2231c0950d124be9df/7fda6ebc57bacaaa2323abdc9edd159a.png)
+![image-20230416214128225](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7f588d14531a9e2231c0950d124be9df/7fda6ebc57bacaaa2323abdc9edd159a.png)
 
 前往[https://dl.acm.org/ccs#](https://dl.acm.org/ccs#)可以查看分类检索系统。
 
@@ -98,7 +98,7 @@ CCS CONCEPTS这个东西简单来说可以看作一个论文的分类索引，**
 
 CCF会议以及期刊论文，某个section的，或者subsecion。第一个段落都省略缩进。
 
-![image-20230416215615378](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7f588d14531a9e2231c0950d124be9df/820fc704d0fcb0ab842e61dfb53b940c.png)
+![image-20230416215615378](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7f588d14531a9e2231c0950d124be9df/820fc704d0fcb0ab842e61dfb53b940c.png)
 
 
 
@@ -134,7 +134,7 @@ CCF会议以及期刊论文，某个section的，或者subsecion。第一个段�
 \end{document}
 ```
 
-![v2-23b67081dc78de280d25e4f4e1362964_b](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7f588d14531a9e2231c0950d124be9df/7777188702cac7c62991c637ec555c67.png)
+![v2-23b67081dc78de280d25e4f4e1362964_b](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7f588d14531a9e2231c0950d124be9df/7777188702cac7c62991c637ec555c67.png)
 
 
 
@@ -165,7 +165,7 @@ Figure \ref{Fig.main} has two sub figures, fig. \ref{Fig.sub.1} is the travel de
 
 编译完成后的效果：
 
-![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7f588d14531a9e2231c0950d124be9df/5aeff1da6bd1851da2fb6dd839bd06bb.png)
+![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7f588d14531a9e2231c0950d124be9df/5aeff1da6bd1851da2fb6dd839bd06bb.png)
 
 
 
@@ -213,7 +213,7 @@ Figure \ref{Fig.main} has two sub figures, fig. \ref{Fig.sub.1} is the travel de
 
 
 
-![image-20230419204928081](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7f588d14531a9e2231c0950d124be9df/800bf5664042fce1de778abbc9fa6650.png)
+![image-20230419204928081](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7f588d14531a9e2231c0950d124be9df/800bf5664042fce1de778abbc9fa6650.png)
 
 
 
@@ -224,7 +224,7 @@ Figure \ref{Fig.main} has two sub figures, fig. \ref{Fig.sub.1} is the travel de
 # 如何查找会议或者期刊的bib引用
 
 - 使用谷歌学术
-- ![image-20230419213615531](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7f588d14531a9e2231c0950d124be9df/29f8b5bf1fa566f42e1cf060267713a0.png)
+- ![image-20230419213615531](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7f588d14531a9e2231c0950d124be9df/29f8b5bf1fa566f42e1cf060267713a0.png)
 
 
 
@@ -232,7 +232,7 @@ Figure \ref{Fig.main} has two sub figures, fig. \ref{Fig.sub.1} is the travel de
 
 - 对于名字不全，只能在文章中提到做什么的论文，可以把对该论文的描述发给new bing看能不能搜索到，如何我搜索到了
 
-![image-20230419214052251](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/7f588d14531a9e2231c0950d124be9df/3eabb9953f63e269f1b44453d7e47153.png)
+![image-20230419214052251](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7f588d14531a9e2231c0950d124be9df/3eabb9953f63e269f1b44453d7e47153.png)
 
 
 

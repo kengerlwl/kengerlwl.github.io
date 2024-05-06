@@ -37,7 +37,7 @@ pipenv install
 ```
 pipenv shell
 ```
-![](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/f4c8bb88e70a139f1a1b6fd1fbe46230/2dc9f02aaf0a29976a9390bd13ae75b1.png)
+![](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f4c8bb88e70a139f1a1b6fd1fbe46230/2dc9f02aaf0a29976a9390bd13ae75b1.png)
 
 
 推出虚拟环境

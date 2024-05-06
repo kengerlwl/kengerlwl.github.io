@@ -28,7 +28,7 @@ categories:
 - 将该端口在交换机上加入两个vlan
 - 在esxi上新建不同的端口组，并指定vlan id
 
-![image-20230622215847377](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cbbb7644e3da38099708c7ef6845178b/aa445631645c9b0d948ac904ce1e790d.png)
+![image-20230622215847377](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/cbbb7644e3da38099708c7ef6845178b/aa445631645c9b0d948ac904ce1e790d.png)
 
 
 

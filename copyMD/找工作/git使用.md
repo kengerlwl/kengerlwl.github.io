@@ -68,7 +68,7 @@ categories:
 
 `git stash pop`结果
 
-![image-20240320002801980](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/6564124d1c13fba84ff5a68727fc7a10.png)
+![image-20240320002801980](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/b2f8414f6cbfc15e7744f2112f9bde7d/6564124d1c13fba84ff5a68727fc7a10.png)
 
 然后做出修改，相当于在之前的分支上继续
 
@@ -86,13 +86,13 @@ categories:
 
 `git pull`
 
-![image-20240320003754753](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/9d9c71e96815daf4b20625a2939c90ef.png)
+![image-20240320003754753](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/b2f8414f6cbfc15e7744f2112f9bde7d/9d9c71e96815daf4b20625a2939c90ef.png)
 
 
 
 查看文件
 
-![image-20240320003815852](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/5fdf6af1eda4fd9dd760c61a225d8c95.png)
+![image-20240320003815852](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/b2f8414f6cbfc15e7744f2112f9bde7d/5fdf6af1eda4fd9dd760c61a225d8c95.png)
 
 
 
@@ -100,13 +100,13 @@ categories:
 
 
 
-![image-20240320003841710](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/92ce6f1a30134b1939f9db89e452488c.png)
+![image-20240320003841710](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/b2f8414f6cbfc15e7744f2112f9bde7d/92ce6f1a30134b1939f9db89e452488c.png)
 
 
 
 `merge 后push`
 
-![image-20240320004238882](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/eb2a32111ff31d8fa046a25e248f26c2.png)
+![image-20240320004238882](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/b2f8414f6cbfc15e7744f2112f9bde7d/eb2a32111ff31d8fa046a25e248f26c2.png)
 
 
 

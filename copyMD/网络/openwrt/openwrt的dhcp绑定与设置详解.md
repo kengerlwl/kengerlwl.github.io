@@ -28,7 +28,7 @@ categories:
 
 **设置**
 
-![image-20230918160554220](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cd73dd14663bf3d11348686e8bea3748/57a136d23f09a045112ac69872e7d015.png)
+![image-20230918160554220](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/cd73dd14663bf3d11348686e8bea3748/57a136d23f09a045112ac69872e7d015.png)
 
 
 

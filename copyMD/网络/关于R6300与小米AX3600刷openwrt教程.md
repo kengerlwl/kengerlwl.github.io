@@ -16,7 +16,7 @@ categories:
 ## R6300教程
 **需要用到的资源如下[百度云](https://pan.baidu.com/s/1pmyT5WHlxAezD48TDZvtPw) 提取码：s87z**
 
-![image-20220427141644265](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/eac86cb5b405690647db62f9da52eb90/24569a3e4256b1d33ceeb759b36ba0f6.png)
+![image-20220427141644265](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/eac86cb5b405690647db62f9da52eb90/24569a3e4256b1d33ceeb759b36ba0f6.png)
 
 刷机文件：
 
@@ -36,18 +36,18 @@ categories:
 
 以下是梅林
 
-![1-0bc2d58fee7642019cb30bd7a602e575](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/eac86cb5b405690647db62f9da52eb90/f4f5211bcaf6c34315d451406f90d153.png)
+![1-0bc2d58fee7642019cb30bd7a602e575](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/eac86cb5b405690647db62f9da52eb90/f4f5211bcaf6c34315d451406f90d153.png)
 
 在梅林**系统管理里面的固件升级**直接使用文件进行刷机：
-**使用固件**![2-1a198385c20a4bec9c37017afa96d234](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/eac86cb5b405690647db62f9da52eb90/4fdeac671c9241c1b8ab52c0593815e9.png)
+**使用固件**![2-1a198385c20a4bec9c37017afa96d234](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/eac86cb5b405690647db62f9da52eb90/4fdeac671c9241c1b8ab52c0593815e9.png)
 
 然后进入升级界面
 
-![image-20220427142108994](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/eac86cb5b405690647db62f9da52eb90/cbccea0255c45c6774c73682c05618ee.png)
+![image-20220427142108994](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/eac86cb5b405690647db62f9da52eb90/cbccea0255c45c6774c73682c05618ee.png)
 
 然后有完成的提示
 
-![4-3a4e3346f13b420fa44f3960022623d9](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/eac86cb5b405690647db62f9da52eb90/4582499bb92c73c4d77bb8854262b3e7.png)
+![4-3a4e3346f13b420fa44f3960022623d9](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/eac86cb5b405690647db62f9da52eb90/4582499bb92c73c4d77bb8854262b3e7.png)
 
 
 
@@ -55,7 +55,7 @@ categories:
 
 原厂Netgear的默认地址：192.168.1.1 用户名：admin 密码：password
 
-![8-6c0d8a99b5b84078b5aab5dd6e86c2eb](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/eac86cb5b405690647db62f9da52eb90/a9f2aa61739567771accce7b1c820225.png)
+![8-6c0d8a99b5b84078b5aab5dd6e86c2eb](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/eac86cb5b405690647db62f9da52eb90/a9f2aa61739567771accce7b1c820225.png)
 
 
 
@@ -65,17 +65,17 @@ categories:
 
 需要注意的是，如果是**美版6300v2需要选择dd-wrt.K3_R6300V2CH.chk**，美版特殊！文件包内有文件。
 
-![9-24c5e4f975524dd4a3a8dde2289c3001](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/eac86cb5b405690647db62f9da52eb90/552f6d3eb325cd5ea6d5f82a06a28ab8.png)
+![9-24c5e4f975524dd4a3a8dde2289c3001](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/eac86cb5b405690647db62f9da52eb90/552f6d3eb325cd5ea6d5f82a06a28ab8.png)
 
 在上传文件升级会有版本提示，否则就需要从新确认固件是否有问题。
 
-![10-06403273426f4554bc3971db95745025](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/eac86cb5b405690647db62f9da52eb90/6d954d25910431c68fe1b71ba24551a7.png)
+![10-06403273426f4554bc3971db95745025](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/eac86cb5b405690647db62f9da52eb90/6d954d25910431c68fe1b71ba24551a7.png)
 
 
 
 刷机成功后，就能进入dd-wrt系统了。ip没变，还是192.168.1.1。登陆进去后，选择刷入openwrt系统
 
-![13-262c666e5c7b49ac8698c936f08e6161](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/eac86cb5b405690647db62f9da52eb90/b3da2f825192f07072af67836257edf9.png)
+![13-262c666e5c7b49ac8698c936f08e6161](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/eac86cb5b405690647db62f9da52eb90/b3da2f825192f07072af67836257edf9.png)
 
 
 
@@ -83,9 +83,9 @@ categories:
 
 我们这里选择刷入openwrt系统
 
-![image-20220427142620127](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/eac86cb5b405690647db62f9da52eb90/6d30b47c71fd3d2386aac88c5daebaae.png)
+![image-20220427142620127](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/eac86cb5b405690647db62f9da52eb90/6d30b47c71fd3d2386aac88c5daebaae.png)
 
-![14-c936b7bf28ab4ccc89a700b20aec4d23](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/eac86cb5b405690647db62f9da52eb90/be4484cf66c54a31b42b5ee6722c74ff.png)
+![14-c936b7bf28ab4ccc89a700b20aec4d23](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/eac86cb5b405690647db62f9da52eb90/be4484cf66c54a31b42b5ee6722c74ff.png)
 
 ### 启动openwrt
 
@@ -103,21 +103,21 @@ categories:
 
 用到的文件[网盘](https://www.geet.cc/?dir=d/%E5%B0%8F%E7%B1%B3AX3600)
 
-![image-20220427144226797](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/eac86cb5b405690647db62f9da52eb90/7cd010f397df07dba4905afa4f9423dd.png)
+![image-20220427144226797](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/eac86cb5b405690647db62f9da52eb90/7cd010f397df07dba4905afa4f9423dd.png)
 
 ### 先刷入特定版本的老原厂固件
 
-![image-20220427143040471](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/eac86cb5b405690647db62f9da52eb90/6a702bd406ef2136d24fcff73808714e.png)
+![image-20220427143040471](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/eac86cb5b405690647db62f9da52eb90/6a702bd406ef2136d24fcff73808714e.png)
 
 **这个版本有漏洞可以破解，可以刷入ssh**
 
-![image-20220427143128048](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/eac86cb5b405690647db62f9da52eb90/2e2b25cda337252e6084d7a7c784dc67.png)
+![image-20220427143128048](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/eac86cb5b405690647db62f9da52eb90/2e2b25cda337252e6084d7a7c784dc67.png)
 
 ### 然后进入ssh
 
 先拿到token，stok后面这串就是我们的token。
 
-![image-20220427143245513](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/eac86cb5b405690647db62f9da52eb90/c73ff25a47329f133382dad213340e85.png)
+![image-20220427143245513](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/eac86cb5b405690647db62f9da52eb90/c73ff25a47329f133382dad213340e85.png)
 
 #### 获取 SSH：
 
@@ -127,11 +127,11 @@ http://192.168.31.1/cgi-bin/luci/;stok=（将token放入这里）/api/misystem/s
 
 *补全**stok=**后面的数据，*
 
-![image-20220427143427007](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/eac86cb5b405690647db62f9da52eb90/d5cca4e584580e525d73e00d68be7195.png)
+![image-20220427143427007](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/eac86cb5b405690647db62f9da52eb90/d5cca4e584580e525d73e00d68be7195.png)
 
 *然后复制到浏览器打开*，显示`{"code":0}`就说明成功了。
 
-![image-20220427143453925](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/eac86cb5b405690647db62f9da52eb90/4c3fa205e576a9a45fd7a365fc42fa08.png)
+![image-20220427143453925](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/eac86cb5b405690647db62f9da52eb90/4c3fa205e576a9a45fd7a365fc42fa08.png)
 
 #### 修改默认 SSH 密码为 admin
 
@@ -146,7 +146,7 @@ http://192.168.31.1/cgi-bin/luci/;stok=/api/misystem/set_config_iotdev?bssid=Xia
 #### 进入ssh
 这里用putty连上路由器
 
-![image-20220427143659857](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/eac86cb5b405690647db62f9da52eb90/e5f8106ddc96f245be7846b0f6932191.png)
+![image-20220427143659857](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/eac86cb5b405690647db62f9da52eb90/e5f8106ddc96f245be7846b0f6932191.png)
 
 **密码是admin。**
 
@@ -154,7 +154,7 @@ http://192.168.31.1/cgi-bin/luci/;stok=/api/misystem/set_config_iotdev?bssid=Xia
 
 然后将如下升级固件用scp传入路由器的/tmp目录下
 
-![image-20220427143830787](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/eac86cb5b405690647db62f9da52eb90/61f32af36ec2532fe1aceb99afdc7c0f.png)
+![image-20220427143830787](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/eac86cb5b405690647db62f9da52eb90/61f32af36ec2532fe1aceb99afdc7c0f.png)
 
 
 
@@ -191,7 +191,7 @@ reboot
 
 **openwrt默认用户名和密码为（root，password）**
 
-![image-20220427144053505](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/eac86cb5b405690647db62f9da52eb90/7d7fc358a09b31772378f791e3aeff66.png)
+![image-20220427144053505](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/eac86cb5b405690647db62f9da52eb90/7d7fc358a09b31772378f791e3aeff66.png)
 
 
 

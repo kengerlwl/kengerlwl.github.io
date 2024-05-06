@@ -52,7 +52,7 @@ categories:
 
 ### 迭代器模式
 
-![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/6bb5bcfd83ad6f211856a971bad5f5fc/e52efe39290bdfbf8a743cd4aecc4f7e.png)
+![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/6bb5bcfd83ad6f211856a971bad5f5fc/e52efe39290bdfbf8a743cd4aecc4f7e.png)
 
 
 

@@ -40,7 +40,7 @@ categories:
 
 控制台地址：[https://console.cloud.tencent.com/ssl/](https://link.zhihu.com/?target=https%3A//console.cloud.tencent.com/ssl/)
 
-![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/9d01b0a126164afb713932382fce16f7/590d7be83374b8aed2e9759b03d9531b.png)
+![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/9d01b0a126164afb713932382fce16f7/590d7be83374b8aed2e9759b03d9531b.png)
 
 **2、进入申请流程**
 
@@ -50,13 +50,13 @@ categories:
 
 **备注：如果你选择的是其他机构证书，可能就会涉及到费用问题了，而不是免费的了，需要在选择是看清楚是否需要付费。**
 
-![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/9d01b0a126164afb713932382fce16f7/3f957bce5a3f1e4824906c3b294641ee.png)
+![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/9d01b0a126164afb713932382fce16f7/3f957bce5a3f1e4824906c3b294641ee.png)
 
 **3、提交申请域名的基本信息**
 
 这里将你要用来申请证书的域名信息和基本的证书信息进行选择和填写。其中关于算法根据需求进行选择，如果没有特殊需求可以直接默认RSA算法。
 
-![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/9d01b0a126164afb713932382fce16f7/0dd4d7b2c3d8bb7aae7c5cc6084ca4a9.png)
+![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/9d01b0a126164afb713932382fce16f7/0dd4d7b2c3d8bb7aae7c5cc6084ca4a9.png)
 
 **4、选择证书验证方式**
 
@@ -70,7 +70,7 @@ categories:
 
 这种方式需要你在相应域名解析的站点下面创建指定的文件（一般都会提供现有文件进行上传），然后进行验证。
 
-![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/9d01b0a126164afb713932382fce16f7/ae5ffb578eaa99907d18e7e63ec7c718.png)
+![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/9d01b0a126164afb713932382fce16f7/ae5ffb578eaa99907d18e7e63ec7c718.png)
 
 **5、进行证书验证**
 
@@ -78,11 +78,11 @@ categories:
 
 如果出现像我一样的以下错误可以根据腾讯官方的错误描述进行排查问题。
 
-![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/9d01b0a126164afb713932382fce16f7/73b9e0b8d16f764a721d37767b121144.png)
+![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/9d01b0a126164afb713932382fce16f7/73b9e0b8d16f764a721d37767b121144.png)
 
 **6、证书申请完成**
 
-![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/9d01b0a126164afb713932382fce16f7/6fa5eecdbe084f0617bffdab436f6e26.png)
+![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/9d01b0a126164afb713932382fce16f7/6fa5eecdbe084f0617bffdab436f6e26.png)
 
 证书申请完成后腾讯云提供了两种安装方式，第一种我们自己手动安装，另一种他们人工安装。
 
@@ -98,7 +98,7 @@ categories:
 
 腾讯云，下载效验文件
 
-![image-20230629203700271](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/9d01b0a126164afb713932382fce16f7/7da6b2f2b8048951ecd53907993ad385.png)
+![image-20230629203700271](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/9d01b0a126164afb713932382fce16f7/7da6b2f2b8048951ecd53907993ad385.png)
 
 文件目录为
 
@@ -116,7 +116,7 @@ categories:
 
 宝塔面板，找到相应站点的ssl设置，复制粘贴进去
 
-![image-20230629203946622](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/9d01b0a126164afb713932382fce16f7/cb1d74bf9bdc42676cddf89a5235974b.png)
+![image-20230629203946622](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/9d01b0a126164afb713932382fce16f7/cb1d74bf9bdc42676cddf89a5235974b.png)
 
 
 
@@ -170,13 +170,13 @@ DNS验证和文件验证是SSL证书颁发机构（CA）用于**验证域名所�
 
 **申请token**
 
-![image-20240506233139467](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/9d01b0a126164afb713932382fce16f7/29f366369628108382302a9b1d553b40.png)
+![image-20240506233139467](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/9d01b0a126164afb713932382fce16f7/29f366369628108382302a9b1d553b40.png)
 
 
 
 **选择验证方式**
 
-![image-20240506233243409](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/9d01b0a126164afb713932382fce16f7/98985403656aa4ffc15e7b83e38d0419.png)
+![image-20240506233243409](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/9d01b0a126164afb713932382fce16f7/98985403656aa4ffc15e7b83e38d0419.png)
 
 
 
@@ -186,7 +186,7 @@ DNS验证和文件验证是SSL证书颁发机构（CA）用于**验证域名所�
 
 例如我想要使用`50443`作为ssl的端口，修改以下既可。
 
-![image-20240506233404338](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/9d01b0a126164afb713932382fce16f7/0e4459036b9fc6a6c862040c1117ab0b.png)
+![image-20240506233404338](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/9d01b0a126164afb713932382fce16f7/0e4459036b9fc6a6c862040c1117ab0b.png)
 
 
 

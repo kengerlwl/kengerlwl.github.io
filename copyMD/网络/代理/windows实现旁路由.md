@@ -27,11 +27,11 @@ categories:
 
 windows上启用clash。
 
-![image-20231025002302280](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/570acd47f145aa15f9d6903e5f42a41c/9554d49bbd5359348167667fb0e686ce.png)
+![image-20231025002302280](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/570acd47f145aa15f9d6903e5f42a41c/9554d49bbd5359348167667fb0e686ce.png)
 
 
 
-![image-20231025002507591](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/570acd47f145aa15f9d6903e5f42a41c/24ab1e1adcf01835d009b5c2b5bd7f7f.png)
+![image-20231025002507591](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/570acd47f145aa15f9d6903e5f42a41c/24ab1e1adcf01835d009b5c2b5bd7f7f.png)
 
 
 

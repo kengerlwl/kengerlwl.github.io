@@ -86,7 +86,7 @@ Install 32 bit compatibility libraries ？ 选择No
 nvidia-smi
 ```
 
-![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/fd10750a9216e7e8481fa986baad00c8/e5eef861ebafd1e5104dac0a107afa79.png)
+![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/fd10750a9216e7e8481fa986baad00c8/e5eef861ebafd1e5104dac0a107afa79.png)
 
 ### 安装CUDA和cuDNN
 
@@ -99,11 +99,11 @@ sudo sh cuda_11.1.0_455.23.05_linux.run
 
 accept 同意 取消Driver，因为我们前面已经安装过显示驱动了，不能重复安装，否则会报错。
 
-![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/fd10750a9216e7e8481fa986baad00c8/80e31a36d5f762ad8c5c23c146db4f38.png)
+![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/fd10750a9216e7e8481fa986baad00c8/80e31a36d5f762ad8c5c23c146db4f38.png)
 
 等待执行完毕
 
-![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/fd10750a9216e7e8481fa986baad00c8/1aa9c7f087059a817bb0debaffa0acfa.png)
+![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/fd10750a9216e7e8481fa986baad00c8/1aa9c7f087059a817bb0debaffa0acfa.png)
 
 添加环境变量
 
@@ -156,7 +156,7 @@ wget https://developer.nvidia.com/downloads/c118-cudnn-linux-8664-880121cuda11-a
 
 [https://developer.nvidia.com/rdp/cudnn-archivedeveloper.nvidia.com/rdp/cudnn-archive](https://link.zhihu.com/?target=https%3A//developer.nvidia.com/rdp/cudnn-archive)
 
-![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/fd10750a9216e7e8481fa986baad00c8/bdf466115f08a53ab2b6a05ebafb9a36.png)
+![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/fd10750a9216e7e8481fa986baad00c8/bdf466115f08a53ab2b6a05ebafb9a36.png)
 
 解压。
 

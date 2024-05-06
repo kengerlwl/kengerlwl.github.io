@@ -72,7 +72,7 @@ liunx环境[Neo4j](https://so.csdn.net/so/search?q=Neo4j&spm=1001.2101.3001.7020
 
 然后有结果。
 
-![image-20220905200159871](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/2970cc53434809d84eb89184b8668416/1a00cb19834f970596e2bfd3ccb898c9.png)
+![image-20220905200159871](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/2970cc53434809d84eb89184b8668416/1a00cb19834f970596e2bfd3ccb898c9.png)
 
 停止
 
