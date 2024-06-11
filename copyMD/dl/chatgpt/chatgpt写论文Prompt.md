@@ -36,8 +36,39 @@ As a professional academic English editor , you are asked to translate the follo
 ````
 As a professional academic English editor, you are asked to revise the grammar of the following passage and list the changes made to each section。please keep the latex grammer，the context is as follows```
 ```
-From Table 5, we can see that our BSO-GBD has the best classification effect compared to existing methods.The two models BIAMN and BoDeGHa mainly classify accounts from the textual similarity of the account comments, but due to the sparseness of the textual content, they do not perform well on our dataset.BotHunter, although it takes into account numerous user features, such as account information, account behavior indicators, and text similarity. However, it relies too much on some features, such as whether the account profile contains strings such as 'bot' or not. After removing this information, the effect will be greatly reduced. In the end, our model achieves excellent results after considering the behavioral sequence information of accounts and some important account features.
+\textbf{Temporal Pretraining Embedding Module (TPE): }Temporal Pretraining Embedding Module (TPE): In previous research on robot detection, distinguishing between humans and robots has often relied on manually observed feature creation or a text semantic perspective (Abdellatif et al., 2022). The utilization of artificial features in behavioral data typically remains at the level of statistical features, and the exploration of behavioral pattern differences between human and robot accounts is not sufficiently in-depth. Classification methods based on a text semantic approach face challenges in effectively differentiating between machine-generated text and human-generated text, especially in the context of large language models. Therefore, we primarily focus on the procedural behavior sequences of robots and propose the Temporal Pretraining Embedding module to deeply explore the robot features hidden beneath account behavioral data. It is noteworthy that in our experiments, we observed that during the data fusion process, simultaneous utilization of temporal and numerical feature data leads to the loss being trapped in a local optimum, thus unable to effectively extract temporal features. 
+
+Therefore, our approach is to first divide the dataset into training, testing, and validation sets. 
+Then, we use only the the training set data as a complete dataset  to pretrain a TPE module capable of extracting account temporal features. Subsequently, this TPE is embedded into a fusion layer as a low-dimensional vector.
+
+In the TPE module, we train the account data using the Bi-LSTM model. On one hand, compared to a unidirectional LSTM, Bi-LSTM can better capture long-term dependencies and patterns in long sequences, ensuring the accuracy of our model (Siami et al., 2019). On the other hand, compared to models like Transformer, the deployment training cost of BiLSTM is lower, which is conducive to practical model deployment in engineering. This is significant for 实际项目落地
+
+After obtaining a well-pretrained model, we extract the Bi-LSTM layer and incorporate it into the subsequent Feature Fusion module.
 ```
+````
+
+
+
+
+
+# 根据审稿意见修改
+
+````
+please help me to fix the error in my paper. I will give you the suggestions from reviewers.
+here is the paper content
+```
+where $x_{i}$ represents the $i$th semaphore and $MA_i$ represents the $i$th semaphore after smoothing. $K$ is the step size used in the smoothing move.
+
+Since GitHub account behaviors are usually concentrated over a period of time and then fall into a waiting void. In order to better represent the distribution state of user behavior over time. We use Bezier curves to reconstruct the raw data to more accurately reflect changes in user behavior.
+
+```
+and next is the suggestions
+```
+- "Since GitHub account behaviors are usually concentrated over a period of time and then fall into a waiting void." => unsubstantiated claim.
+
+```
+
+
 ````
 
 
