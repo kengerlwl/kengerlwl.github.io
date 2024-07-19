@@ -1,0 +1,32 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>LLM - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/llm/</link>
+        <description>LLM - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 28 May 2024 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/llm/" rel="self" type="application/rss+xml" /><item>
+    <title>LoRA微调原理解读</title>
+    <link>https://kengerlwl.github.io/lora%E5%BE%AE%E8%B0%83%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB/</link>
+    <pubDate>Tue, 28 May 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/lora%E5%BE%AE%E8%B0%83%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB/</guid>
+    <description><![CDATA[介绍 LoRA属于PEFT。一种利用微调训练少量参数，来达到全量微调的效果的技术。 在实际工程中非常常用。 文本主要将LoRA原理以及为什么LoR]]></description>
+</item>
+<item>
+    <title>大模型推理参数详解</title>
+    <link>https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3/</link>
+    <pubDate>Tue, 28 May 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3/</guid>
+    <description><![CDATA[背景 一直在用大模型，也大概知道有哪些参数，但是一直没有详细了解其底层是什么原理，决定学习一下。 推理相关参数 LLM看似很神奇，但本质还是一个概]]></description>
+</item>
+<item>
+    <title>大模型微调技术汇总</title>
+    <link>https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83%E6%8A%80%E6%9C%AF%E6%B1%87%E6%80%BB/</link>
+    <pubDate>Tue, 28 May 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83%E6%8A%80%E6%9C%AF%E6%B1%87%E6%80%BB/</guid>
+    <description><![CDATA[介绍 主要介绍各种大模型**微调（Fine tuning）**技术 受GPT论文的影响，目前大模型通用训练模式是三阶段训练模式 第一阶段pre-tr]]></description>
+</item>
+</channel>
+</rss>

@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>GPU - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/gpu/</link>
+        <description>GPU - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 13 Mar 2023 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/gpu/" rel="self" type="application/rss+xml" /><item>
+    <title>关于cpu与gpu的不同阶段使用以及变量的存放</title>
+    <link>https://kengerlwl.github.io/%E5%85%B3%E4%BA%8Ecpu%E4%B8%8Egpu%E7%9A%84%E4%B8%8D%E5%90%8C%E9%98%B6%E6%AE%B5%E4%BD%BF%E7%94%A8/</link>
+    <pubDate>Mon, 13 Mar 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E5%85%B3%E4%BA%8Ecpu%E4%B8%8Egpu%E7%9A%84%E4%B8%8D%E5%90%8C%E9%98%B6%E6%AE%B5%E4%BD%BF%E7%94%A8/</guid>
+    <description><![CDATA[描述 最近在自己编写一个深度学习代码的时候想到了一些问题。由此有了一些思考。 情况： 我把数据分为了训练集，验证集，测试集 由于gpu不够大，而训练]]></description>
+</item>
+</channel>
+</rss>
