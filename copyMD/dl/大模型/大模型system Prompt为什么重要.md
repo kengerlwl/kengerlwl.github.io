@@ -45,6 +45,18 @@ categories:
 
 本质上来说，system prompt也只不过是加了一个分割得token来和user prompt放在一起，直接写在user prompt是没有本质区别的。
 
+![image-20240814200222542](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/b03a509485115100b891e5eeb8634fc7/cbdd56239bd34b020c0cb0702afa92c9.png)
+
+
+
+![image-20240814200229217](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/b03a509485115100b891e5eeb8634fc7/bd8fd894bed17527f0e95a3813aa8357.png)
+
+
+
+
+
+
+
 但是：理论上来说，没有区别。LLM 得到的只是一堆文本，不管是你自己输入的所有内容，还是前端自动添加的某些部分。
 
 **话虽如此，格式很重要，不使用模型训练的格式可能会带来不利影响**。因此，最好让前端处理复杂的提示。
