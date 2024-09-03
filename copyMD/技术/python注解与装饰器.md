@@ -24,6 +24,14 @@ python想要使用注解，来实现一些方便解耦合的功能。
 
 
 
+# 原理
+
+**实际上就是闭包，外面的decorator函数，是为了将目标函数封装到里面的闭包函数里面去。**
+
+**只有在@decorator的时候，会去执行这个decorator函数，**
+
+**每次使用目标函数，实际上就是使用wrapper函数（目标函数是封装在wrapper函数里面的）**
+
 
 
 # demo
@@ -51,7 +59,11 @@ print(greeting)
 
 ```
 
-在这个示例中，`my_decorator` 是一个装饰器函数，它接受一个函数 `func` 作为参数。它定义了一个内部函数 `wrapper`，在调用目标函数 `func` 前后添加了额外的逻辑。然后，我们将 `@my_decorator` 应用于 `say_hello` 函数，这等效于执行 `say_hello = my_decorator(say_hello)`，从而将 `say_hello` 函数传递给 `my_decorator` 并重新赋值为装饰后的函数。
+在这个示例中，`my_decorator` 是一个装饰器函数，它接受一个函数 `func` 作为参数。它定义了一个内部函数 `wrapper`，在调用目标函数 `func` 前后添加了额外的逻辑。
+
+
+
+**然后，我们将 `@my_decorator` 应用于 `say_hello` 函数，这等效于执行 `say_hello = my_decorator(say_hello)`，从而将 `say_hello` 函数传递给 `my_decorator` 并重新赋值为装饰后的函数。**
 
 装饰器的原理：
 
@@ -93,6 +105,29 @@ def verify_request_token(func):
     return wrapper
 
 ```
+
+
+
+# 带参数的注解写法（二层闭包）
+
+```
+def my_decorator_with_args(arg1, arg2):
+    def decorator(func):
+        def wrapper():
+            print(f"Something is happening before the function is called. Arg1: {arg1}, Arg2: {arg2}")
+            func()
+            print("Something is happening after the function is called.")
+        return wrapper
+    return decorator
+
+@my_decorator_with_args("Hello", "World")
+def say_hello():
+    print("Hello!")
+
+say_hello()
+```
+
+
 
 
 
