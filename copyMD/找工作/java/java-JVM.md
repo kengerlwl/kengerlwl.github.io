@@ -4,7 +4,7 @@ top: false
 cover: false
 toc: true
 mathjax: true
-draft: true
+draft: false
 date: 2024-03-25 15:27:31
 password:
 summary:
@@ -39,7 +39,7 @@ categories:
 
 - **堆**： **几乎所有的对象实例以及数组都在这里分配内存。**
   - Java 堆是**垃圾收集器管理的主要区域（GC）**
-  - 
+  - 栈的话一般操作系统有指令可以自己做好回收
 - 方法区
 - 直接内存 (非运行时数据区的一部分)
 

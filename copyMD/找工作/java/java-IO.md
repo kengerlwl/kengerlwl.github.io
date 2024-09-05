@@ -4,7 +4,7 @@ top: false
 cover: false
 toc: true
 mathjax: true
-draft: true
+draft: false
 date: 2024-04-10 15:27:31
 password:
 summary:
@@ -21,7 +21,9 @@ categories:
 
 运算器、控制器、存储器、输入设备、输出设备。
 
-![冯诺依曼体系结构](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/dc65631729c1fc11888079d4e0f4c5a7/102cfebfc7a79a3d4a45d44f29af6581.png)冯诺依曼体系结构
+![冯诺依曼体系结构](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/dc65631729c1fc11888079d4e0f4c5a7/102cfebfc7a79a3d4a45d44f29af6581.png)
+
+冯诺依曼体系结构
 
 **输入设备（比如键盘）和输出设备（比如显示器）**都属于外部设备。网卡、硬盘这种既可以属于输入设备，也可以属于输出设备。
 
