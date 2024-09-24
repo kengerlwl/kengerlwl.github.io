@@ -39,48 +39,9 @@ categories:
 
 **Java 的参数是以值传递的形式传入方法中，而不是引用传递。(但是由于java默认用的就是指针来指向对象，所以在函数里面改变对象实际也会改变)**
 
-以下代码中 Dog dog 的 dog 是一个指针，存储的是对象的地址。在将一个参数传入一个方法时，本质上是将对象的地址以值的方式传递到形参中。
-
-```java
-public class Dog {
-
-    String name;
-
-    Dog(String name) {
-        this.name = name;
-    }
-
-    String getName() {
-        return this.name;
-    }
-
-    void setName(String name) {
-        this.name = name;
-    }
-
-    String getObjectAddress() {
-        return super.toString();
-    }
-}
-```
-
-在方法中改变对象的字段值会改变原对象该字段值，因为引用的是同一个对象。
-
-```java
-class PassByValueExample {
-    public static void main(String[] args) {
-        Dog dog = new Dog("A");
-        func(dog);
-        System.out.println(dog.getName());          // B
-    }
-
-    private static void func(Dog dog) {
-        dog.setName("B");
-    }
-}
-```
 
 
+**注意：string是不可变类型，如果改变了string，并不会影响原来的值，导致看着像值传递。int之类的基础变量类型也是**
 
 ### float 与 double
 

@@ -697,9 +697,9 @@ with 语句的原理:上下文管理协议(Context ManagementProtocol):
 
 #### 直接引用 & 间接应用
 
-![img](https://i-blog.csdnimg.cn/blog_migrate/9f1e556a4322cc194c09d6ff9541c6d8.jpeg)
+![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/c3ae844e26c6be8b47de199e0f6d9e19/108901b9e3a73c43a48c79f1d5ef9eae.jpeg)
 
-![img](https://i-blog.csdnimg.cn/blog_migrate/fe38b91a974aa2ca14023bb072457592.jpeg)
+![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/c3ae844e26c6be8b47de199e0f6d9e19/6389dd193cf7fac005e3163e13268794.jpeg)
 
 ## 可变数据类型于不可变数据类型
 
@@ -744,3 +744,28 @@ def read_large_file(file_path, block_size=4 * 1024 * 1024):
 ## Python中为什么没有函数重载?
 
 首**先Pvthon是解释型语言，函数重载现象通常出现在编译型语言中。其次Python是动态类型语言，函数的参数没有类型约束，也就无法根据参数类型来区分重载**。再者Python中函数的参数可以有默认值，可以使用可变参数和关键字参数，因此即便没有函数重载，也要可以让一个函数根据调用者传入的参数产生不同的行为。
+
+
+
+
+
+## Python和PyPy的区别
+
+
+
+**PyPy2 和 PyPy3:**
+
+PyPy2 和 PyPy3 是 PyPy（Python [解释器](https://so.csdn.net/so/search?q=解释器&spm=1001.2101.3001.7020)）的不同版本，分别针对 Python 2 和 Python 3。**PyPy 是一个优化和即时编译的 Python 解释器，旨在提高 Python 的性能**。主要区别包括：
+
+- 目标版本：PyPy2 是为 Python 2 设计的，而 PyPy3 是为 Python 3 设计的。
+- 兼容性：由于 PyPy2 是针对 Python 2 设计的，因此它可能不支持 Python 3 的某些特性。同样，PyPy3 可能不支持 Python 2 的某些特性。
+- 性能优化：PyPy2 和 PyPy3 都试图通过即时编译和优化来提高 Python 的性能，但它们针对的 Python 版本不同，因此优化方法可能不同
+
+
+
+**亲测：在某次OJ，使用pypy3就pass了**
+
+*PyPy*适用于使用纯Python代码编写的程序，但是只要用到了C扩展库（如Numpy、SciPy等），它的运行*速度*不仅不会加快，反而会比使用CPython慢。
+
+
+

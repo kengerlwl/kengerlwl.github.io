@@ -310,3 +310,113 @@ public class LoggingAspect {
 
 
 
+# MYBatis
+
+
+
+
+
+## 关于防止sql注入
+
+**[#{}和${}的区别?](https://javabetter.cn/sidebar/sanfene/mybatis.html#_7-和-的区别)**
+
+在 MyBatis 中，`#{}` 和 `${}` 是两种不同的占位符，**`#{}` 是预编译处理**，`${}` 是字符串替换。
+
+![三分恶面渣逆袭：#{}和${}比较](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/c4045af266103bf0f40c3fa6989e6e59/56816e5cebaae4bb0119a461d7204f40.png)
+#{}和${}比较
+
+①、当使用 `#{}` 时，MyBatis 会在 SQL 执行之前，将占位符替换为问号 `?`，并使用参数值来替代这些问号。
+
+**由于 `#{}` 使用了预处理，它能有效防止 SQL 注入，可以确保参数值在到达数据库之前被正确地处理和转义。**
+
+
+
+```
+<select id="selectUser" resultType="User">
+  SELECT * FROM users WHERE id = #{id}
+</select>
+```
+
+
+
+### [ MyBatis 的工作原理](https://javabetter.cn/sidebar/sanfene/mybatis.html#_15-能说说-mybatis-的工作原理吗)
+
+我们已经大概知道了 MyBatis 的工作流程，按工作原理，可以分为两大步：`生成会话工厂`、`会话运行`。
+
+![MyBatis的工作流程](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/c4045af266103bf0f40c3fa6989e6e59/1e95b0179b9c1414d026b87d518c5549.png)
+
+MyBatis的工作流程
+
+![MyBatis整体工作原理图](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/c4045af266103bf0f40c3fa6989e6e59/427e6138bad1286e4f542dbd9454d5d7.png)
+
+
+
+
+
+### [为什么 Mapper 接口不需要实现类？](https://javabetter.cn/sidebar/sanfene/mybatis.html#_17-为什么-mapper-接口不需要实现类)
+
+四个字回答：**动态代理**，我们来看一下获取 Mapper 的过程：
+
+![Mapper代理](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/c4045af266103bf0f40c3fa6989e6e59/babd530f12bab28b707427c22695e597.png)
+
+Mapper代理
+
+- 获取 Mapper
+
+我们都知道定义的 Mapper 接口是没有实现类的，Mapper 映射其实是通过**动态代理**实现的。
+
+
+
+### [MyBatis 是如何进行分页的？分页插件的原理是什么？](https://javabetter.cn/sidebar/sanfene/mybatis.html#_20-mybatis-是如何进行分页的-分页插件的原理是什么)
+
+> **MyBatis 是如何分页的？**
+
+MyBatis 使用 RowBounds 对象进行分页，它是针对 ResultSet 结果集执行的内存分页，而非物理分页。可以在 sql 内直接书写带有物理分页的参数来完成物理分页功能，也可以使用分页插件来完成物理分页。
+
+> **分页插件的原理是什么？**
+
+- 分页插件的基本原理是使用 Mybatis 提供的插件接口，实现自定义插件，拦截 Executor 的 query 方法
+- 在执行查询的时候，拦截待执行的 sql，然后重写 sql，根据 dialect 方言，添加对应的物理分页语句和物理分页参数。
+- **举例：`select * from student`，拦截 sql 后重写为：`select t.* from (select * from student) t limit 0, 10`**
+
+
+
+
+
+
+
+## 为了防止 SQL 注入，可以采取以下措施：
+
+①、使用参数化查询
+
+使用参数化查询，即使用`PreparedStatement`对象，通过`setXxx`方法设置参数值，而不是通过字符串拼接 SQL 语句。这样可以有效防止 SQL 注入。
+
+
+
+```
+String query = "SELECT * FROM users WHERE username = ?";
+PreparedStatement pstmt = connection.prepareStatement(query);
+pstmt.setString(1, userName);  // userName 是用户输入
+ResultSet rs = pstmt.executeQuery();
+```
+
+`?` 是一个参数占位符，userName 是外部输入。**这样即便用户输入了恶意的 SQL 语句，也只会被视为参数的一部分，不会改变查询的结构。**
+
+②、限制用户输入
+
+对用户输入进行验证和过滤，只允许输入预期的数据，不允许输入特殊字符或 SQL 关键字。
+
+③、使用 ORM 框架
+
+比如，在 **MyBatis 中，使用`#{}`占位符来代替直接拼接 SQL 语句，MyBatis 会自动进行参数化处理。**
+
+
+
+
+
+# ref
+
+[MyBatis面试题，23道MyBatis八股文（6千字30张手绘图），面渣逆袭必看👍 | 二哥的Java进阶之路](https://javabetter.cn/sidebar/sanfene/mybatis.html#_12-mybatis-%E6%94%AF%E6%8C%81%E5%8A%A8%E6%80%81-sql-%E5%90%97)
+
+
+
