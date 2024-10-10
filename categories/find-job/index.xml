@@ -1,0 +1,88 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Find JOB - 分类 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/categories/find-job/</link>
+        <description>Find JOB - 分类 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 30 Aug 2024 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/categories/find-job/" rel="self" type="application/rss+xml" /><item>
+    <title>python八股题</title>
+    <link>https://kengerlwl.github.io/python%E5%85%AB%E8%82%A1%E9%A2%98/</link>
+    <pubDate>Fri, 30 Aug 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/python%E5%85%AB%E8%82%A1%E9%A2%98/</guid>
+    <description><![CDATA[TOSEE: 【建议收藏】50 道硬核的 Python 面试题.._python程序员面试题-CSDN博客 taizilongxu/interview_python: 关于Python的面试题 基础语法特性 列表（list）和元组（]]></description>
+</item>
+<item>
+    <title>go测试</title>
+    <link>https://kengerlwl.github.io/go%E8%AF%AD%E8%A8%80%E6%B5%8B%E8%AF%95/</link>
+    <pubDate>Mon, 22 Jul 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/go%E8%AF%AD%E8%A8%80%E6%B5%8B%E8%AF%95/</guid>
+    <description><![CDATA[背景 正在编写go的测试用例case，但是对基本流程不熟。 建议还是用goland开发，用vscode有点难受 方法 在Go语言中，编写测试函数和设]]></description>
+</item>
+<item>
+    <title>java-IO</title>
+    <link>https://kengerlwl.github.io/java-io/</link>
+    <pubDate>Wed, 10 Apr 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/java-io/</guid>
+    <description><![CDATA[计算机IO结构 运算器、控制器、存储器、输入设备、输出设备。 冯诺依曼体系结构 **输入设备（比如键盘）和输出设备（比如显示器）**都属于外部设备]]></description>
+</item>
+<item>
+    <title>数据库索引</title>
+    <link>https://kengerlwl.github.io/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/</link>
+    <pubDate>Tue, 26 Mar 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/</guid>
+    <description><![CDATA[索引介绍分类 索引是一种用于快速查询和检索数据的数据结构，其本质可以看成是一种排序好的数据结构。 我们可以按照四个角度来分类索引。 按「数据结构」]]></description>
+</item>
+<item>
+    <title>java-JVM学习</title>
+    <link>https://kengerlwl.github.io/java-jvm/</link>
+    <pubDate>Mon, 25 Mar 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/java-jvm/</guid>
+    <description><![CDATA[什么是JVM？ JVM（Java Virtual Machine）是用于运行Java字节码的虚拟机，包括一套字节码指令集、一组程序寄存器、一个虚拟机栈、一个虚]]></description>
+</item>
+<item>
+    <title>数据库原理</title>
+    <link>https://kengerlwl.github.io/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/</link>
+    <pubDate>Tue, 12 Mar 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/</guid>
+    <description><![CDATA[事务 事务指的是满足 ACID 特性的一组操作，可以通过 Commit 提交一个事务，也可以使用 Rollback 进行回滚。 ACID 1. 原子性（Atomicity） 事务被视为不可分割的最小单]]></description>
+</item>
+<item>
+    <title>git使用</title>
+    <link>https://kengerlwl.github.io/git%E4%BD%BF%E7%94%A8/</link>
+    <pubDate>Tue, 22 Aug 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/git%E4%BD%BF%E7%94%A8/</guid>
+    <description><![CDATA[当本地版本修改与云端发生冲突解决办法 未commit 使用git stash 功能: 将当前未提交的工作保存到 Git 栈中，以便稍后恢复(将当前文件恢复到上次com]]></description>
+</item>
+<item>
+    <title>HTTP连接</title>
+    <link>https://kengerlwl.github.io/http%E8%BF%9E%E6%8E%A5/</link>
+    <pubDate>Tue, 22 Aug 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/http%E8%BF%9E%E6%8E%A5/</guid>
+    <description><![CDATA[基础概念 请求和响应报文 客户端发送一个请求报文给服务器，服务器根据请求报文中的信息进行处理，并将处理结果放入响应报文中返回给客户端。 URL HTTP 使用 U]]></description>
+</item>
+<item>
+    <title>java容器</title>
+    <link>https://kengerlwl.github.io/java%E5%AE%B9%E5%99%A8/</link>
+    <pubDate>Tue, 22 Aug 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/java%E5%AE%B9%E5%99%A8/</guid>
+    <description><![CDATA[概览 容器主要包括 Collection 和 Map 两种，Collection 存储着对象的集合，而 Map 存储着键值对（两个对象）的映射表。 Collection 1. Set TreeSet：**基于红黑树]]></description>
+</item>
+<item>
+    <title>计算机操作系统</title>
+    <link>https://kengerlwl.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</link>
+    <pubDate>Tue, 22 Aug 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</guid>
+    <description><![CDATA[概述 并发和并行 并发：**指的是在同一时间段内，宏观上，多个任务都在执行，但不一定是同时刻。**操作系统会通过在任务之间快速切换来实现并发，每]]></description>
+</item>
+</channel>
+</rss>

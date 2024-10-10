@@ -1,0 +1,64 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Python - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/python/</link>
+        <description>Python - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 30 Aug 2024 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/python/" rel="self" type="application/rss+xml" /><item>
+    <title>python八股题</title>
+    <link>https://kengerlwl.github.io/python%E5%85%AB%E8%82%A1%E9%A2%98/</link>
+    <pubDate>Fri, 30 Aug 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/python%E5%85%AB%E8%82%A1%E9%A2%98/</guid>
+    <description><![CDATA[TOSEE: 【建议收藏】50 道硬核的 Python 面试题.._python程序员面试题-CSDN博客 taizilongxu/interview_python: 关于Python的面试题 基础语法特性 列表（list）和元组（]]></description>
+</item>
+<item>
+    <title>python项目依赖管理</title>
+    <link>https://kengerlwl.github.io/python%E9%A1%B9%E7%9B%AE%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86/</link>
+    <pubDate>Thu, 18 Jul 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/python%E9%A1%B9%E7%9B%AE%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86/</guid>
+    <description><![CDATA[背景 python包管理是一个非常抽象的问题，尤其是设计cuda登显卡环境的时候更加如此。 cu的问题我解决不了，但是普通工程的依赖问题需要解决]]></description>
+</item>
+<item>
+    <title>python协程</title>
+    <link>https://kengerlwl.github.io/python%E5%8D%8F%E7%A8%8B/</link>
+    <pubDate>Thu, 18 Jul 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/python%E5%8D%8F%E7%A8%8B/</guid>
+    <description><![CDATA[python协程 语法 定义协程 协程是使用 async def 关键字定义的函数。协程可以在执行过程中暂停，并在稍后继续执行。 1 2 3 4 5 6 import asyncio async def my_coroutine(): print(&#34;Hello&#34;) await asyncio.sleep(1) print(&#34;World&#34;) 运行协]]></description>
+</item>
+<item>
+    <title>Python Redis，rabbitMQ以及Mysql使用操作教程</title>
+    <link>https://kengerlwl.github.io/python-redisrabbitmq%E4%BB%A5%E5%8F%8Amysql%E4%BD%BF%E7%94%A8%E6%93%8D%E4%BD%9C%E6%95%99%E7%A8%8B/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/python-redisrabbitmq%E4%BB%A5%E5%8F%8Amysql%E4%BD%BF%E7%94%A8%E6%93%8D%E4%BD%9C%E6%95%99%E7%A8%8B/</guid>
+    <description><![CDATA[Python Redis，rabbitMQ以及Mysql使用操作教程 先redis Redis知识点 Redis的数据通常是存储在内存之中的，但是Redis支]]></description>
+</item>
+<item>
+    <title>python 请求重试机制tenacity</title>
+    <link>https://kengerlwl.github.io/python-%E8%AF%B7%E6%B1%82%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6tenacity/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/python-%E8%AF%B7%E6%B1%82%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6tenacity/</guid>
+    <description><![CDATA[python 请求重试机制tenacity 优秀的参考 ref from tenacity import * 正常看到错误就重试 1 2 3 4 @retry def test_retry1(): print(&#34;等待重试.....&#34;) raise Exception #]]></description>
+</item>
+<item>
+    <title>python错误异常处理</title>
+    <link>https://kengerlwl.github.io/python%E9%94%99%E8%AF%AF%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/python%E9%94%99%E8%AF%AF%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/</guid>
+    <description><![CDATA[python 错误处理 try and except捕获异常 可以通过用多个except捕获多个异常 1 2 3 4 5 6 7 8 try: print 2/&#39;0&#39; except ZeroDivisionError: print &#39;除数不能为0&#39; except Exception: print &]]></description>
+</item>
+<item>
+    <title>python协程，进程与线程</title>
+    <link>https://kengerlwl.github.io/python%E5%8D%8F%E7%A8%8B%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/python%E5%8D%8F%E7%A8%8B%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/</guid>
+    <description><![CDATA[协程，进程，线程概念 进程：资源占用的基本单位。 线程：执行任务的单位，一个进程可以有多个线程。 **以上两者，如果要实现并发，那么利用的是多核c]]></description>
+</item>
+</channel>
+</rss>
