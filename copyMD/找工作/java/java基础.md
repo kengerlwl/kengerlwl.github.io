@@ -2,7 +2,7 @@
 title: java基础
 top: false
 cover: false
-draft: true
+draft: false
 toc: true
 mathjax: true
 date: 2023-08-22 15:27:31
@@ -108,7 +108,7 @@ float f = 1.1f;
 4. **final类：** 当一个类被声明为 `final` 时，意味着该类不能被继承。这通常是因为该类的设计者认为它已经完整并且不应该有子类来改变其行为。
 
    ```
-   javaCopy codefinal class FinalClass {
+   codefinal class FinalClass {
        // 类定义
    }
    
@@ -509,7 +509,7 @@ class hello {
 
 **原因是BigDecimal采用了long intCompact和int scale来表示数值，而不是浮点型的科学计数法。BigDecimal的原理很简单，就是将小数扩大N倍，转成整数后再进行计算，同时结合指数，得出没有精度损失的结果。**
 
-
+如果是包含小数点的数据其会将其小数点去掉，进而保存其去掉小数点后的数据。例如`new BigDecimal("3.1415926")`在该`BigDecimal`对象中`intCompact = 31415926`。
 
 
 

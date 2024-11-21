@@ -103,3 +103,41 @@ Vocab size after: 32100
 New token ids: [32100, 32101]
 ```
 
+
+
+# 关于下一步CMG思路
+
+直接将
+
+<ORIGIN_DIFF>
+
+origin diff
+
+<RETRIEVAL_DIFF>
+
+retrieval diff
+
+<RETRIEVAL_MSG>
+
+msg
+
+基于token将其直接分割，
+
+
+
+
+
+
+
+
+
+
+
+
+
+```mermaid
+
+```
+
+
+

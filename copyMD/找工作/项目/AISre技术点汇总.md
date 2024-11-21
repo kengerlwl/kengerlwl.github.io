@@ -1,3 +1,22 @@
+---
+title: AISre技术点汇总
+top: false
+cover: false
+toc: true
+mathjax: true
+date: 2023-08-22 15:27:31
+password:
+summary:
+tags:
+- 找工作
+categories:
+- find JOB
+---
+
+
+
+
+
 # AISre技术点汇总
 
 
@@ -19,7 +38,17 @@
 
 
 
+重复消费的方案
 
+**乐观锁重试机制，重试机制，相关框架**
+
+mybp 
+
+es分片集群。
+
+索引文档过程。还是ES分片
+
+如何删除链表：快速失败异常，迭代器删除。
 
 
 
