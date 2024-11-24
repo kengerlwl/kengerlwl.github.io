@@ -105,7 +105,7 @@ categories:
 
 ## Spring Bean的生命周期
 
-![image-20210726145441431](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/c4045af266103bf0f40c3fa6989e6e59/9013ba7699bd049343060c879ecbc5e8.png)
+![refs/heads/master/image-20210726145441431](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/c4045af266103bf0f40c3fa6989e6e59/9013ba7699bd049343060c879ecbc5e8.png)
 
 
 
@@ -322,7 +322,7 @@ public class LoggingAspect {
 
 在 MyBatis 中，`#{}` 和 `${}` 是两种不同的占位符，**`#{}` 是预编译处理**，`${}` 是字符串替换。
 
-![三分恶面渣逆袭：#{}和${}比较](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/c4045af266103bf0f40c3fa6989e6e59/56816e5cebaae4bb0119a461d7204f40.png)
+![三分恶面渣逆袭：#{}和${}比较](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/c4045af266103bf0f40c3fa6989e6e59/56816e5cebaae4bb0119a461d7204f40.png)
 #{}和${}比较
 
 ①、当使用 `#{}` 时，MyBatis 会在 SQL 执行之前，将占位符替换为问号 `?`，并使用参数值来替代这些问号。
@@ -343,11 +343,11 @@ public class LoggingAspect {
 
 我们已经大概知道了 MyBatis 的工作流程，按工作原理，可以分为两大步：`生成会话工厂`、`会话运行`。
 
-![MyBatis的工作流程](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/c4045af266103bf0f40c3fa6989e6e59/1e95b0179b9c1414d026b87d518c5549.png)
+![MyBatis的工作流程](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/c4045af266103bf0f40c3fa6989e6e59/1e95b0179b9c1414d026b87d518c5549.png)
 
 MyBatis的工作流程
 
-![MyBatis整体工作原理图](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/c4045af266103bf0f40c3fa6989e6e59/427e6138bad1286e4f542dbd9454d5d7.png)
+![MyBatis整体工作原理图](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/c4045af266103bf0f40c3fa6989e6e59/427e6138bad1286e4f542dbd9454d5d7.png)
 
 
 
@@ -357,7 +357,7 @@ MyBatis的工作流程
 
 四个字回答：**动态代理**，我们来看一下获取 Mapper 的过程：
 
-![Mapper代理](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/c4045af266103bf0f40c3fa6989e6e59/babd530f12bab28b707427c22695e597.png)
+![Mapper代理](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/c4045af266103bf0f40c3fa6989e6e59/babd530f12bab28b707427c22695e597.png)
 
 Mapper代理
 

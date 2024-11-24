@@ -39,7 +39,7 @@ categories:
 
 
 
-![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/cbe20f3c867c494a3822fcf8ee25f5b2/ecc5ef3a07ad7c820e92179ec29f5d54.webp)
+![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/ecc5ef3a07ad7c820e92179ec29f5d54.webp)
 
 - 强化学习的两个实体：**智能体（Agent）**与**环境（Environment）**
 
@@ -90,7 +90,7 @@ categories:
 
 NLP任务做强化学习（RLHF）的目的：**我们希望给模型一个prompt，让模型能生成符合人类喜好的response**。再回想一下[gpt模型](https://zhida.zhihu.com/search?q=gpt模型&zhida_source=entity&is_preview=1)做推理的过程：**每个时刻** t **只产生一个token，即token是一个一个蹦出来的，先有上一个token，再有下一个token。**
 
-![v2-eb250d428d3b9a751d4ba3aeae70e290_1440w](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/cbe20f3c867c494a3822fcf8ee25f5b2/9d41c9cf600d23244d8e67a3ba7b6f7a.webp)
+![v2-eb250d428d3b9a751d4ba3aeae70e290_1440w](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/9d41c9cf600d23244d8e67a3ba7b6f7a.webp)
 
 
 
@@ -105,7 +105,7 @@ NLP任务做强化学习（RLHF）的目的：**我们希望给模型一个promp
 - **[Reward Model](https://zhida.zhihu.com/search?q=Reward+Model&zhida_source=entity&is_preview=1)：奖励模型**，它的作用是计算即时收益 Rt
 - **Reference Model：[参考模型](https://zhida.zhihu.com/search?q=参考模型&zhida_source=entity&is_preview=1)**，它的作用是在RLHF阶段给语言模型增加一些“约束”，防止语言模型训歪（朝不受控制的方向更新，效果可能越来越差）
 
-![v2-22c2f6fce157dc4385a14f0de50d8136_r](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/cbe20f3c867c494a3822fcf8ee25f5b2/3c0dd9a02fdbd15ebfd81498f14bd8d8.jpg)
+![v2-22c2f6fce157dc4385a14f0de50d8136_r](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/3c0dd9a02fdbd15ebfd81498f14bd8d8.jpg)
 
 
 
@@ -118,7 +118,7 @@ NLP任务做强化学习（RLHF）的目的：**我们希望给模型一个promp
 
 ### actor model
 
-![v2-eb250d428d3b9a751d4ba3aeae70e290_1440w](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/cbe20f3c867c494a3822fcf8ee25f5b2/9d41c9cf600d23244d8e67a3ba7b6f7a.webp)
+![v2-eb250d428d3b9a751d4ba3aeae70e290_1440w](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/9d41c9cf600d23244d8e67a3ba7b6f7a.webp)
 
 实际上，每次是输入一个prompt，然后输出一个answer。一次性计算当前的Rt
 
@@ -128,7 +128,7 @@ NLP任务做强化学习（RLHF）的目的：**我们希望给模型一个promp
 
 **Reference Model（以下简称Ref模型）一般也用SFT阶段得到的SFT模型做初始化，在训练过程中，它的参数是冻结的。**[Ref模型](https://zhida.zhihu.com/search?q=Ref模型&zhida_source=entity&is_preview=1)的主要作用是防止Actor”训歪”，那么它具体是怎么做到这一点的呢？
 
-![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/cbe20f3c867c494a3822fcf8ee25f5b2/84b3ed2927623236b9c89e9e0a546c32.webp)
+![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/84b3ed2927623236b9c89e9e0a546c32.webp)
 
 “防止[模型训歪](https://zhida.zhihu.com/search?q=模型训歪&zhida_source=entity&is_preview=1)”换一个更详细的解释是：**我们希望训练出来的Actor模型既能达到符合人类喜好的目的，又尽量让它和SFT模型不要差异太大**
 
@@ -154,7 +154,7 @@ NLP任务做强化学习（RLHF）的目的：**我们希望给模型一个promp
 
 **所以总结来说，在RLHF中，我们不仅要训练模型生成符合人类喜好的内容的能力（Actor），也要提升模型对人类喜好[量化判断](https://zhida.zhihu.com/search?q=量化判断&zhida_source=entity&is_preview=1)的能力（Critic）！！！！！！**。这就是Critic模型存在的意义。我们来看看它的大致架构：
 
-![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/cbe20f3c867c494a3822fcf8ee25f5b2/c5f04c942d5294e3082781ee6e2759b7.webp)
+![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/c5f04c942d5294e3082781ee6e2759b7.webp)
 
 - value head很多时候就是一个全连接层，用于做维度变换
 
@@ -166,7 +166,7 @@ NLP任务做强化学习（RLHF）的目的：**我们希望给模型一个promp
 
 Reward Model用于计算生成token At 的即时收益，它就是RW阶段所训练的奖励模型，在RLHF过程中，它的参数是冻结的。
 
-![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/cbe20f3c867c494a3822fcf8ee25f5b2/01b9dfe72bb65905a6b978ffbc473a5a.webp)
+![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/01b9dfe72bb65905a6b978ffbc473a5a.webp)
 
 
 **你可能想问：为什么Critic模型要参与训练，而同样是和收益相关的Reward模型的参数就可以冻结呢？**
@@ -190,7 +190,7 @@ Reward Model用于计算生成token At 的即时收益，它就是RW阶段所训
 
 ## 总体流程
 
-![a2fbc36040619a6267fb9816b06ff9b4.jpeg](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/cbe20f3c867c494a3822fcf8ee25f5b2/158714cbb383e72c18d8369f5974020d.jpeg)
+![a2fbc36040619a6267fb9816b06ff9b4.jpeg](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/158714cbb383e72c18d8369f5974020d.jpeg)
 
 - 首先用actor model在**推理模式**下根据prompt生成一个answer（prompt对应强化学习里边的state，answer对应一些列的action）
 
@@ -202,7 +202,7 @@ Reward Model用于计算生成token At 的即时收益，它就是RW阶段所训
 
   ### PPO训练
 
-  ![3996c57c1ce7ff9114fa4f7d5fff24c5](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/cbe20f3c867c494a3822fcf8ee25f5b2/2550d8af3c5b5b17bfd5e23b043e952c.jpeg)
+  ![3996c57c1ce7ff9114fa4f7d5fff24c5](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/2550d8af3c5b5b17bfd5e23b043e952c.jpeg)
 
 
 

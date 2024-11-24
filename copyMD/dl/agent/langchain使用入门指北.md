@@ -116,7 +116,7 @@ print(chain.run({"product": "pizza"}))
 
 下面这个图，**就展现出了 Agent 接到任务之后，自动进行推理，然后自主调用工具完成任务的过程。**
 
-![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/6fa9f6cffd328121122ebd7ec8ec7b85/ef8c5671e2853378b78d1346f8927a2e.jpg?wh=10666x5260)
+![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/6fa9f6cffd328121122ebd7ec8ec7b85/ef8c5671e2853378b78d1346f8927a2e.jpg?wh=10666x5260)
 
 那么，你看 LangChain，乃至整个大模型应用开发的核心理念就呼之欲出了。这个核心理念就是**操作的序列并非硬编码在代码中，而是使用语言模型（如 GPT-3 或 GPT-4）来选择执行的操作序列**。
 
@@ -167,7 +167,7 @@ class AgentExecutor(Chain):
         return result
 ```
 
-![image-20240807153658974](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/6fa9f6cffd328121122ebd7ec8ec7b85/d273d0b7ce818fb0c729db5e2204300b.png)
+![refs/heads/master/image-20240807153658974](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/6fa9f6cffd328121122ebd7ec8ec7b85/d273d0b7ce818fb0c729db5e2204300b.png)
 
 
 

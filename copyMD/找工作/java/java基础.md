@@ -23,7 +23,7 @@ categories:
 
 ### 基本数据类型
 
-![image-20210712152020611](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/e8da9232c588c9b3f04ef0372addef93/d6d2baff4b0ba2647046bf6d69619806.png)
+![refs/heads/master/image-20210712152020611](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/e8da9232c588c9b3f04ef0372addef93/d6d2baff4b0ba2647046bf6d69619806.png)
 
 
 
@@ -367,7 +367,7 @@ class Calculator {
 
 
 每个类都有一个 **Class** 对象，包含了与类有关的信息。当编译一个新类时，会产生一个同名的 .class 文件，该文件内容保存着 Class 对象。原理如图
-![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/e8da9232c588c9b3f04ef0372addef93/c2b064c181acc94720b7cd57611d0388.png)
+![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/e8da9232c588c9b3f04ef0372addef93/c2b064c181acc94720b7cd57611d0388.png)
 
 **Class类对象的获取**
 

@@ -418,7 +418,7 @@ if __name__ == "__main__":
 
 ### 三维中的视角投影
 
-![image-20210518184712038](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7974510d81a8f068b3b3d3e0ac238580/2bd5871a9ea36305f229d33e7fce0249.png)
+![refs/heads/master/image-20210518184712038](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/2bd5871a9ea36305f229d33e7fce0249.png)
 
 以上是书里面的形容整个工作流程的段内容。
 
@@ -428,13 +428,13 @@ if __name__ == "__main__":
 
 #### 平行投影
 
-![image-20210518184935113](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7974510d81a8f068b3b3d3e0ac238580/aaad111715f70823468838cf88c35170.png)
+![refs/heads/master/image-20210518184935113](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/aaad111715f70823468838cf88c35170.png)
 
 
 
 #### 透视投影
 
-![image-20210518185003943](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7974510d81a8f068b3b3d3e0ac238580/8a3bd973ffe2ac8c068f08991049c9cc.png)
+![refs/heads/master/image-20210518185003943](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/8a3bd973ffe2ac8c068f08991049c9cc.png)
 
 ### 函数glOrtho（），平行投影
 
@@ -450,7 +450,7 @@ if __name__ == "__main__":
 
 **视景体**:其实就是能够显示观察的范围。
 
-![image-20210518144514464](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7974510d81a8f068b3b3d3e0ac238580/7643708a27e6261d9b70051c8e95ce8e.png)
+![refs/heads/master/image-20210518144514464](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/7643708a27e6261d9b70051c8e95ce8e.png)
 
 
 
@@ -458,13 +458,13 @@ if __name__ == "__main__":
 
 ### 透视投影glFrustum（）
 
-![image-20210518185229062](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7974510d81a8f068b3b3d3e0ac238580/904bbc990c9db4365238a63447a0e86a.png)
+![refs/heads/master/image-20210518185229062](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/904bbc990c9db4365238a63447a0e86a.png)
 
 
 
 
 
-![image-20210518144522692](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7974510d81a8f068b3b3d3e0ac238580/b9ac18501c9d20195467de23bb84a669.png)
+![refs/heads/master/image-20210518144522692](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/b9ac18501c9d20195467de23bb84a669.png)
 
 
 
@@ -495,7 +495,7 @@ if __name__ == "__main__":
 
 这两个圆半径相差一倍，但是使用透视投影，第一个能遮住第二个半
 
-![image-20210518191339617](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7974510d81a8f068b3b3d3e0ac238580/8b057e7b32a39c34754518dd487d8aa9.png)
+![refs/heads/master/image-20210518191339617](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/8b057e7b32a39c34754518dd487d8aa9.png)
 
 **果然**
 
@@ -596,13 +596,13 @@ $$x^{,} = M1 \cdot M2 \cdot M3 \cdot x$$
 
 没开之前
 
-![image-20210518150145147](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7974510d81a8f068b3b3d3e0ac238580/608838dede0d258a81ea1275d665c5d4.png)
+![refs/heads/master/image-20210518150145147](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/608838dede0d258a81ea1275d665c5d4.png)
 
 不难看出，三角形被后来绘制的圆形给挡住了。
 
 **开启深度测试**
 
-![image-20210518150228027](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/7974510d81a8f068b3b3d3e0ac238580/44bf7ade0b6a45d6c0b07e2390dcdc67.png)
+![refs/heads/master/image-20210518150228027](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/44bf7ade0b6a45d6c0b07e2390dcdc67.png)
 
 **没毛病**
 

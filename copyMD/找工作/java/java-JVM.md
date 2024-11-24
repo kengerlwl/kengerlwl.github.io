@@ -29,7 +29,7 @@ categories:
 
 **一个更加清晰的结构图**
 
-![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f2e69943a7177210b2e5fff570bf4e7b/8c884d8796e5beac7799576e7fbbb968.png)
+![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/f2e69943a7177210b2e5fff570bf4e7b/8c884d8796e5beac7799576e7fbbb968.png)
 
 
 
@@ -39,7 +39,7 @@ categories:
 
 
 
-![Java 运行时数据区域（JDK1.8 ）](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f2e69943a7177210b2e5fff570bf4e7b/ab3aa96730a25c95c8e9a6b6c184d643.png)
+![Java 运行时数据区域（JDK1.8 ）](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/f2e69943a7177210b2e5fff570bf4e7b/ab3aa96730a25c95c8e9a6b6c184d643.png)
 
 **线程私有的：**
 
@@ -47,7 +47,7 @@ categories:
 
 - **虚拟机栈**：**拟机栈为虚拟机执行 Java 方法 （也就是字节码）服务，还有方法调用的各种（变量，操作数，方法返回地址）存储要要入栈帧。**
 
-  ![三分恶面渣逆袭：Java虚拟机栈](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f2e69943a7177210b2e5fff570bf4e7b/2cf6bde8c17b55608dcb130c6688f912.png)
+  ![三分恶面渣逆袭：Java虚拟机栈](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/f2e69943a7177210b2e5fff570bf4e7b/2cf6bde8c17b55608dcb130c6688f912.png)
 
 - **本地方法栈**：**为虚拟机使用到的 Native 方法服务**，与虚拟机栈不同：Navtive方法是Java通过JNI直接调用本地C/C++库，可以认为是Native方法相当于C/C++暴露给Java的一个接口，**Java通过调用这个接口从而调用到C/C++方法**。
 
@@ -56,7 +56,7 @@ categories:
 - **堆**： **几乎所有的对象实例以及数组都在这里分配内存。**
   - Java 堆是**垃圾收集器管理的主要区域（GC）**
   - 栈的话一般操作系统有指令可以自己做好回收
-  - ![二哥的 Java 进阶之路：堆](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f2e69943a7177210b2e5fff570bf4e7b/f7a24aef5da03e76e6d8743c1c0bfbe1.png)
+  - ![二哥的 Java 进阶之路：堆](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/f2e69943a7177210b2e5fff570bf4e7b/f7a24aef5da03e76e6d8743c1c0bfbe1.png)
 - **方法区：（实际上是一些字符串常量池，方法，类信息）**
 - 直接内存 (非运行时数据区的一部分)
 
@@ -69,7 +69,7 @@ categories:
 
 ### java内存分区
 
-![image-20221026100332889](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f2e69943a7177210b2e5fff570bf4e7b/8d49402e9a8099495c09a33c227b839e.png)
+![refs/heads/master/image-20221026100332889](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/f2e69943a7177210b2e5fff570bf4e7b/8d49402e9a8099495c09a33c227b839e.png)
 
 ### java堆
 
@@ -152,7 +152,7 @@ Java堆在JVM启动时创建，作用是：**存放对象实例**
 >
 > **引用计数器**：在Java 中如果要操作对象，就必须先获取该对象的引用，因此可以通过引用计数法来判断一个对象是否可以被回收。在为对象添加一个引用时，引用计数加l ；在为对象删除一个引用时， 引进计数减l ；如果一个对象的引用计数为0 ，则表示此刻该对象没有被引用，可以被回收。
 >
-> **存在的问题：如果两个互相引用，则不会回收**![对象之间循环引用](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f2e69943a7177210b2e5fff570bf4e7b/33861af6e976624ec2f601443ee6fc7c.png)
+> **存在的问题：如果两个互相引用，则不会回收**![对象之间循环引用](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/f2e69943a7177210b2e5fff570bf4e7b/33861af6e976624ec2f601443ee6fc7c.png)
 >
 > **可达性分析**：为了解决引用计数器方法的循环引用问题，首先定义一些GC Root s 对象，然后**以这些GC Roots 对象作为起点向下搜索，如果在GC roots 和一个对象之间没有可达路径， 则称该对象是不可达的**。不可达对象要经过至少两次标记才能判定其是否可以被回收，如果在两次标记后该对象仍然是不可达的，则将被垃圾收集器回收。
 >
@@ -169,7 +169,7 @@ Java堆在JVM启动时创建，作用是：**存放对象实例**
 
 ### java引用类型总结
 
-![Java 引用类型总结](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f2e69943a7177210b2e5fff570bf4e7b/5cd2eb63ab7866a1bedaa5f6f31a4656.png)
+![Java 引用类型总结](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/f2e69943a7177210b2e5fff570bf4e7b/5cd2eb63ab7866a1bedaa5f6f31a4656.png)
 
 1. **强引用（StrongReference）**
 
@@ -251,13 +251,13 @@ Java堆在JVM启动时创建，作用是：**存放对象实例**
 
 **标记-整理算法的“标记”过程与“标记-清除算法”的标记过程一致，但标记之后不会直接清理。而是将所有存活对象都移动到内存的一端。移动结束后直接清理掉剩余部分。**
 
-![标记-整理算法](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f2e69943a7177210b2e5fff570bf4e7b/9f54c5467aad11f9dd339ba0f2e05b8e.png)
+![标记-整理算法](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/f2e69943a7177210b2e5fff570bf4e7b/9f54c5467aad11f9dd339ba0f2e05b8e.png)
 
 
 
 ### 不同算法对比
 
-![image-20240915180830891](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f2e69943a7177210b2e5fff570bf4e7b/295e38a1d1b4fa2c58f238c3c8d4b707.png)
+![refs/heads/master/image-20240915180830891](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/f2e69943a7177210b2e5fff570bf4e7b/295e38a1d1b4fa2c58f238c3c8d4b707.png)
 
 
 
@@ -271,7 +271,7 @@ Java堆在JVM启动时创建，作用是：**存放对象实例**
 
 
 
-![三分恶面渣逆袭：Java堆内存划分](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f2e69943a7177210b2e5fff570bf4e7b/bae8c5a1cbef1379722b3989a11acc1c.png)
+![三分恶面渣逆袭：Java堆内存划分](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/f2e69943a7177210b2e5fff570bf4e7b/bae8c5a1cbef1379722b3989a11acc1c.png)
 
 三分恶面渣逆袭：Java堆内存划分
 
@@ -288,7 +288,7 @@ Java堆在JVM启动时创建，作用是：**存放对象实例**
 
 对象通常会先在年轻代中分配，然后随着时间的推移和垃圾收集的处理，某些对象会进入到老年代中。
 
-![二哥的 Java 进阶之路：对象进入老年代](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f2e69943a7177210b2e5fff570bf4e7b/7246d9600feb75db7fff0b0958af5722.png)
+![二哥的 Java 进阶之路：对象进入老年代](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/f2e69943a7177210b2e5fff570bf4e7b/7246d9600feb75db7fff0b0958af5722.png)
 
 
 
@@ -310,7 +310,7 @@ Java堆在JVM启动时创建，作用是：**存放对象实例**
 
 ### Full GC 的触发条件
 
-![Full GC触发条件](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f2e69943a7177210b2e5fff570bf4e7b/75882c327cc0ef4bc483c63c3ee2c6f0.png)
+![Full GC触发条件](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/f2e69943a7177210b2e5fff570bf4e7b/75882c327cc0ef4bc483c63c3ee2c6f0.png)
 
 
 
@@ -339,7 +339,7 @@ VM 的垃圾收集器主要分为两大类：分代收集器和分区收集器
 - **分代收集器的代表是 CMS**
 - **分区收集器的代表是 G1 和 ZGC。**
 
-![三分恶面渣逆袭：HotSpot虚拟机垃圾收集器](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f2e69943a7177210b2e5fff570bf4e7b/052c07ed8872fa58b8f28d2af4b9b462.png)
+![三分恶面渣逆袭：HotSpot虚拟机垃圾收集器](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/f2e69943a7177210b2e5fff570bf4e7b/052c07ed8872fa58b8f28d2af4b9b462.png)
 
 
 
@@ -354,7 +354,7 @@ CMS收集器仅作用于**老年代**的收集，**是基于`标记-清除算法
 - 并发标记
 - 并发清除
 
-![小潘：CMS](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f2e69943a7177210b2e5fff570bf4e7b/987cac742efed23f002b9aa7469afd20.png)
+![小潘：CMS](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/f2e69943a7177210b2e5fff570bf4e7b/987cac742efed23f002b9aa7469afd20.png)
 
 
 
@@ -364,7 +364,7 @@ CMS收集器仅作用于**老年代**的收集，**是基于`标记-清除算法
 
 G1 把 Java 堆划分为多个大小相等的独立区域（Region），每个区域都可以扮演新生代（Eden 和 Survivor）或老年代的角色。
 
-![gc-collector-20231228213824](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f2e69943a7177210b2e5fff570bf4e7b/cba989a5f31a0dd0e2dbaad8365c42a3.png)
+![gc-collector-20231228213824](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/f2e69943a7177210b2e5fff570bf4e7b/cba989a5f31a0dd0e2dbaad8365c42a3.png)
 
 G1 收集器的运行过程大致可划分为这几个步骤：
 
@@ -400,7 +400,7 @@ G1 非常适合大内存、多核处理器的环境。
 
 
 
-![JMM(Java 内存模型)](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f2e69943a7177210b2e5fff570bf4e7b/afaf5bed55fe5835ca70005914a9db2c.png)
+![JMM(Java 内存模型)](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/f2e69943a7177210b2e5fff570bf4e7b/afaf5bed55fe5835ca70005914a9db2c.png)
 
 **什么是主内存？什么是本地内存？**
 
@@ -426,7 +426,7 @@ G1 非常适合大内存、多核处理器的环境。
 
 **类加载判断》内存分配》内存初始化为0》对象头设置》init构造方法执行**
 
-![二哥的 Java 进阶之路：对象的创建过程](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f2e69943a7177210b2e5fff570bf4e7b/b5b269e78f1e267b2e137ca91f5eeec7.png)
+![二哥的 Java 进阶之路：对象的创建过程](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/f2e69943a7177210b2e5fff570bf4e7b/b5b269e78f1e267b2e137ca91f5eeec7.png)
 
 
 
@@ -473,7 +473,7 @@ Java 程序通过栈上的 reference 数据来操作堆上的具体对象。对�
 - 类加载过程：**加载->连接->初始化**。
 - 连接过程又可分为三步：**验证->准备->解析**。
 
-![类加载过程](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f2e69943a7177210b2e5fff570bf4e7b/d5c27259d176f877f8a4947266957d28.png)
+![类加载过程](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/f2e69943a7177210b2e5fff570bf4e7b/d5c27259d176f877f8a4947266957d28.png)
 
 
 
@@ -499,7 +499,7 @@ JVM 启动的时候，并不会一次性加载所有的类，而是根据需要�
 
 **类加载器分类，以及加载流程**
 
-![类加载器层次关系图](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/f2e69943a7177210b2e5fff570bf4e7b/cb10529e430edb743c6cdbc89aebc247.png)
+![类加载器层次关系图](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/f2e69943a7177210b2e5fff570bf4e7b/cb10529e430edb743c6cdbc89aebc247.png)
 
 
 

@@ -116,7 +116,7 @@ jobs:
 - 每个文件对应一个action
 - 支持同时运行多个action
 
-![image-20230226162215015](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/2b78d441e06115f3b806254386a5b28e/ac080647ecca438430a64316c5ffaf72.png)
+![refs/heads/master/image-20230226162215015](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2b78d441e06115f3b806254386a5b28e/ac080647ecca438430a64316c5ffaf72.png)
 
 
 
@@ -188,7 +188,7 @@ jobs:
 
 结果，执行的时候会自动替换成相应的变量
 
-![image](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/2b78d441e06115f3b806254386a5b28e/f3840f12297fe167148edd33980da65f.png)
+![refs/heads/master/image](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2b78d441e06115f3b806254386a5b28e/f3840f12297fe167148edd33980da65f.png)
 
 
 
@@ -264,7 +264,7 @@ jobs: #可以有多个job
 
 ##### 6.1 可以自己设置一些变量
 
-![image-20230226193445352](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/2b78d441e06115f3b806254386a5b28e/f4b6e5a0bdda07b9b581d1c033a31556.png)
+![refs/heads/master/image-20230226193445352](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2b78d441e06115f3b806254386a5b28e/f4b6e5a0bdda07b9b581d1c033a31556.png)
 
 要使用该密码，你可以在工作流中使用上下文 `secrets` 来引用它。如果你有一个密码的名字 `SECRET_KEY`，你可以将其称为 `$`。
 
@@ -320,7 +320,7 @@ GitHub Actions会为每次运行的工作流**自动在存储库中设置一个�
           cache-dependency-path: package-lock.json
 ```
 
-![image-20230227171954386](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/2b78d441e06115f3b806254386a5b28e/6432ae3565912fd40930b2c82915c3f8.png)
+![refs/heads/master/image-20230227171954386](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2b78d441e06115f3b806254386a5b28e/6432ae3565912fd40930b2c82915c3f8.png)
 
 
 

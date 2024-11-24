@@ -262,7 +262,7 @@ try {
 > - **相当于用monitor实现了一个锁的计数器**
 >
 
-![执行 monitorexit 释放锁](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/bb65bdb9c9fd2ec81565504ae3c020cd/526b027d891fa58c2ee2203ed2484942.png)
+![执行 monitorexit 释放锁](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/bb65bdb9c9fd2ec81565504ae3c020cd/526b027d891fa58c2ee2203ed2484942.png)
 
 **Java 中的 synchronized 有偏向锁、轻量级锁、重量级锁三种形式，分别对应了锁只被一个线程持有、不同线程交替持有锁、多线程竞争锁三种情况。**
 
@@ -420,7 +420,7 @@ public static void doLongTimeTaskE() {
 
 
 
-![Java 运行时数据区域（JDK1.8 之后）](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/bb65bdb9c9fd2ec81565504ae3c020cd/ab3aa96730a25c95c8e9a6b6c184d643.png)
+![Java 运行时数据区域（JDK1.8 之后）](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/bb65bdb9c9fd2ec81565504ae3c020cd/ab3aa96730a25c95c8e9a6b6c184d643.png)
 
 - 程序计数器私有主要是为了**线程切换后能恢复到正确的执行位置**
 - **虚拟机栈：** 每个 Java 方法在执行之前会创建一个栈帧用于存储局部变量表、操作数栈、常量池引用等信息。从方法调用直至执行完成的过程，就对应着一个栈帧在 Java 虚拟机栈中入栈和出栈的过程。
@@ -460,7 +460,7 @@ public static void doLongTimeTaskE() {
 >
 >    
 
-![image-20231114150834495](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/bb65bdb9c9fd2ec81565504ae3c020cd/3671a9e49ffb7bce0d3f775cee82f939.png)
+![refs/heads/master/image-20231114150834495](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/bb65bdb9c9fd2ec81565504ae3c020cd/3671a9e49ffb7bce0d3f775cee82f939.png)
 
 **good case**
 
@@ -650,7 +650,7 @@ newFixedThreadPool：适合任务量相对固定且需要控制并发数量的�
 
 
 
-![CPU 缓存模型示意图](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/bb65bdb9c9fd2ec81565504ae3c020cd/4efa16362f8d227a5e1f1e49bbd720ad.png)
+![CPU 缓存模型示意图](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/bb65bdb9c9fd2ec81565504ae3c020cd/4efa16362f8d227a5e1f1e49bbd720ad.png)
 
 
 
@@ -815,7 +815,7 @@ instance = new Singleton(); // 第10行
 
 **线程A在初始化instance。这时候线程B想要用单例，对于双重效验锁，如果直接访问，由于instanceu已经赋值了，那么会直接返回已经初始化的instance。**
 
-![双重校验单例模式异常情形](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/bb65bdb9c9fd2ec81565504ae3c020cd/4c3171a53009926f3180b1898cf983eb.png)
+![双重校验单例模式异常情形](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/bb65bdb9c9fd2ec81565504ae3c020cd/4c3171a53009926f3180b1898cf983eb.png)
 
 ## 自旋锁是什么
 
@@ -931,7 +931,7 @@ Java 源代码会经历 **编译器优化重排 —> 指令并行重排 —> 内
 
 **对数组的node上锁，最新1.8版本**
 
-![Java8 ConcurrentHashMap 存储结构（图片来自 javadoop）](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/bb65bdb9c9fd2ec81565504ae3c020cd/f268edb660265d7a82b12875c3d27d81.png)
+![Java8 ConcurrentHashMap 存储结构（图片来自 javadoop）](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/bb65bdb9c9fd2ec81565504ae3c020cd/f268edb660265d7a82b12875c3d27d81.png)
 
 ### BlockingQueue
 
@@ -1014,7 +1014,7 @@ CopyOnWrite 是一个时髦的技术，不管是 Linux 还是 Redis 都会用到
 
 一个请求过来，可以通过ThreadLocal来实现同一个线程不同调用层的对象共享，而不需要通过参数传递。**因为是同一个线程，线程内是串行执行的，没有线程安全的问题。所以完全可行。**
 
-![三分恶面渣逆袭：ThreadLoca存放用户上下文](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/bb65bdb9c9fd2ec81565504ae3c020cd/43b91931adea6ed67941c222f63e7c21.png)
+![三分恶面渣逆袭：ThreadLoca存放用户上下文](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/bb65bdb9c9fd2ec81565504ae3c020cd/43b91931adea6ed67941c222f63e7c21.png)
 
 
 
@@ -1024,7 +1024,7 @@ CopyOnWrite 是一个时髦的技术，不管是 Linux 还是 Redis 都会用到
 
 **ThreadLocalMap 是 ThreadLocal 的静态内部类，它内部维护了一个 Entry 数组，key 是 ThreadLocal 对象，value 是线程的局部变量本身。**
 
-![三分恶面渣逆袭：ThreadLoca结构图](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/bb65bdb9c9fd2ec81565504ae3c020cd/b190428983ab1a2e8353c7148ec94d8e.png)
+![三分恶面渣逆袭：ThreadLoca结构图](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/bb65bdb9c9fd2ec81565504ae3c020cd/b190428983ab1a2e8353c7148ec94d8e.png)
 
 
 
@@ -1048,7 +1048,7 @@ ThreadLocalMap 没有使用链表，自然也不是用链地址法来解决冲�
 
 
 
-![ThreadLocalMap扩容](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/bb65bdb9c9fd2ec81565504ae3c020cd/7d873bd1905ecf5b38ea5830e31b7b28.png)
+![ThreadLocalMap扩容](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/bb65bdb9c9fd2ec81565504ae3c020cd/7d873bd1905ecf5b38ea5830e31b7b28.png)
 
 
 

@@ -45,7 +45,7 @@ ReAct=少样本prompt + Thought + Action + Observation 。是调用工具、推�
 
 
 
-![image](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/2af73fc674bc1670e2bbb53830958266/ff8a902d9f6ce504309c32968ef5ba9d.png)
+![refs/heads/master/image](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2af73fc674bc1670e2bbb53830958266/ff8a902d9f6ce504309c32968ef5ba9d.png)
 
 
 
@@ -61,7 +61,7 @@ ReAct=少样本prompt + Thought + Action + Observation 。是调用工具、推�
 
 
 
-![image](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/2af73fc674bc1670e2bbb53830958266/634ae8defb304246f81912feb855a5e9.jpeg)
+![refs/heads/master/image](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2af73fc674bc1670e2bbb53830958266/634ae8defb304246f81912feb855a5e9.jpeg)
 
 LLmCompiler：并行执行任务，规划时生成一个DAG图来执行action，可以理解成将多个工具聚合成一个工具执行图，用图的方式执行某一个action
 
@@ -148,7 +148,7 @@ doc：https://docs.deepwisdom.ai/main/zh/guide/get_started/introduction.html
 
 metaGPT以软件公司方式组成，目的是完成一个软件需求，输入一句话的老板需求，输出用户故事 / 竞品分析 / 需求 / 数据结构 / APIs / 文件等。
 
-![e2576f30dd664ff240603479e29c22dd.png](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/2af73fc674bc1670e2bbb53830958266/a8f88e35e62d2f996b742249cc9c43bb.png)
+![e2576f30dd664ff240603479e29c22dd.png](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2af73fc674bc1670e2bbb53830958266/a8f88e35e62d2f996b742249cc9c43bb.png)
 
 MetaGPT内部包括产品经理 / 架构师 / 项目经理 / 工程师，它提供了一个软件公司的全过程与精心调配的SOP
 

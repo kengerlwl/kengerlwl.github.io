@@ -89,7 +89,7 @@ for message in consumer:
 
 
 
-![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/78848a678fba46e3090f37a9e04deac5/2982919d07179229248caaa6e93756e8.png)
+![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/78848a678fba46e3090f37a9e04deac5/2982919d07179229248caaa6e93756e8.png)
 
 
 

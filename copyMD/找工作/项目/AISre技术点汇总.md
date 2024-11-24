@@ -104,7 +104,7 @@ es分片集群。
 
 
 
-## 答案生成
+## 答案生成（一开始的离线版本，不要求首字速度）
 
 - 分块生成
 
@@ -112,10 +112,15 @@ es分片集群。
   - 主模型语言理解能力，概括能力更强，但是上下文能力不足
   - 引入次模型，来辅助长上下文处理。
 - 通用问题保底
+- 一致性判断，回答是否正确（因为大模型太容易幻觉了）
 
 
 
+## 首字客服版本
 
+- 要求输入问题，很快就要有吞吐输出，不能够做完了再回复
+
+- 
 
 ## token压缩
 
@@ -206,7 +211,7 @@ es分片集群。
 - 可以确认回答是否幻觉了
 - 回答是否与参考文献一致
 
-![image-20240815102605090](C:\Users\rainwlliu\AppData\Roaming\Typora\typora-user-images\image-20240815102605090.png)
+![refs/heads/master/image-20240815102605090](C:\Users\rainwlliu\AppData\Roaming\Typora\typora-user-refs/heads/master/images\refs/heads/master/image-20240815102605090.png)
 
 
 

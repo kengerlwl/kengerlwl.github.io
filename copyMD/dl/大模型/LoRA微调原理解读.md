@@ -51,13 +51,13 @@ LoRA 可以将可训练参数数量减少 10,000 倍，GPU 内存需求减少 3 
 
 **这样，保证了输出输出维度不变，整体的原模型结构不变，想要转换下游任务，只需要更换lora的旁路举证即可。**
 
-![1](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/2334a36e26dc4a650f990ba36b6135d4/9a44b99c0b54b9d84cab5cd93c5ecf1a.png)
+![1](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2334a36e26dc4a650f990ba36b6135d4/9a44b99c0b54b9d84cab5cd93c5ecf1a.png)
 
 
 
 **运算图**
 
-![image-20240528163601110](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/2334a36e26dc4a650f990ba36b6135d4/3247ebac413cbc584577a25b76210f9f.png)
+![refs/heads/master/image-20240528163601110](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2334a36e26dc4a650f990ba36b6135d4/3247ebac413cbc584577a25b76210f9f.png)
 
 
 

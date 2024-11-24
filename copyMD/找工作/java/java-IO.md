@@ -21,7 +21,7 @@ categories:
 
 运算器、控制器、存储器、输入设备、输出设备。
 
-![冯诺依曼体系结构](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/dc65631729c1fc11888079d4e0f4c5a7/102cfebfc7a79a3d4a45d44f29af6581.png)
+![冯诺依曼体系结构](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/102cfebfc7a79a3d4a45d44f29af6581.png)
 
 冯诺依曼体系结构
 
@@ -54,7 +54,7 @@ categories:
 
 但是，当面对十万甚至百万级连接的时候，传统的 BIO 模型是无能为力的。因此，我们需要一种更高效的 I/O 处理模型来应对更高的并发量。
 
-![图源：《深入拆解Tomcat & Jetty》](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/dc65631729c1fc11888079d4e0f4c5a7/04fb15e7c9736207b513137d6c45b084.png)
+![图源：《深入拆解Tomcat & Jetty》](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/04fb15e7c9736207b513137d6c45b084.png)
 
 
 
@@ -74,7 +74,7 @@ Java 中的 NIO 可以看作是 **I/O 多路复用模型**。也有很多人认�
 
 我们先来看看 **同步非阻塞 IO 模型**。
 
-![图源：《深入拆解Tomcat & Jetty》](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/dc65631729c1fc11888079d4e0f4c5a7/4719c0e343b9b0a5b97fadd95e298908.png)图源：《深入拆解Tomcat & Jetty》
+![图源：《深入拆解Tomcat & Jetty》](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/4719c0e343b9b0a5b97fadd95e298908.png)图源：《深入拆解Tomcat & Jetty》
 
 同步非阻塞 IO 模型中，应用程序会一直发起 read 调用，等待数据从内核空间拷贝到用户空间的这段时间里，线程依然是阻塞的，直到在内核把数据拷贝到用户空间。
 
@@ -90,7 +90,7 @@ IO 多路复用模型中，**线程首先发起 select 调用，询问内核数�
 
 
 
-![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/dc65631729c1fc11888079d4e0f4c5a7/b7c5aa1b3d6f937b8daf2e184c728226.png)
+![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/b7c5aa1b3d6f937b8daf2e184c728226.png)
 
 目前支持 IO 多路复用的系统调用，有 select，epoll 等等。select 系统调用，目前几乎在所有的操作系统上都有支持。
 
@@ -105,4 +105,4 @@ AIO 也就是 NIO 2。Java 7 中引入了 NIO 的改进版 NIO 2,它是异步 IO
 
 优点，不用一直阻塞。
 
-![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/dc65631729c1fc11888079d4e0f4c5a7/ed560a676ca2432f45e79a0d2c5f43e1.png)
+![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/ed560a676ca2432f45e79a0d2c5f43e1.png)

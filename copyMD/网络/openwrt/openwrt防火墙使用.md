@@ -44,7 +44,7 @@ netfilter：内核里的工具
 
 ### 四表五链
 
-![这里写图片描述](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/677e020a01cbbf8630aa5c684df44ad4/9b4049c74857bf1f98e3e95864babb59.png)
+![这里写图片描述](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/677e020a01cbbf8630aa5c684df44ad4/9b4049c74857bf1f98e3e95864babb59.png)
 
 
 

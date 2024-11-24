@@ -85,7 +85,7 @@ categories:
 
 客户端配置
 
-![image-20220508111037368](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/8cb3d7627a138d3e74c02045c2347434/e13d6fa0744082ab7f21973b385bafad.png)
+![refs/heads/master/image-20220508111037368](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/8cb3d7627a138d3e74c02045c2347434/e13d6fa0744082ab7f21973b385bafad.png)
 
 
 
@@ -123,7 +123,7 @@ categories:
 
 正向代理是代理的客户端，所有客户端都可以走代理服务器
 
-![image-20220508112316782](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/8cb3d7627a138d3e74c02045c2347434/33f7cefd5f32433ba897e077253b21ef.png)
+![refs/heads/master/image-20220508112316782](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/8cb3d7627a138d3e74c02045c2347434/33f7cefd5f32433ba897e077253b21ef.png)
 
 
 

@@ -50,7 +50,7 @@ categories:
 
 直接缩短了接近一半。
 
-![image-20240814154442191](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/8aa8605ff9d42c05e3d8fab4d9dbe35e/55c00a0e7b68357f6a89418eaaeeec1a.png)
+![refs/heads/master/image-20240814154442191](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/8aa8605ff9d42c05e3d8fab4d9dbe35e/55c00a0e7b68357f6a89418eaaeeec1a.png)
 
 
 

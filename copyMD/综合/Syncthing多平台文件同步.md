@@ -56,17 +56,17 @@ docker run --name syncthing -d -p 8384:8384 -p 22000:22000 -v 待同步的目录
 
 ### 先添加设备
 
-![image-20221123221058166](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/028e0d396c15ec22f145eac2e43acb96/63583805273a0dd567ba86e7e31f9539.png)
+![refs/heads/master/image-20221123221058166](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/028e0d396c15ec22f145eac2e43acb96/63583805273a0dd567ba86e7e31f9539.png)
 
 填入目标设备ID
 
-![image-20221123221134471](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/028e0d396c15ec22f145eac2e43acb96/43c63dd14ffa309d13db74d78c394622.png)
+![refs/heads/master/image-20221123221134471](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/028e0d396c15ec22f145eac2e43acb96/43c63dd14ffa309d13db74d78c394622.png)
 
 填入目标设备IP。
 
 **坑点：不知道为什么如果按照提示使用`（"tcp://ip:port", "tcp://host:port"）`反而会出错**
 
-![image-20221123221209755](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/028e0d396c15ec22f145eac2e43acb96/26b7d1e74dc9f7940f677a21731fb0d3.png)
+![refs/heads/master/image-20221123221209755](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/028e0d396c15ec22f145eac2e43acb96/26b7d1e74dc9f7940f677a21731fb0d3.png)
 
 
 
@@ -76,11 +76,11 @@ docker run --name syncthing -d -p 8384:8384 -p 22000:22000 -v 待同步的目录
 
 不同设备间，这个标识符应该唯一
 
-![image-20221123221257440](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/028e0d396c15ec22f145eac2e43acb96/d9b66ce10a1978552fdc85c80396e6db.png)
+![refs/heads/master/image-20221123221257440](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/028e0d396c15ec22f145eac2e43acb96/d9b66ce10a1978552fdc85c80396e6db.png)
 
 设置待同步的设备
 
-![image-20221123221333920](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/028e0d396c15ec22f145eac2e43acb96/d1530b082949714d47965c96e0e6a5e1.png)
+![refs/heads/master/image-20221123221333920](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/028e0d396c15ec22f145eac2e43acb96/d1530b082949714d47965c96e0e6a5e1.png)
 
 
 
@@ -88,7 +88,7 @@ docker run --name syncthing -d -p 8384:8384 -p 22000:22000 -v 待同步的目录
 
 ### 主动扫描同步
 
-![image-20221123221358020](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/028e0d396c15ec22f145eac2e43acb96/d4fa17d845069f51a478c68e0caa4457.png)
+![refs/heads/master/image-20221123221358020](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/028e0d396c15ec22f145eac2e43acb96/d4fa17d845069f51a478c68e0caa4457.png)
 
 点击就会同步给共享中的设备。
 
@@ -104,7 +104,7 @@ docker run --name syncthing -d -p 8384:8384 -p 22000:22000 -v 待同步的目录
 
 ### 通过公网服务器做中间节点
 
-![image-20221124212741062](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/028e0d396c15ec22f145eac2e43acb96/8cdea1e0191fcdb2afe23653d03a87d0.png)
+![refs/heads/master/image-20221124212741062](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/028e0d396c15ec22f145eac2e43acb96/8cdea1e0191fcdb2afe23653d03a87d0.png)
 
 要点：
 

@@ -697,9 +697,9 @@ with 语句的原理:上下文管理协议(Context ManagementProtocol):
 
 #### 直接引用 & 间接应用
 
-![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/c3ae844e26c6be8b47de199e0f6d9e19/108901b9e3a73c43a48c79f1d5ef9eae.jpeg)
+![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/c3ae844e26c6be8b47de199e0f6d9e19/108901b9e3a73c43a48c79f1d5ef9eae.jpeg)
 
-![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/c3ae844e26c6be8b47de199e0f6d9e19/6389dd193cf7fac005e3163e13268794.jpeg)
+![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/c3ae844e26c6be8b47de199e0f6d9e19/6389dd193cf7fac005e3163e13268794.jpeg)
 
 ## 可变数据类型于不可变数据类型
 
