@@ -77,6 +77,10 @@ def img_pro(img_url):
     global img_dir_pre
     global md_name_hash
     post_format = img_url.split(".")[-1] # 图片格式可能不是png结尾
+    post_format_s = post_format.split("?")
+    # 去除结尾的?的后缀
+    if len(post_format_s) >= 2:
+        post_format = post_format_s[0]
     new_local_img_path = img_dir_pre + md5.my_md5(img_url) +'.'+ post_format
     new_github_img_path = github_url + '/image/' + md_name_hash +'/' + md5.my_md5(img_url) +'.' + post_format
     # http 图片
