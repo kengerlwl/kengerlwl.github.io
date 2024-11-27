@@ -123,3 +123,23 @@ categories:
 `git fetch`是将远程主机的最新内容拉到本地，用户在检查了以后决定是否合并到工作本机分支中。
 
 而`git pull` 则是将远程主机的最新内容拉下来后直接合并，即：`git pull = git fetch + git merge`，这样可能会产生冲突，需要手动解决。
+
+
+
+
+
+
+
+# git rebase 和 git merge 的区别
+
+
+
+Rebase（变基）**是将一个分支上的提交逐个地应用到另一个分支上，使得提交历史变得更加线性**。当执行rebase时，Git会将目标分支与源分支的共同祖先以来的所有提交挪到目标分支的最新位置。这个过程可以看作是将源分支上的每个提交复制到目标分支上。简而言之，rebase可以将提交按照时间顺序线性排列。
+
+![image-20241127145850893](C:\Users\kenger\AppData\Roaming\Typora\typora-user-images\image-20241127145850893.png)
+
+Merge（合并）**是将两个分支上的代码提交历史合并为一个新的提交。在执行merge时，Git会创建一个新的合并提交，将两个分支的提交历史连接在一起**。这样，两个分支的修改都会包含在一个合并提交中。合并后的历史会保留每个分支的提交记录。
+
+
+
+![image-20241127145843452](C:\Users\kenger\AppData\Roaming\Typora\typora-user-images\image-20241127145843452.png)
