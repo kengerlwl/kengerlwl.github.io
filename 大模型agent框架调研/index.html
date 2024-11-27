@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>大模型agent框架调研 - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8Bagent%E6%A1%86%E6%9E%B6%E8%B0%83%E7%A0%94/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="大模型agent框架调研">
+  <meta property="og:description" content="背景 最近需要用到这玩意儿，但是我目前只知道langchain等框架，对市场缺乏一个调研。 需要做一个技术选型。 实际上：agent，本质上就是一">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-07-25T14:27:31+00:00">
+    <meta property="article:modified_time" content="2024-07-25T14:27:31+00:00">
+    <meta property="article:tag" content="Pytorch">
+    <meta property="article:tag" content="推理">
+    <meta property="article:tag" content="LLM">
+    <meta property="og:image" content="https://kengerlwl.github.io/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kengerlwl.github.io/logo.png">
+  <meta name="twitter:title" content="大模型agent框架调研">
+  <meta name="twitter:description" content="背景 最近需要用到这玩意儿，但是我目前只知道langchain等框架，对市场缺乏一个调研。 需要做一个技术选型。 实际上：agent，本质上就是一">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8Bagent%E6%A1%86%E6%9E%B6%E8%B0%83%E7%A0%94/" /><link rel="prev" href="https://kengerlwl.github.io/rlhf/" /><link rel="next" href="https://kengerlwl.github.io/langchain%E4%BD%BF%E7%94%A8%E5%85%A5%E9%97%A8%E6%8C%87%E5%8C%97/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "大模型agent框架调研",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/kengerlwl.github.io\/%E5%A4%A7%E6%A8%A1%E5%9E%8Bagent%E6%A1%86%E6%9E%B6%E8%B0%83%E7%A0%94\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/kengerlwl.github.io\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "pytorch, 推理, LLM","wordcount":  1932 ,
+        "url": "https:\/\/kengerlwl.github.io\/%E5%A4%A7%E6%A8%A1%E5%9E%8Bagent%E6%A1%86%E6%9E%B6%E8%B0%83%E7%A0%94\/","datePublished": "2024-07-25T14:27:31+00:00","dateModified": "2024-07-25T14:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/kengerlwl.github.io\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/%E5%A4%A7%E6%A8%A1%E5%9E%8Bagent%E6%A1%86%E6%9E%B6%E8%B0%83%E7%A0%94/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/%E5%A4%A7%E6%A8%A1%E5%9E%8Bagent%E6%A1%86%E6%9E%B6%E8%B0%83%E7%A0%94/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">大模型agent框架调研</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kengerlwl.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%AD%A6%E6%9C%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>学术</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-07-25">2024-07-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1932 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#react框架">ReAct框架</a></li>
+    <li><a href="#plan-and-execute-react">Plan-and-Execute ReAct</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#langchain">LangChain</a></li>
+    <li><a href="#outlines">Outlines</a></li>
+    <li><a href="#agentgpt">AgentGPT</a></li>
+    <li><a href="#llamaindex">LlamaIndex</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#hugginggpt">HuggingGPT</a></li>
+    <li><a href="#gpt-engineer">GPT-Engineer</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#斯坦福虚拟小镇">斯坦福虚拟小镇</a></li>
+    <li><a href="#metagpt">MetaGPT</a></li>
+    <li><a href="#autogen">AutoGen</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="背景">背景</h1>
+<p>最近需要用到这玩意儿，但是我目前只知道langchain等框架，对市场缺乏一个调研。</p>
+<p>需要做一个技术选型。</p>
+<p>实际上：agent，本质上就是一个tool选择器。根据NLP输入的需求，选择需要执行的tool动作，</p>
+<h1 id="决策模型">决策模型</h1>
+<h2 id="react框架">ReAct框架</h2>
+<p>目前Agent主流的决策模型是ReAct框架，也有一些ReAct的变种框架，以下是两种框架的对比。</p>
+<ul>
+<li>传统ReAct框架：Reason and Act</li>
+</ul>
+<p>ReAct=少样本prompt + Thought + Action + Observation 。是调用工具、推理和规划时常用的prompt结构，先推理再执行，根据环境来执行具体的action，并给出思考过程Thought。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2af73fc674bc1670e2bbb53830958266/ff8a902d9f6ce504309c32968ef5ba9d.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2af73fc674bc1670e2bbb53830958266/ff8a902d9f6ce504309c32968ef5ba9d.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2af73fc674bc1670e2bbb53830958266/ff8a902d9f6ce504309c32968ef5ba9d.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2af73fc674bc1670e2bbb53830958266/ff8a902d9f6ce504309c32968ef5ba9d.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2af73fc674bc1670e2bbb53830958266/ff8a902d9f6ce504309c32968ef5ba9d.png"
+        title="refs/heads/master/image" /></p>
+<h2 id="plan-and-execute-react">Plan-and-Execute ReAct</h2>
+<p>类BabyAgi的执行流程：一部分Agent通过优化规划和任务执行的流程来完成复杂任务的拆解，将复杂的任务拆解成多个子任务，再依次/批量执行。</p>
+<p>优点是对于解决复杂任务、需要调用多个工具时，也只需要调用三次大模型，而不是每次工具调用都要调大模型。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2af73fc674bc1670e2bbb53830958266/634ae8defb304246f81912feb855a5e9.jpeg"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2af73fc674bc1670e2bbb53830958266/634ae8defb304246f81912feb855a5e9.jpeg, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2af73fc674bc1670e2bbb53830958266/634ae8defb304246f81912feb855a5e9.jpeg 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2af73fc674bc1670e2bbb53830958266/634ae8defb304246f81912feb855a5e9.jpeg 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2af73fc674bc1670e2bbb53830958266/634ae8defb304246f81912feb855a5e9.jpeg"
+        title="refs/heads/master/image" /></p>
+<p>LLmCompiler：并行执行任务，规划时生成一个DAG图来执行action，可以理解成将多个工具聚合成一个工具执行图，用图的方式执行某一个action</p>
+<h1 id="single-agent一个智能体来解决任务">Single-Agent一个智能体来解决任务</h1>
+<h2 id="langchain">LangChain</h2>
+<p>不说了，目前第一</p>
+<h2 id="outlines">Outlines</h2>
+<p>(<a href="https://github.com/outlines-dev/outlines" target="_blank" rel="noopener noreffer ">GitHub - outlines-dev/outlines: Structured Text Generation</a>)这个工具让开发者能精确控制文本生成，提供了多种生成方法，能保证输出符合正则表达式或JSON模式。它还支持所有模型，让开发者能更灵活地使用</p>
+<h2 id="agentgpt">AgentGPT</h2>
+<p>(<a href="https://github.com/reworkd/AgentGPT" target="_blank" rel="noopener noreffer ">GitHub - reworkd/AgentGPT: 🤖 Assemble, configure, and deploy autonomous AI Agents in your browser.</a>)为企业设计的一个解决方案，通过网页浏览器介绍自给自足的AI代理。它依赖用户输入来完成任务，还能长期记忆和探索网页。</p>
+<h2 id="llamaindex">LlamaIndex</h2>
+<p>(<a href="https://docs.llamaindex.ai/en/stable/" target="_blank" rel="noopener noreffer ">LlamaIndex 🦙 v0.10.18.post1</a>)一个多功能的数据管理工具，可以从API、PDF、SQL数据库等多种来源提取数据，然后优化数据格式，让LLMs能更好地理解。它支持自然语言查询，让你能更自然地跟数据对话。</p>
+<h1 id="autogpt">autoGPT</h1>
+<p><a href="https://github.com/Significant-Gravitas/AutoGPT" target="_blank" rel="noopener noreffer ">Significant-Gravitas/AutoGPT: AutoGPT is the vision of accessible AI for everyone, to use and to build on. Our mission is to provide the tools, so that you can focus on what matters.</a></p>
+<p>AutoGPT 定位类似个人助理，帮助用户完成指定的任务，如调研某个课题。AutoGPT比较强调对外部工具的使用，如搜索引擎、页面浏览等。</p>
+<p>同样，作为早期agent，autoGPT<strong>麻雀虽小五脏俱全</strong>，虽然也有很多缺点，比如无法控制迭代次数、工具有限。但是后续的模仿者非常多，基于此演变出了非常多的框架。</p>
+<h2 id="hugginggpt">HuggingGPT</h2>
+<p>git: <a href="https://github.com/microsoft/JARVIS" target="_blank" rel="noopener noreffer ">https://github.com/microsoft/JARVIS</a></p>
+<p>paper: <a href="https://arxiv.org/abs/2303.17580" target="_blank" rel="noopener noreffer ">https://arxiv.org/abs/2303.17580</a></p>
+<p>HuggingGPT的任务分为四个部分：</p>
+<ol>
+<li>任务规划：将任务规划成不同的步骤，这一步比较容易理解。</li>
+<li>模型选择：在一个任务中，可能需要调用不同的模型来完成。例如，在写作任务中，首先写一句话，然后希望模型能够帮助补充文本，接着希望生成一个图片。这涉及到调用到不同的模型。</li>
+<li>执行任务：根据任务的不同选择不同的模型进行执行。</li>
+<li>响应汇总和反馈：将执行的结果反馈给用户。</li>
+</ol>
+<h2 id="gpt-engineer">GPT-Engineer</h2>
+<p>git: <a href="https://github.com/AntonOsika/gpt-engineer" target="_blank" rel="noopener noreffer ">https://github.com/AntonOsika/gpt-engineer</a></p>
+<p>基于langchain开发，单一的工程师agent，<strong>解决编码场景的问题。CODE领域</strong></p>
+<p>目的是创建一个完整的代码仓库，在需要时要求用户额外输入补充信息。</p>
+<h1 id="multi-agent使用多个智能体来解决更复杂的问题">Multi-Agent使用多个智能体来解决更复杂的问题</h1>
+<p><strong>比如要开发一个程序，不仅仅需要程序员，还需要产品，运维，市场，销售，老板来参与进来。需要大家共同来讨论，因此，基于多个agent分别扮演不同的角色，通过交互来实现复杂智能组，解决一些复杂问题。</strong></p>
+<h2 id="斯坦福虚拟小镇">斯坦福虚拟小镇</h2>
+<p>git：https://github.com/joonspk-research/generative_agents</p>
+<p>paper：https://arxiv.org/abs/2304.03442</p>
+<p>虚拟小镇作为早期的multi-agent项目，很多设计也影响到了其他multi-agent框架，里面的反思和记忆检索feature比较有意思，模拟人类的思考方式。</p>
+<h2 id="metagpt">MetaGPT</h2>
+<p>git：https://github.com/geekan/MetaGPT</p>
+<p>doc：https://docs.deepwisdom.ai/main/zh/guide/get_started/introduction.html</p>
+<p><strong>metaGPT是国内开源的一个Multi-Agent框架，目前整体社区活跃度较高和也不断有新feature出来，中文文档支持的很好。</strong></p>
+<p>metaGPT以软件公司方式组成，目的是完成一个软件需求，输入一句话的老板需求，输出用户故事 / 竞品分析 / 需求 / 数据结构 / APIs / 文件等。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2af73fc674bc1670e2bbb53830958266/a8f88e35e62d2f996b742249cc9c43bb.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2af73fc674bc1670e2bbb53830958266/a8f88e35e62d2f996b742249cc9c43bb.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2af73fc674bc1670e2bbb53830958266/a8f88e35e62d2f996b742249cc9c43bb.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2af73fc674bc1670e2bbb53830958266/a8f88e35e62d2f996b742249cc9c43bb.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2af73fc674bc1670e2bbb53830958266/a8f88e35e62d2f996b742249cc9c43bb.png"
+        title="e2576f30dd664ff240603479e29c22dd.png" /></p>
+<p>MetaGPT内部包括产品经理 / 架构师 / 项目经理 / 工程师，它提供了一个软件公司的全过程与精心调配的SOP</p>
+<h2 id="autogen">AutoGen</h2>
+<p>doc：https://microsoft.github.io/autogen/docs/Getting-Started</p>
+<p>AutoGen是<strong>微软</strong>开发的一个通过代理通信实现复杂工作流的框架。目前也是活跃度top级别的Multi-Agent框架，与MetaGPT“不相上下”。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-07-25</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E5%A4%A7%E6%A8%A1%E5%9E%8Bagent%E6%A1%86%E6%9E%B6%E8%B0%83%E7%A0%94/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8Bagent%E6%A1%86%E6%9E%B6%E8%B0%83%E7%A0%94/" data-title="大模型agent框架调研" data-hashtags="pytorch,推理,LLM"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8Bagent%E6%A1%86%E6%9E%B6%E8%B0%83%E7%A0%94/" data-hashtag="pytorch"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8Bagent%E6%A1%86%E6%9E%B6%E8%B0%83%E7%A0%94/" data-title="大模型agent框架调研"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8Bagent%E6%A1%86%E6%9E%B6%E8%B0%83%E7%A0%94/" data-title="大模型agent框架调研"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8Bagent%E6%A1%86%E6%9E%B6%E8%B0%83%E7%A0%94/" data-title="大模型agent框架调研"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/pytorch/">Pytorch</a>,&nbsp;<a href="/tags/%E6%8E%A8%E7%90%86/">推理</a>,&nbsp;<a href="/tags/llm/">LLM</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/rlhf/" class="prev" rel="prev" title="RLHF算法"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>RLHF算法</a>
+            <a href="/langchain%E4%BD%BF%E7%94%A8%E5%85%A5%E9%97%A8%E6%8C%87%E5%8C%97/" class="next" rel="next" title="langchain使用入门指北">langchain使用入门指北<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.132.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kengerlwl.github.io/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"JCTYUNKA9R","algoliaIndex":"kenger","algoliaSearchKey":"3ef68664495033362b7df9cf5a3eee1e","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
