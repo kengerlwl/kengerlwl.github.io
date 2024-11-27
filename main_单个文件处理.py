@@ -110,20 +110,20 @@ def main():
             try:
                 image_url = image_urls[0]
                 print(image_url)
-                # if image_url.find("raw.githubusercontent.com") != -1:
-                #     # print(image_url.find("raw.githubusercontent.com"))
-                #     # line = line.replace("raw.githubusercontent.com", "cdn.jsdelivr.net/gh")
-                #     line = line.replace("cdn.jsdelivr.net/gh","raw.githubusercontent.com")
-                #     line = line.replace("master/", "")
-                #     raise Exception("已经是github图源了")
+                if image_url.find("raw.githubusercontent.com") != -1:
+                    # print(image_url.find("raw.githubusercontent.com"))
+                    # line = line.replace("raw.githubusercontent.com", "cdn.jsdelivr.net/gh")
+                    # line = line.replace("cdn.jsdelivr.net/gh","raw.githubusercontent.com")
+                    # line = line.replace("master/", "")
+                    raise Exception("已经是github图源了")
                 if image_url.find("cdn.jsdelivr.net/gh") != 1:
                     line = line.replace("cdn.jsdelivr.net/gh","raw.githubusercontent.com")
                     line = line.replace("image", "refs/heads/master/image")
                     raise Exception("切换为Github 图源")
                     
 
-                if image_url.find("cdn.jsdelivr.net") != -1:
-                    raise Exception("已经是github的cdn图源了")
+                # if image_url.find("cdn.jsdelivr.net") != -1:
+                #     raise Exception("已经是github的cdn图源了")
                 
 
                 git_url = img_pro(image_url)
