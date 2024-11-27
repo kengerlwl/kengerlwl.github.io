@@ -112,7 +112,7 @@ config interface 'vpn0'
 
 然后就可以通过192.168.0.2访问openwrt了。
 
-![image-20221113144733240](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/fe1a21ac19801f2fc6a8da0c4ddb5a7f/3d19efd0e078458cccfa68203f8e20e8.png)
+![refs/heads/master/image-20221113144733240](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/fe1a21ac19801f2fc6a8da0c4ddb5a7f/3d19efd0e078458cccfa68203f8e20e8.png)
 
 
 
@@ -138,4 +138,4 @@ config interface 'vpn0'
 
 让连接主路由的设备默认走旁路由网关
 
-![image-20221113144137125](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/fe1a21ac19801f2fc6a8da0c4ddb5a7f/83418a8dd78659c8a6b72dff32c71c4c.png)
+![refs/heads/master/image-20221113144137125](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/fe1a21ac19801f2fc6a8da0c4ddb5a7f/83418a8dd78659c8a6b72dff32c71c4c.png)

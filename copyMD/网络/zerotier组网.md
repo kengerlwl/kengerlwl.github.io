@@ -41,13 +41,13 @@ zerotier也可以选择自己建立中继服务器，但是由于我的服务器
 
 设置网段和路由
 
-![image-20230620234524500](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/899a82b23714fc31a927eb619c6ba0f8/007f4cfec5c224bf911f48ed2a322ada.png)
+![refs/heads/master/image-20230620234524500](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/899a82b23714fc31a927eb619c6ba0f8/007f4cfec5c224bf911f48ed2a322ada.png)
 
 ### 设置ip分配
 
 可以针对每个设备分配不同的ip，**前面的复选框要选中，才能分配出ip**。这得当一个设备尝试接入该网络时才会有这个情况，复选后重新运行zerotier
 
-![image-20230620234557239](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/899a82b23714fc31a927eb619c6ba0f8/f0f95eae659a34f6c6521fd3788b6368.png)
+![refs/heads/master/image-20230620234557239](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/899a82b23714fc31a927eb619c6ba0f8/f0f95eae659a34f6c6521fd3788b6368.png)
 
 
 

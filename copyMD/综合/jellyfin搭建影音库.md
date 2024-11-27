@@ -47,11 +47,11 @@ categories:
 
 3. 设置
 
-4. ![image-20240216160642142](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/713f10a9e5b3df6f9ca55da80e92bcfe/5036bbc0c719a85f5c88ed56db2d5434.png)
+4. ![refs/heads/master/image-20240216160642142](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/713f10a9e5b3df6f9ca55da80e92bcfe/5036bbc0c719a85f5c88ed56db2d5434.png)
 
 5. 选择需要的分辨率
 
-  ![image-20240216160725449](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/713f10a9e5b3df6f9ca55da80e92bcfe/c99c9da429eea43214d2670fed9e67f1.png)
+  ![refs/heads/master/image-20240216160725449](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/713f10a9e5b3df6f9ca55da80e92bcfe/c99c9da429eea43214d2670fed9e67f1.png)
 
 
 

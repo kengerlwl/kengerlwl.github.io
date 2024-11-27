@@ -54,7 +54,7 @@ q) Quit config
 
 然后有：
 
-![image-20220831231450455](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/ddc552e2fb60427a31c6b3d28ba21944/69b94b1ad4cfc3d4acb3f2f4f190bf2a.png)
+![refs/heads/master/image-20220831231450455](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/ddc552e2fb60427a31c6b3d28ba21944/69b94b1ad4cfc3d4acb3f2f4f190bf2a.png)
 
 **对于这个id以及secret，输入enter跳过就行。**
 
@@ -152,7 +152,7 @@ rclone mount one_drive_test1: /onedrive --allow-other --allow-non-empty --vfs-ca
 df -h
 ```
 
-![image-20220831232119105](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/ddc552e2fb60427a31c6b3d28ba21944/750110b64a59b0a23bc6cf808c7f6e1a.png)
+![refs/heads/master/image-20220831232119105](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/ddc552e2fb60427a31c6b3d28ba21944/750110b64a59b0a23bc6cf808c7f6e1a.png)
 
 
 
@@ -168,7 +168,7 @@ df -h
 基本流程和上面是一致的，但是要注意：
 - 这个要选择第一个
 
-- ![image-20220917175707801](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/ddc552e2fb60427a31c6b3d28ba21944/4efac40a129a35d631dd81cb33b5acb3.png)
+- ![refs/heads/master/image-20220917175707801](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/ddc552e2fb60427a31c6b3d28ba21944/4efac40a129a35d631dd81cb33b5acb3.png)
 
   
 

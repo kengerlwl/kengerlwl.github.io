@@ -28,7 +28,7 @@ categories:
 
 在查阅相关资料后。获悉，jupyter在浏览器里面会有一个jupyter对象。可以通过对这个对象执行函数，实现全部自动化操作。可以在控制台执行。
 
-![image-20221009193043155](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/536c1e5c631aea0dfc3c8ce5d0023b10/b4576ee39abe2ae37cc94501d2e94ab8.png)
+![refs/heads/master/image-20221009193043155](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/536c1e5c631aea0dfc3c8ce5d0023b10/b4576ee39abe2ae37cc94501d2e94ab8.png)
 
 下面讲解一些实用的函数。
 
@@ -36,7 +36,7 @@ categories:
 
 ### 方框是分类种类的。
 
-![image-20221009173853724](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/536c1e5c631aea0dfc3c8ce5d0023b10/2cbe0b646e59c1793a2b5058bee6e00f.png)
+![refs/heads/master/image-20221009173853724](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/536c1e5c631aea0dfc3c8ce5d0023b10/2cbe0b646e59c1793a2b5058bee6e00f.png)
 
 图里面，第一个是md框，第二个是代码执行框。
 

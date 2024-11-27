@@ -30,7 +30,7 @@ Docker 包含三个基本概念，分别是镜像（Image）、容器（Containe
 ## docker的配置
 
 先在项目下创建一个文件`Dockerfile`。
-![](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/91e15ed4a577cd55d7e4a4843d293fe7/04de0721475502582d05243cb2a52876.png)
+![](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/91e15ed4a577cd55d7e4a4843d293fe7/04de0721475502582d05243cb2a52876.png)
 
 编辑`Dockerfile`文件：
 `Dockerfile`文件的详解[link](https://blog.csdn.net/qq_39626154/article/details/82787528)
@@ -78,7 +78,7 @@ HEALTHCHECK：容器健康状态检查
 docker build -t dockerdemo:v1 . # 最后一个.实际指定当前的构建目录，dockerdemo(注意只能用小写)是该docker的名字,v1是tag
 ```
 结果
-![](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/91e15ed4a577cd55d7e4a4843d293fe7/400a9154b13f51973f2af1c7b5c8b734.png)
+![](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/91e15ed4a577cd55d7e4a4843d293fe7/400a9154b13f51973f2af1c7b5c8b734.png)
 
 
 
@@ -89,10 +89,10 @@ docker run -p 3000:5000 demo:v1
 
 ```
 
-![](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/91e15ed4a577cd55d7e4a4843d293fe7/716b6dc2421ffa1448152017202cd5e4.png)
+![](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/91e15ed4a577cd55d7e4a4843d293fe7/716b6dc2421ffa1448152017202cd5e4.png)
 
 访问
-![](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/91e15ed4a577cd55d7e4a4843d293fe7/b24c63c55a126b2741a895c42bcdd652.png)
+![](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/91e15ed4a577cd55d7e4a4843d293fe7/b24c63c55a126b2741a895c42bcdd652.png)
 
 
 ## 容器的管理
@@ -104,7 +104,7 @@ docker run -p 3000:5000 demo:v1
 ```
 docker ps -a
 ```
-![](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/91e15ed4a577cd55d7e4a4843d293fe7/9b74ab04b47259728f163126d74802d5.png)
+![](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/91e15ed4a577cd55d7e4a4843d293fe7/9b74ab04b47259728f163126d74802d5.png)
 
 
 停止和删除容器
@@ -116,7 +116,7 @@ docker rm + 容器id
 
 ```
 
-![](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/91e15ed4a577cd55d7e4a4843d293fe7/4707628ce451d57e301f537b34d02107.png)
+![](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/91e15ed4a577cd55d7e4a4843d293fe7/4707628ce451d57e301f537b34d02107.png)
 
 
 要先把镜像的容器都关了，才能删除相关镜像
@@ -127,7 +127,7 @@ docker images # 查看所有镜像及其信息
 
 docker images -q  # 输出所有镜像的id
 ```
-![](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/91e15ed4a577cd55d7e4a4843d293fe7/a26457f5d68c5ec899dfb58129f51712.png)
+![](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/91e15ed4a577cd55d7e4a4843d293fe7/a26457f5d68c5ec899dfb58129f51712.png)
 
 删除镜像
 删除images（镜像），通过image的id来指定删除谁
@@ -140,11 +140,11 @@ docker rmi $(docker images -q)
 ```
 只删除未被使用的资源
 - Docker 提供了方便的 docker system prune 命令来删除那些已停止的容器、dangling 镜像、未被容器引用的 network 和构建过程中的 cache：
-![](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/91e15ed4a577cd55d7e4a4843d293fe7/c4374d159824ee90df3e24e958427892.png)
+![](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/91e15ed4a577cd55d7e4a4843d293fe7/c4374d159824ee90df3e24e958427892.png)
 
 
 在本地的镜像更新之后，就会出现类似图中红框内的 <none> 镜像。这表示旧的镜像已经不再被引用了，此时它们就变成了 dangling images。如果使用 -a 参数，你还会发现另外一种类型的 <none> 镜像，它们的 repository 和 tag 列都表现为 <none>：
-![](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/91e15ed4a577cd55d7e4a4843d293fe7/893e772a3551604979a621e81834f2df.png)
+![](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/91e15ed4a577cd55d7e4a4843d293fe7/893e772a3551604979a621e81834f2df.png)
     这些镜像被称为 intermediate 镜像(就是其它镜像依赖的层)。
 
 **我们还可在不同在子命令下执行 prune，这样删除的就是某类资源：**
@@ -165,7 +165,7 @@ docker image prune # 删除 dangling 或所有未被使用的镜像
 ### 关于docker的端口映射增改问题。
 
 一般来说，在镜像运行成容器后就不能再更改端口映射了，并且下次启动原来的映射配置也在。
-![](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/91e15ed4a577cd55d7e4a4843d293fe7/48f85923d1c58a63157bf99adde19876.png)
+![](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/91e15ed4a577cd55d7e4a4843d293fe7/48f85923d1c58a63157bf99adde19876.png)
 
 想要改变两个办法。
 **法一：**
@@ -181,7 +181,7 @@ docker image prune # 删除 dangling 或所有未被使用的镜像
 ```
 docker pull centos
 ```
-![](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/91e15ed4a577cd55d7e4a4843d293fe7/7732d980c9dba0fc5e0c2a40c5f09766.png)
+![](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/91e15ed4a577cd55d7e4a4843d293fe7/7732d980c9dba0fc5e0c2a40c5f09766.png)
 
 ### 2,对这个镜像创建容器（也就是说运行它）
 
@@ -202,10 +202,10 @@ docker pull centos
 bash：跟 -it 命令结合在一起操作，使容器创建后处于前端，一般是 /bin/bash，我这是bash。
     
 结果：
-![](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/91e15ed4a577cd55d7e4a4843d293fe7/f7fd50b701e2dad74e2c70e4c28dddaa.png)
+![](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/91e15ed4a577cd55d7e4a4843d293fe7/f7fd50b701e2dad74e2c70e4c28dddaa.png)
 
 查看所有容器
-![](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/91e15ed4a577cd55d7e4a4843d293fe7/a4641ced6f18e89d2bb9e2a7924789a5.png)
+![](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/91e15ed4a577cd55d7e4a4843d293fe7/a4641ced6f18e89d2bb9e2a7924789a5.png)
 
 **不中断退出容器**
 可以通过 Ctrl+p，Ctrl+q 退出容器，但容器还是处于运行状态（Up）。
@@ -218,7 +218,7 @@ bash：跟 -it 命令结合在一起操作，使容器创建后处于前端，�
 然后有结果
 
 
-![image-20220821221517801](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/91e15ed4a577cd55d7e4a4843d293fe7/6d07b1501c4b634d8718374b41b828e7.png)    
+![refs/heads/master/image-20220821221517801](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/91e15ed4a577cd55d7e4a4843d293fe7/6d07b1501c4b634d8718374b41b828e7.png)    
 ### 进入容器
 
 **方法一**
@@ -227,7 +227,7 @@ bash：跟 -it 命令结合在一起操作，使容器创建后处于前端，�
 执行命令的方式：
 - 先启动容器
 - 然后使用exec命令去执行命令
-![](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/91e15ed4a577cd55d7e4a4843d293fe7/ddfd8f4be65c4ef913eedff5cbe88412.png)
+![](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/91e15ed4a577cd55d7e4a4843d293fe7/ddfd8f4be65c4ef913eedff5cbe88412.png)
 
 
 其他容器命令
@@ -296,7 +296,7 @@ ssh 启动文件路径：/usr/sbin/
 启动前修改
 修改/etc/ssh/sshd_config这个ssh配置文件
     
-![](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/91e15ed4a577cd55d7e4a4843d293fe7/315c39e1cfc901608d72456af0a85ce1.png)
+![](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/91e15ed4a577cd55d7e4a4843d293fe7/315c39e1cfc901608d72456af0a85ce1.png)
 
 退出后访问
 
@@ -318,7 +318,7 @@ ssh 启动文件路径：/usr/sbin/
 用新镜像运行容器
     
 结果
-![](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/91e15ed4a577cd55d7e4a4843d293fe7/84b4c22dcec687cb8738be54bdf5b6d1.png)
+![](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/91e15ed4a577cd55d7e4a4843d293fe7/84b4c22dcec687cb8738be54bdf5b6d1.png)
 
 然后运行新的镜像
 `docker run -it -d --name container-name（or id） -p p1:p1 -p p2:p2 new-image-name`
@@ -329,10 +329,10 @@ ssh 启动文件路径：/usr/sbin/
 
 我这里将外部的2020端口映射到容器里面的22端口。
 用特定的连接工具**MobaXterm**
-![](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/91e15ed4a577cd55d7e4a4843d293fe7/33f1657022f4724b85c3b89bff23f464.png)
+![](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/91e15ed4a577cd55d7e4a4843d293fe7/33f1657022f4724b85c3b89bff23f464.png)
 
 然后输入用户名和密码：成功
-![](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/91e15ed4a577cd55d7e4a4843d293fe7/9fbb228cc98997fb48f0fcfddad37492.png)
+![](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/91e15ed4a577cd55d7e4a4843d293fe7/9fbb228cc98997fb48f0fcfddad37492.png)
 
 ## docker Hub的使用
 

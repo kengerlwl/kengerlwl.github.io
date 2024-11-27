@@ -45,11 +45,11 @@ categories:
 
 本质上来说，system prompt也只不过是加了一个分割得token来和user prompt放在一起，直接写在user prompt是没有本质区别的。
 
-![image-20240814200222542](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/b03a509485115100b891e5eeb8634fc7/cbdd56239bd34b020c0cb0702afa92c9.png)
+![refs/heads/master/image-20240814200222542](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b03a509485115100b891e5eeb8634fc7/cbdd56239bd34b020c0cb0702afa92c9.png)
 
 
 
-![image-20240814200229217](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/b03a509485115100b891e5eeb8634fc7/bd8fd894bed17527f0e95a3813aa8357.png)
+![refs/heads/master/image-20240814200229217](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b03a509485115100b891e5eeb8634fc7/bd8fd894bed17527f0e95a3813aa8357.png)
 
 
 

@@ -18,7 +18,7 @@ categories:
 
 结果
 
-![image-20230113225050509](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/230e647f418926abc0ab069056ffffcc/f01a7096b9af0e7a9bd59545b305176c.png)
+![refs/heads/master/image-20230113225050509](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/230e647f418926abc0ab069056ffffcc/f01a7096b9af0e7a9bd59545b305176c.png)
 
 
 
@@ -42,7 +42,7 @@ categories:
 
 但是发现我这一开始loss就是nan。
 
-![image-20230113225244523](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/230e647f418926abc0ab069056ffffcc/e940bd1bfb7e3ff654485b6b43fa0cb2.png)
+![refs/heads/master/image-20230113225244523](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/230e647f418926abc0ab069056ffffcc/e940bd1bfb7e3ff654485b6b43fa0cb2.png)
 
 模型内部应该加入SIGMOD之类的防止越界
 
@@ -50,7 +50,7 @@ categories:
 
 然后输出模型的的out查看
 
-![image-20230113230413317](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/230e647f418926abc0ab069056ffffcc/91eb7485cd11e2576e3159d19da24927.png)
+![refs/heads/master/image-20230113230413317](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/230e647f418926abc0ab069056ffffcc/91eb7485cd11e2576e3159d19da24927.png)
 
 发现第一次的数据就有nan值。不知道是中间哪一层开始的。
 

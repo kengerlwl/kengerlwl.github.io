@@ -36,11 +36,11 @@ categories:
 
 ## 消背景技巧------调整颜色范围
 
-![image-20221009110452976](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/84d663a0b038982740b9687a7d3fec01/a0d4360826c1aee50b09c42c8c804a07.png)
+![refs/heads/master/image-20221009110452976](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84d663a0b038982740b9687a7d3fec01/a0d4360826c1aee50b09c42c8c804a07.png)
 
 使用混合选项。
 
-![image-20221009110523619](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/84d663a0b038982740b9687a7d3fec01/a4aa434fc6120f710a15f0579bf1c219.png)
+![refs/heads/master/image-20221009110523619](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84d663a0b038982740b9687a7d3fec01/a4aa434fc6120f710a15f0579bf1c219.png)
 
 
 
@@ -50,7 +50,7 @@ categories:
 
 可以做到加深颜色，调节对比度等等。
 
-![image-20221009110612289](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/84d663a0b038982740b9687a7d3fec01/d31c304ce686458ad9af1b6e61181f3b.png)
+![refs/heads/master/image-20221009110612289](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84d663a0b038982740b9687a7d3fec01/d31c304ce686458ad9af1b6e61181f3b.png)
 
 
 
@@ -64,7 +64,7 @@ categories:
 
 ### 图层蒙版---黑透白不透
 
-![image-20221009103857768](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/84d663a0b038982740b9687a7d3fec01/6402b7be47c0e6cf9ae77ec55182e85c.png)
+![refs/heads/master/image-20221009103857768](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84d663a0b038982740b9687a7d3fec01/6402b7be47c0e6cf9ae77ec55182e85c.png)
 
 蒙版的底色是白色，在蒙版上用黑色话，那么就会让前景变得透明。反之白色不透明
 
@@ -74,7 +74,7 @@ categories:
 
 可以用来加深颜色啥的
 
-![image-20221009104558570](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/84d663a0b038982740b9687a7d3fec01/03f8e30852390016db00b92df5491204.png)
+![refs/heads/master/image-20221009104558570](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84d663a0b038982740b9687a7d3fec01/03f8e30852390016db00b92df5491204.png)
 
 
 

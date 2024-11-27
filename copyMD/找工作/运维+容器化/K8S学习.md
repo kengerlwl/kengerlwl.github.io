@@ -4,7 +4,7 @@ top: false
 cover: false
 toc: true
 mathjax: true
-draft: true
+draft: false
 date: 2024-04-11 15:27:31
 password:
 summary:
@@ -49,7 +49,7 @@ categories:
 
 
 
-![Kuberentes 架构（图片来自于网络）](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/6a942e0fbd78bbacf026b27ac02bef3b/b3309a121a94959a6874384cd23a45f7.png)
+![Kuberentes 架构（图片来自于网络）](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/6a942e0fbd78bbacf026b27ac02bef3b/b3309a121a94959a6874384cd23a45f7.png)
 
 结构构成
 
@@ -183,7 +183,7 @@ kubectl run hello-minikube --image=tomcat:8.0 --port=8001
 
 这个会创建一个简单的提供一个hello world的web服务应用。并提供一个内部的端口
 
-![image-20240412140417684](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/6a942e0fbd78bbacf026b27ac02bef3b/522cdda19a744e4f30963e5e4251f4ed.png)
+![refs/heads/master/image-20240412140417684](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/6a942e0fbd78bbacf026b27ac02bef3b/522cdda19a744e4f30963e5e4251f4ed.png)
 
 **192这个就是k8s的内部节点ip。宿主机是不能直接curl访问的。pod的ip一般是10开的。**
 
@@ -294,7 +294,7 @@ spec:
 kubectl exec -it pod-name -- bash
 ```
 
-![image-20240413191151261](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/6a942e0fbd78bbacf026b27ac02bef3b/dd2639162ad1bb2ffa4ce6f3e75e43e4.png)
+![refs/heads/master/image-20240413191151261](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/6a942e0fbd78bbacf026b27ac02bef3b/dd2639162ad1bb2ffa4ce6f3e75e43e4.png)
 
 
 
@@ -377,7 +377,7 @@ spec:
 
 **结果**
 
-![image-20240414164048526](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/6a942e0fbd78bbacf026b27ac02bef3b/97ef58e1c2455b172a40bf37ec99de16.png)
+![refs/heads/master/image-20240414164048526](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/6a942e0fbd78bbacf026b27ac02bef3b/97ef58e1c2455b172a40bf37ec99de16.png)
 
 
 
@@ -637,7 +637,7 @@ metadata:
 
 **同一个node内部的pod之间，可以直接使用pod的10开的ip直接通信。** 
 
-![Kubernetes之POD、容器之间的网络通信](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/6a942e0fbd78bbacf026b27ac02bef3b/781eaaa73ce58d43abedc39285678487.png)
+![Kubernetes之POD、容器之间的网络通信](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/6a942e0fbd78bbacf026b27ac02bef3b/781eaaa73ce58d43abedc39285678487.png)
 
 
 

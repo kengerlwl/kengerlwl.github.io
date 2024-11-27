@@ -22,8 +22,7 @@ categories:
 As a professional academic English editor , you are asked to translate the following paragraph into English, the context is as follows```
 
 ```
-为了解决上述问题，本文主要针对GitHub平台中的用户身份识别进行了分析与研究，我们收集了GitHub用户的行为数据，提出了基于线性惩罚分割的行为序列分割方法和改进的 PrefixSpan 算法构建了用户的行为序列数据，从时序角度分析了用户的行为模式，并以此提出了一个面向行为序列的GitHub机器人识别模型（BSO-GBD），通过集成时序预训练嵌入模块(TPE）挖掘隐藏在账户行为数据下的机器人特征以及融合GitHub账户的多维特征信息实现对GitHub账户的识别预测。本文的贡献如下：
-
+此外，我们还加入了最新的两种Github社区项目推荐的模型，GHTRec和GCNRec。其中，GHTRec主要基于开发者历史行为生成项目特征进行推荐，GCNRec则通过构建开发者用户网络，使用图卷积神经网络来进行推荐。
 ```
 ````
 

@@ -28,13 +28,13 @@ categories:
 
 不要在站点设置ssl
 
-![image-20230630001554800](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/11bf76605aba903c1ec0b31c60df5727/d3ab6b082bdd7072479cf6501421994e.png)
+![refs/heads/master/image-20230630001554800](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/11bf76605aba903c1ec0b31c60df5727/d3ab6b082bdd7072479cf6501421994e.png)
 
 
 
 记住不能写127.0.0.1.因为frp也是根据路由匹配是否转发的。
 
-![image-20230630001541198](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/11bf76605aba903c1ec0b31c60df5727/b3f2ff4cc0a6f7e5a3a5368b0fba52d8.png)
+![refs/heads/master/image-20230630001541198](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/11bf76605aba903c1ec0b31c60df5727/b3f2ff4cc0a6f7e5a3a5368b0fba52d8.png)
 
 
 

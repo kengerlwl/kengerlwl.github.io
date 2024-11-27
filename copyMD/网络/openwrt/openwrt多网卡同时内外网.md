@@ -18,31 +18,31 @@ categories:
 
 # 关于esxi上的双网卡
 
-![image-20230607170105323](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/35b2c633405925134851417309e82253/18c82d1a73aa80e23a8db2c3e380c254.png)
+![refs/heads/master/image-20230607170105323](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/35b2c633405925134851417309e82253/18c82d1a73aa80e23a8db2c3e380c254.png)
 
 首先由两个网卡
 
 然后分别新建两个交换机
 
-![image-20230607170145633](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/35b2c633405925134851417309e82253/c26c673670225c0e0699bff3a796774e.png)
+![refs/heads/master/image-20230607170145633](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/35b2c633405925134851417309e82253/c26c673670225c0e0699bff3a796774e.png)
 
 
 
-![image-20230607170201197](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/35b2c633405925134851417309e82253/84b711ae77464e99f539d8afa7d3a266.png)
+![refs/heads/master/image-20230607170201197](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/35b2c633405925134851417309e82253/84b711ae77464e99f539d8afa7d3a266.png)
 
 然后新建两个端口组
 
-![image-20230607170224050](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/35b2c633405925134851417309e82253/b395c8f6be551c53b8c76b9e88e8de8d.png)
+![refs/heads/master/image-20230607170224050](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/35b2c633405925134851417309e82253/b395c8f6be551c53b8c76b9e88e8de8d.png)
 
 虚拟机使用不同的端口组
 
-![image-20230607170249482](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/35b2c633405925134851417309e82253/165ee8927e4f3e458d99a0f386e73c1f.png)
+![refs/heads/master/image-20230607170249482](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/35b2c633405925134851417309e82253/165ee8927e4f3e458d99a0f386e73c1f.png)
 
 
 
 进入openwrt。网络设置
 
-![image-20230607170322376](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/35b2c633405925134851417309e82253/12940517f5a6aa47035e407c526ac09a.png)
+![refs/heads/master/image-20230607170322376](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/35b2c633405925134851417309e82253/12940517f5a6aa47035e407c526ac09a.png)
 
 分别绑定两个网卡
 

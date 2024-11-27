@@ -343,7 +343,7 @@ groupdel g1
 
 显示的内容如下：
 
-![image-20221020134132328](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/c53b935433a115d5732aa06e1e6ac8ac/40e434fe37e731e20ea912fb2e41d2ad.png)
+![refs/heads/master/image-20221020134132328](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/c53b935433a115d5732aa06e1e6ac8ac/40e434fe37e731e20ea912fb2e41d2ad.png)
 
 其中的kenger.txt表示属于kenger用户，files用户组。同组的具有rwx权限。
 

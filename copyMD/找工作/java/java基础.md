@@ -2,7 +2,7 @@
 title: java基础
 top: false
 cover: false
-draft: true
+draft: false
 toc: true
 mathjax: true
 date: 2023-08-22 15:27:31
@@ -23,7 +23,7 @@ categories:
 
 ### 基本数据类型
 
-![image-20210712152020611](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/e8da9232c588c9b3f04ef0372addef93/d6d2baff4b0ba2647046bf6d69619806.png)
+![refs/heads/master/image-20210712152020611](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/e8da9232c588c9b3f04ef0372addef93/d6d2baff4b0ba2647046bf6d69619806.png)
 
 
 
@@ -39,48 +39,9 @@ categories:
 
 **Java 的参数是以值传递的形式传入方法中，而不是引用传递。(但是由于java默认用的就是指针来指向对象，所以在函数里面改变对象实际也会改变)**
 
-以下代码中 Dog dog 的 dog 是一个指针，存储的是对象的地址。在将一个参数传入一个方法时，本质上是将对象的地址以值的方式传递到形参中。
-
-```java
-public class Dog {
-
-    String name;
-
-    Dog(String name) {
-        this.name = name;
-    }
-
-    String getName() {
-        return this.name;
-    }
-
-    void setName(String name) {
-        this.name = name;
-    }
-
-    String getObjectAddress() {
-        return super.toString();
-    }
-}
-```
-
-在方法中改变对象的字段值会改变原对象该字段值，因为引用的是同一个对象。
-
-```java
-class PassByValueExample {
-    public static void main(String[] args) {
-        Dog dog = new Dog("A");
-        func(dog);
-        System.out.println(dog.getName());          // B
-    }
-
-    private static void func(Dog dog) {
-        dog.setName("B");
-    }
-}
-```
 
 
+**注意：string是不可变类型，如果改变了string，并不会影响原来的值，导致看着像值传递。int之类的基础变量类型也是**
 
 ### float 与 double
 
@@ -147,7 +108,7 @@ float f = 1.1f;
 4. **final类：** 当一个类被声明为 `final` 时，意味着该类不能被继承。这通常是因为该类的设计者认为它已经完整并且不应该有子类来改变其行为。
 
    ```
-   javaCopy codefinal class FinalClass {
+   codefinal class FinalClass {
        // 类定义
    }
    
@@ -406,7 +367,7 @@ class Calculator {
 
 
 每个类都有一个 **Class** 对象，包含了与类有关的信息。当编译一个新类时，会产生一个同名的 .class 文件，该文件内容保存着 Class 对象。原理如图
-![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/e8da9232c588c9b3f04ef0372addef93/c2b064c181acc94720b7cd57611d0388.png)
+![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/e8da9232c588c9b3f04ef0372addef93/c2b064c181acc94720b7cd57611d0388.png)
 
 **Class类对象的获取**
 
@@ -548,7 +509,7 @@ class hello {
 
 **原因是BigDecimal采用了long intCompact和int scale来表示数值，而不是浮点型的科学计数法。BigDecimal的原理很简单，就是将小数扩大N倍，转成整数后再进行计算，同时结合指数，得出没有精度损失的结果。**
 
-
+如果是包含小数点的数据其会将其小数点去掉，进而保存其去掉小数点后的数据。例如`new BigDecimal("3.1415926")`在该`BigDecimal`对象中`intCompact = 31415926`。
 
 ## 浮点数原理
 
