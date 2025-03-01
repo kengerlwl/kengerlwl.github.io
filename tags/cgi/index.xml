@@ -1,0 +1,48 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Cgi - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/cgi/</link>
+        <description>Cgi - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 17 May 2023 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/cgi/" rel="self" type="application/rss+xml" /><item>
+    <title>docker镜像的逆向分析</title>
+    <link>https://kengerlwl.github.io/docker%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%9B%E7%A8%8B/</link>
+    <pubDate>Wed, 17 May 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/docker%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%9B%E7%A8%8B/</guid>
+    <description><![CDATA[需求 如何用bash启动一个什么也不执行的容器 注意，如果您尝试同时使用 -it 和 -d，则Docker会忽略 -it 选项，并将 -d 的行为应用于容器。例如，以下]]></description>
+</item>
+<item>
+    <title>docker镜像的逆向分析</title>
+    <link>https://kengerlwl.github.io/docker%E9%95%9C%E5%83%8F%E7%9A%84%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/</link>
+    <pubDate>Wed, 17 May 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/docker%E9%95%9C%E5%83%8F%E7%9A%84%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/</guid>
+    <description><![CDATA[需求 目前我需要在一台神奇的服务器上部署一个数据库，但是由于权限问题，我不能让容器按照默认的守护进程直接启动，我需要进入容器更改完我需要做的一]]></description>
+</item>
+<item>
+    <title>web可执行目录之-----CGI协议与相关API接口编程探索</title>
+    <link>https://kengerlwl.github.io/web%E5%8F%AF%E6%89%A7%E8%A1%8C%E7%9B%AE%E5%BD%95%E4%B9%8B-----cgi%E5%8D%8F%E8%AE%AE%E4%B8%8E%E7%9B%B8%E5%85%B3api%E6%8E%A5%E5%8F%A3%E7%BC%96%E7%A8%8B%E6%8E%A2%E7%B4%A2/</link>
+    <pubDate>Sat, 22 Apr 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/web%E5%8F%AF%E6%89%A7%E8%A1%8C%E7%9B%AE%E5%BD%95%E4%B9%8B-----cgi%E5%8D%8F%E8%AE%AE%E4%B8%8E%E7%9B%B8%E5%85%B3api%E6%8E%A5%E5%8F%A3%E7%BC%96%E7%A8%8B%E6%8E%A2%E7%B4%A2/</guid>
+    <description><![CDATA[介绍 Web 服务器的可执行目录是指用于存放 CGI 脚本或其他可执行文件的目录。它的作用是让 Web 服务器能够通过 CGI 或其他类似机制执行这些脚本或程序，并将结果返]]></description>
+</item>
+<item>
+    <title>cors跨域，原理与解决</title>
+    <link>https://kengerlwl.github.io/cors%E8%B7%A8%E5%9F%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E8%A7%A3%E5%86%B3/</link>
+    <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/cors%E8%B7%A8%E5%9F%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E8%A7%A3%E5%86%B3/</guid>
+    <description><![CDATA[背景 需求：目前我需要在浏览器实现跨域请求访问我的服务。但是由于浏览器同源策略，导致访问不了。 思路：在服务器端设置允许跨域请求。 以前我只注意到]]></description>
+</item>
+<item>
+    <title>spring入门之踩坑</title>
+    <link>https://kengerlwl.github.io/spring%E5%85%A5%E9%97%A8%E4%B9%8B%E8%B8%A9%E5%9D%91/</link>
+    <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/spring%E5%85%A5%E9%97%A8%E4%B9%8B%E8%B8%A9%E5%9D%91/</guid>
+    <description><![CDATA[前置相关知识 语言特性相关 泛型 你可以写一个泛型方法，该方法在调用时可以接收不同类型的参数。根据传递给泛型方法的参数类型，编译器适当地处理每一个]]></description>
+</item>
+</channel>
+</rss>

@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Dl - 分类 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/categories/dl/</link>
+        <description>Dl - 分类 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 06 Mar 2023 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/categories/dl/" rel="self" type="application/rss+xml" /><item>
+    <title>tesla T4 深度学习环境搭建</title>
+    <link>https://kengerlwl.github.io/tesla-t4-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</link>
+    <pubDate>Mon, 06 Mar 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/tesla-t4-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</guid>
+    <description><![CDATA[Tesla T4安装 NVIDIA的驱动 1 wget https://cn.download.nvidia.com/tesla/460.106.00/NVIDIA-Linux-x86_64-460.106.00.run 下载deb文件后，先别着急安装，需先禁用nuoveau 1 sudo vi /etc/modprobe.d/blacklist.conf 下面两行加到末尾 1 2 blacklist nouveau options nouveau modeset=0 更新initr]]></description>
+</item>
+</channel>
+</rss>

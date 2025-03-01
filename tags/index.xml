@@ -1,0 +1,88 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Tags - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/</link>
+        <description>Tags - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 26 Oct 2024 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>LLM</title>
+    <link>https://kengerlwl.github.io/tags/llm/</link>
+    <pubDate>Sat, 26 Oct 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/tags/llm/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Pytorch</title>
+    <link>https://kengerlwl.github.io/tags/pytorch/</link>
+    <pubDate>Sat, 26 Oct 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/tags/pytorch/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Tokenizer</title>
+    <link>https://kengerlwl.github.io/tags/tokenizer/</link>
+    <pubDate>Sat, 26 Oct 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/tags/tokenizer/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Python</title>
+    <link>https://kengerlwl.github.io/tags/python/</link>
+    <pubDate>Fri, 30 Aug 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/tags/python/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Transformer</title>
+    <link>https://kengerlwl.github.io/tags/transformer/</link>
+    <pubDate>Sun, 18 Aug 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/tags/transformer/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Tokens压缩</title>
+    <link>https://kengerlwl.github.io/tags/tokens%E5%8E%8B%E7%BC%A9/</link>
+    <pubDate>Wed, 14 Aug 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/tags/tokens%E5%8E%8B%E7%BC%A9/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>推理</title>
+    <link>https://kengerlwl.github.io/tags/%E6%8E%A8%E7%90%86/</link>
+    <pubDate>Tue, 13 Aug 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/tags/%E6%8E%A8%E7%90%86/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Langchain</title>
+    <link>https://kengerlwl.github.io/tags/langchain/</link>
+    <pubDate>Mon, 05 Aug 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/tags/langchain/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>RLHF</title>
+    <link>https://kengerlwl.github.io/tags/rlhf/</link>
+    <pubDate>Tue, 23 Jul 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/tags/rlhf/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Go</title>
+    <link>https://kengerlwl.github.io/tags/go/</link>
+    <pubDate>Mon, 22 Jul 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/tags/go/</guid>
+    <description><![CDATA[]]></description>
+</item>
+</channel>
+</rss>
