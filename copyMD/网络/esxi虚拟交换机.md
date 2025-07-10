@@ -46,7 +46,7 @@ categories:
 
 ### 在一个标准虚拟交换机里，我们可以设置三类连接类型
 
-![img](https:////upload-refs/heads/master/images.jianshu.io/upload_refs/heads/master/images/9635611-366f1f1952a12f25.png?refs/heads/master/imageMogr2/auto-orient/strip|refs/heads/master/imageView2/2/w/1200/format/webp)
+![img](https:////upload-refs/heads/master/refs/heads/master/images.jianshu.io/upload_refs/heads/master/refs/heads/master/images/9635611-366f1f1952a12f25.png?refs/heads/master/refs/heads/master/imageMogr2/auto-orient/strip|refs/heads/master/refs/heads/master/imageView2/2/w/1200/format/webp)
 
 虚拟交换机连接类型
 

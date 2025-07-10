@@ -76,6 +76,24 @@ def img_pro(img_url):
     global md_file
     global img_dir_pre
     global md_name_hash
+
+    # 处理相对路径
+    if img_url.startswith("../") or img_url.startswith("./") or img_url.startswith("../../"):
+        # 如果是相对路径，直接使用md5作为新文件名
+        post_format = img_url.split(".")[-1]  # 图片格式
+        post_format_s = post_format.split("?")
+        # 去除结尾的?的后缀
+        if len(post_format_s) >= 2:
+            post_format = post_format_s[0]
+
+        new_local_img_path = img_dir_pre + md5.my_md5(img_url) + '.' + post_format
+        new_github_img_path = github_url + '/image/' + md_name_hash + '/' + md5.my_md5(img_url) + '.' + post_format
+
+        # 对于相对路径，我们不尝试下载或打开，直接返回新路径
+        # 这里假设这些相对路径的图片已经在GitHub上了
+        return new_github_img_path
+
+    # 原有逻辑处理
     post_format = img_url.split(".")[-1] # 图片格式可能不是png结尾
     post_format_s = post_format.split("?")
     # 去除结尾的?的后缀
@@ -89,8 +107,13 @@ def img_pro(img_url):
 
     # 本地的图片
     else:
-        img = Image.open(img_url)
-        img.save(new_local_img_path, post_format)
+        try:
+            img = Image.open(img_url)
+            img.save(new_local_img_path, post_format)
+        except Exception as e:
+            print(f"无法处理图片 {img_url}: {str(e)}")
+            # 如果无法处理，仍然返回新路径
+            pass
 
     return new_github_img_path
 
@@ -116,7 +139,7 @@ def main():
                     # line = line.replace("cdn.jsdelivr.net/gh","raw.githubusercontent.com")
                     # line = line.replace("master/", "")
                     raise Exception("已经是github图源了")
-                if image_url.find("cdn.jsdelivr.net/gh") != 1:
+                if image_url.find("cdn.jsdelivr.net/gh") != -1:
                     line = line.replace("cdn.jsdelivr.net/gh","raw.githubusercontent.com")
                     line = line.replace("image", "refs/heads/master/image")
                     raise Exception("切换为Github 图源")

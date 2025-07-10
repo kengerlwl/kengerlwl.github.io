@@ -45,7 +45,7 @@ mwan是一个openwrt上的插件，可以实现多wan口的上网流量管理。
 
 主要分为
 
-![230293745_2_20210913102146914](/Users/lwl/Desktop/230293745_2_20210913102146914.jpg)
+![230293745_2_20210913102146914](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/daa0b5992d6a9fb3beceed9958bce7d2/fcd64204d6d7a36c21abbbca2d97f9fa.jpg)
 
 
 

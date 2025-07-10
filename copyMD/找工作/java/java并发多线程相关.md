@@ -843,7 +843,7 @@ AQS 核心思想是，**如果被请求的共享资源空闲，则将当前请�
 
 ## 结构
 
-![887fafe6f6b282d7443424fce2cadb9](C:\Users\kenger\Documents\WeChat Files\wxid_i60ep1lbq9cl22\FileStorage\Temp\887fafe6f6b282d7443424fce2cadb9.jpg)
+![887fafe6f6b282d7443424fce2cadb9](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/bb65bdb9c9fd2ec81565504ae3c020cd/afb346960dc3d2b927dbbf37f0eea242.jpg)
 
 相当于给目标资源加了一个state变量判断是否占用了该资源，然后有个队列用来存储当且需要这个资源的线程队列。
 

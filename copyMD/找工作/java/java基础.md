@@ -534,7 +534,7 @@ class hello {
 - 指数 E 全 1，尾数全 0：正无穷大/负无穷大（正负取决于 S 符号位）
 - 指数 E 全 1，尾数非 0：NaN(Not a Number)
 
-[![3](https://kaito-blog-1253469779.cos.ap-beijing.myqcloud.com/2020/12/16090749848677.jpg)](https://kaito-blog-1253469779.cos.ap-beijing.myqcloud.com/2020/12/16090749848677.jpg)
+[![3](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/e8da9232c588c9b3f04ef0372addef93/19e967e651b4143e1bf21dc515bdc80f.jpg)](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/e8da9232c588c9b3f04ef0372addef93/19e967e651b4143e1bf21dc515bdc80f.jpg)
 
 [3](https://kaito-blog-1253469779.cos.ap-beijing.myqcloud.com/2020/12/16090749848677.jpg)
 
@@ -550,7 +550,7 @@ class hello {
 
 所以 S = 0，尾数 M = 1.001001 = 001001(去掉1，隐藏位)，指数 E = 4 + 127(中间数) = 135(D) = 10000111(B)。填充到 32 bit 中，如下：
 
-[![img](https://kaito-blog-1253469779.cos.ap-beijing.myqcloud.com/2020/12/16090678516830.jpg)](https://kaito-blog-1253469779.cos.ap-beijing.myqcloud.com/2020/12/16090678516830.jpg)
+[![img](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/e8da9232c588c9b3f04ef0372addef93/44955b728141b90aed1979ed58900d7c.jpg)](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/e8da9232c588c9b3f04ef0372addef93/44955b728141b90aed1979ed58900d7c.jpg)
 
 这就是标准 32 位浮点数的结果。
 

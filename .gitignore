@@ -25,3 +25,4 @@ Config/*.json
 *.pyc
 .DS_Store
 __pycache__
+asset
