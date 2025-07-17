@@ -222,7 +222,7 @@ es分片集群。
 - 可以确认回答是否幻觉了
 - 回答是否与参考文献一致
 
-![refs/heads/master/refs/heads/master/image-20240815102605090](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/2c31db40af8be05bbc11af0070ad1394/67fd917113ef00bccb65cedb5950080c.png)
+![refs/heads/master/refs/heads/master/image-20240815102605090](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/2c31db40af8be05bbc11af0070ad1394/67fd917113ef00bccb65cedb5950080c.png)
 
 
 

@@ -25,7 +25,8 @@ SSO 的主要思想是**在一个系统中登录一次，就可以访问其他�
 A系统和B系统都依赖S系统提供的SSO服务。
 A系统和B系统都需要登录才能访问资源。
 A系统登录后，B系统不需要再次登录就可以访问资源。
-![alt text](https://cdn.jsdelivr.net/gh/kengerlwl/kengerlwl.github.io/image/cfd513337dda68d87f2963ab48f95794/68639bfcc5d2e4efee296a8c5d5d5294.png)
+![alt text](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/cfd513337dda68d87f2963ab48f95794/508ac8cc56f6e45c5a4fe6da34889b74.png)
+
 
 流程就是
 1. 用户访问A系统，没有权限需要登陆，向S系统发起请求

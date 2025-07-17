@@ -42,15 +42,9 @@ def init():
     global img_dir_pre
     global md_name_hash
 
-    # github_url = 'https://github.com/' + conf['username'] + '/' + conf['repository']
-    # github_url = github_url.replace('https://github.com/', '')
-    # github_url = 'https://raw.githubusercontent.com/' + github_url
+    # 使用raw GitHub源而不是CDN
+    github_url = 'https://raw.githubusercontent.com/' + conf['username'] + '/' + conf['repository'] + '/master'
    
-    # github_url = github_url + '/master'
-
-
-    github_url = "https://cdn.jsdelivr.net/gh/" +  conf['username'] + '/' + conf['repository']
-
     print('github image url 的链接前缀 ： ' + github_url)
 
     md_name = conf['md_name']
@@ -78,8 +72,8 @@ def img_pro(img_url):
     global md_name_hash
 
     # 处理相对路径
-    if img_url.startswith("../") or img_url.startswith("./") or img_url.startswith("../../"):
-        # 如果是相对路径，直接使用md5作为新文件名
+    if img_url.startswith("../") or img_url.startswith("./") or img_url.startswith("../../") or not img_url.startswith("http"):
+        # 如果是相对路径，需要找到实际的图片文件
         post_format = img_url.split(".")[-1]  # 图片格式
         post_format_s = post_format.split("?")
         # 去除结尾的?的后缀
@@ -89,8 +83,58 @@ def img_pro(img_url):
         new_local_img_path = img_dir_pre + md5.my_md5(img_url) + '.' + post_format
         new_github_img_path = github_url + '/image/' + md_name_hash + '/' + md5.my_md5(img_url) + '.' + post_format
 
-        # 对于相对路径，我们不尝试下载或打开，直接返回新路径
-        # 这里假设这些相对路径的图片已经在GitHub上了
+        # 尝试找到实际的图片文件路径
+        actual_img_path = None
+
+        # 方法1: 从当前md文件位置出发的相对路径
+        if conf['complete_name']:
+            md_dir = os.path.dirname(os.path.abspath(conf['complete_name']))
+            relative_path_from_md = os.path.normpath(os.path.join(md_dir, img_url))
+            if os.path.exists(relative_path_from_md):
+                actual_img_path = relative_path_from_md
+                print(f"找到图片(相对于MD文件): {actual_img_path}")
+
+        # 方法2: 从项目根目录出发的相对路径
+        if actual_img_path is None:
+            project_root = os.path.abspath(FileDir)
+            relative_path_from_root = os.path.normpath(os.path.join(project_root, img_url))
+            if os.path.exists(relative_path_from_root):
+                actual_img_path = relative_path_from_root
+                print(f"找到图片(相对于项目根目录): {actual_img_path}")
+
+        # 方法3: 从当前工作目录出发的相对路径
+        if actual_img_path is None:
+            cwd_path = os.path.normpath(os.path.join(os.getcwd(), img_url))
+            if os.path.exists(cwd_path):
+                actual_img_path = cwd_path
+                print(f"找到图片(相对于当前工作目录): {actual_img_path}")
+
+        # 方法4: 直接作为绝对路径
+        if actual_img_path is None and os.path.exists(img_url):
+            actual_img_path = os.path.abspath(img_url)
+            print(f"找到图片(直接路径): {actual_img_path}")
+
+        # 方法5: 尝试去掉开头的相对路径符号，直接从项目根目录查找
+        if actual_img_path is None:
+            clean_path = img_url.lstrip('./').lstrip('../')
+            if clean_path != img_url:  # 确实有相对路径符号被去掉
+                project_root = os.path.abspath(FileDir)
+                clean_full_path = os.path.normpath(os.path.join(project_root, clean_path))
+                if os.path.exists(clean_full_path):
+                    actual_img_path = clean_full_path
+                    print(f"找到图片(清理路径后): {actual_img_path}")
+
+        # 如果找到了实际的图片文件，复制到目标位置
+        if actual_img_path and os.path.exists(actual_img_path):
+            try:
+                img = Image.open(actual_img_path)
+                img.save(new_local_img_path, post_format)
+                print(f"成功处理图片: {img_url} -> {new_local_img_path}")
+            except Exception as e:
+                print(f"无法处理图片 {actual_img_path}: {str(e)}")
+        else:
+            print(f"警告: 找不到图片文件 {img_url}")
+
         return new_github_img_path
 
     # 原有逻辑处理
@@ -134,15 +178,12 @@ def main():
                 image_url = image_urls[0]
                 print(image_url)
                 if image_url.find("raw.githubusercontent.com") != -1:
-                    # print(image_url.find("raw.githubusercontent.com"))
-                    # line = line.replace("raw.githubusercontent.com", "cdn.jsdelivr.net/gh")
-                    # line = line.replace("cdn.jsdelivr.net/gh","raw.githubusercontent.com")
-                    # line = line.replace("master/", "")
-                    raise Exception("已经是github图源了")
+                    raise Exception("已经是raw github图源了")
                 if image_url.find("cdn.jsdelivr.net/gh") != -1:
-                    line = line.replace("cdn.jsdelivr.net/gh","raw.githubusercontent.com")
-                    line = line.replace("image", "refs/heads/master/image")
-                    raise Exception("切换为Github 图源")
+                    # 将CDN链接转换为raw GitHub源
+                    line = line.replace("cdn.jsdelivr.net/gh", "raw.githubusercontent.com")
+                    line = line.replace("/image/", "/master/image/")
+                    raise Exception("已将CDN切换为raw Github图源")
                     
 
                 # if image_url.find("cdn.jsdelivr.net") != -1:
