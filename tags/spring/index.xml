@@ -1,0 +1,40 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Spring - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/spring/</link>
+        <description>Spring - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 10 Jul 2025 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/spring/" rel="self" type="application/rss+xml" /><item>
+    <title>SSO原理</title>
+    <link>https://kengerlwl.github.io/sso%E5%8E%9F%E7%90%86/</link>
+    <pubDate>Thu, 10 Jul 2025 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/sso%E5%8E%9F%E7%90%86/</guid>
+    <description><![CDATA[背景 目前而言，一个公司往往会有多个系统，而每个系统都需要登录才能访问资源。 SSO（单点登录）就是为了解决这个问题而出现的。 SSO 的主要思想是在一]]></description>
+</item>
+<item>
+    <title>Spring Cloud.md</title>
+    <link>https://kengerlwl.github.io/spring-cloud/</link>
+    <pubDate>Sat, 06 Apr 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/spring-cloud/</guid>
+    <description><![CDATA[为什么需要微服务 传统的Web项目 传统的WEB应用核心分为业务逻辑、适配器以及API或通过UI访问的WEB界面。业务逻辑定义业务流程、业务规则]]></description>
+</item>
+<item>
+    <title>Spring常见问题</title>
+    <link>https://kengerlwl.github.io/spring%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</link>
+    <pubDate>Fri, 05 Apr 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/spring%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</guid>
+    <description><![CDATA[基础概念 spring的底层 底层都依赖于它的两个核心特性，也就是**(IOC)依赖注入**（dependency injection，DI）和面]]></description>
+</item>
+<item>
+    <title>关于web服务中的认证，授权，会话</title>
+    <link>https://kengerlwl.github.io/%E5%85%B3%E4%BA%8Eweb%E6%9C%8D%E5%8A%A1%E4%B8%AD%E7%9A%84%E8%AE%A4%E8%AF%81%E6%8E%88%E6%9D%83%E4%BC%9A%E8%AF%9D/</link>
+    <pubDate>Fri, 01 Sep 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E5%85%B3%E4%BA%8Eweb%E6%9C%8D%E5%8A%A1%E4%B8%AD%E7%9A%84%E8%AE%A4%E8%AF%81%E6%8E%88%E6%9D%83%E4%BC%9A%E8%AF%9D/</guid>
+    <description><![CDATA[背景 在学习过程中，认证与授权通常是绕不过去的一部分，很多服务都有身份限制，不是特定的用户不能执行部分的资源操作，也不能访问到其他用户。 个人在]]></description>
+</item>
+</channel>
+</rss>
