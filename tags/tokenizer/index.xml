@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Tokenizer - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/tokenizer/</link>
+        <description>Tokenizer - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 26 Oct 2024 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/tokenizer/" rel="self" type="application/rss+xml" /><item>
+    <title>tokenizer使用指北</title>
+    <link>https://kengerlwl.github.io/tokenizer%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8C%97/</link>
+    <pubDate>Sat, 26 Oct 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/tokenizer%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8C%97/</guid>
+    <description><![CDATA[背景 文本到向量需要有个中间层，用来将文本分词，然后将不同的文本编码为序号。 例如一个文本 i am your father. 就应该分词为四个单词，然后其中首位还应该加入首]]></description>
+</item>
+</channel>
+</rss>

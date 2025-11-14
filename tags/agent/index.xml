@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Agent - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/agent/</link>
+        <description>Agent - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 15 Aug 2025 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/agent/" rel="self" type="application/rss+xml" /><item>
+    <title>mcp协议与使用</title>
+    <link>https://kengerlwl.github.io/mcp%E5%8D%8F%E8%AE%AE%E4%B8%8E%E4%BD%BF%E7%94%A8/</link>
+    <pubDate>Fri, 15 Aug 2025 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/mcp%E5%8D%8F%E8%AE%AE%E4%B8%8E%E4%BD%BF%E7%94%A8/</guid>
+    <description><![CDATA[背景 什么是mcp。 Model Context Protocol (MCP)。是一个模型上下文协议。 MCP 提供： 越来越多的预建集成可供您的 LLM 直接插入 为 AI 应用程序构建自定义集成的标准化方法]]></description>
+</item>
+</channel>
+</rss>

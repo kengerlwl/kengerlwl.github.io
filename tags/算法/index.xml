@@ -1,0 +1,24 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>算法 - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/%E7%AE%97%E6%B3%95/</link>
+        <description>算法 - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 08 Apr 2024 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/%E7%AE%97%E6%B3%95/" rel="self" type="application/rss+xml" /><item>
+    <title>排序算法</title>
+    <link>https://kengerlwl.github.io/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</link>
+    <pubDate>Mon, 08 Apr 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</guid>
+    <description><![CDATA[排序算法对比 快排最坏时间复杂度为O(n^2)。 最坏情况发生在待排序序列已经有序或基本有序的情况下。 分类： 位图排序解决海量数据排序问题 位图排序]]></description>
+</item>
+<item>
+    <title>算法比赛套路</title>
+    <link>https://kengerlwl.github.io/%E7%AE%97%E6%B3%95%E6%AF%94%E8%B5%9B%E5%A5%97%E8%B7%AF/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E7%AE%97%E6%B3%95%E6%AF%94%E8%B5%9B%E5%A5%97%E8%B7%AF/</guid>
+    <description><![CDATA[算法比赛套路 leetcode得进阶套路 如何判断出当前是第多少个case 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 import math math.a=0 class Solution: def twoSum(self, nums: List[int], target: int) -&gt; List[int]: math.a+=1 print(math.a) n = len(nums) for i]]></description>
+</item>
+</channel>
+</rss>

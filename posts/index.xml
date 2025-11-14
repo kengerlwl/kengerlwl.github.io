@@ -1,0 +1,88 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>所有文章 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/posts/</link>
+        <description>所有文章 | Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 13 Nov 2025 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>HttpInterceptor隐私政策</title>
+    <link>https://kengerlwl.github.io/privacy_policy/</link>
+    <pubDate>Thu, 13 Nov 2025 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/privacy_policy/</guid>
+    <description><![CDATA[隐私政策 (Privacy Policy) 最后更新日期 (Last Updated): 2025年11月14日 中文版本 1. 概述 HTTP Request Interceptor（以下简称&quot;本扩展&quot;）是一个 Chrome]]></description>
+</item>
+<item>
+    <title>TypeScript学习</title>
+    <link>https://kengerlwl.github.io/typescript%E5%AD%A6%E4%B9%A0/</link>
+    <pubDate>Fri, 05 Sep 2025 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/typescript%E5%AD%A6%E4%B9%A0/</guid>
+    <description><![CDATA[demo 我们新建一个 app.ts 的文件，代码如下： var message:string = &ldquo;Hello World&rdquo; console.log(message) 通常我们使用 .ts 作为 TypeScript 代码文件的扩展名。 然后执行以下命令将 TypeScript 转换为 JavaScript 代码： 1 tsc app.ts 这时候在当前目录]]></description>
+</item>
+<item>
+    <title>mcp协议与使用</title>
+    <link>https://kengerlwl.github.io/mcp%E5%8D%8F%E8%AE%AE%E4%B8%8E%E4%BD%BF%E7%94%A8/</link>
+    <pubDate>Fri, 15 Aug 2025 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/mcp%E5%8D%8F%E8%AE%AE%E4%B8%8E%E4%BD%BF%E7%94%A8/</guid>
+    <description><![CDATA[背景 什么是mcp。 Model Context Protocol (MCP)。是一个模型上下文协议。 MCP 提供： 越来越多的预建集成可供您的 LLM 直接插入 为 AI 应用程序构建自定义集成的标准化方法]]></description>
+</item>
+<item>
+    <title>关于手机推送技术架构</title>
+    <link>https://kengerlwl.github.io/%E5%85%B3%E4%BA%8E%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/</link>
+    <pubDate>Fri, 18 Jul 2025 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E5%85%B3%E4%BA%8E%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/</guid>
+    <description><![CDATA[背景 需要实现手机端的推送 技术调研 FCM：相当于调用安卓系统的原生的，google提供的免费的推送能力，由google来实现统一的推送。 tcp]]></description>
+</item>
+<item>
+    <title>关于LLM上下文管理</title>
+    <link>https://kengerlwl.github.io/%E5%85%B3%E4%BA%8Ellm%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86/</link>
+    <pubDate>Wed, 16 Jul 2025 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E5%85%B3%E4%BA%8Ellm%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86/</guid>
+    <description><![CDATA[背景 方法 1. 裁剪 超过一定长度的token，或者超过指定阈值。 就将更远（旧）的上下文直接裁剪掉。 2. 压缩 同上，但是不是裁剪，而是压缩更旧的上下文。]]></description>
+</item>
+<item>
+    <title>阅读12-factor-agents</title>
+    <link>https://kengerlwl.github.io/%E9%98%85%E8%AF%BB12-factor-agents/</link>
+    <pubDate>Wed, 16 Jul 2025 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E9%98%85%E8%AF%BB12-factor-agents/</guid>
+    <description><![CDATA[第一章，认识软件 要认识到：软件是一个有向图。我们过去用流程图来表示程序是有原因的。 其流程，边界，是完全严谨可控的。 让大模型自己去找这么编排处]]></description>
+</item>
+<item>
+    <title>SSO原理</title>
+    <link>https://kengerlwl.github.io/sso%E5%8E%9F%E7%90%86/</link>
+    <pubDate>Thu, 10 Jul 2025 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/sso%E5%8E%9F%E7%90%86/</guid>
+    <description><![CDATA[背景 目前而言，一个公司往往会有多个系统，而每个系统都需要登录才能访问资源。 SSO（单点登录）就是为了解决这个问题而出现的。 SSO 的主要思想是在一]]></description>
+</item>
+<item>
+    <title>linux系统备份</title>
+    <link>https://kengerlwl.github.io/linux%E7%B3%BB%E7%BB%9F%E5%A4%87%E4%BB%BD/</link>
+    <pubDate>Thu, 12 Jun 2025 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/linux%E7%B3%BB%E7%BB%9F%E5%A4%87%E4%BB%BD/</guid>
+    <description><![CDATA[背景 需要备份一下系统，方便迁移。 方法 1. 创建备份目录 1 mkdir -p /home/kenger/backup 2. 执行打包备份 1 2 3 4 5 6 7 8 9 10 sudo tar --exclude=/proc \ --exclude=/tmp \ --exclude=/sys \ --exclude=/dev \ --exclude=/run \ --exclude=/mnt \ --exclude=/media \ --exclude=/lost+found \ --exclude=/home/kenger/backup \ -cvpzf /home/kenger/backup/full-backup.tar.gz / --exclude=/home/kenger/backup]]></description>
+</item>
+<item>
+    <title>tokenizer使用指北</title>
+    <link>https://kengerlwl.github.io/tokenizer%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8C%97/</link>
+    <pubDate>Sat, 26 Oct 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/tokenizer%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8C%97/</guid>
+    <description><![CDATA[背景 文本到向量需要有个中间层，用来将文本分词，然后将不同的文本编码为序号。 例如一个文本 i am your father. 就应该分词为四个单词，然后其中首位还应该加入首]]></description>
+</item>
+<item>
+    <title>python八股题</title>
+    <link>https://kengerlwl.github.io/python%E5%85%AB%E8%82%A1%E9%A2%98/</link>
+    <pubDate>Fri, 30 Aug 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/python%E5%85%AB%E8%82%A1%E9%A2%98/</guid>
+    <description><![CDATA[TOSEE: 【建议收藏】50 道硬核的 Python 面试题.._python程序员面试题-CSDN博客 taizilongxu/interview_python: 关于Python的面试题 基础语法特性 列表（list）和元组（]]></description>
+</item>
+</channel>
+</rss>
