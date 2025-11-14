@@ -1,5 +1,5 @@
 ---
-title: 隐私政策 (Privacy Policy)
+title: HttpInterceptor隐私政策
 top: false
 cover: false
 toc: true
@@ -8,7 +8,7 @@ date: 2025-11-14 15:27:31
 password:
 summary:
 tags:
-- 隐私政策
+- 隐私
 categories:
 - 声明相关文档
 ---
