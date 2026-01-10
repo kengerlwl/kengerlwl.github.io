@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>大模型推理参数详解 - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="大模型推理参数详解">
+  <meta property="og:description" content="背景 一直在用大模型，也大概知道有哪些参数，但是一直没有详细了解其底层是什么原理，决定学习一下。 推理相关参数 LLM看似很神奇，但本质还是一个概">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-05-28T15:27:31+00:00">
+    <meta property="article:modified_time" content="2024-05-28T15:27:31+00:00">
+    <meta property="article:tag" content="Pytorch">
+    <meta property="article:tag" content="推理">
+    <meta property="article:tag" content="Llm">
+    <meta property="og:image" content="https://kengerlwl.github.io/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kengerlwl.github.io/logo.png">
+  <meta name="twitter:title" content="大模型推理参数详解">
+  <meta name="twitter:description" content="背景 一直在用大模型，也大概知道有哪些参数，但是一直没有详细了解其底层是什么原理，决定学习一下。 推理相关参数 LLM看似很神奇，但本质还是一个概">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3/" /><link rel="prev" href="https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83%E6%8A%80%E6%9C%AF%E6%B1%87%E6%80%BB/" /><link rel="next" href="https://kengerlwl.github.io/lora%E5%BE%AE%E8%B0%83%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "大模型推理参数详解",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/kengerlwl.github.io\/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/kengerlwl.github.io\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "pytorch, 推理, LLM","wordcount":  1732 ,
+        "url": "https:\/\/kengerlwl.github.io\/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3\/","datePublished": "2024-05-28T15:27:31+00:00","dateModified": "2024-05-28T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/kengerlwl.github.io\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">大模型推理参数详解</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kengerlwl.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%AD%A6%E6%9C%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>学术</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-05-28">2024-05-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1732 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#temperature"><strong>temperature</strong></a></li>
+    <li><a href="#top_k--top_p"><strong>top_k &amp; top_p</strong></a>
+      <ul>
+        <li><a href="#greedy-decoding"><strong>greedy decoding</strong></a></li>
+        <li><a href="#top-k"><strong>top-k</strong></a></li>
+        <li><a href="#top-p"><strong>top-p</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#控制输出策略的参数">控制输出策略的参数</a>
+      <ul>
+        <li><a href="#惩罚参数">惩罚参数</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#上下文长度">上下文长度</a></li>
+    <li><a href="#输出长度-1">输出长度</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#beam搜索">beam搜索</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="背景">背景</h1>
+<p>一直在用大模型，也大概知道有哪些参数，但是一直没有详细了解其底层是什么原理，决定学习一下。</p>
+<h1 id="推理相关参数">推理相关参数</h1>
+<p>LLM看似很神奇，但本质还是一个概率问题，神<strong>经网络根据输入的文本，从预训练的模型里面生成一堆候选词，选择概率高的作为输出，下面这三个参数，都是跟采样有关（也就是要如何从候选词里选择输出）。</strong></p>
+<h2 id="temperature"><strong>temperature</strong></h2>
+<p>用于控制模型输出的结果的随机性，这个值越大随机性越大。一般我们多次输入相同的prompt之后，模型的每次输出都不一样。</p>
+<ul>
+<li>设置为 0，对每个prompt都生成固定的输出</li>
+<li>较低的值，输出更集中，更有确定性</li>
+<li>较高的值，输出更随机（更有创意 ）
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/46bca30e69d1901883a91805ea846e16/4c17644a807f2e5741d4e7455e39e9fc.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/46bca30e69d1901883a91805ea846e16/4c17644a807f2e5741d4e7455e39e9fc.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/46bca30e69d1901883a91805ea846e16/4c17644a807f2e5741d4e7455e39e9fc.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/46bca30e69d1901883a91805ea846e16/4c17644a807f2e5741d4e7455e39e9fc.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/46bca30e69d1901883a91805ea846e16/4c17644a807f2e5741d4e7455e39e9fc.png"
+        title="在这里插入图片描述" />
+一般来说，prompt 越长，描述得越清楚，模型生成的输出质量就越好，置信度越高，这时可以适当调高 temperature 的值；反过来，如果 prompt 很短，很含糊，这时再设置一个比较高的 temperature 值，模型的输出就很不稳定了。</li>
+</ul>
+<blockquote>
+</blockquote>
+<h2 id="top_k--top_p"><strong>top_k &amp; top_p</strong></h2>
+<p>这俩也是采样参数，跟 temperature 不一样的采样方式。</p>
+<p>前面有介绍到，模型在输出之前，会生成一堆 token，这些 token 根据质量高低排名。</p>
+<p>比如下面这个图片，输入 <code>The name of that country is the</code> 这句话，模型生成了一堆 token，然后根据不同的 <code>decoding strategy</code> 从 tokens 中选择输出。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/46bca30e69d1901883a91805ea846e16/337001f699c3334f9f1908a88cb136de.webp"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/46bca30e69d1901883a91805ea846e16/337001f699c3334f9f1908a88cb136de.webp, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/46bca30e69d1901883a91805ea846e16/337001f699c3334f9f1908a88cb136de.webp 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/46bca30e69d1901883a91805ea846e16/337001f699c3334f9f1908a88cb136de.webp 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/46bca30e69d1901883a91805ea846e16/337001f699c3334f9f1908a88cb136de.webp"
+        title="img" /></p>
+<p>The model calculates a likelihood for each token in its vocabulary. The decoding strategy then picks one as the output.</p>
+<p>这里的 <code>decoding strategy</code> 可以选择</p>
+<ul>
+<li><strong>greedy decoding: 总是选择最高分的 token，有用但是有些弊端，详见下文</strong></li>
+<li><strong>top-k: 从 tokens 里选择 k 个作为候选，然后根据它们的 <code>likelihood scores</code> 来采样</strong></li>
+<li><strong>top-p: 候选词列表是动态的，从 tokens 里按百分比选择候选词</strong></li>
+</ul>
+<p>top-k 与 top-p 为选择 token 引入了随机性，让其他高分的 token 有被选择的机会，不像 greedy decoding 一样总是选最高分的。</p>
+<h3 id="greedy-decoding"><strong>greedy decoding</strong></h3>
+<p>好处是简单，坏处是容易生成循环、重复的内容</p>
+<blockquote>
+<p>Greedy decoding is a reasonable strategy but has some drawbacks such as outputs with repetitive loops of text. Think of the suggestions in your smartphone&rsquo;s auto-suggest. When you continually pick the highest suggested word, it may devolve into repeated sentences.</p>
+</blockquote>
+<h3 id="top-k"><strong>top-k</strong></h3>
+<p>设置越大，生成的内容可能性越大；</p>
+<p>设置越小，生成的内容越固定；</p>
+<p><strong>设置为1时，和 <code>greedy decoding</code> 效果一样。</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/46bca30e69d1901883a91805ea846e16/3be989e76b9897500db5b9912cfb8e62.webp"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/46bca30e69d1901883a91805ea846e16/3be989e76b9897500db5b9912cfb8e62.webp, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/46bca30e69d1901883a91805ea846e16/3be989e76b9897500db5b9912cfb8e62.webp 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/46bca30e69d1901883a91805ea846e16/3be989e76b9897500db5b9912cfb8e62.webp 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/46bca30e69d1901883a91805ea846e16/3be989e76b9897500db5b9912cfb8e62.webp"
+        title="img" /></p>
+<p>Adjusting to the top-k setting.</p>
+<blockquote>
+<p>Changing the top-k parameter sets the size of the shortlist the model samples from as it outputs each token. Setting top-k to 1 gives us greedy decoding.</p>
+</blockquote>
+<h3 id="top-p"><strong>top-p</strong></h3>
+<p>top-p 又名 <em>Nucleus Sampling</em>（核采样）</p>
+<p>与 top-k 固定选取前 k 个 tokens 不同，top-p 选取的 tokens 数量不是固定的，这个方法是设定一个概率阈值。</p>
+<p>继续上面的例子，**将 top-p 设定为 0.15，即选择前 15% 概率的 tokens 作为候选。**如下图所示，United 和 Netherlands 的概率加起来为 15% ，所以候选词就是这俩，最后再从这些候选词里，根据概率分数，选择 united 这个词。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/46bca30e69d1901883a91805ea846e16/1d67f5d28ea1736e7d0425d7b3ceb8a1.webp"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/46bca30e69d1901883a91805ea846e16/1d67f5d28ea1736e7d0425d7b3ceb8a1.webp, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/46bca30e69d1901883a91805ea846e16/1d67f5d28ea1736e7d0425d7b3ceb8a1.webp 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/46bca30e69d1901883a91805ea846e16/1d67f5d28ea1736e7d0425d7b3ceb8a1.webp 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/46bca30e69d1901883a91805ea846e16/1d67f5d28ea1736e7d0425d7b3ceb8a1.webp"
+        title="img" /></p>
+<p>In top-p, the size of the shortlist is dynamically selected based on the sum of likelihood scores reaching some threshold.</p>
+<blockquote>
+<p>Top-p is usually set to a high value (like 0.75) with the purpose of limiting the long tail of low-probability tokens that may be sampled. We can use both top-k and top-p together. If both <code>k</code> and <code>p</code> are enabled, <code>p</code> acts after <code>k</code>.</p>
+</blockquote>
+<p>经常遇到的默认 top-p 值就是 0.7/0.8 这样，还是那个说法，设置太低模型的输出太固定，设置太高，模型彻底放飞自我也不好。</p>
+<h2 id="控制输出策略的参数">控制输出策略的参数</h2>
+<p>是否使用采样，否则使用贪婪解码 。</p>
+<p>generate默认使用贪婪的搜索解码，所以你不需要传递任何参数来启用它。这意味着参数num_beams被设置为1，do_sample=False。</p>
+<h3 id="惩罚参数">惩罚参数</h3>
+<p><strong>在ChatGPT模型中，惩罚机制（Penalty Mechanism）主要用于控制生成文本的质量和多样性。惩罚机制通过调整生成过程中的概率分布，避免模型生成重复、无意义或不相关的内容。以下是一些常见的惩罚机制：</strong></p>
+<p><strong>重复惩罚（Repetition Penalty）</strong></p>
+<p>重复惩罚机制用于减少生成文本中的重复内容。</p>
+<p><strong>长度惩罚（Length Penalty）</strong></p>
+<p>长度惩罚机制用于控制生成文本的长度，避免生成过长或过短的文本。</p>
+<h1 id="输出长度">输出长度</h1>
+<h2 id="上下文长度">上下文长度</h2>
+<p>相当于视野，每次计算下一个token看到的视野长度</p>
+<h2 id="输出长度-1">输出长度</h2>
+<p>就是字面意识，对输出没什么影响，就是直接截断不输出了。</p>
+<h1 id="推理的搜索算法">推理的搜索算法</h1>
+<p>贪婪搜索、束搜索（beam search）或采样方法等。<strong>贪婪搜索只考虑当前最有可能的输出，束搜索会考虑多个候选输出，采样方法会根据概率分布进行随机采样。</strong></p>
+<h2 id="beam搜索">beam搜索</h2>
+<p><strong>束搜索是一种改进的贪婪搜索算法，它在每一步保留多个候选序列（称为“束”），以增加找到全局最优解的可能性。</strong></p>
+<ul>
+<li>
+<p><strong>过程</strong>:</p>
+<ol>
+<li>从起始标记开始。</li>
+<li><strong>在每一步，保留前k个概率最高的候选序列（k为束宽）。</strong></li>
+<li>对每个候选序列，扩展所有可能的下一个词，并计算其联合概率。</li>
+<li>从所有扩展的候选序列中选择前k个概率最高的序列。</li>
+<li>重复步骤2到4，直到生成结束标记或达到最大长度。</li>
+</ol>
+</li>
+<li>
+<p><strong>优点</strong>:</p>
+<ul>
+<li><strong>增加了找到全局最优解的可能性。</strong></li>
+<li><strong>生成的文本质量通常比贪婪搜索高</strong>。</li>
+</ul>
+</li>
+<li>
+<p><strong>缺点</strong>:</p>
+<ul>
+<li>计算复杂度较高，束宽越大，计算量越大。</li>
+<li>仍然可能会错过一些高质量的序列，特别是在束宽较小时。</li>
+</ul>
+</li>
+</ul>
+<h1 id="ref">ref</h1>
+<p><a href="https://zhuanlan.zhihu.com/p/631786282" target="_blank" rel="noopener noreffer ">知乎</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-05-28</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3/" data-title="大模型推理参数详解" data-hashtags="pytorch,推理,LLM"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3/" data-hashtag="pytorch"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3/" data-title="大模型推理参数详解"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3/" data-title="大模型推理参数详解"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3/" data-title="大模型推理参数详解"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/pytorch/">Pytorch</a>,&nbsp;<a href="/tags/%E6%8E%A8%E7%90%86/">推理</a>,&nbsp;<a href="/tags/llm/">Llm</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83%E6%8A%80%E6%9C%AF%E6%B1%87%E6%80%BB/" class="prev" rel="prev" title="大模型微调技术汇总"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>大模型微调技术汇总</a>
+            <a href="/lora%E5%BE%AE%E8%B0%83%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB/" class="next" rel="next" title="LoRA微调原理解读，及相关经验">LoRA微调原理解读，及相关经验<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.132.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kengerlwl.github.io/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"JCTYUNKA9R","algoliaIndex":"kenger","algoliaSearchKey":"3ef68664495033362b7df9cf5a3eee1e","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

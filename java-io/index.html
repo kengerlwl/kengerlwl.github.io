@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>java-IO - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://kengerlwl.github.io/java-io/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="java-IO">
+  <meta property="og:description" content="计算机IO结构 运算器、控制器、存储器、输入设备、输出设备。 冯诺依曼体系结构 **输入设备（比如键盘）和输出设备（比如显示器）**都属于外部设备">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-04-10T15:27:31+00:00">
+    <meta property="article:modified_time" content="2024-04-10T15:27:31+00:00">
+    <meta property="article:tag" content="Java">
+    <meta property="article:tag" content="IO">
+    <meta property="og:image" content="https://kengerlwl.github.io/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kengerlwl.github.io/logo.png">
+  <meta name="twitter:title" content="java-IO">
+  <meta name="twitter:description" content="计算机IO结构 运算器、控制器、存储器、输入设备、输出设备。 冯诺依曼体系结构 **输入设备（比如键盘）和输出设备（比如显示器）**都属于外部设备">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://kengerlwl.github.io/java-io/" /><link rel="prev" href="https://kengerlwl.github.io/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" /><link rel="next" href="https://kengerlwl.github.io/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E9%9D%A2%E8%AF%95%E9%A2%98/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "java-IO",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/kengerlwl.github.io\/java-io\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/kengerlwl.github.io\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "java, IO","wordcount":  1201 ,
+        "url": "https:\/\/kengerlwl.github.io\/java-io\/","datePublished": "2024-04-10T15:27:31+00:00","dateModified": "2024-04-10T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/kengerlwl.github.io\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/java-io/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/java-io/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">java-IO</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kengerlwl.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/find-job/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Find JOB</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-04-10">2024-04-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1201 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#bio-blocking-iohttpsjavaguidecnjavaioio-modelhtmlbio-blocking-i-o"><a href="https://javaguide.cn/java/io/io-model.html#bio-blocking-i-o">BIO (Blocking I/O)</a></a></li>
+        <li><a href="#nio-non-blockingnew-ionio-non-blocking-new-i-o"><a href="#nio-non-blocking-new-i-o">NIO (Non-blocking/New I/O)</a></a></li>
+        <li><a href="#io多路复用多了个select过程">IO多路复用（多了个select过程）</a></li>
+        <li><a href="#aio-asynchronous-iohttpsjavaguidecnjavaioio-modelhtmlaio-asynchronous-i-o"><a href="https://javaguide.cn/java/io/io-model.html#aio-asynchronous-i-o">AIO (Asynchronous I/O)</a></a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="计算机io结构">计算机IO结构</h1>
+<p>运算器、控制器、存储器、输入设备、输出设备。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/102cfebfc7a79a3d4a45d44f29af6581.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/102cfebfc7a79a3d4a45d44f29af6581.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/102cfebfc7a79a3d4a45d44f29af6581.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/102cfebfc7a79a3d4a45d44f29af6581.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/102cfebfc7a79a3d4a45d44f29af6581.png"
+        title="冯诺依曼体系结构" /></p>
+<p>冯诺依曼体系结构</p>
+<p>**输入设备（比如键盘）和输出设备（比如显示器）**都属于外部设备。网卡、硬盘这种既可以属于输入设备，也可以属于输出设备。</p>
+<p>操作系统：一个进程的地址空间划分为 <strong>用户空间（User space）</strong> 和 <strong>内核空间（Kernel space ）</strong> 。内核空间用来进行一些更加高危，更加关键的操作。比如：文件管理、进程通信、内存管理等等</p>
+<p>所以，想要IO，需要通过 <strong>系统调用</strong> 来间接访问内核空间</p>
+<p>当应用程序发起 I/O 调用后，会经历两个步骤：</p>
+<ol>
+<li><strong>内核等待 I/O 设备准备好数据</strong></li>
+<li><strong>内核将数据从内核空间拷贝到用户空间。</strong></li>
+</ol>
+<h1 id="常见io模型">常见IO模型</h1>
+<h3 id="bio-blocking-iohttpsjavaguidecnjavaioio-modelhtmlbio-blocking-i-o"><a href="https://javaguide.cn/java/io/io-model.html#bio-blocking-i-o" target="_blank" rel="noopener noreffer ">BIO (Blocking I/O)</a></h3>
+<p><strong>BIO 属于同步阻塞 IO 模型</strong> 。</p>
+<p>同步阻塞 IO 模型中，应用程序发起 read 调用后，<strong>会一直阻塞，直到内核把数据拷贝到用户空间。</strong></p>
+<p>但是，当面对十万甚至百万级连接的时候，传统的 BIO 模型是无能为力的。因此，我们需要一种更高效的 I/O 处理模型来应对更高的并发量。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/04fb15e7c9736207b513137d6c45b084.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/04fb15e7c9736207b513137d6c45b084.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/04fb15e7c9736207b513137d6c45b084.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/04fb15e7c9736207b513137d6c45b084.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/04fb15e7c9736207b513137d6c45b084.png"
+        title="图源：《深入拆解Tomcat &amp;amp; Jetty》" /></p>
+<h3 id="nio-non-blockingnew-ionio-non-blocking-new-i-o"><a href="#nio-non-blocking-new-i-o" rel="">NIO (Non-blocking/New I/O)</a></h3>
+<p>Java 中的 NIO 于 Java 1.4 中引入，对应 <code>java.nio</code> 包，提供了 <code>Channel</code> , <code>Selector</code>，<code>Buffer</code> 等抽象。NIO 中的 N 可以理解为 Non-blocking，不单纯是 New。<strong>它是支持面向缓冲的，基于通道的 I/O 操作方法。 对于高负载、高并发的（网络）应用，应使用 NIO 。</strong></p>
+<p><strong>相当于这个线程一直搁这疯狂的问IO数据好了吗？它并不阻塞在某一个IO上，它可以是一个线程不阻塞的，疯狂的询问多个IO好了吗。不想BIO，一个IO需要一个线程！！！！！！</strong></p>
+<p><strong>可以使用少量的线程来处理多个连接，大大提高了 I/O 效率和并发。</strong></p>
+<p>所以单独的线程可以管理多个输入和输出通道。因此NIO可以让服务器端使用一个或有限几个线程来同时处理连接到服务器端的所有客户端。</p>
+<p>Java 中的 NIO 可以看作是 <strong>I/O 多路复用模型</strong>。也有很多人认为，Java 中的 NIO 属于同步非阻塞 IO 模型。</p>
+<p>跟着我的思路往下看看，相信你会得到答案！</p>
+<p>我们先来看看 <strong>同步非阻塞 IO 模型</strong>。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/4719c0e343b9b0a5b97fadd95e298908.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/4719c0e343b9b0a5b97fadd95e298908.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/4719c0e343b9b0a5b97fadd95e298908.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/4719c0e343b9b0a5b97fadd95e298908.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/4719c0e343b9b0a5b97fadd95e298908.png"
+        title="图源：《深入拆解Tomcat &amp;amp; Jetty》" />图源：《深入拆解Tomcat &amp; Jetty》</p>
+<p>同步非阻塞 IO 模型中，应用程序会一直发起 read 调用，等待数据从内核空间拷贝到用户空间的这段时间里，线程依然是阻塞的，直到在内核把数据拷贝到用户空间。</p>
+<p><strong>应用程序不断进行 I/O 系统调用轮询数据是否已经准备好的过程是十分消耗 CPU 资源的。</strong></p>
+<h3 id="io多路复用多了个select过程">IO多路复用（多了个select过程）</h3>
+<p>IO 多路复用模型中，<strong>线程首先发起 select 调用，询问内核数据是否准备就绪，等内核把数据准备好了，用户线程再发起 read 调用。read 调用的过程（数据从内核空间 -&gt; 用户空间）还是阻塞的</strong>。</p>
+<p><strong>IO 多路复用模型，通过减少无效的系统调用，减少了对 CPU 资源的消耗。</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/b7c5aa1b3d6f937b8daf2e184c728226.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/b7c5aa1b3d6f937b8daf2e184c728226.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/b7c5aa1b3d6f937b8daf2e184c728226.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/b7c5aa1b3d6f937b8daf2e184c728226.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/b7c5aa1b3d6f937b8daf2e184c728226.png"
+        title="img" /></p>
+<p>目前支持 IO 多路复用的系统调用，有 select，epoll 等等。select 系统调用，目前几乎在所有的操作系统上都有支持。</p>
+<ul>
+<li><strong>select 调用</strong>：内核提供的系统调用，它支持一次查询多个系统调用的可用状态。几乎所有的操作系统都支持。</li>
+<li><strong>epoll 调用</strong>：linux 2.6 内核，属于 select 调用的增强版本，优化了 IO 的执行效率</li>
+</ul>
+<h3 id="aio-asynchronous-iohttpsjavaguidecnjavaioio-modelhtmlaio-asynchronous-i-o"><a href="https://javaguide.cn/java/io/io-model.html#aio-asynchronous-i-o" target="_blank" rel="noopener noreffer ">AIO (Asynchronous I/O)</a></h3>
+<p>AIO 也就是 NIO 2。Java 7 中引入了 NIO 的改进版 NIO 2,它是异步 IO 模型。</p>
+<p>优点，不用一直阻塞。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/ed560a676ca2432f45e79a0d2c5f43e1.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/ed560a676ca2432f45e79a0d2c5f43e1.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/ed560a676ca2432f45e79a0d2c5f43e1.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/ed560a676ca2432f45e79a0d2c5f43e1.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/dc65631729c1fc11888079d4e0f4c5a7/ed560a676ca2432f45e79a0d2c5f43e1.png"
+        title="img" /></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-04-10</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/java-io/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://kengerlwl.github.io/java-io/" data-title="java-IO" data-hashtags="java,IO"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://kengerlwl.github.io/java-io/" data-hashtag="java"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://kengerlwl.github.io/java-io/" data-title="java-IO"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://kengerlwl.github.io/java-io/" data-title="java-IO"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://kengerlwl.github.io/java-io/" data-title="java-IO"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/java/">Java</a>,&nbsp;<a href="/tags/io/">IO</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" class="prev" rel="prev" title="排序算法"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>排序算法</a>
+            <a href="/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E9%9D%A2%E8%AF%95%E9%A2%98/" class="next" rel="next" title="运维相关面试题">运维相关面试题<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.132.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kengerlwl.github.io/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"JCTYUNKA9R","algoliaIndex":"kenger","algoliaSearchKey":"3ef68664495033362b7df9cf5a3eee1e","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

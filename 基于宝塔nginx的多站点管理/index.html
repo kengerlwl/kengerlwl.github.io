@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>基于宝塔nginx的多站点管理 - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://kengerlwl.github.io/%E5%9F%BA%E4%BA%8E%E5%AE%9D%E5%A1%94nginx%E7%9A%84%E5%A4%9A%E7%AB%99%E7%82%B9%E7%AE%A1%E7%90%86/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="基于宝塔nginx的多站点管理">
+  <meta property="og:description" content="应用的场景 有若干服务需要访问，他们或者ip不一样，或者端口不一样。 如果一个个的去绑定隐形url域名挺麻烦的。也没必要。 一个优秀的办法是，通过">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2020-01-15T15:27:31+00:00">
+    <meta property="article:modified_time" content="2020-01-15T15:27:31+00:00">
+    <meta property="article:tag" content="服务器">
+    <meta property="article:tag" content="宝塔">
+    <meta property="article:tag" content="Nginx">
+    <meta property="og:image" content="https://kengerlwl.github.io/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kengerlwl.github.io/logo.png">
+  <meta name="twitter:title" content="基于宝塔nginx的多站点管理">
+  <meta name="twitter:description" content="应用的场景 有若干服务需要访问，他们或者ip不一样，或者端口不一样。 如果一个个的去绑定隐形url域名挺麻烦的。也没必要。 一个优秀的办法是，通过">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://kengerlwl.github.io/%E5%9F%BA%E4%BA%8E%E5%AE%9D%E5%A1%94nginx%E7%9A%84%E5%A4%9A%E7%AB%99%E7%82%B9%E7%AE%A1%E7%90%86/" /><link rel="prev" href="https://kengerlwl.github.io/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%AE%AD%E7%BB%83loss%E5%8F%98%E6%88%90nan%E5%80%BC/" /><link rel="next" href="https://kengerlwl.github.io/%E5%85%B3%E4%BA%8E%E6%88%91%E5%9C%A8ubuntu%E4%B8%8A%E9%85%8D%E7%BD%AEroute/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "基于宝塔nginx的多站点管理",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/kengerlwl.github.io\/%E5%9F%BA%E4%BA%8E%E5%AE%9D%E5%A1%94nginx%E7%9A%84%E5%A4%9A%E7%AB%99%E7%82%B9%E7%AE%A1%E7%90%86\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/kengerlwl.github.io\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "服务器, 宝塔, nginx","wordcount":  740 ,
+        "url": "https:\/\/kengerlwl.github.io\/%E5%9F%BA%E4%BA%8E%E5%AE%9D%E5%A1%94nginx%E7%9A%84%E5%A4%9A%E7%AB%99%E7%82%B9%E7%AE%A1%E7%90%86\/","datePublished": "2020-01-15T15:27:31+00:00","dateModified": "2020-01-15T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/kengerlwl.github.io\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/%E5%9F%BA%E4%BA%8E%E5%AE%9D%E5%A1%94nginx%E7%9A%84%E5%A4%9A%E7%AB%99%E7%82%B9%E7%AE%A1%E7%90%86/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/%E5%9F%BA%E4%BA%8E%E5%AE%9D%E5%A1%94nginx%E7%9A%84%E5%A4%9A%E7%AB%99%E7%82%B9%E7%AE%A1%E7%90%86/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">基于宝塔nginx的多站点管理</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kengerlwl.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>服务器</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2020-01-15">2020-01-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 740 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#设置二级域名">设置二级域名</a></li>
+    <li><a href="#设置宝塔面板nginx">设置宝塔面板nginx</a>
+      <ul>
+        <li><a href="#错误注意">错误注意</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="应用的场景">应用的场景</h1>
+<p>有若干服务需要访问，他们或者ip不一样，或者端口不一样。</p>
+<p>如果一个个的去绑定隐形url域名挺麻烦的。也没必要。</p>
+<p>一个优秀的办法是，通过不同的域名访问过去。然后根据域名不同做反向代理。</p>
+<h1 id="demo">demo</h1>
+<p>我服务器上有一个wordpress，其端口是8081。我想要通过<code>blog.kenger.com</code>去访问该服务。</p>
+<h2 id="设置二级域名">设置二级域名</h2>
+<p>先直接将域名指向服务器ip。或者服务器www域名也可以。总之就是直接到80端口。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/7c600b883827b37010c4aa5fd5a6ad04.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/7c600b883827b37010c4aa5fd5a6ad04.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/7c600b883827b37010c4aa5fd5a6ad04.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/7c600b883827b37010c4aa5fd5a6ad04.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/7c600b883827b37010c4aa5fd5a6ad04.png"
+        title="refs/heads/master/image-20221217203603861" /></p>
+<h2 id="设置宝塔面板nginx">设置宝塔面板nginx</h2>
+<p>然后去宝塔</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/4478ddcc4224e5f5fa0ba799d09c245e.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/4478ddcc4224e5f5fa0ba799d09c245e.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/4478ddcc4224e5f5fa0ba799d09c245e.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/4478ddcc4224e5f5fa0ba799d09c245e.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/4478ddcc4224e5f5fa0ba799d09c245e.png"
+        title="refs/heads/master/image-20221217203731037" /></p>
+<p>添加一个站点</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/96411d22da4f6290b0c8645b93df94af.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/96411d22da4f6290b0c8645b93df94af.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/96411d22da4f6290b0c8645b93df94af.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/96411d22da4f6290b0c8645b93df94af.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/96411d22da4f6290b0c8645b93df94af.png"
+        title="refs/heads/master/image-20221217203751574" /></p>
+<p>设置反向代理到本地</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/0a0df8a8546b32df15f96a5226a75713.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/0a0df8a8546b32df15f96a5226a75713.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/0a0df8a8546b32df15f96a5226a75713.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/0a0df8a8546b32df15f96a5226a75713.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/0a0df8a8546b32df15f96a5226a75713.png"
+        title="refs/heads/master/image-20221217204302535" /></p>
+<h3 id="错误注意">错误注意</h3>
+<p>尽量不要用localhost。用127.0.0.1更好。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/d1fb124357b45b2d75a26dcfa362255f.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/d1fb124357b45b2d75a26dcfa362255f.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/d1fb124357b45b2d75a26dcfa362255f.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/d1fb124357b45b2d75a26dcfa362255f.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/d1fb124357b45b2d75a26dcfa362255f.png"
+        title="refs/heads/master/image-20221217203808588" /></p>
+<p>然后就可以访问了</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/510f3b91cd60dcc1840fc5194894106a.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/510f3b91cd60dcc1840fc5194894106a.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/510f3b91cd60dcc1840fc5194894106a.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/510f3b91cd60dcc1840fc5194894106a.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7d3fdd730213faafd876f5c39adc98ca/510f3b91cd60dcc1840fc5194894106a.png"
+        title="refs/heads/master/image-20221217204312605" /></p>
+<h1 id="伪静态设置">伪静态设置</h1>
+<p>通俗来讲其实就是一种seo的方式。</p>
+<p>伪静态是相对真实静态来讲的，通常我们为了增强搜索引擎的友好面，都将文章内容生成静态页面，但是为了实时的显示一些信息，就损失了对搜索引擎的友好面。 伪静态即是<strong>网站本身是动态网页，url后有&quot;?</strong> <strong>&ldquo;加参数来读取不同数据，伪静态就是做url重写操作(rewrite)</strong>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// 监听80端口
+</span></span><span class="line"><span class="cl">//访问www.test.com/wangla.html跳转到百度
+</span></span><span class="line"><span class="cl">//访问www.test.com/纯数字至少一个数字.html跳转到QQ官网
+</span></span><span class="line"><span class="cl">//访问www.test.com/匹配字母或数字或下划线组合.html 跳转到百度对应页面。
+</span></span><span class="line"><span class="cl">server {
+</span></span><span class="line"><span class="cl">    listen       80;
+</span></span><span class="line"><span class="cl">    server_name      www.test.com;
+</span></span><span class="line"><span class="cl">    index    index.html index.htm index.php;
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">    rewrite  ^/wangla.html$  http://www.baidu.com/ permanent;
+</span></span><span class="line"><span class="cl">    rewrite  ^/(\d+).html$   http://www.qq.com/ permanent;
+</span></span><span class="line"><span class="cl">    rewrite  ^/(\w+).html$   http://www.baidu.com/index_wd_v5.html permanent;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="基于nginx实现不同前缀代理到不同的页面">基于nginx实现不同前缀代理到不同的页面</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#PROXY-START/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">location /yuedu
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    proxy_pass http://127.0.0.1:58080/;  # 注意，这个/不能省略
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后就可以通过<code>服务器域名/yuedu</code>访问到<code>58080</code>这个端口的内容了。</p>
+<p><strong>注意：<code>proxy_pass</code>的/不能省略，nginx用到的是简单的替换！！！！！！！！</strong></p>
+<p>参考：</p>
+<p><a href="https://www.cnblogs.com/woshimrf/p/nginx-proxy-rewrite-url.html" target="_blank" rel="noopener noreffer ">Nginx代理proxy pass配置去除前缀 - Ryan.Miao - 博客园</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-01-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E5%9F%BA%E4%BA%8E%E5%AE%9D%E5%A1%94nginx%E7%9A%84%E5%A4%9A%E7%AB%99%E7%82%B9%E7%AE%A1%E7%90%86/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://kengerlwl.github.io/%E5%9F%BA%E4%BA%8E%E5%AE%9D%E5%A1%94nginx%E7%9A%84%E5%A4%9A%E7%AB%99%E7%82%B9%E7%AE%A1%E7%90%86/" data-title="基于宝塔nginx的多站点管理" data-hashtags="服务器,宝塔,nginx"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://kengerlwl.github.io/%E5%9F%BA%E4%BA%8E%E5%AE%9D%E5%A1%94nginx%E7%9A%84%E5%A4%9A%E7%AB%99%E7%82%B9%E7%AE%A1%E7%90%86/" data-hashtag="服务器"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://kengerlwl.github.io/%E5%9F%BA%E4%BA%8E%E5%AE%9D%E5%A1%94nginx%E7%9A%84%E5%A4%9A%E7%AB%99%E7%82%B9%E7%AE%A1%E7%90%86/" data-title="基于宝塔nginx的多站点管理"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://kengerlwl.github.io/%E5%9F%BA%E4%BA%8E%E5%AE%9D%E5%A1%94nginx%E7%9A%84%E5%A4%9A%E7%AB%99%E7%82%B9%E7%AE%A1%E7%90%86/" data-title="基于宝塔nginx的多站点管理"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://kengerlwl.github.io/%E5%9F%BA%E4%BA%8E%E5%AE%9D%E5%A1%94nginx%E7%9A%84%E5%A4%9A%E7%AB%99%E7%82%B9%E7%AE%A1%E7%90%86/" data-title="基于宝塔nginx的多站点管理"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>,&nbsp;<a href="/tags/%E5%AE%9D%E5%A1%94/">宝塔</a>,&nbsp;<a href="/tags/nginx/">Nginx</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%AE%AD%E7%BB%83loss%E5%8F%98%E6%88%90nan%E5%80%BC/" class="prev" rel="prev" title="记一次训练loss变成nan值"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>记一次训练loss变成nan值</a>
+            <a href="/%E5%85%B3%E4%BA%8E%E6%88%91%E5%9C%A8ubuntu%E4%B8%8A%E9%85%8D%E7%BD%AEroute/" class="next" rel="next" title="关于我在Ubuntu上配置route">关于我在Ubuntu上配置route<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.132.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kengerlwl.github.io/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"JCTYUNKA9R","algoliaIndex":"kenger","algoliaSearchKey":"3ef68664495033362b7df9cf5a3eee1e","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

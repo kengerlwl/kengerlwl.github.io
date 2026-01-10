@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>linux Ubuntu通过systemd 添加开机自动启动程序方法 - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://kengerlwl.github.io/linux-ubuntu%E9%80%9A%E8%BF%87systemd-%E6%B7%BB%E5%8A%A0%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F%E6%96%B9%E6%B3%95/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="linux Ubuntu通过systemd 添加开机自动启动程序方法">
+  <meta property="og:description" content="机器 ubuntu 22 流程 建立Systemd 服务单元配置文件 建立一个新的Systemd 服务单元配置文件，储存于/etc/systemd/system/ec">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-05-05T15:27:31+00:00">
+    <meta property="article:modified_time" content="2023-05-05T15:27:31+00:00">
+    <meta property="article:tag" content="服务器">
+    <meta property="article:tag" content="Linux">
+    <meta property="article:tag" content="开机启动脚本">
+    <meta property="og:image" content="https://kengerlwl.github.io/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kengerlwl.github.io/logo.png">
+  <meta name="twitter:title" content="linux Ubuntu通过systemd 添加开机自动启动程序方法">
+  <meta name="twitter:description" content="机器 ubuntu 22 流程 建立Systemd 服务单元配置文件 建立一个新的Systemd 服务单元配置文件，储存于/etc/systemd/system/ec">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://kengerlwl.github.io/linux-ubuntu%E9%80%9A%E8%BF%87systemd-%E6%B7%BB%E5%8A%A0%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F%E6%96%B9%E6%B3%95/" /><link rel="prev" href="https://kengerlwl.github.io/%E5%85%B3%E4%BA%8E%E4%BD%BF%E7%94%A8%E6%9C%BA%E6%9E%B6%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BB%8F%E9%AA%8C/" /><link rel="next" href="https://kengerlwl.github.io/ldap%E9%85%8D%E5%90%88truenas%E5%AE%9E%E7%8E%B0smb%E6%8C%82%E8%BD%BD/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "linux Ubuntu通过systemd 添加开机自动启动程序方法",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/kengerlwl.github.io\/linux-ubuntu%E9%80%9A%E8%BF%87systemd-%E6%B7%BB%E5%8A%A0%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F%E6%96%B9%E6%B3%95\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/kengerlwl.github.io\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "服务器, linux, 开机启动脚本","wordcount":  833 ,
+        "url": "https:\/\/kengerlwl.github.io\/linux-ubuntu%E9%80%9A%E8%BF%87systemd-%E6%B7%BB%E5%8A%A0%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F%E6%96%B9%E6%B3%95\/","datePublished": "2023-05-05T15:27:31+00:00","dateModified": "2023-05-05T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/kengerlwl.github.io\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/linux-ubuntu%E9%80%9A%E8%BF%87systemd-%E6%B7%BB%E5%8A%A0%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F%E6%96%B9%E6%B3%95/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/linux-ubuntu%E9%80%9A%E8%BF%87systemd-%E6%B7%BB%E5%8A%A0%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F%E6%96%B9%E6%B3%95/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">linux Ubuntu通过systemd 添加开机自动启动程序方法</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kengerlwl.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>服务器</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-05-05">2023-05-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 833 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#建立systemd-服务单元配置文件">建立Systemd 服务单元配置文件</a></li>
+    <li><a href="#常见systemctl的命令">常见systemctl的命令</a></li>
+    <li><a href="#注意">注意</a></li>
+    <li><a href="#一个frp的demo">一个frp的demo</a></li>
+    <li><a href="#systemd-服务单元配置文件说明">Systemd 服务单元配置文件说明:</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="机器">机器</h1>
+<p>ubuntu 22</p>
+<h1 id="流程">流程</h1>
+<h2 id="建立systemd-服务单元配置文件">建立Systemd 服务单元配置文件</h2>
+<p>建立一个新的Systemd 服务单元配置文件，储存于<code>/etc/systemd/system/echo_server.service</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[Unit] 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Description= Echo Server
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[Service] 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> Type= simple
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> ExecStart= /opt/echo_server.py
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> Restart= always
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[Install] 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">WantedBy= multi-user.target
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>权限要设定为<code>644</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo chmod <span class="m">644</span> /etc/systemd/system/echo_server.service
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果在开发过程中，有修改过Systemd 的服务单元配置文件，记得重新载入daemon 让新设置生效：</p>
+<p># 重新载入Systemd 配置文件</p>
+<p><code>sudo systemctl daemon-reload</code></p>
+<p>接着就可以使用 <code>systemctl</code> 命令启动自定义的echo 服务器：</p>
+<p># 启动自定义的echo 服务器</p>
+<p><code>sudo systemctl start echo_server</code></p>
+<p>查看echo 服务器的状态：</p>
+<p># 查看echo 服务器状态</p>
+<p><code>systemctl status echo_server</code></p>
+<h2 id="常见systemctl的命令">常见systemctl的命令</h2>
+<p>允许开机自启：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">systemctl <span class="nb">enable</span> scratch.service
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其他命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">启动 sudo systemctl start scratch
+</span></span><span class="line"><span class="cl">重启 sudo systemctl restart scratch
+</span></span><span class="line"><span class="cl">停止 sudo systemctl stop scratch
+</span></span><span class="line"><span class="cl">日志 sudo systemctl status scratch
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="注意">注意</h2>
+<p>要给足文件权限。</p>
+<h2 id="一个frp的demo">一个frp的demo</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[Unit]
+</span></span><span class="line"><span class="cl">Description=frp service
+</span></span><span class="line"><span class="cl">After=network.target network-online.target syslog.target
+</span></span><span class="line"><span class="cl">Wants=network.target network-online.target
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[Service]
+</span></span><span class="line"><span class="cl">Type=simple
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#启动服务的命令（命令必须写绝对路径）
+</span></span><span class="line"><span class="cl">ExecStart=bash /home/m1ld/.test/frp_0.45.0_linux_amd64/run_frps.sh
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 停止服务后，执行的命令
+</span></span><span class="line"><span class="cl">ExecStop=ps -aux | grep frp | awk &#39;{print $2}&#39; | xargs kill -9
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[Install]
+</span></span><span class="line"><span class="cl">WantedBy=multi-user.target
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="systemd-服务单元配置文件说明">Systemd 服务单元配置文件说明:</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="p">[</span><span class="n">Unit</span><span class="p">]</span> 
+</span></span><span class="line"><span class="cl"><span class="c1"># 服务名称</span>
+</span></span><span class="line"><span class="cl"><span class="n">Description</span><span class="o">=</span> <span class="n">Your</span> <span class="n">Server</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 服务相关文件</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Documentation=https://example.com </span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Documentation=man:&lt;a class=&#34;wpal-linked-keyword&#34; href=&#34;https://nginx.p2hp.com/&#34; target=&#34;_blank&#34;&gt;nginx&lt;/a&gt;(8)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 设定服务启动的先后相关姓，例如在网络启动之后：</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># After=network.target</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">Service</span><span class="p">]</span> 
+</span></span><span class="line"><span class="cl"><span class="c1"># 进程类型</span>
+</span></span><span class="line"><span class="cl"><span class="n">Type</span><span class="o">=</span> <span class="n">simple</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 启动服务命令</span>
+</span></span><span class="line"><span class="cl"><span class="n">ExecStart</span><span class="o">=</span><span class="n">bash</span><span class="o">/</span><span class="n">sh</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">your_command</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 服务进程PID（通常配合forking 的服务使用）</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># PIDFile=/run/your_server.pid</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 启动服务前，执行的命令</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ExecStartPre=/opt/your_command</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 启动服务后，执行的命令</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ExecStartPost=/opt/your_command</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 停止服务命令</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ExecStop=/opt/your_command</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 停止服务后，执行的命令</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ExecStopPost=/opt/your_command</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 重新载入服务命令</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ExecReload=/opt/your_command</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 服务终止时自动重新启动</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Restart= always</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 重新启动时间格时间（预设为100ms）</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># RestartSec=3s</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 启动服务超时秒数</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># TimeoutStartSec=3s</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 停止服务超时秒数</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># TimeoutStopSec=3s</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 执行时的工作目录</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># WorkingDirectory=/opt/your_folder</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 执行服务的用户（名称或ID 皆可）</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># User=myuser</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 执行服务的群组（名称或ID 皆可）</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># User=mygroup</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 环境变数设置</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Environment=&#34;VAR1=word1 word2&#34; VAR2=word3 &#34;VAR3=$word 5 6&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 服务输出信息指向设定</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># StandardOutput=syslog</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 服务错误信息息指向设定</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># StandardError=syslog</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 设定服务在Syslog 中的名称</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># SyslogIdentifier=your-server</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">Install</span><span class="p">]</span> 
+</span></span><span class="line"><span class="cl"><span class="n">WantedBy</span><span class="o">=</span> <span class="n">multi</span><span class="o">-</span><span class="n">user</span><span class="o">.</span><span class="n">target</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="ref">ref</h1>
+<p><a href="https://blog.p2hp.com/archives/8690" target="_blank" rel="noopener noreffer ">https://blog.p2hp.com/archives/8690</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-05-05</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/linux-ubuntu%E9%80%9A%E8%BF%87systemd-%E6%B7%BB%E5%8A%A0%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F%E6%96%B9%E6%B3%95/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://kengerlwl.github.io/linux-ubuntu%E9%80%9A%E8%BF%87systemd-%E6%B7%BB%E5%8A%A0%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F%E6%96%B9%E6%B3%95/" data-title="linux Ubuntu通过systemd 添加开机自动启动程序方法" data-hashtags="服务器,linux,开机启动脚本"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://kengerlwl.github.io/linux-ubuntu%E9%80%9A%E8%BF%87systemd-%E6%B7%BB%E5%8A%A0%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F%E6%96%B9%E6%B3%95/" data-hashtag="服务器"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://kengerlwl.github.io/linux-ubuntu%E9%80%9A%E8%BF%87systemd-%E6%B7%BB%E5%8A%A0%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F%E6%96%B9%E6%B3%95/" data-title="linux Ubuntu通过systemd 添加开机自动启动程序方法"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://kengerlwl.github.io/linux-ubuntu%E9%80%9A%E8%BF%87systemd-%E6%B7%BB%E5%8A%A0%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F%E6%96%B9%E6%B3%95/" data-title="linux Ubuntu通过systemd 添加开机自动启动程序方法"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://kengerlwl.github.io/linux-ubuntu%E9%80%9A%E8%BF%87systemd-%E6%B7%BB%E5%8A%A0%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F%E6%96%B9%E6%B3%95/" data-title="linux Ubuntu通过systemd 添加开机自动启动程序方法"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>,&nbsp;<a href="/tags/linux/">Linux</a>,&nbsp;<a href="/tags/%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC/">开机启动脚本</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E5%85%B3%E4%BA%8E%E4%BD%BF%E7%94%A8%E6%9C%BA%E6%9E%B6%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BB%8F%E9%AA%8C/" class="prev" rel="prev" title="关于使用机架服务器经验"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>关于使用机架服务器经验</a>
+            <a href="/ldap%E9%85%8D%E5%90%88truenas%E5%AE%9E%E7%8E%B0smb%E6%8C%82%E8%BD%BD/" class="next" rel="next" title="ldap配合truenas实现smb挂载.md">ldap配合truenas实现smb挂载.md<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.132.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kengerlwl.github.io/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"JCTYUNKA9R","algoliaIndex":"kenger","algoliaSearchKey":"3ef68664495033362b7df9cf5a3eee1e","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

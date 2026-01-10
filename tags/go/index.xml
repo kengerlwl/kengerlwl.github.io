@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Go - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/go/</link>
+        <description>Go - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 22 Jul 2024 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/go/" rel="self" type="application/rss+xml" /><item>
+    <title>go测试</title>
+    <link>https://kengerlwl.github.io/go%E8%AF%AD%E8%A8%80%E6%B5%8B%E8%AF%95/</link>
+    <pubDate>Mon, 22 Jul 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/go%E8%AF%AD%E8%A8%80%E6%B5%8B%E8%AF%95/</guid>
+    <description><![CDATA[背景 正在编写go的测试用例case，但是对基本流程不熟。 建议还是用goland开发，用vscode有点难受 方法 在Go语言中，编写测试函数和设]]></description>
+</item>
+</channel>
+</rss>

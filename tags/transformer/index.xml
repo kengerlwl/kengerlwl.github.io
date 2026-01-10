@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Transformer - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/transformer/</link>
+        <description>Transformer - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 18 Aug 2024 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/transformer/" rel="self" type="application/rss+xml" /><item>
+    <title>大模型底层八股</title>
+    <link>https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BA%95%E5%B1%82%E5%85%AB%E8%82%A1/</link>
+    <pubDate>Sun, 18 Aug 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BA%95%E5%B1%82%E5%85%AB%E8%82%A1/</guid>
+    <description><![CDATA[Transformer八股 为什么在Transformer模型中使用Layer Normalization（Layer Norm）而不是Batch]]></description>
+</item>
+</channel>
+</rss>

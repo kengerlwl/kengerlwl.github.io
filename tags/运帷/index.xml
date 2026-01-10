@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>运帷 - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/%E8%BF%90%E5%B8%B7/</link>
+        <description>运帷 - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 20 Dec 2025 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/%E8%BF%90%E5%B8%B7/" rel="self" type="application/rss+xml" /><item>
+    <title>个人服务发布方案V1</title>
+    <link>https://kengerlwl.github.io/%E4%B8%AA%E4%BA%BA%E6%9C%8D%E5%8A%A1%E5%8F%91%E5%B8%83%E6%96%B9%E6%A1%88/</link>
+    <pubDate>Sat, 20 Dec 2025 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E4%B8%AA%E4%BA%BA%E6%9C%8D%E5%8A%A1%E5%8F%91%E5%B8%83%E6%96%B9%E6%A1%88/</guid>
+    <description><![CDATA[背景 我有一个个人服务，这个服务有一定的用户量，之前是单机的，只有一个容器。 但是如果我想要升级，而这个时候正好有用户在使用，部署期间将会导致服]]></description>
+</item>
+</channel>
+</rss>

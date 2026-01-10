@@ -1,0 +1,88 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>技术 - 分类 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/categories/%E6%8A%80%E6%9C%AF/</link>
+        <description>技术 - 分类 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 27 Dec 2025 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/categories/%E6%8A%80%E6%9C%AF/" rel="self" type="application/rss+xml" /><item>
+    <title>个人服务简单注册中心与灰度发布V2</title>
+    <link>https://kengerlwl.github.io/%E4%B8%AA%E4%BA%BA%E6%9C%8D%E5%8A%A1%E7%AE%80%E5%8D%95%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83%E4%B8%8E%E7%81%B0%E5%BA%A6%E5%8F%91%E5%B8%83/</link>
+    <pubDate>Sat, 27 Dec 2025 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E4%B8%AA%E4%BA%BA%E6%9C%8D%E5%8A%A1%E7%AE%80%E5%8D%95%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83%E4%B8%8E%E7%81%B0%E5%BA%A6%E5%8F%91%E5%B8%83/</guid>
+    <description><![CDATA[Kenger 服务注册中心架构文档 当前方案的一些问题： nginx这边目前感知比较慢，目前是nginx这边轮训，所以会有一个间隔。（考虑nginx这边提供]]></description>
+</item>
+<item>
+    <title>个人服务发布方案V1</title>
+    <link>https://kengerlwl.github.io/%E4%B8%AA%E4%BA%BA%E6%9C%8D%E5%8A%A1%E5%8F%91%E5%B8%83%E6%96%B9%E6%A1%88/</link>
+    <pubDate>Sat, 20 Dec 2025 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E4%B8%AA%E4%BA%BA%E6%9C%8D%E5%8A%A1%E5%8F%91%E5%B8%83%E6%96%B9%E6%A1%88/</guid>
+    <description><![CDATA[背景 我有一个个人服务，这个服务有一定的用户量，之前是单机的，只有一个容器。 但是如果我想要升级，而这个时候正好有用户在使用，部署期间将会导致服]]></description>
+</item>
+<item>
+    <title>TypeScript学习</title>
+    <link>https://kengerlwl.github.io/typescript%E5%AD%A6%E4%B9%A0/</link>
+    <pubDate>Fri, 05 Sep 2025 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/typescript%E5%AD%A6%E4%B9%A0/</guid>
+    <description><![CDATA[demo 我们新建一个 app.ts 的文件，代码如下： var message:string = &ldquo;Hello World&rdquo; console.log(message) 通常我们使用 .ts 作为 TypeScript 代码文件的扩展名。 然后执行以下命令将 TypeScript 转换为 JavaScript 代码： 1 tsc app.ts 这时候在当前目录]]></description>
+</item>
+<item>
+    <title>关于LLM上下文管理</title>
+    <link>https://kengerlwl.github.io/%E5%85%B3%E4%BA%8Ellm%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86/</link>
+    <pubDate>Wed, 16 Jul 2025 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E5%85%B3%E4%BA%8Ellm%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86/</guid>
+    <description><![CDATA[背景 方法 1. 裁剪 超过一定长度的token，或者超过指定阈值。 就将更远（旧）的上下文直接裁剪掉。 2. 压缩 同上，但是不是裁剪，而是压缩更旧的上下文。]]></description>
+</item>
+<item>
+    <title>阅读12-factor-agents</title>
+    <link>https://kengerlwl.github.io/%E9%98%85%E8%AF%BB12-factor-agents/</link>
+    <pubDate>Wed, 16 Jul 2025 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E9%98%85%E8%AF%BB12-factor-agents/</guid>
+    <description><![CDATA[第一章，认识软件 要认识到：软件是一个有向图。我们过去用流程图来表示程序是有原因的。 其流程，边界，是完全严谨可控的。 让大模型自己去找这么编排处]]></description>
+</item>
+<item>
+    <title>SSO原理</title>
+    <link>https://kengerlwl.github.io/sso%E5%8E%9F%E7%90%86/</link>
+    <pubDate>Thu, 10 Jul 2025 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/sso%E5%8E%9F%E7%90%86/</guid>
+    <description><![CDATA[背景 目前而言，一个公司往往会有多个系统，而每个系统都需要登录才能访问资源。 SSO（单点登录）就是为了解决这个问题而出现的。 SSO 的主要思想是在一]]></description>
+</item>
+<item>
+    <title>关于web服务中的认证，授权，会话</title>
+    <link>https://kengerlwl.github.io/%E5%85%B3%E4%BA%8Eweb%E6%9C%8D%E5%8A%A1%E4%B8%AD%E7%9A%84%E8%AE%A4%E8%AF%81%E6%8E%88%E6%9D%83%E4%BC%9A%E8%AF%9D/</link>
+    <pubDate>Fri, 01 Sep 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E5%85%B3%E4%BA%8Eweb%E6%9C%8D%E5%8A%A1%E4%B8%AD%E7%9A%84%E8%AE%A4%E8%AF%81%E6%8E%88%E6%9D%83%E4%BC%9A%E8%AF%9D/</guid>
+    <description><![CDATA[背景 在学习过程中，认证与授权通常是绕不过去的一部分，很多服务都有身份限制，不是特定的用户不能执行部分的资源操作，也不能访问到其他用户。 个人在]]></description>
+</item>
+<item>
+    <title>python注解与装饰器</title>
+    <link>https://kengerlwl.github.io/python%E6%B3%A8%E8%A7%A3%E4%B8%8E%E8%A3%85%E9%A5%B0%E5%99%A8/</link>
+    <pubDate>Tue, 22 Aug 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/python%E6%B3%A8%E8%A7%A3%E4%B8%8E%E8%A3%85%E9%A5%B0%E5%99%A8/</guid>
+    <description><![CDATA[背景 python想要使用注解，来实现一些方便解耦合的功能。 例如对某个flask的路由函数加入token验证功能。但是又不是针对所有的函数都加]]></description>
+</item>
+<item>
+    <title>python里的线程安全问题</title>
+    <link>https://kengerlwl.github.io/python%E9%87%8C%E7%9A%84%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/</link>
+    <pubDate>Tue, 08 Aug 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/python%E9%87%8C%E7%9A%84%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/</guid>
+    <description><![CDATA[背景 需要实现一个flask里面的消息队列后台执行的功能，但是不想用第三方库。 原理是基于内存的消息队列 查阅资料看到了使用线程安全的queue.]]></description>
+</item>
+<item>
+    <title>python的SQLAlchemy 的踩坑历程</title>
+    <link>https://kengerlwl.github.io/python%E7%9A%84sqlalchemy-%E7%9A%84%E8%B8%A9%E5%9D%91%E5%8E%86%E7%A8%8B/</link>
+    <pubDate>Mon, 24 Jul 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/python%E7%9A%84sqlalchemy-%E7%9A%84%E8%B8%A9%E5%9D%91%E5%8E%86%E7%A8%8B/</guid>
+    <description><![CDATA[背景 最近在项目开发的时候，碰到了SQLAlchemy 的一些问题，记录一下，对于其针对数据库的操作有一些疑惑， SQLAlchemy 是一个python这边的ORM]]></description>
+</item>
+</channel>
+</rss>

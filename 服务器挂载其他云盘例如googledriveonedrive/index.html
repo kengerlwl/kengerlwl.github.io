@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>服务器挂载其他云盘，例如googledrive，onedrive - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://kengerlwl.github.io/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%82%E8%BD%BD%E5%85%B6%E4%BB%96%E4%BA%91%E7%9B%98%E4%BE%8B%E5%A6%82googledriveonedrive/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="服务器挂载其他云盘，例如googledrive，onedrive">
+  <meta property="og:description" content="服务器可以挂载很多云网盘 用到的工具Rclone 可以支持很多的云盘，不仅仅是google，还有onedrive等。 安装相关库 1 2 3 4 curl https://rclone.org/install.sh | sudo bash">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2020-01-15T15:27:31+00:00">
+    <meta property="article:modified_time" content="2020-01-15T15:27:31+00:00">
+    <meta property="article:tag" content="服务器">
+    <meta property="article:tag" content="挂载">
+    <meta property="og:image" content="https://kengerlwl.github.io/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kengerlwl.github.io/logo.png">
+  <meta name="twitter:title" content="服务器挂载其他云盘，例如googledrive，onedrive">
+  <meta name="twitter:description" content="服务器可以挂载很多云网盘 用到的工具Rclone 可以支持很多的云盘，不仅仅是google，还有onedrive等。 安装相关库 1 2 3 4 curl https://rclone.org/install.sh | sudo bash">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://kengerlwl.github.io/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%82%E8%BD%BD%E5%85%B6%E4%BB%96%E4%BA%91%E7%9B%98%E4%BE%8B%E5%A6%82googledriveonedrive/" /><link rel="prev" href="https://kengerlwl.github.io/%E5%82%85%E9%87%8C%E5%8F%B6%E7%BA%A7%E6%95%B0-%E7%94%BB%E5%88%9D%E9%9F%B3-%E9%99%84%E5%BA%95%E5%B1%82%E4%BB%A3%E7%A0%81/" /><link rel="next" href="https://kengerlwl.github.io/%E7%94%B5%E8%A7%86%E7%9B%92%E5%AD%90%E6%90%AD%E5%BB%BA%E6%96%B9%E6%A1%88/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "服务器挂载其他云盘，例如googledrive，onedrive",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/kengerlwl.github.io\/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%82%E8%BD%BD%E5%85%B6%E4%BB%96%E4%BA%91%E7%9B%98%E4%BE%8B%E5%A6%82googledriveonedrive\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/kengerlwl.github.io\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "服务器, 挂载","wordcount":  760 ,
+        "url": "https:\/\/kengerlwl.github.io\/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%82%E8%BD%BD%E5%85%B6%E4%BB%96%E4%BA%91%E7%9B%98%E4%BE%8B%E5%A6%82googledriveonedrive\/","datePublished": "2020-01-15T15:27:31+00:00","dateModified": "2020-01-15T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/kengerlwl.github.io\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%82%E8%BD%BD%E5%85%B6%E4%BB%96%E4%BA%91%E7%9B%98%E4%BE%8B%E5%A6%82googledriveonedrive/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%82%E8%BD%BD%E5%85%B6%E4%BB%96%E4%BA%91%E7%9B%98%E4%BE%8B%E5%A6%82googledriveonedrive/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">服务器挂载其他云盘，例如googledrive，onedrive</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kengerlwl.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>服务器</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2020-01-15">2020-01-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 760 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><h1 id="服务器可以挂载很多云网盘">服务器可以挂载很多云网盘</h1>
+<p><strong>用到的工具Rclone</strong></p>
+<p>可以支持很多的云盘，不仅仅是google，还有onedrive等。</p>
+<h1 id="安装相关库">安装相关库</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">curl https://rclone.org/install.sh | sudo bash
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">yum install fuse
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="用rclone登录云盘配置">用rclone登录云盘配置</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">rclone config
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>out</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">2020/03/04 17:17:28 NOTICE: Config file &#34;/root/.config/rclone/rclone.conf&#34; not found - using defaults
+</span></span><span class="line"><span class="cl">No remotes found - make a new one
+</span></span><span class="line"><span class="cl">n) New remote
+</span></span><span class="line"><span class="cl">s) Set configuration password
+</span></span><span class="line"><span class="cl">q) Quit config
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>选择n，建立新的远程连接</p>
+<p>然后输入名字。这个可以随便自己填。</p>
+<p>然后有：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/ddc552e2fb60427a31c6b3d28ba21944/69b94b1ad4cfc3d4acb3f2f4f190bf2a.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/ddc552e2fb60427a31c6b3d28ba21944/69b94b1ad4cfc3d4acb3f2f4f190bf2a.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/ddc552e2fb60427a31c6b3d28ba21944/69b94b1ad4cfc3d4acb3f2f4f190bf2a.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/ddc552e2fb60427a31c6b3d28ba21944/69b94b1ad4cfc3d4acb3f2f4f190bf2a.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/ddc552e2fb60427a31c6b3d28ba21944/69b94b1ad4cfc3d4acb3f2f4f190bf2a.png"
+        title="refs/heads/master/image-20220831231450455" /></p>
+<p><strong>对于这个id以及secret，输入enter跳过就行。</strong></p>
+<p>然后要选择Rclone对Google Drive网盘文件的操作权限：选择1</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">Option</span> <span class="n">scope</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Scope</span> <span class="n">that</span> <span class="n">rclone</span> <span class="n">should</span> <span class="n">use</span> <span class="n">when</span> <span class="n">requesting</span> <span class="n">access</span> <span class="n">from</span> <span class="n">drive</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Enter</span> <span class="n">a</span> <span class="n">string</span> <span class="n">value</span><span class="o">.</span> <span class="n">Press</span> <span class="n">Enter</span> <span class="k">for</span> <span class="n">the</span> <span class="n">default</span> <span class="p">(</span><span class="s2">&#34;&#34;</span><span class="p">)</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Choose</span> <span class="n">a</span> <span class="n">number</span> <span class="n">from</span> <span class="n">below</span><span class="p">,</span> <span class="ow">or</span> <span class="n">type</span> <span class="ow">in</span> <span class="n">your</span> <span class="n">own</span> <span class="n">value</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl"> <span class="mi">1</span> <span class="o">/</span> <span class="n">Full</span> <span class="n">access</span> <span class="n">all</span> <span class="n">files</span><span class="p">,</span> <span class="n">excluding</span> <span class="n">Application</span> <span class="n">Data</span> <span class="n">Folder</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">   \ <span class="s2">&#34;drive&#34;</span>
+</span></span><span class="line"><span class="cl"> <span class="mi">2</span> <span class="o">/</span> <span class="n">Read</span><span class="o">-</span><span class="n">only</span> <span class="n">access</span> <span class="n">to</span> <span class="n">file</span> <span class="n">metadata</span> <span class="ow">and</span> <span class="n">file</span> <span class="n">contents</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">   \ <span class="s2">&#34;drive.readonly&#34;</span>
+</span></span><span class="line"><span class="cl">   <span class="o">/</span> <span class="n">Access</span> <span class="n">to</span> <span class="n">files</span> <span class="n">created</span> <span class="n">by</span> <span class="n">rclone</span> <span class="n">only</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl"> <span class="mi">3</span> <span class="o">|</span> <span class="n">These</span> <span class="n">are</span> <span class="n">visible</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">drive</span> <span class="n">website</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">   <span class="o">|</span> <span class="ne">File</span> <span class="n">authorization</span> <span class="n">is</span> <span class="n">revoked</span> <span class="n">when</span> <span class="n">the</span> <span class="n">user</span> <span class="n">deauthorizes</span> <span class="n">the</span> <span class="n">app</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">   \ <span class="s2">&#34;drive.file&#34;</span>
+</span></span><span class="line"><span class="cl">   <span class="o">/</span> <span class="n">Allows</span> <span class="n">read</span> <span class="ow">and</span> <span class="n">write</span> <span class="n">access</span> <span class="n">to</span> <span class="n">the</span> <span class="n">Application</span> <span class="n">Data</span> <span class="n">folder</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl"> <span class="mi">4</span> <span class="o">|</span> <span class="n">This</span> <span class="n">is</span> <span class="ow">not</span> <span class="n">visible</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">drive</span> <span class="n">website</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">   \ <span class="s2">&#34;drive.appfolder&#34;</span>
+</span></span><span class="line"><span class="cl">   <span class="o">/</span> <span class="n">Allows</span> <span class="n">read</span><span class="o">-</span><span class="n">only</span> <span class="n">access</span> <span class="n">to</span> <span class="n">file</span> <span class="n">metadata</span> <span class="n">but</span>
+</span></span><span class="line"><span class="cl"> <span class="mi">5</span> <span class="o">|</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">allow</span> <span class="n">any</span> <span class="n">access</span> <span class="n">to</span> <span class="n">read</span> <span class="ow">or</span> <span class="n">download</span> <span class="n">file</span> <span class="n">content</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">   \ <span class="s2">&#34;drive.metadata.readonly&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">scope</span><span class="o">&gt;</span> <span class="mi">1</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后是一些设置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 一
+</span></span><span class="line"><span class="cl">Edit advanced config?
+</span></span><span class="line"><span class="cl">y) Yes
+</span></span><span class="line"><span class="cl">n) No (default)
+</span></span><span class="line"><span class="cl">y/n&gt; n
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 二
+</span></span><span class="line"><span class="cl">Use auto config?
+</span></span><span class="line"><span class="cl"> * Say Y if not sure
+</span></span><span class="line"><span class="cl"> * Say N if you are working on a remote or headless machine
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">y) Yes (default)
+</span></span><span class="line"><span class="cl">n) No
+</span></span><span class="line"><span class="cl">y/n&gt; n
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>关键；然后会出现一个需要到网页登录验证的连接。用nginx做跨越访问代理到公网。</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">2022/08/31 23:17:42 NOTICE: If your browser doesn&#39;t open automatically go to the following link: http://127.0.0.1:53682/auth?state=-y3AQQerN0TGxaYaTe7TIQ
+</span></span><span class="line"><span class="cl">2022/08/31 23:17:42 NOTICE: Log in and authorize rclone for access
+</span></span><span class="line"><span class="cl">2022/08/31 23:17:42 NOTICE: Waiting for code...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对于http://127.0.0.1:53682/auth?state=-y3AQQerN0TGxaYaTe7TIQ 代理到公网访问登录。</p>
+<p>后面会出现一些设置选项，基本选择yes。然后可以退出了。</p>
+<h1 id="挂载">挂载</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">rclone mount GoogleDrive: /google --allow-other --allow-non-empty --vfs-cache-mode writes
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>解释：</p>
+<p><strong>rclone mount 我之前输入的云盘名字: 本地被挂载的路径&ndash;allow-other &ndash;allow-non-empty &ndash;vfs-cache-mode writes</strong></p>
+<p>挂载onedrive</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">rclone mount one_drive_test1: /onedrive --allow-other --allow-non-empty --vfs-cache-mode writes
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="查看">查看</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">df -h
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/ddc552e2fb60427a31c6b3d28ba21944/750110b64a59b0a23bc6cf808c7f6e1a.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/ddc552e2fb60427a31c6b3d28ba21944/750110b64a59b0a23bc6cf808c7f6e1a.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/ddc552e2fb60427a31c6b3d28ba21944/750110b64a59b0a23bc6cf808c7f6e1a.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/ddc552e2fb60427a31c6b3d28ba21944/750110b64a59b0a23bc6cf808c7f6e1a.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/ddc552e2fb60427a31c6b3d28ba21944/750110b64a59b0a23bc6cf808c7f6e1a.png"
+        title="refs/heads/master/image-20220831232119105" /></p>
+<p>可以正常访问。</p>
+<h1 id="关于挂载onedrive云盘">关于挂载onedrive云盘。</h1>
+<p>我这里用的是从pdd上买的5T永久免费盘。
+基本流程和上面是一致的，但是要注意：</p>
+<ul>
+<li>
+<p>这个要选择第一个</p>
+</li>
+<li>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/ddc552e2fb60427a31c6b3d28ba21944/4efac40a129a35d631dd81cb33b5acb3.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/ddc552e2fb60427a31c6b3d28ba21944/4efac40a129a35d631dd81cb33b5acb3.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/ddc552e2fb60427a31c6b3d28ba21944/4efac40a129a35d631dd81cb33b5acb3.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/ddc552e2fb60427a31c6b3d28ba21944/4efac40a129a35d631dd81cb33b5acb3.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/ddc552e2fb60427a31c6b3d28ba21944/4efac40a129a35d631dd81cb33b5acb3.png"
+        title="refs/heads/master/image-20220917175707801" /></p>
+</li>
+</ul>
+<h1 id="ref">ref</h1>
+<p><a href="https://www.unvone.com/69270.html" target="_blank" rel="noopener noreffer ">https://www.unvone.com/69270.html</a></p>
+<p><a href="https://333rd.net/posts/tech/linux%E4%BD%BF%E7%94%A8rclone%E6%8C%82%E8%BD%BDgoogle-drive%E7%BD%91%E7%9B%98/" target="_blank" rel="noopener noreffer ">https://333rd.net/posts/tech/linux%E4%BD%BF%E7%94%A8rclone%E6%8C%82%E8%BD%BDgoogle-drive%E7%BD%91%E7%9B%98/</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-01-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%82%E8%BD%BD%E5%85%B6%E4%BB%96%E4%BA%91%E7%9B%98%E4%BE%8B%E5%A6%82googledriveonedrive/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://kengerlwl.github.io/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%82%E8%BD%BD%E5%85%B6%E4%BB%96%E4%BA%91%E7%9B%98%E4%BE%8B%E5%A6%82googledriveonedrive/" data-title="服务器挂载其他云盘，例如googledrive，onedrive" data-hashtags="服务器,挂载"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://kengerlwl.github.io/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%82%E8%BD%BD%E5%85%B6%E4%BB%96%E4%BA%91%E7%9B%98%E4%BE%8B%E5%A6%82googledriveonedrive/" data-hashtag="服务器"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://kengerlwl.github.io/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%82%E8%BD%BD%E5%85%B6%E4%BB%96%E4%BA%91%E7%9B%98%E4%BE%8B%E5%A6%82googledriveonedrive/" data-title="服务器挂载其他云盘，例如googledrive，onedrive"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://kengerlwl.github.io/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%82%E8%BD%BD%E5%85%B6%E4%BB%96%E4%BA%91%E7%9B%98%E4%BE%8B%E5%A6%82googledriveonedrive/" data-title="服务器挂载其他云盘，例如googledrive，onedrive"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://kengerlwl.github.io/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%82%E8%BD%BD%E5%85%B6%E4%BB%96%E4%BA%91%E7%9B%98%E4%BE%8B%E5%A6%82googledriveonedrive/" data-title="服务器挂载其他云盘，例如googledrive，onedrive"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>,&nbsp;<a href="/tags/%E6%8C%82%E8%BD%BD/">挂载</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E5%82%85%E9%87%8C%E5%8F%B6%E7%BA%A7%E6%95%B0-%E7%94%BB%E5%88%9D%E9%9F%B3-%E9%99%84%E5%BA%95%E5%B1%82%E4%BB%A3%E7%A0%81/" class="prev" rel="prev" title="傅里叶级数 画初音 附底层代码"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>傅里叶级数 画初音 附底层代码</a>
+            <a href="/%E7%94%B5%E8%A7%86%E7%9B%92%E5%AD%90%E6%90%AD%E5%BB%BA%E6%96%B9%E6%A1%88/" class="next" rel="next" title="电视盒子搭建方案">电视盒子搭建方案<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.132.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kengerlwl.github.io/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"JCTYUNKA9R","algoliaIndex":"kenger","algoliaSearchKey":"3ef68664495033362b7df9cf5a3eee1e","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

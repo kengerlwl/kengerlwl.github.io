@@ -1,0 +1,8 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Tags - Tag - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/en/tags/</link>
+        <description>Tags - Tag - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><atom:link href="https://kengerlwl.github.io/en/tags/" rel="self" type="application/rss+xml" /></channel>
+</rss>

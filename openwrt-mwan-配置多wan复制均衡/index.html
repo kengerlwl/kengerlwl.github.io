@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>openwrt mwan 配置多wan复制均衡 - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://kengerlwl.github.io/openwrt-mwan-%E9%85%8D%E7%BD%AE%E5%A4%9Awan%E5%A4%8D%E5%88%B6%E5%9D%87%E8%A1%A1/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="openwrt mwan 配置多wan复制均衡">
+  <meta property="og:description" content="openwrt新建多个wan口 可以采取多线多口的方式。多个物理接口对应多个wan口 或者采取单线多拨的方式，但是运行商不一定支持。 在单个网卡上">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2020-01-15T15:27:31+00:00">
+    <meta property="article:modified_time" content="2020-01-15T15:27:31+00:00">
+    <meta property="article:tag" content="实验室">
+    <meta property="article:tag" content="Linux">
+    <meta property="article:tag" content="网络">
+    <meta property="og:image" content="https://kengerlwl.github.io/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kengerlwl.github.io/logo.png">
+  <meta name="twitter:title" content="openwrt mwan 配置多wan复制均衡">
+  <meta name="twitter:description" content="openwrt新建多个wan口 可以采取多线多口的方式。多个物理接口对应多个wan口 或者采取单线多拨的方式，但是运行商不一定支持。 在单个网卡上">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://kengerlwl.github.io/openwrt-mwan-%E9%85%8D%E7%BD%AE%E5%A4%9Awan%E5%A4%8D%E5%88%B6%E5%9D%87%E8%A1%A1/" /><link rel="prev" href="https://kengerlwl.github.io/openwrt%E9%98%B2%E7%81%AB%E5%A2%99%E4%BD%BF%E7%94%A8/" /><link rel="next" href="https://kengerlwl.github.io/openwrt-docker%E6%97%81%E8%B7%AF%E7%94%B1/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "openwrt mwan 配置多wan复制均衡",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/kengerlwl.github.io\/openwrt-mwan-%E9%85%8D%E7%BD%AE%E5%A4%9Awan%E5%A4%8D%E5%88%B6%E5%9D%87%E8%A1%A1\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/kengerlwl.github.io\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "实验室, linux, 网络","wordcount":  1528 ,
+        "url": "https:\/\/kengerlwl.github.io\/openwrt-mwan-%E9%85%8D%E7%BD%AE%E5%A4%9Awan%E5%A4%8D%E5%88%B6%E5%9D%87%E8%A1%A1\/","datePublished": "2020-01-15T15:27:31+00:00","dateModified": "2020-01-15T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/kengerlwl.github.io\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/openwrt-mwan-%E9%85%8D%E7%BD%AE%E5%A4%9Awan%E5%A4%8D%E5%88%B6%E5%9D%87%E8%A1%A1/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/openwrt-mwan-%E9%85%8D%E7%BD%AE%E5%A4%9Awan%E5%A4%8D%E5%88%B6%E5%9D%87%E8%A1%A1/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">openwrt mwan 配置多wan复制均衡</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kengerlwl.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%AE%9E%E9%AA%8C%E5%AE%A4/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>实验室</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2020-01-15">2020-01-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1528 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#openwrt新建多个wan口">openwrt新建多个wan口</a></li>
+    <li><a href="#mwan配置复载均衡">mwan配置复载均衡</a></li>
+    <li><a href="#一套成熟的校园网多wan部署方案">一套成熟的校园网多wan部署方案</a>
+      <ul>
+        <li><a href="#需求">需求</a></li>
+        <li><a href="#1先弄出多个wan口">1先弄出多个wan口</a></li>
+        <li><a href="#2配置mwan的基本参数">2配置mwan的基本参数</a></li>
+        <li><a href="#3配置流量规则">3配置流量规则</a></li>
+      </ul>
+    </li>
+    <li><a href="#坑点">坑点</a>
+      <ul>
+        <li><a href="#坑点之-------python的requests访问百度做判断并不准确">坑点之&mdash;&mdash;-python的requests访问百度做判断并不准确</a></li>
+      </ul>
+    </li>
+    <li><a href="#附录">附录</a>
+      <ul>
+        <li><a href="#python指定ip发起请求脚本">python指定ip发起请求脚本</a></li>
+        <li><a href="#在宿舍内的一些openwrt上需要配置的路由表">在宿舍内的一些openwrt上需要配置的路由表</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="openwrt新建多个wan口">openwrt新建多个wan口</h2>
+<ul>
+<li>可以采取多线多口的方式。多个物理接口对应多个wan口</li>
+<li>或者采取单线多拨的方式，但是运行商不一定支持。
+<ul>
+<li>在单个网卡上虚拟出多个网卡</li>
+<li>不同网卡不同的ip，mac</li>
+</ul>
+</li>
+</ul>
+<h2 id="mwan配置复载均衡">mwan配置复载均衡</h2>
+<p>mwan是一个openwrt上的插件，可以实现多wan口的上网流量管理。</p>
+<p><strong>前置wan注意点</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/daa0b5992d6a9fb3beceed9958bce7d2/c6023b7600b77f4a35908dd079d9b432.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/daa0b5992d6a9fb3beceed9958bce7d2/c6023b7600b77f4a35908dd079d9b432.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/daa0b5992d6a9fb3beceed9958bce7d2/c6023b7600b77f4a35908dd079d9b432.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/daa0b5992d6a9fb3beceed9958bce7d2/c6023b7600b77f4a35908dd079d9b432.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/daa0b5992d6a9fb3beceed9958bce7d2/c6023b7600b77f4a35908dd079d9b432.png"
+        title="refs/heads/master/image-20221123161720081" /></p>
+<ul>
+<li>网关跳跃点必须要有且不能重复</li>
+</ul>
+<p><strong>配置mwan</strong></p>
+<p>主要分为</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/daa0b5992d6a9fb3beceed9958bce7d2/fcd64204d6d7a36c21abbbca2d97f9fa.jpg"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/daa0b5992d6a9fb3beceed9958bce7d2/fcd64204d6d7a36c21abbbca2d97f9fa.jpg, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/daa0b5992d6a9fb3beceed9958bce7d2/fcd64204d6d7a36c21abbbca2d97f9fa.jpg 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/daa0b5992d6a9fb3beceed9958bce7d2/fcd64204d6d7a36c21abbbca2d97f9fa.jpg 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/daa0b5992d6a9fb3beceed9958bce7d2/fcd64204d6d7a36c21abbbca2d97f9fa.jpg"
+        title="230293745_2_20210913102146914" /></p>
+<p>中文界面如图</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/daa0b5992d6a9fb3beceed9958bce7d2/9a17fdd2ace3c1d3ff8b772a5d1fdfbe.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/daa0b5992d6a9fb3beceed9958bce7d2/9a17fdd2ace3c1d3ff8b772a5d1fdfbe.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/daa0b5992d6a9fb3beceed9958bce7d2/9a17fdd2ace3c1d3ff8b772a5d1fdfbe.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/daa0b5992d6a9fb3beceed9958bce7d2/9a17fdd2ace3c1d3ff8b772a5d1fdfbe.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/daa0b5992d6a9fb3beceed9958bce7d2/9a17fdd2ace3c1d3ff8b772a5d1fdfbe.png"
+        title="refs/heads/master/image-20221123162109769" /></p>
+<p><strong>如何查看mwan的界面情况</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/daa0b5992d6a9fb3beceed9958bce7d2/6b165289c29de018e7e20912490f1eff.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/daa0b5992d6a9fb3beceed9958bce7d2/6b165289c29de018e7e20912490f1eff.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/daa0b5992d6a9fb3beceed9958bce7d2/6b165289c29de018e7e20912490f1eff.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/daa0b5992d6a9fb3beceed9958bce7d2/6b165289c29de018e7e20912490f1eff.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/daa0b5992d6a9fb3beceed9958bce7d2/6b165289c29de018e7e20912490f1eff.png"
+        title="refs/heads/master/image-20221123162154984" /></p>
+<p>在这个界面可以看到各个接口的在线情况</p>
+<h2 id="一套成熟的校园网多wan部署方案">一套成熟的校园网多wan部署方案</h2>
+<h3 id="需求">需求</h3>
+<ul>
+<li>实现多个wan口</li>
+<li>每个wan口都需要账号登录脚本使用指定参数做断开重连</li>
+<li>将多个wan口聚合，做负载均衡提高网速</li>
+</ul>
+<h3 id="1先弄出多个wan口">1先弄出多个wan口</h3>
+<h3 id="2配置mwan的基本参数">2配置mwan的基本参数</h3>
+<p>包括接口，成员，策略</p>
+<p><strong>不过这里策略多出了一些单wan口直连的，用于后序的网络断开重连维护</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/daa0b5992d6a9fb3beceed9958bce7d2/edc22a6499e598bd5288f9e5907c7da1.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/daa0b5992d6a9fb3beceed9958bce7d2/edc22a6499e598bd5288f9e5907c7da1.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/daa0b5992d6a9fb3beceed9958bce7d2/edc22a6499e598bd5288f9e5907c7da1.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/daa0b5992d6a9fb3beceed9958bce7d2/edc22a6499e598bd5288f9e5907c7da1.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/daa0b5992d6a9fb3beceed9958bce7d2/edc22a6499e598bd5288f9e5907c7da1.png"
+        title="refs/heads/master/image-20221123162711423" /></p>
+<h3 id="3配置流量规则">3配置流量规则</h3>
+<p><strong>为了实现不同的wan口分别发起请求做断开重连维护。</strong></p>
+<p><strong>我们需要将断开重连的的请求分别从不同的脚本发出去。</strong></p>
+<p><strong>一个思路是，一台lan口下面的linux主机上，配置不同的ip。将不同的ip通过不同的wan口发送出去。</strong></p>
+<p><strong>要做到这点，需要mwan配置openwrt上的流量规则。同时也要在linux上通过脚本指定ip发起请求。</strong></p>
+<p><strong>我这里用的python指定发送脚本。后序程序会贴在附录。</strong></p>
+<p><strong>主要分为以下规则</strong></p>
+<ul>
+<li>从某个ip发送出的请求只走某个wan口。</li>
+<li>将正常ip下的请求全部负载均衡。</li>
+</ul>
+<p>如图</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/daa0b5992d6a9fb3beceed9958bce7d2/808da81abd8ed21979deb4014431b709.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/daa0b5992d6a9fb3beceed9958bce7d2/808da81abd8ed21979deb4014431b709.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/daa0b5992d6a9fb3beceed9958bce7d2/808da81abd8ed21979deb4014431b709.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/daa0b5992d6a9fb3beceed9958bce7d2/808da81abd8ed21979deb4014431b709.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/daa0b5992d6a9fb3beceed9958bce7d2/808da81abd8ed21979deb4014431b709.png"
+        title="refs/heads/master/image-20221124131230129" /></p>
+<h2 id="坑点">坑点</h2>
+<p>因为我这里需要另外一台局域网内的linux主机来通过指定wan口发起请求来实现断网重连。</p>
+<p>那么意味着需要在断网情况下也能通过wan口访问。</p>
+<p>但是mwan有个问题，就是如果断网时候，该wan口会自动下线，也就是说不能访问，这个坑我踩了好久。</p>
+<p><strong>所以要么关闭wan口下线的功能</strong></p>
+<p><strong>要么设置让两个wan口永远在线</strong></p>
+<h3 id="坑点之-------python的requests访问百度做判断并不准确">坑点之&mdash;&mdash;-python的requests访问百度做判断并不准确</h3>
+<p>所以实用ping指定ip做判断</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">def net_check_ping(ip):
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    cmd = &#39;ping -I {} -c 5 baidu.com&#39;.format(ip)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    ans = os.system(cmd)
+</span></span><span class="line"><span class="cl">    if ans == 0:
+</span></span><span class="line"><span class="cl">        return True
+</span></span><span class="line"><span class="cl">    else:
+</span></span><span class="line"><span class="cl">        return False
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="附录">附录</h2>
+<h3 id="python指定ip发起请求脚本">python指定ip发起请求脚本</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">json</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">http.client</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">urllib.parse</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">http_client</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;a&#34;</span><span class="p">:</span> <span class="s2">&#34;123&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;Content-type&#34;</span><span class="p">:</span> <span class="s2">&#34;application/json&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">conn</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">HTTPConnection</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;目标ip或者域名&#34;</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="n">source_address</span><span class="o">=</span><span class="p">(</span><span class="s2">&#34;指定本地的ip&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">conn</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s2">&#34;GET&#34;</span><span class="p">,</span> <span class="s2">&#34;/&#34;</span><span class="p">)</span> <span class="c1">#发起特定请求</span>
+</span></span><span class="line"><span class="cl">    <span class="n">response</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">getresponse</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">reason</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">http_client</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;main&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">main</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>或者用requests</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">import</span> <span class="n">random</span>
+</span></span><span class="line"><span class="cl"><span class="n">import</span> <span class="n">requests</span>
+</span></span><span class="line"><span class="cl"><span class="n">from</span> <span class="n">requests_toolbelt</span> <span class="n">import</span> <span class="n">SourceAddressAdapter</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="n">SourceAddressRequests</span><span class="p">(</span><span class="n">object</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">session</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">ips</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;192.168.1.209&#39;</span><span class="p">,</span> <span class="s1">&#39;192.168.1.210&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">adapter_requests</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;随机绑定一个本机ip&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">bind_address</span> <span class="o">=</span> <span class="n">ip</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;请求ip：&#34;</span><span class="p">,</span> <span class="n">bind_address</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">new_source</span> <span class="o">=</span> <span class="n">SourceAddressAdapter</span><span class="p">(</span><span class="n">bind_address</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;http://&#39;</span><span class="p">,</span> <span class="n">new_source</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;https://&#39;</span><span class="p">,</span> <span class="n">new_source</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">test_requests</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;测试请求&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">url</span> <span class="o">=</span> <span class="s2">&#34;http://httpbin.org/get&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">origin</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&#34;origin&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;检测到ip：&#34;</span><span class="p">,</span> <span class="n">origin</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ips</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">adapter_requests</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ips</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">test_requests</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 使用指定ip发起get请求</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">get_by_ip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">response</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">test</span> <span class="o">=</span> <span class="n">SourceAddressRequests</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">test</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>可以用重写直接替换get，在一定程度上达到无缝衔接的效果。</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># ip bind get write again
+</span></span><span class="line"><span class="cl">adapter = SourceAddressRequests()
+</span></span><span class="line"><span class="cl">requests.get = adapter.get_by_ip
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="在宿舍内的一些openwrt上需要配置的路由表">在宿舍内的一些openwrt上需要配置的路由表</h3>
+<p>在宿舍内，如果openwrt某个wan断网了，那么当重新连接时，目标验证网站10.1.1.1根本ping不通。我猜是openwrt上没搞清楚这个要走那个口出去，初步判定，因为我这里涉及不通的运营商，所以导致不同的运营商网关不通，需要针对性的做出判断。</p>
+<p>配置</p>
+<ul>
+<li>注意这俩的metric一定要高，否则会走默认网关</li>
+<li>不通的ip WAN口设备一定要对应起来。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ip route append 10.1.1.1 via 100.69.255.254 dev br-WAN1 proto static src 100.69.211.72 metric 1
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">ip route append 10.1.1.1 via 100.64.255.254 dev wlan0 proto static src 100.64.249.177 metric 2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>一个小技巧</p>
+<p><strong>ping指令带上参数就可以指定源ip去ping目的ip。</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">形式如下：ping -I 192.168.195.130 192.168.195.132
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-01-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/openwrt-mwan-%E9%85%8D%E7%BD%AE%E5%A4%9Awan%E5%A4%8D%E5%88%B6%E5%9D%87%E8%A1%A1/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://kengerlwl.github.io/openwrt-mwan-%E9%85%8D%E7%BD%AE%E5%A4%9Awan%E5%A4%8D%E5%88%B6%E5%9D%87%E8%A1%A1/" data-title="openwrt mwan 配置多wan复制均衡" data-hashtags="实验室,linux,网络"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://kengerlwl.github.io/openwrt-mwan-%E9%85%8D%E7%BD%AE%E5%A4%9Awan%E5%A4%8D%E5%88%B6%E5%9D%87%E8%A1%A1/" data-hashtag="实验室"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://kengerlwl.github.io/openwrt-mwan-%E9%85%8D%E7%BD%AE%E5%A4%9Awan%E5%A4%8D%E5%88%B6%E5%9D%87%E8%A1%A1/" data-title="openwrt mwan 配置多wan复制均衡"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://kengerlwl.github.io/openwrt-mwan-%E9%85%8D%E7%BD%AE%E5%A4%9Awan%E5%A4%8D%E5%88%B6%E5%9D%87%E8%A1%A1/" data-title="openwrt mwan 配置多wan复制均衡"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://kengerlwl.github.io/openwrt-mwan-%E9%85%8D%E7%BD%AE%E5%A4%9Awan%E5%A4%8D%E5%88%B6%E5%9D%87%E8%A1%A1/" data-title="openwrt mwan 配置多wan复制均衡"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%AE%9E%E9%AA%8C%E5%AE%A4/">实验室</a>,&nbsp;<a href="/tags/linux/">Linux</a>,&nbsp;<a href="/tags/%E7%BD%91%E7%BB%9C/">网络</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/openwrt%E9%98%B2%E7%81%AB%E5%A2%99%E4%BD%BF%E7%94%A8/" class="prev" rel="prev" title="openwrt防火墙使用"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>openwrt防火墙使用</a>
+            <a href="/openwrt-docker%E6%97%81%E8%B7%AF%E7%94%B1/" class="next" rel="next" title="openwrt docker旁路由">openwrt docker旁路由<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.132.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kengerlwl.github.io/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"JCTYUNKA9R","algoliaIndex":"kenger","algoliaSearchKey":"3ef68664495033362b7df9cf5a3eee1e","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
