@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>RLHF算法 - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://kengerlwl.github.io/rlhf/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="RLHF算法">
+  <meta property="og:description" content="背景 PPO(Proximal Policy Optimization)近端策略优化算法 它属于策略梯度方法的一种，旨在通过限制新策略和旧策略之间的差异来稳定训练过程。PPO通过引">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-07-23T15:27:31+00:00">
+    <meta property="article:modified_time" content="2024-07-23T15:27:31+00:00">
+    <meta property="article:tag" content="Pytorch">
+    <meta property="article:tag" content="RLHF">
+    <meta property="article:tag" content="Llm">
+    <meta property="og:image" content="https://kengerlwl.github.io/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kengerlwl.github.io/logo.png">
+  <meta name="twitter:title" content="RLHF算法">
+  <meta name="twitter:description" content="背景 PPO(Proximal Policy Optimization)近端策略优化算法 它属于策略梯度方法的一种，旨在通过限制新策略和旧策略之间的差异来稳定训练过程。PPO通过引">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://kengerlwl.github.io/rlhf/" /><link rel="prev" href="https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8Bsystem-prompt%E4%B8%BA%E4%BB%80%E4%B9%88%E9%87%8D%E8%A6%81/" /><link rel="next" href="https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8Bagent%E6%A1%86%E6%9E%B6%E8%B0%83%E7%A0%94/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "RLHF算法",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/kengerlwl.github.io\/rlhf\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/kengerlwl.github.io\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "pytorch, RLHF, LLM","wordcount":  2862 ,
+        "url": "https:\/\/kengerlwl.github.io\/rlhf\/","datePublished": "2024-07-23T15:27:31+00:00","dateModified": "2024-07-23T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/kengerlwl.github.io\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/rlhf/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/rlhf/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">RLHF算法</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kengerlwl.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%AD%A6%E6%9C%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>学术</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-07-23">2024-07-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2862 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#强化学习背景概念">强化学习背景概念</a>
+      <ul>
+        <li><a href="#强化学习基本概念">强化学习基本概念</a></li>
+        <li><a href="#如何更好的选择下一个动作使用价值函数">如何更好的选择下一个动作，使用价值函数</a></li>
+      </ul>
+    </li>
+    <li><a href="#nlp与强化学习">NLP与强化学习</a>
+      <ul>
+        <li><a href="#四个相关模型">四个相关模型</a></li>
+        <li><a href="#actor-model">actor model</a></li>
+        <li><a href="#reference-model参考模型">Reference Model（参考模型）</a></li>
+        <li><a href="#critic-model评论家模型">Critic Model（评论家模型）</a></li>
+        <li><a href="#reward-model奖励模型">Reward Model（奖励模型）</a></li>
+      </ul>
+    </li>
+    <li><a href="#loss计算">LOSS计算</a></li>
+    <li><a href="#总体流程">总体流程</a>
+      <ul>
+        <li><a href="#ppo训练">PPO训练</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="背景">背景</h1>
+<ul>
+<li><strong>PPO(Proximal Policy Optimization)近端策略优化算法</strong></li>
+</ul>
+<p>它属于策略梯度方法的一种，旨在通过限制新策略和旧策略之间的差异来稳定训练过程。PPO通过引入一个称为“近端策略优化”的技巧来避免过大的策略更新，从而减少了训练过程中的不稳定性和样本复杂性。</p>
+<h1 id="方法">方法</h1>
+<h2 id="强化学习背景概念">强化学习背景概念</h2>
+<h3 id="强化学习基本概念">强化学习基本概念</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/ecc5ef3a07ad7c820e92179ec29f5d54.webp"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/ecc5ef3a07ad7c820e92179ec29f5d54.webp, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/ecc5ef3a07ad7c820e92179ec29f5d54.webp 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/ecc5ef3a07ad7c820e92179ec29f5d54.webp 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/ecc5ef3a07ad7c820e92179ec29f5d54.webp"
+        title="img" /></p>
+<ul>
+<li>
+<p>强化学习的两个实体：<strong>智能体（Agent）<strong>与</strong>环境（Environment）</strong></p>
+</li>
+<li>
+<p>强化学习中两个实体的交互：</p>
+</li>
+<li>
+<ul>
+<li><strong><a href="https://zhida.zhihu.com/search?q=%e7%8a%b6%e6%80%81%e7%a9%ba%e9%97%b4&amp;zhida_source=entity&amp;is_preview=1" target="_blank" rel="noopener noreffer ">状态空间</a>S</strong>：S即为State，指环境中所有可能状态的集合</li>
+<li><strong>动作空间A</strong>：A即为Action，指智能体所有可能动作的集合</li>
+<li>**奖励R：**R即为Reward，指智能体在环境的某一状态下所获得的奖励。</li>
+</ul>
+</li>
+</ul>
+<p>以上图为例，智能体与环境的交互过程如下：</p>
+<ul>
+<li>在 t 时刻，环境的状态为 St ，达到这一状态所获得的奖励为 Rt</li>
+<li>智能体观测到 St 与 Rt ，采取相应动作 At</li>
+<li>智能体采取 At 后，环境状态变为 St+1 ，得到相应的奖励 Rt+1</li>
+</ul>
+<p>智能体在这个过程中学习，它的最终目标是：<strong>找到一个策略，这个策略根据当前观测到的环境状态和奖励反馈，来选择最佳的动作。</strong></p>
+<h3 id="如何更好的选择下一个动作使用价值函数">如何更好的选择下一个动作，使用价值函数</h3>
+<p>**t时刻状态s的总收益 = 身处状态s能带来的即时收益 + 从状态s出发后能带来的未来收益。**写成表达式就是：
+<code>Vt=Rt+γVt+1</code></p>
+<p>其中：</p>
+<ul>
+<li>Vt ： t 时刻的总收益，注意这个收益蕴涵了“即时”和“未来”的概念</li>
+<li>Rt ： t 时刻的<a href="https://zhida.zhihu.com/search?q=%e5%8d%b3%e6%97%b6%e6%94%b6%e7%9b%8a&amp;zhida_source=entity&amp;is_preview=1" target="_blank" rel="noopener noreffer ">即时收益</a></li>
+<li>Vt+1 ： t+1 时刻的总收益，注意这个收益蕴涵了“即时”和“未来”的概念。而 Vt+1 对 Vt 来说就是“未来”。</li>
+<li>γ ：折扣因子。它决定了我们在多大程度上考虑将“未来收益”纳入“当下收益”。</li>
+</ul>
+<h2 id="nlp与强化学习">NLP与强化学习</h2>
+<p>对应于强化学习的概念。</p>
+<ul>
+<li>智能体-&gt;待训练的模型，我们希望这个模型表现得更加符合我们的期望，得分更高</li>
+<li>环境-&gt;已有的prompt输入，ref model。</li>
+<li>状态-&gt;当前模型的输入，以及输出的token</li>
+<li>动作-&gt;模型的下一个输出</li>
+</ul>
+<p>NLP任务做强化学习（RLHF）的目的：<strong>我们希望给模型一个prompt，让模型能生成符合人类喜好的response</strong>。再回想一下<a href="https://zhida.zhihu.com/search?q=gpt%e6%a8%a1%e5%9e%8b&amp;zhida_source=entity&amp;is_preview=1" target="_blank" rel="noopener noreffer ">gpt模型</a>做推理的过程：<strong>每个时刻</strong> t <strong>只产生一个token，即token是一个一个蹦出来的，先有上一个token，再有下一个token。</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/9d41c9cf600d23244d8e67a3ba7b6f7a.webp"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/9d41c9cf600d23244d8e67a3ba7b6f7a.webp, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/9d41c9cf600d23244d8e67a3ba7b6f7a.webp 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/9d41c9cf600d23244d8e67a3ba7b6f7a.webp 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/9d41c9cf600d23244d8e67a3ba7b6f7a.webp"
+        title="v2-eb250d428d3b9a751d4ba3aeae70e290_1440w" /></p>
+<h3 id="四个相关模型">四个相关模型</h3>
+<p>如下图，<strong>在<a href="https://zhida.zhihu.com/search?q=RLHF-PPO%e9%98%b6%e6%ae%b5&amp;zhida_source=entity&amp;is_preview=1" target="_blank" rel="noopener noreffer ">RLHF-PPO阶段</a>，一共有四个主要模型</strong>，分别是：</p>
+<ul>
+<li><strong>Actor Model：<a href="https://zhida.zhihu.com/search?q=%e6%bc%94%e5%91%98%e6%a8%a1%e5%9e%8b&amp;zhida_source=entity&amp;is_preview=1" target="_blank" rel="noopener noreffer ">演员模型</a></strong>，这就是我们想要训练的目标语言模型</li>
+<li><strong>Critic Model：评论家模型</strong>，它的作用是预估总收益 Vt</li>
+<li><strong><a href="https://zhida.zhihu.com/search?q=Reward&#43;Model&amp;zhida_source=entity&amp;is_preview=1" target="_blank" rel="noopener noreffer ">Reward Model</a>：奖励模型</strong>，它的作用是计算即时收益 Rt</li>
+<li><strong>Reference Model：<a href="https://zhida.zhihu.com/search?q=%e5%8f%82%e8%80%83%e6%a8%a1%e5%9e%8b&amp;zhida_source=entity&amp;is_preview=1" target="_blank" rel="noopener noreffer ">参考模型</a></strong>，它的作用是在RLHF阶段给语言模型增加一些“约束”，防止语言模型训歪（朝不受控制的方向更新，效果可能越来越差）</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/3c0dd9a02fdbd15ebfd81498f14bd8d8.jpg"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/3c0dd9a02fdbd15ebfd81498f14bd8d8.jpg, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/3c0dd9a02fdbd15ebfd81498f14bd8d8.jpg 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/3c0dd9a02fdbd15ebfd81498f14bd8d8.jpg 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/3c0dd9a02fdbd15ebfd81498f14bd8d8.jpg"
+        title="v2-22c2f6fce157dc4385a14f0de50d8136_r" /></p>
+<p>其中:</p>
+<ul>
+<li><strong>Actor/Critic Model</strong>在RLHF阶段是<strong>需要训练</strong>的（图中给这两个模型加了粗边，就是表示这个含义）；而<strong>Reward/Reference Model</strong>是<strong>参数冻结</strong>的。</li>
+<li>实际上，actor和ref model通常用的同一个模型， reward和critic也是同一个模型，只不过一个冻结，一个不断迭代更新。</li>
+</ul>
+<h3 id="actor-model">actor model</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/9d41c9cf600d23244d8e67a3ba7b6f7a.webp"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/9d41c9cf600d23244d8e67a3ba7b6f7a.webp, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/9d41c9cf600d23244d8e67a3ba7b6f7a.webp 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/9d41c9cf600d23244d8e67a3ba7b6f7a.webp 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/9d41c9cf600d23244d8e67a3ba7b6f7a.webp"
+        title="v2-eb250d428d3b9a751d4ba3aeae70e290_1440w" /></p>
+<p>实际上，每次是输入一个prompt，然后输出一个answer。一次性计算当前的Rt</p>
+<h3 id="reference-model参考模型">Reference Model（参考模型）</h3>
+<p><strong>Reference Model（以下简称Ref模型）一般也用SFT阶段得到的SFT模型做初始化，在训练过程中，它的参数是冻结的。</strong><a href="https://zhida.zhihu.com/search?q=Ref%e6%a8%a1%e5%9e%8b&amp;zhida_source=entity&amp;is_preview=1" target="_blank" rel="noopener noreffer ">Ref模型</a>的主要作用是防止Actor”训歪”，那么它具体是怎么做到这一点的呢？</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/84b3ed2927623236b9c89e9e0a546c32.webp"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/84b3ed2927623236b9c89e9e0a546c32.webp, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/84b3ed2927623236b9c89e9e0a546c32.webp 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/84b3ed2927623236b9c89e9e0a546c32.webp 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/84b3ed2927623236b9c89e9e0a546c32.webp"
+        title="img" /></p>
+<p>“防止<a href="https://zhida.zhihu.com/search?q=%e6%a8%a1%e5%9e%8b%e8%ae%ad%e6%ad%aa&amp;zhida_source=entity&amp;is_preview=1" target="_blank" rel="noopener noreffer ">模型训歪</a>”换一个更详细的解释是：<strong>我们希望训练出来的Actor模型既能达到符合人类喜好的目的，又尽量让它和SFT模型不要差异太大</strong></p>
+<p>简言之，<strong>我们希望两个模型的输出分布尽量相似</strong>。那什么指标能用来衡量输出分布的相似度呢？我们自然而然想到了<strong>KL散度</strong>。</p>
+<p><strong>如图所示！！！：</strong></p>
+<ul>
+<li><strong>对Actor模型</strong>，我们喂给它一个prompt，它正常输出对应的response。那么response中每一个token肯定有它对应的log_prob结果呀，我们把这样的结果记为<strong>log_probs</strong></li>
+<li><strong>对Ref模型</strong>，我们把Actor生成的&quot;prompt + response&quot;喂给它，那么它同样能给出每个token的log_prob结果，我们记其为<strong>ref_log_probs</strong></li>
+<li>那么这两个模型的输出分布相似度就可以用**<code>ref_log_probs - log_probs</code>**来衡量，我们可以从两个方面来理解这个公式：</li>
+</ul>
+<h3 id="critic-model评论家模型">Critic Model（评论家模型）</h3>
+<p><strong>Critic Model用于预测期望总收益</strong> Vt <strong>，和Actor模型一样，它需要做参数更新</strong>。</p>
+<p>这里critic和reward用的同一个模型参数</p>
+<p><strong>所以总结来说，在RLHF中，我们不仅要训练模型生成符合人类喜好的内容的能力（Actor），也要提升模型对人类喜好<a href="https://zhida.zhihu.com/search?q=%e9%87%8f%e5%8c%96%e5%88%a4%e6%96%ad&amp;zhida_source=entity&amp;is_preview=1" target="_blank" rel="noopener noreffer ">量化判断</a>的能力（Critic）！！！！！！</strong>。这就是Critic模型存在的意义。我们来看看它的大致架构：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/c5f04c942d5294e3082781ee6e2759b7.webp"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/c5f04c942d5294e3082781ee6e2759b7.webp, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/c5f04c942d5294e3082781ee6e2759b7.webp 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/c5f04c942d5294e3082781ee6e2759b7.webp 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/c5f04c942d5294e3082781ee6e2759b7.webp"
+        title="img" /></p>
+<ul>
+<li>value head很多时候就是一个全连接层，用于做维度变换</li>
+</ul>
+<p>在图中， Vt 表示Critic模型对 t 时刻及未来（response完成）的收益预估。</p>
+<h3 id="reward-model奖励模型">Reward Model（奖励模型）</h3>
+<p>Reward Model用于计算生成token At 的即时收益，它就是RW阶段所训练的奖励模型，在RLHF过程中，它的参数是冻结的。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/01b9dfe72bb65905a6b978ffbc473a5a.webp"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/01b9dfe72bb65905a6b978ffbc473a5a.webp, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/01b9dfe72bb65905a6b978ffbc473a5a.webp 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/01b9dfe72bb65905a6b978ffbc473a5a.webp 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/01b9dfe72bb65905a6b978ffbc473a5a.webp"
+        title="img" /></p>
+<p><strong>你可能想问：为什么Critic模型要参与训练，而同样是和收益相关的Reward模型的参数就可以冻结呢？</strong>
+这是因为，Reward模型是站在上帝视角的。这个上帝视角有两层含义：</p>
+<ul>
+<li>第一点，Reward模型是经过和“估算收益”相关的训练的，因此在RLHF阶段它可以直接被当作一个能产生客观值的模型。</li>
+<li>第二点，Reward模型代表的含义就是“即时收益”，你的token At 已经产生，因此即时收益自然可以立刻算出。</li>
+</ul>
+<h2 id="loss计算">LOSS计算</h2>
+<ul>
+<li>**<a href="https://zhida.zhihu.com/search?q=Actor&#43;loss&amp;zhida_source=entity&amp;is_preview=1" target="_blank" rel="noopener noreffer ">Actor loss</a>：**用于评估Actor是否产生了符合人类喜好的结果，将作用于Actor的BWD上。</li>
+<li>**<a href="https://zhida.zhihu.com/search?q=Critic&#43;loss&amp;zhida_source=entity&amp;is_preview=1" target="_blank" rel="noopener noreffer ">Critic loss</a>：**用于评估Critic是否正确预测了人类的喜好，将作用于Critic的BWD上。</li>
+</ul>
+<h2 id="总体流程">总体流程</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/158714cbb383e72c18d8369f5974020d.jpeg"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/158714cbb383e72c18d8369f5974020d.jpeg, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/158714cbb383e72c18d8369f5974020d.jpeg 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/158714cbb383e72c18d8369f5974020d.jpeg 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/158714cbb383e72c18d8369f5974020d.jpeg"
+        title="a2fbc36040619a6267fb9816b06ff9b4.jpeg" /></p>
+<ul>
+<li>
+<p>首先用actor model在<strong>推理模式</strong>下根据prompt生成一个answer（prompt对应强化学习里边的state，answer对应一些列的action）</p>
+</li>
+<li>
+<p>然后利用reward model和ciric model对输出的prompt+answer进行打分（PPO训练时使用的奖励值并不单单是reward model的输出还要考虑kl散度，后文介绍）</p>
+</li>
+<li>
+<p>actor model是我们想通过强化学习微调的大模型，但是强化学习过程很容易把模型训练“坏”，因此需要另外一个<strong>不会参数更新</strong>的 ref_model来当作标的，别让actor mode跑偏太远。我们在<strong>训练模式</strong>下，<strong>将prompt+answer分别输入到actor mode和ref model，用KL散度来衡量 ref model和actor mode输出的差别。同时将KL散度（衡量数据分布差距大小）纳入损失函数</strong>（KL散度本质是纳入到奖励值里边的，奖励值被纳入到了损失函数），进而来约束 ref_model和actor mode的输出分布别差距太大。具体代码如下：</p>
+<h3 id="ppo训练">PPO训练</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/2550d8af3c5b5b17bfd5e23b043e952c.jpeg"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/2550d8af3c5b5b17bfd5e23b043e952c.jpeg, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/2550d8af3c5b5b17bfd5e23b043e952c.jpeg 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/2550d8af3c5b5b17bfd5e23b043e952c.jpeg 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/cbe20f3c867c494a3822fcf8ee25f5b2/2550d8af3c5b5b17bfd5e23b043e952c.jpeg"
+        title="3996c57c1ce7ff9114fa4f7d5fff24c5" /></p>
+</li>
+</ul>
+<h1 id="ref">ref</h1>
+<p><a href="https://zhuanlan.zhihu.com/p/677607581?utm_psn=1816795120613322752" target="_blank" rel="noopener noreffer ">图解大模型RLHF系列之：人人都能看懂的PPO原理与源码解读 - 知乎</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/624589622" target="_blank" rel="noopener noreffer ">详解大模型RLHF过程（配代码解读） - 知乎</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-07-23</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/rlhf/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://kengerlwl.github.io/rlhf/" data-title="RLHF算法" data-hashtags="pytorch,RLHF,LLM"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://kengerlwl.github.io/rlhf/" data-hashtag="pytorch"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://kengerlwl.github.io/rlhf/" data-title="RLHF算法"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://kengerlwl.github.io/rlhf/" data-title="RLHF算法"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://kengerlwl.github.io/rlhf/" data-title="RLHF算法"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/pytorch/">Pytorch</a>,&nbsp;<a href="/tags/rlhf/">RLHF</a>,&nbsp;<a href="/tags/llm/">Llm</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E5%A4%A7%E6%A8%A1%E5%9E%8Bsystem-prompt%E4%B8%BA%E4%BB%80%E4%B9%88%E9%87%8D%E8%A6%81/" class="prev" rel="prev" title="大模型system Prompt为什么重要"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>大模型system Prompt为什么重要</a>
+            <a href="/%E5%A4%A7%E6%A8%A1%E5%9E%8Bagent%E6%A1%86%E6%9E%B6%E8%B0%83%E7%A0%94/" class="next" rel="next" title="大模型agent框架调研">大模型agent框架调研<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.132.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kengerlwl.github.io/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"JCTYUNKA9R","algoliaIndex":"kenger","algoliaSearchKey":"3ef68664495033362b7df9cf5a3eee1e","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

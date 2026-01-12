@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title> - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://kengerlwl.github.io/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84case/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="Kenger`s Blog">
+  <meta property="og:description" content="python 使用kafuka，带确认机制（点对点） 为确保 Kafka 消息只被处理一次，可以使用**消息确认机制（ACKs）**来实现可靠的消息交付。在 Kafka 中，ac">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="og:image" content="https://kengerlwl.github.io/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kengerlwl.github.io/logo.png">
+  <meta name="twitter:title" content="Kenger`s Blog">
+  <meta name="twitter:description" content="python 使用kafuka，带确认机制（点对点） 为确保 Kafka 消息只被处理一次，可以使用**消息确认机制（ACKs）**来实现可靠的消息交付。在 Kafka 中，ac">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://kengerlwl.github.io/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84case/" /><link rel="prev" href="https://kengerlwl.github.io/chatgpt%E8%AF%BB%E8%AE%BA%E6%96%87prompt/" /><link rel="next" href="https://kengerlwl.github.io/%E8%87%AA%E5%BB%BA%E6%9C%BA%E5%9C%BA%E4%B9%8Bwebsocket-tls-cloudflare/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/kengerlwl.github.io\/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84case\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/kengerlwl.github.io\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","wordcount":  2188 ,
+        "url": "https:\/\/kengerlwl.github.io\/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84case\/","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/kengerlwl.github.io\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84case/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84case/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX"></h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kengerlwl.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="0001-01-01">0001-01-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2188 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#kafka-producer生产者带-acks-示例">Kafka Producer（生产者）带 <code>acks</code> 示例</a></li>
+        <li><a href="#kafka-consumer消费者手动提交偏移量示例">Kafka Consumer（消费者）手动提交偏移量示例</a></li>
+        <li><a href="#重要配置解读">重要配置解读：</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-点对点模式通过consumer-group实现">1. <strong>点对点模式（通过Consumer Group实现）</strong></a>
+          <ul>
+            <li><a href="#点对点模式样例">点对点模式样例：</a></li>
+          </ul>
+        </li>
+        <li><a href="#2-发布-订阅模式">2. <strong>发布-订阅模式</strong></a>
+          <ul>
+            <li><a href="#发布-订阅模式样例">发布-订阅模式样例：</a></li>
+          </ul>
+        </li>
+        <li><a href="#总结">总结：</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="python-使用kafuka带确认机制点对点">python 使用kafuka，带确认机制（点对点）</h1>
+<p>为确保 Kafka 消息只被处理一次，可以使用**消息确认机制（ACKs）**来实现可靠的消息交付。在 Kafka 中，<code>acks</code> 是生产者的一项重要配置，可以控制消息被认为是成功写入的条件。</p>
+<p>Kafka 提供了三种 <code>acks</code> 级别：</p>
+<ol>
+<li><strong>acks=0</strong>：生产者不会等待任何来自服务器的确认。这意味着消息会快速发出，但如果服务器没有收到消息，生产者不会知道。</li>
+<li><strong>acks=1</strong>：生产者会等待来自<strong>领导者</strong>分区的确认，表示消息已被成功接收。如果领导者分区失败，可能会丢失消息。</li>
+<li><strong>acks=all</strong>（或 <code>acks=-1</code>）：生产者会等待<strong>所有复制副本</strong>确认消息接收，这提供了最高的可靠性。</li>
+</ol>
+<p>为了确保消息只被消费一次，可以通过开启<strong>消费者的自动提交关闭</strong>和<strong>手动提交偏移量</strong>来处理消费者的消息确认。</p>
+<h3 id="kafka-producer生产者带-acks-示例">Kafka Producer（生产者）带 <code>acks</code> 示例</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaProducer</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">json</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 创建一个Kafka生产者，设置acks=all</span>
+</span></span><span class="line"><span class="cl"><span class="n">producer</span> <span class="o">=</span> <span class="n">KafkaProducer</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bootstrap_servers</span><span class="o">=</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">value_serializer</span><span class="o">=</span><span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">acks</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span>  <span class="c1"># 确保消息被所有副本确认</span>
+</span></span><span class="line"><span class="cl">    <span class="n">retries</span><span class="o">=</span><span class="mi">5</span>    <span class="c1"># 重试次数</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 发送消息到Kafka的主题</span>
+</span></span><span class="line"><span class="cl"><span class="n">topic_name</span> <span class="o">=</span> <span class="s1">&#39;test_topic&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">message</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">:</span> <span class="mi">123</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">future</span> <span class="o">=</span> <span class="n">producer</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">topic_name</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">message</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 等待发送确认</span>
+</span></span><span class="line"><span class="cl"><span class="n">result</span> <span class="o">=</span> <span class="n">future</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># 超时机制，确保有确认</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;消息已发送并确认:&#34;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 刷新确保所有消息被处理</span>
+</span></span><span class="line"><span class="cl"><span class="n">producer</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="kafka-consumer消费者手动提交偏移量示例">Kafka Consumer（消费者）手动提交偏移量示例</h3>
+<p>在消费者端，关闭自动提交并使用手动提交来确保消息消费后才确认处理。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaConsumer</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">json</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 创建一个Kafka消费者，关闭自动提交</span>
+</span></span><span class="line"><span class="cl"><span class="n">consumer</span> <span class="o">=</span> <span class="n">KafkaConsumer</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;test_topic&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bootstrap_servers</span><span class="o">=</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">enable_auto_commit</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># 关闭自动提交偏移量，这个其实就是消费者的ack</span>
+</span></span><span class="line"><span class="cl">    <span class="n">auto_offset_reset</span><span class="o">=</span><span class="s1">&#39;earliest&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">group_id</span><span class="o">=</span><span class="s1">&#39;my-group&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">value_deserializer</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 消费消息并手动提交偏移量</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">consumer</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;收到消息: </span><span class="si">{</span><span class="n">message</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 这里添加处理逻辑，例如保存到数据库，确保消息处理完成</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 如果处理成功，手动提交偏移量</span>
+</span></span><span class="line"><span class="cl">    <span class="n">consumer</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>  <span class="c1"># 手动提交偏移量</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;偏移量已手动提交&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="重要配置解读">重要配置解读：</h3>
+<ol>
+<li>
+<p><strong>acks=&lsquo;all&rsquo;</strong>: 在生产者端，配置了 <code>acks='all'</code>，确保所有副本接收到消息后才返回成功确认。这提供了最高的可靠性。</p>
+</li>
+<li>
+<p><strong>enable_auto_commit=False</strong>: 在消费者端，关闭自动偏移量提交，防止在处理消息之前就提交偏移量，确保每条消息处理后才手动确认。</p>
+</li>
+<li>
+<p><strong>retries=5</strong>: 如果消息发送失败，生产者将最多重试 5 次，以减少临时网络或其他问题导致的消息丢失。</p>
+</li>
+<li>
+<p><strong>commit()</strong>: 消费者端在成功处理消息后手动提交偏移量，确保每条消息都只处理一次。这样，如果消费者在处理消息时发生故障，下一次从未提交的偏移量重新开始。</p>
+</li>
+</ol>
+<p>通过这种方式，结合生产者的 <code>acks</code> 确认机制和消费者的手动提交偏移量，能够最大限度地确保每条消息只被处理一次，同时防止消息丢失或重复处理。</p>
+<h1 id="工作模式">工作模式</h1>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/78848a678fba46e3090f37a9e04deac5/2982919d07179229248caaa6e93756e8.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/78848a678fba46e3090f37a9e04deac5/2982919d07179229248caaa6e93756e8.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/78848a678fba46e3090f37a9e04deac5/2982919d07179229248caaa6e93756e8.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/78848a678fba46e3090f37a9e04deac5/2982919d07179229248caaa6e93756e8.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/78848a678fba46e3090f37a9e04deac5/2982919d07179229248caaa6e93756e8.png"
+        title="img" /></p>
+<p>点对点和订阅模式是消息系统的两种典型模式，通常用来形容**消息队列（Message Queue）<strong>和</strong>发布-订阅（Pub-Sub）**模型。</p>
+<ol>
+<li>
+<p><strong>点对点模式（Point-to-Point Mode）</strong>：在点对点模式下，消息会发送到一个队列中，<strong>每个消息只会被一个消费者处理</strong>。消费者从队列中消费消息，消费过的消息就不会再被其他消费者看到。Kafka的&quot;指定分区模式&quot;与此有些类似。</p>
+</li>
+<li>
+<p><strong>订阅模式（Publish-Subscribe Mode）</strong>：在发布-订阅模式下，<strong>消息会广播给多个订阅者</strong>，每个订阅者都会收到所有消息。Kafka的&quot;订阅模式&quot;与此类似。</p>
+</li>
+</ol>
+<p>Kafka 作为一个发布-订阅系统，支持多个消费者消费同一条消息，因此它的主要模式偏向于<strong>发布-订阅</strong>。我们可以通过特定的消费者组（consumer group）模拟点对点模式，或者通过不同的订阅来实现发布-订阅模式。</p>
+<h3 id="1-点对点模式通过consumer-group实现">1. <strong>点对点模式（通过Consumer Group实现）</strong></h3>
+<p>在Kafka中，<strong>每个消费者组内的每个分区只能有一个消费者</strong>消费。即使有多个消费者同时订阅同一个主题，由于分区分配机制，某个分区中的消息只会被组内的一个消费者消费。</p>
+<h4 id="点对点模式样例">点对点模式样例：</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaConsumer</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 通过指定 group_id 实现点对点消费模式</span>
+</span></span><span class="line"><span class="cl"><span class="n">consumer</span> <span class="o">=</span> <span class="n">KafkaConsumer</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;my_topic&#39;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">bootstrap_servers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="n">group_id</span><span class="o">=</span><span class="s1">&#39;my_group&#39;</span><span class="p">,</span>  <span class="c1"># 每个消费者组内的消息只会被一个消费者消费</span>
+</span></span><span class="line"><span class="cl">    <span class="n">enable_auto_commit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">auto_offset_reset</span><span class="o">=</span><span class="s1">&#39;earliest&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">value_deserializer</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">consumer</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Point-to-Point message received: </span><span class="si">{</span><span class="n">message</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在此示例中，<code>group_id='my_group'</code>表示该消费者属于<code>my_group</code>组。Kafka会将该主题的分区在组内的消费者间分配，每个分区内的消息只会被一个消费者消费。</p>
+<h3 id="2-发布-订阅模式">2. <strong>发布-订阅模式</strong></h3>
+<p>在发布-订阅模式下，多个消费者组都可以订阅同一个主题，<strong>每个组都会独立消费消息</strong>。这种方式下，消息会被广播给多个消费者组，每个组内的消费者会独立地处理该消息。</p>
+<h4 id="发布-订阅模式样例">发布-订阅模式样例：</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaConsumer</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 订阅模式下，不同的消费者组都可以独立消费同一主题的消息</span>
+</span></span><span class="line"><span class="cl"><span class="n">consumer1</span> <span class="o">=</span> <span class="n">KafkaConsumer</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;my_topic&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bootstrap_servers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="n">group_id</span><span class="o">=</span><span class="s1">&#39;group1&#39;</span><span class="p">,</span>  <span class="c1"># 订阅组1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">enable_auto_commit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">auto_offset_reset</span><span class="o">=</span><span class="s1">&#39;earliest&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">value_deserializer</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">consumer2</span> <span class="o">=</span> <span class="n">KafkaConsumer</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;my_topic&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bootstrap_servers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="n">group_id</span><span class="o">=</span><span class="s1">&#39;group2&#39;</span><span class="p">,</span>  <span class="c1"># 订阅组2</span>
+</span></span><span class="line"><span class="cl">    <span class="n">enable_auto_commit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">auto_offset_reset</span><span class="o">=</span><span class="s1">&#39;earliest&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">value_deserializer</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">consumer1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Consumer1 (Group1) received: </span><span class="si">{</span><span class="n">message</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">consumer2</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Consumer2 (Group2) received: </span><span class="si">{</span><span class="n">message</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在这个示例中，<code>group_id='group1'</code> 和 <code>group_id='group2'</code> 表示两个独立的消费者组。即使订阅了相同的主题，每个组都会独立地消费所有消息，因此所有消息都会分别被两组消费者接收到。</p>
+<h3 id="总结">总结：</h3>
+<ul>
+<li><strong>点对点模式</strong>：通过消费者组中的分区分配机制实现，每条消息只会被一个消费者组内的某个消费者消费。</li>
+<li><strong>订阅模式</strong>：通过不同的消费者组，每条消息会广播给订阅了该主题的所有消费者组，每个组内独立消费。</li>
+</ul>
+<p><strong>group_id 是决定点对点模式和发布-订阅模式的关键区别。</strong></p>
+<p>​	•	<strong>点对点模式</strong>：所有消费者共享相同的group_id，消息在消费者组内分配。</p>
+<p>​	•	<strong>发布-订阅模式</strong>：每个消费者组有不同的group_id，所有消费者组都能接收到相同的消息。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 0001-01-01</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84case/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://kengerlwl.github.io/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84case/" data-title=""><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://kengerlwl.github.io/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84case/"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://kengerlwl.github.io/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84case/" data-title=""><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://kengerlwl.github.io/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84case/" data-title=""><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://kengerlwl.github.io/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84case/" data-title=""><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/chatgpt%E8%AF%BB%E8%AE%BA%E6%96%87prompt/" class="prev" rel="prev" title="chatgpt读论文Prompt"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>chatgpt读论文Prompt</a>
+            <a href="/%E8%87%AA%E5%BB%BA%E6%9C%BA%E5%9C%BA%E4%B9%8Bwebsocket-tls-cloudflare/" class="next" rel="next" title="自建机场之websocket&#43;tls&#43;cloudflare">自建机场之websocket+tls+cloudflare<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.132.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kengerlwl.github.io/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"JCTYUNKA9R","algoliaIndex":"kenger","algoliaSearchKey":"3ef68664495033362b7df9cf5a3eee1e","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

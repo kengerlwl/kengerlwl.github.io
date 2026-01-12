@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>服务注册 - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/</link>
+        <description>服务注册 - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 27 Dec 2025 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/" rel="self" type="application/rss+xml" /><item>
+    <title>个人服务简单注册中心与灰度发布V2</title>
+    <link>https://kengerlwl.github.io/%E4%B8%AA%E4%BA%BA%E6%9C%8D%E5%8A%A1%E7%AE%80%E5%8D%95%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83%E4%B8%8E%E7%81%B0%E5%BA%A6%E5%8F%91%E5%B8%83/</link>
+    <pubDate>Sat, 27 Dec 2025 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E4%B8%AA%E4%BA%BA%E6%9C%8D%E5%8A%A1%E7%AE%80%E5%8D%95%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83%E4%B8%8E%E7%81%B0%E5%BA%A6%E5%8F%91%E5%B8%83/</guid>
+    <description><![CDATA[Kenger 服务注册中心架构文档 当前方案的一些问题： nginx这边目前感知比较慢，目前是nginx这边轮训，所以会有一个间隔。（考虑nginx这边提供]]></description>
+</item>
+</channel>
+</rss>

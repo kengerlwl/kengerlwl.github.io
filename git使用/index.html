@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>git使用 - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://kengerlwl.github.io/git%E4%BD%BF%E7%94%A8/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="git使用">
+  <meta property="og:description" content="当本地版本修改与云端发生冲突解决办法 未commit 使用git stash 功能: 将当前未提交的工作保存到 Git 栈中，以便稍后恢复(将当前文件恢复到上次com">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-08-22T15:27:31+00:00">
+    <meta property="article:modified_time" content="2023-08-22T15:27:31+00:00">
+    <meta property="article:tag" content="Git">
+    <meta property="og:image" content="https://kengerlwl.github.io/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kengerlwl.github.io/logo.png">
+  <meta name="twitter:title" content="git使用">
+  <meta name="twitter:description" content="当本地版本修改与云端发生冲突解决办法 未commit 使用git stash 功能: 将当前未提交的工作保存到 Git 栈中，以便稍后恢复(将当前文件恢复到上次com">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://kengerlwl.github.io/git%E4%BD%BF%E7%94%A8/" /><link rel="prev" href="https://kengerlwl.github.io/hr%E9%9D%A2%E8%AF%95%E8%BD%AF%E9%97%AE%E9%A2%98/" /><link rel="next" href="https://kengerlwl.github.io/aisre%E6%8A%80%E6%9C%AF%E7%82%B9%E6%B1%87%E6%80%BB/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "git使用",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/kengerlwl.github.io\/git%E4%BD%BF%E7%94%A8\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/kengerlwl.github.io\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "git","wordcount":  805 ,
+        "url": "https:\/\/kengerlwl.github.io\/git%E4%BD%BF%E7%94%A8\/","datePublished": "2023-08-22T15:27:31+00:00","dateModified": "2023-08-22T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/kengerlwl.github.io\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/git%E4%BD%BF%E7%94%A8/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/git%E4%BD%BF%E7%94%A8/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">git使用</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kengerlwl.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/find-job/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Find JOB</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-08-22">2023-08-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 805 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#未commit">未commit</a>
+      <ul>
+        <li><a href="#用法常用就push-和pop">用法（常用就push 和pop）</a></li>
+      </ul>
+    </li>
+    <li><a href="#已经commit">已经commit</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="当本地版本修改与云端发生冲突解决办法">当本地版本修改与云端发生冲突解决办法</h1>
+<h2 id="未commit">未commit</h2>
+<p>使用<code>git stash</code></p>
+<ul>
+<li><strong>功能</strong>:
+<ul>
+<li><strong>将当前未提交的工作保存到 Git 栈中，以便稍后恢复(将当前文件恢复到上次commit)</strong>。</li>
+<li>允许你在不想提交改动的情况下切换分支或者进行其他操作。</li>
+</ul>
+</li>
+<li><strong>应用场景</strong>:
+<ul>
+<li>当你正在进行一些修改但需要紧急切换到其他分支时。</li>
+<li>在不想提交所有改动，但需要临时保存工作现场时。</li>
+<li>用于暂存工作，以便在其他地方继续工作而不丢失当前进度。</li>
+</ul>
+</li>
+</ul>
+<h3 id="用法常用就push-和pop">用法（常用就push 和pop）</h3>
+<ol>
+<li>
+<p><strong><code>git stash push</code></strong>: 这是 <code>git stash</code> 的完整形式，将未提交的更改暂存起来。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git stash push
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong><code>git stash list</code></strong>: 显示当前保存的 stash 列表。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git stash list
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong><code>git stash apply</code></strong>: 恢复最近的 stash，但不删除它。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git stash apply
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong><code>git stash pop</code></strong>: 恢复最近的 stash，并将其从栈中移除。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git stash pop
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong><code>git stash drop</code></strong>: 丢弃最近的 stash，从栈中移除。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git stash drop
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<p>这些是基本的 <code>git stash</code> 命令及其常见用法。根据具体情况，你可以根据需要进行调整和深入学习。</p>
+<p><code>git stash pop</code>结果</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/6564124d1c13fba84ff5a68727fc7a10.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/6564124d1c13fba84ff5a68727fc7a10.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/6564124d1c13fba84ff5a68727fc7a10.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/6564124d1c13fba84ff5a68727fc7a10.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/6564124d1c13fba84ff5a68727fc7a10.png"
+        title="refs/heads/master/image-20240320002801980" /></p>
+<p>然后做出修改，相当于在之前的分支上继续</p>
+<h2 id="已经commit">已经commit</h2>
+<p><code>git pull</code></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/9d9c71e96815daf4b20625a2939c90ef.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/9d9c71e96815daf4b20625a2939c90ef.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/9d9c71e96815daf4b20625a2939c90ef.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/9d9c71e96815daf4b20625a2939c90ef.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/9d9c71e96815daf4b20625a2939c90ef.png"
+        title="refs/heads/master/image-20240320003754753" /></p>
+<p>查看文件</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/5fdf6af1eda4fd9dd760c61a225d8c95.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/5fdf6af1eda4fd9dd760c61a225d8c95.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/5fdf6af1eda4fd9dd760c61a225d8c95.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/5fdf6af1eda4fd9dd760c61a225d8c95.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/5fdf6af1eda4fd9dd760c61a225d8c95.png"
+        title="refs/heads/master/image-20240320003815852" /></p>
+<p>选择修改。例如二者都接受</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/92ce6f1a30134b1939f9db89e452488c.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/92ce6f1a30134b1939f9db89e452488c.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/92ce6f1a30134b1939f9db89e452488c.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/92ce6f1a30134b1939f9db89e452488c.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/92ce6f1a30134b1939f9db89e452488c.png"
+        title="refs/heads/master/image-20240320003841710" /></p>
+<p><code>merge 后push</code></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/eb2a32111ff31d8fa046a25e248f26c2.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/eb2a32111ff31d8fa046a25e248f26c2.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/eb2a32111ff31d8fa046a25e248f26c2.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/eb2a32111ff31d8fa046a25e248f26c2.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/eb2a32111ff31d8fa046a25e248f26c2.png"
+        title="refs/heads/master/image-20240320004238882" /></p>
+<h1 id="fetch和pull">fetch和pull</h1>
+<p><code>git fetch</code>是将远程主机的最新内容拉到本地，用户在检查了以后决定是否合并到工作本机分支中。</p>
+<p>而<code>git pull</code> 则是将远程主机的最新内容拉下来后直接合并，即：<code>git pull = git fetch + git merge</code>，这样可能会产生冲突，需要手动解决。</p>
+<h1 id="git-rebase-和-git-merge-的区别">git rebase 和 git merge 的区别</h1>
+<p>Rebase（变基）<strong>是将一个分支上的提交逐个地应用到另一个分支上，使得提交历史变得更加线性</strong>。当执行rebase时，Git会将目标分支与源分支的共同祖先以来的所有提交挪到目标分支的最新位置。这个过程可以看作是将源分支上的每个提交复制到目标分支上。简而言之，rebase可以将提交按照时间顺序线性排列。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/c91a6962cf95228ea82b50b90d09959a.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/c91a6962cf95228ea82b50b90d09959a.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/c91a6962cf95228ea82b50b90d09959a.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/c91a6962cf95228ea82b50b90d09959a.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/c91a6962cf95228ea82b50b90d09959a.png"
+        title="refs/heads/master/image-20241127145850893" /></p>
+<p>Merge（合并）<strong>是将两个分支上的代码提交历史合并为一个新的提交。在执行merge时，Git会创建一个新的合并提交，将两个分支的提交历史连接在一起</strong>。这样，两个分支的修改都会包含在一个合并提交中。合并后的历史会保留每个分支的提交记录。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/38e5537a6cedbf87bf4ea17e72c7c29d.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/38e5537a6cedbf87bf4ea17e72c7c29d.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/38e5537a6cedbf87bf4ea17e72c7c29d.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/38e5537a6cedbf87bf4ea17e72c7c29d.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/b2f8414f6cbfc15e7744f2112f9bde7d/38e5537a6cedbf87bf4ea17e72c7c29d.png"
+        title="refs/heads/master/image-20241127145843452" /></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-08-22</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/git%E4%BD%BF%E7%94%A8/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://kengerlwl.github.io/git%E4%BD%BF%E7%94%A8/" data-title="git使用" data-hashtags="git"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://kengerlwl.github.io/git%E4%BD%BF%E7%94%A8/" data-hashtag="git"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://kengerlwl.github.io/git%E4%BD%BF%E7%94%A8/" data-title="git使用"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://kengerlwl.github.io/git%E4%BD%BF%E7%94%A8/" data-title="git使用"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://kengerlwl.github.io/git%E4%BD%BF%E7%94%A8/" data-title="git使用"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/git/">Git</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/hr%E9%9D%A2%E8%AF%95%E8%BD%AF%E9%97%AE%E9%A2%98/" class="prev" rel="prev" title="HR问题"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>HR问题</a>
+            <a href="/aisre%E6%8A%80%E6%9C%AF%E7%82%B9%E6%B1%87%E6%80%BB/" class="next" rel="next" title="AISre技术点汇总">AISre技术点汇总<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.132.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kengerlwl.github.io/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"JCTYUNKA9R","algoliaIndex":"kenger","algoliaSearchKey":"3ef68664495033362b7df9cf5a3eee1e","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

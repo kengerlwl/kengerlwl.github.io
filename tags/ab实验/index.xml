@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>AB实验 - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/ab%E5%AE%9E%E9%AA%8C/</link>
+        <description>AB实验 - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 26 Sep 2022 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/ab%E5%AE%9E%E9%AA%8C/" rel="self" type="application/rss+xml" /><item>
+    <title>关于算法落地常见流程记录</title>
+    <link>https://kengerlwl.github.io/%E5%85%B3%E4%BA%8E%E7%AE%97%E6%B3%95%E8%90%BD%E5%9C%B0%E5%B8%B8%E8%A7%81%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95/</link>
+    <pubDate>Mon, 26 Sep 2022 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E5%85%B3%E4%BA%8E%E7%AE%97%E6%B3%95%E8%90%BD%E5%9C%B0%E5%B8%B8%E8%A7%81%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95/</guid>
+    <description><![CDATA[背景 我做了一个大模型相关的项目，但是很不正规，正常开发完后其实是需要单元测试，测试人员测试。然后测试服上线，最后正式服上线。 但是这个大模型的]]></description>
+</item>
+</channel>
+</rss>

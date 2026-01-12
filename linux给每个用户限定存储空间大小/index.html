@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>linux给每个用户限定存储空间大小 - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://kengerlwl.github.io/linux%E7%BB%99%E6%AF%8F%E4%B8%AA%E7%94%A8%E6%88%B7%E9%99%90%E5%AE%9A%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="linux给每个用户限定存储空间大小">
+  <meta property="og:description" content="前置测试工具 随机生成一定大小的文件 1 2 3 4 5 6 out_file_name=out.txt #生成一个1G 的文件，内容全部为0 dd if=/dev/zero of=out_file_name bs=1M count=1000 #生产一个1G 的文件，内容随机 dd if=/dev/urandom of=out_file_name bs=1M count=1000 磁盘配额">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2020-01-15T15:27:31+00:00">
+    <meta property="article:modified_time" content="2020-01-15T15:27:31+00:00">
+    <meta property="article:tag" content="服务器">
+    <meta property="article:tag" content="Linux">
+    <meta property="og:image" content="https://kengerlwl.github.io/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kengerlwl.github.io/logo.png">
+  <meta name="twitter:title" content="linux给每个用户限定存储空间大小">
+  <meta name="twitter:description" content="前置测试工具 随机生成一定大小的文件 1 2 3 4 5 6 out_file_name=out.txt #生成一个1G 的文件，内容全部为0 dd if=/dev/zero of=out_file_name bs=1M count=1000 #生产一个1G 的文件，内容随机 dd if=/dev/urandom of=out_file_name bs=1M count=1000 磁盘配额">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://kengerlwl.github.io/linux%E7%BB%99%E6%AF%8F%E4%B8%AA%E7%94%A8%E6%88%B7%E9%99%90%E5%AE%9A%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F/" /><link rel="prev" href="https://kengerlwl.github.io/linux%E5%90%8C%E6%AD%A5%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81/" /><link rel="next" href="https://kengerlwl.github.io/linux%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "linux给每个用户限定存储空间大小",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/kengerlwl.github.io\/linux%E7%BB%99%E6%AF%8F%E4%B8%AA%E7%94%A8%E6%88%B7%E9%99%90%E5%AE%9A%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/kengerlwl.github.io\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "服务器, linux","wordcount":  2144 ,
+        "url": "https:\/\/kengerlwl.github.io\/linux%E7%BB%99%E6%AF%8F%E4%B8%AA%E7%94%A8%E6%88%B7%E9%99%90%E5%AE%9A%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F\/","datePublished": "2020-01-15T15:27:31+00:00","dateModified": "2020-01-15T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/kengerlwl.github.io\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/linux%E7%BB%99%E6%AF%8F%E4%B8%AA%E7%94%A8%E6%88%B7%E9%99%90%E5%AE%9A%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/linux%E7%BB%99%E6%AF%8F%E4%B8%AA%E7%94%A8%E6%88%B7%E9%99%90%E5%AE%9A%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">linux给每个用户限定存储空间大小</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kengerlwl.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>服务器</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2020-01-15">2020-01-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2144 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#前置测试工具">前置测试工具</a></li>
+    <li><a href="#磁盘配额工具quota">磁盘配额工具(Quota)</a>
+      <ul>
+        <li><a href="#限制">限制</a></li>
+        <li><a href="#一些配置说明">一些配置说明</a></li>
+      </ul>
+    </li>
+    <li><a href="#quota实操">quota实操</a>
+      <ul>
+        <li><a href="#流程">流程</a></li>
+        <li><a href="#1-建立测试环境">1 建立测试环境</a></li>
+        <li><a href="#2-建立好-filesystem-的-quota-支持"><strong>2 建立好 filesystem 的 quota 支持：</strong></a></li>
+        <li><a href="#3-扫瞄磁盘的用户使用状况并产生重要的-aquotagroup-与-aquotauser文件"><strong>3 扫瞄磁盘的用户使用状况，并产生重要的 aquota.group 与 aquota.user：文件</strong></a></li>
+        <li><a href="#4-启动-quota-的限额">4 <strong>启动 quota 的限额：</strong></a></li>
+        <li><a href="#5-编辑使用者的可使用空间">5 <strong>编辑使用者的可使用空间：</strong></a></li>
+        <li><a href="#6-设定开机时启动-quota">6 <strong>设定开机时启动 quota</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#一个针对某个小组每个人设置限额的脚本">一个针对某个小组每个人设置限额的脚本</a></li>
+    <li><a href="#ref">ref</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="前置测试工具">前置测试工具</h2>
+<p><strong>随机生成一定大小的文件</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">out_file_name=out.txt
+</span></span><span class="line"><span class="cl">#生成一个1G 的文件，内容全部为0
+</span></span><span class="line"><span class="cl">dd if=/dev/zero of=out_file_name bs=1M count=1000
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#生产一个1G 的文件，内容随机
+</span></span><span class="line"><span class="cl">dd if=/dev/urandom of=out_file_name bs=1M count=1000
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="磁盘配额工具quota">磁盘配额工具(Quota)</h2>
+<h3 id="限制">限制</h3>
+<ul>
+<li>针对整个 partition（分区）：
+quota 实际在运作的时候，是针对『整个 partition』进行限制的， 例如：如果你的 /dev/hda5 是挂载在 /home 底下，那么在 /home 底下的所有目录都会受到限制！</li>
+<li>只对一般身份使用者有效：
+这就有趣了！并不是所有在 Linux 上面的账号都可以设定 quota 呢，例如 <strong>root 就不能设定 quota</strong> ， 因为整个系统所有的数据几乎都是他的！</li>
+</ul>
+<h3 id="一些配置说明">一些配置说明</h3>
+<p>quota 这支程序针对整个 partition 的限制项目主要分为底下几个部分：</p>
+<ul>
+<li>soft：
+这是最<strong>低限制容量</strong>的意思，用户在宽限期间之内，他的容量可以超过 soft ，但必需要宽限时间之内将磁盘容量降低到 soft 的容量限制之下！</li>
+<li>hard：
+<strong>这是『绝对不能超过』的容量</strong>！跟 soft 相比的意思为何呢？通常 hard limit 会比 soft limit 为高，例如网络驱动器空间为 30 MB ，那么 hard limit 就设定为 30MB ，但是为了让使用者有一定的警戒心，所以当使用空间超过 25 MB 时，例如使用者使用了 27 MB 的空间时，那么系统就会警告用户， 让使用者可以在『宽限时间内』将他的档案量降低至 25 MB ( 亦即是 soft limit )之内！也就是说， soft 到 hard 之间的容量其实就是宽限的容量啦！可以达到针对使用者的『警示』作用！</li>
+<li>宽限时间：
+那么宽限时间就可以很清楚的知道含意是什么了！也就是当您的使用者使用的空间超过了 soft limit ，却还没有到达 hard limit 时，那么在这个『宽限时间』之内， 就必需要请用户将使用的磁盘容量降低到 soft limit 之下！而当用户将磁盘容量使用情况超过 soft limit 时，『宽限时间』就会自动被启动，而在用户将容量降低到 soft limit 之下，那么宽限时间就会自动的取消啰！</li>
+</ul>
+<h2 id="quota实操">quota实操</h2>
+<h3 id="流程">流程</h3>
+<p>Quota 从开始准备 filesystem 的支持到整个设定结束的主要的步骤大概是：</p>
+<ol>
+<li><strong>设定 partition 的 filesystem 支持 quota 参数：</strong>
+由于 quota 必须要让 partition 上面的 filesystem 支持才行，一般来说， 支持度最好的是 ext2/ext3 ，其他的 filesystem 类型鸟哥我是没有试过啦！ 启动 filesystem 支持 quota 最简单就是编辑 /etc/fstab ，使得准备要开放的 quota 磁盘可以支持 quota 啰；</li>
+<li><strong>建立 quota 记录文件：</strong>
+刚刚前面讲过，整个 quota 进行磁盘限制值记录的档案是 aquota.user/aquota.group， 要建立这两个档案就必须要先利用 quotacheck 扫瞄才行喔！所以啰，接下来的步骤就是： 使用 quotacheck 来扫瞄一下我们要使用的磁盘啰；</li>
+<li><strong>编辑 quota 限制值数据：</strong>
+再来就是使用 edquota 来编辑每个使用者或群组的可使用空间啰；</li>
+<li><strong>重新扫瞄与启动 quota ：</strong>
+设定好 quota 之后，建议可以再进行一次 quotacheck ，然后再以 quotaon 来启动吧！</li>
+</ol>
+<h3 id="1-建立测试环境">1 建立测试环境</h3>
+<p>新建好用户和分组</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[root@linux ~]# groupadd qgroup
+</span></span><span class="line"><span class="cl">[root@linux ~]# useradd -m -g qgroup quser1
+</span></span><span class="line"><span class="cl">[root@linux ~]# useradd -m -g qgroup quser2
+</span></span><span class="line"><span class="cl">[root@linux ~]# passwd quser1
+</span></span><span class="line"><span class="cl">[root@linux ~]# passwd quser2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2-建立好-filesystem-的-quota-支持"><strong>2 建立好 filesystem 的 quota 支持：</strong></h3>
+<p>查看系统的文件挂载情况</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[root@linux ~]# df -h
+</span></span><span class="line"><span class="cl">Filesystem           1K-blocks      Used Available Use% Mounted on
+</span></span><span class="line"><span class="cl">/dev/hda1              5952252   3193292   2451720  57% /
+</span></span><span class="line"><span class="cl">/dev/hdb1             28267608     77904  26730604   1% /disk2  # 这是我们计划挂载的点，/disk2
+</span></span><span class="line"><span class="cl">/dev/hda5              9492644    227252   8775412   3% /disk1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>编辑 <code>/etc/fstab</code>文件，在指定目录下面加入,usrquota,grpquota（<strong>在  defaults,usrquota,grpquota  之间都没有空格！）</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[root@linux ~]# vi /etc/fstab
+</span></span><span class="line"><span class="cl">LABEL=/        /          ext3    defaults                    1 1
+</span></span><span class="line"><span class="cl">LABEL=/disk1   /disk1     ext3    defaults                    1 2
+</span></span><span class="line"><span class="cl">LABEL=/disk2   /disk2     ext3    defaults,usrquota,grpquota  1 2 # 这里是更改的地方
+</span></span><span class="line"><span class="cl">/dev/hda3      swap       swap    defaults                    0 0
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>由于真正的 quota 在读取的时候是读取 /etc/mtab 这个档案的，偏偏这一个档案需要重新启动之后才能够以 /etc/fstab 的新数据进行改写！</strong></p>
+<p><strong>Solution:</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 1重启
+</span></span><span class="line"><span class="cl">reboot
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 2重新挂载
+</span></span><span class="line"><span class="cl">[root@linux ~]# mount -o remount /disk2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="3-扫瞄磁盘的用户使用状况并产生重要的-aquotagroup-与-aquotauser文件"><strong>3 扫瞄磁盘的用户使用状况，并产生重要的 aquota.group 与 aquota.user：文件</strong></h3>
+<p>用到<code>quotacheck</code>生成配置文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[root@linux ~]# quotacheck -avug   # 生成配置文件
+</span></span><span class="line"><span class="cl">quotacheck: Scanning /dev/hdb1 [/disk2] done
+</span></span><span class="line"><span class="cl">quotacheck: Checked 3 directories and 4 files
+</span></span><span class="line"><span class="cl">[root@linux ~]# ll /disk2          # 查看
+</span></span><span class="line"><span class="cl">-rw-------  1 root root  6144 Sep  6 11:44 aquota.group
+</span></span><span class="line"><span class="cl">-rw-------  1 root root  6144 Sep  6 11:44 aquota.user
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="4-启动-quota-的限额">4 <strong>启动 quota 的限额：</strong></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[root@linux ~]# quotaon -avug
+</span></span><span class="line"><span class="cl">/dev/hdb1 [/disk2]: group quotas turned on
+</span></span><span class="line"><span class="cl">/dev/hdb1 [/disk2]: user quotas turned on
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="5-编辑使用者的可使用空间">5 <strong>编辑使用者的可使用空间：</strong></h3>
+<p>主要分为针对用户还是分组进行限制</p>
+<ul>
+<li>用户：设置每单个用户的限额</li>
+<li>分组：设置某个小组所有用户加起来的限制</li>
+</ul>
+<p><strong>实操</strong></p>
+<p>使用<code>edquota</code>设置用户<code>quser1</code> 的限额</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[root@linux ~]# edquota -u quser1   # 输入该命令，会弹出一个vim的编辑框。修改配置即可
+</span></span><span class="line"><span class="cl">Disk quotas for user quser1 (uid 502):
+</span></span><span class="line"><span class="cl">  Filesystem    blocks    soft    hard   inodes   soft   hard
+</span></span><span class="line"><span class="cl">  /dev/hdb1          0   45000   50000        0      0      0
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 说明
+</span></span><span class="line"><span class="cl">soft的单位是KBytes。要转化为MB请除以1024
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>设置用户的限制时间（这个是针对整个分区设置的，所有用户都会一致）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">edquota -t
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将某个用户的限制粘贴给另一个用户（<strong>如果quser2已经有配置了，那么会覆盖掉原有配置</strong>）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[root@linux ~]# edquota -p quser1 quser2  # 把quser1的复制给 quser2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>查看各用户配置以及使用情况</strong></p>
+<p><strong>1</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[root@linux ~]# quota [-uvsl] [username]
+</span></span><span class="line"><span class="cl">[root@linux ~]# quota [-gvsl] [groupname]
+</span></span><span class="line"><span class="cl">参数：
+</span></span><span class="line"><span class="cl">-u  ：后面可以接 username ，表示显示出该用户的 quota 限制值。若不接 username 
+</span></span><span class="line"><span class="cl">      ，表示显示出执行者的 quota 限制值。
+</span></span><span class="line"><span class="cl">-g  ：后面可接 groupname ，表示显示出该群组的 quota 限制值。
+</span></span><span class="line"><span class="cl">-v  ：显示每个 filesystem 的 quota 值；
+</span></span><span class="line"><span class="cl">-s  ：可选择以 inode 或磁盘容量的限制值来显示；
+</span></span><span class="line"><span class="cl">-l  ：仅显示出目前本机上面的 filesystem 的 quota 值。
+</span></span><span class="line"><span class="cl">范例：
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">范例一：秀出目前 root 自己的 quota 限制值：
+</span></span><span class="line"><span class="cl">[root@linux ~]# quota -guvs
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">范例二：秀出 quser1 这个用户的磁盘配额
+</span></span><span class="line"><span class="cl">[root@linux ~]# quota -u quser1
+</span></span><span class="line"><span class="cl"># 注意一下这两个范例，如果您的系统上面尚未有任何的 quota 支持的 filesystem 时，
+</span></span><span class="line"><span class="cl"># 使用这两个范例时，『不会有任何信息列出来』啦！不要以为发生错误啰！
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>或者2</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">repquota -a
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="6-设定开机时启动-quota">6 <strong>设定开机时启动 quota</strong></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[root@linux ~]# vi /etc/rc.d/rc.local 在里面加入一行 (直接加在最后一行即可)：如下
+</span></span><span class="line"><span class="cl">/sbin/quotaon -avug
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="一个针对某个小组每个人设置限额的脚本">一个针对某个小组每个人设置限额的脚本</h2>
+<p>思路：</p>
+<ul>
+<li>设置一个模板用户：example（对该用户设置想要的限额）</li>
+<li>针对某用户组所有的用户，将example的配置复制过去。
+<ul>
+<li>考虑到有用户更新，那么就分两个接口</li>
+<li>1，强制复制，所有人原有的配置都重新更改为example</li>
+<li>2，只针对目前没有限制的人做复制</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+</div>
+</div><h2 id="ref">ref</h2>
+<p><a href="http://cn.linux.vbird.org/linux_basic/fedora_4/0420quota-fc4.php" target="_blank" rel="noopener noreffer ">鸟哥linux</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-01-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/linux%E7%BB%99%E6%AF%8F%E4%B8%AA%E7%94%A8%E6%88%B7%E9%99%90%E5%AE%9A%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://kengerlwl.github.io/linux%E7%BB%99%E6%AF%8F%E4%B8%AA%E7%94%A8%E6%88%B7%E9%99%90%E5%AE%9A%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F/" data-title="linux给每个用户限定存储空间大小" data-hashtags="服务器,linux"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://kengerlwl.github.io/linux%E7%BB%99%E6%AF%8F%E4%B8%AA%E7%94%A8%E6%88%B7%E9%99%90%E5%AE%9A%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F/" data-hashtag="服务器"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://kengerlwl.github.io/linux%E7%BB%99%E6%AF%8F%E4%B8%AA%E7%94%A8%E6%88%B7%E9%99%90%E5%AE%9A%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F/" data-title="linux给每个用户限定存储空间大小"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://kengerlwl.github.io/linux%E7%BB%99%E6%AF%8F%E4%B8%AA%E7%94%A8%E6%88%B7%E9%99%90%E5%AE%9A%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F/" data-title="linux给每个用户限定存储空间大小"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://kengerlwl.github.io/linux%E7%BB%99%E6%AF%8F%E4%B8%AA%E7%94%A8%E6%88%B7%E9%99%90%E5%AE%9A%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F/" data-title="linux给每个用户限定存储空间大小"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>,&nbsp;<a href="/tags/linux/">Linux</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/linux%E5%90%8C%E6%AD%A5%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81/" class="prev" rel="prev" title="linux同步身份认证"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>linux同步身份认证</a>
+            <a href="/linux%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/" class="next" rel="next" title="linux查看系统架构，以及架构分类">linux查看系统架构，以及架构分类<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.132.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kengerlwl.github.io/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"JCTYUNKA9R","algoliaIndex":"kenger","algoliaSearchKey":"3ef68664495033362b7df9cf5a3eee1e","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

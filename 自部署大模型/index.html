@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>自部署大模型实验细节 - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://kengerlwl.github.io/%E8%87%AA%E9%83%A8%E7%BD%B2%E5%A4%A7%E6%A8%A1%E5%9E%8B/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="自部署大模型实验细节">
+  <meta property="og:description" content="huggingface 换源 1 export HF_ENDPOINT=https://hf-mirror.com 下载 1 2 3 4 5 6 7 8 9 10 nohup huggingface-cli download --resume-download Qwen/Qwen-72B-Chat-Int4 --local-dir ./Qwen-72B-Chat-Int4 &gt; 72b.log &amp; huggingface-cli download --resume-download Qwen/Qwen-14B --local-dir ./Qwen-14B huggingface-cli download --resume-download Qwen/Qwen2-7B-Instruct --local-dir ./Qwen-7B huggingface-cli download --resume-download Qwen/Qwen1.5-14B-Chat --local-dir ./Qwen1.5-14B 启动 vllm api 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-13T15:27:31+00:00">
+    <meta property="article:modified_time" content="2024-08-13T15:27:31+00:00">
+    <meta property="article:tag" content="Pytorch">
+    <meta property="article:tag" content="推理">
+    <meta property="article:tag" content="Llm">
+    <meta property="og:image" content="https://kengerlwl.github.io/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kengerlwl.github.io/logo.png">
+  <meta name="twitter:title" content="自部署大模型实验细节">
+  <meta name="twitter:description" content="huggingface 换源 1 export HF_ENDPOINT=https://hf-mirror.com 下载 1 2 3 4 5 6 7 8 9 10 nohup huggingface-cli download --resume-download Qwen/Qwen-72B-Chat-Int4 --local-dir ./Qwen-72B-Chat-Int4 &gt; 72b.log &amp; huggingface-cli download --resume-download Qwen/Qwen-14B --local-dir ./Qwen-14B huggingface-cli download --resume-download Qwen/Qwen2-7B-Instruct --local-dir ./Qwen-7B huggingface-cli download --resume-download Qwen/Qwen1.5-14B-Chat --local-dir ./Qwen1.5-14B 启动 vllm api 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://kengerlwl.github.io/%E8%87%AA%E9%83%A8%E7%BD%B2%E5%A4%A7%E6%A8%A1%E5%9E%8B/" /><link rel="prev" href="https://kengerlwl.github.io/langchain%E4%BD%BF%E7%94%A8%E5%85%A5%E9%97%A8%E6%8C%87%E5%8C%97/" /><link rel="next" href="https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8Btoken%E5%8E%8B%E7%BC%A9/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "自部署大模型实验细节",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/kengerlwl.github.io\/%E8%87%AA%E9%83%A8%E7%BD%B2%E5%A4%A7%E6%A8%A1%E5%9E%8B\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/kengerlwl.github.io\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "pytorch, 推理, LLM","wordcount":  2511 ,
+        "url": "https:\/\/kengerlwl.github.io\/%E8%87%AA%E9%83%A8%E7%BD%B2%E5%A4%A7%E6%A8%A1%E5%9E%8B\/","datePublished": "2024-08-13T15:27:31+00:00","dateModified": "2024-08-13T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/kengerlwl.github.io\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/%E8%87%AA%E9%83%A8%E7%BD%B2%E5%A4%A7%E6%A8%A1%E5%9E%8B/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/%E8%87%AA%E9%83%A8%E7%BD%B2%E5%A4%A7%E6%A8%A1%E5%9E%8B/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">自部署大模型实验细节</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kengerlwl.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%AD%A6%E6%9C%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>学术</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-08-13">2024-08-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2511 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#启动-vllm-api">启动 vllm api</a>
+      <ul>
+        <li><a href="#参数">参数</a></li>
+        <li><a href="#模型压缩">模型压缩</a></li>
+        <li><a href="#访问">访问</a>
+          <ul>
+            <li><a href="#completion">completion</a></li>
+            <li><a href="#chatcompletion">ChatCompletion</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#坑">坑</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#qwen-14b-半精度">qwen 14B 半精度</a></li>
+    <li><a href="#qwen27b全精度">qwen2:7B全精度</a></li>
+    <li><a href="#qwen27b半精度">qwen2:7B半精度</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#启动命令">启动命令</a></li>
+    <li><a href="#ollama部署">ollama部署</a></li>
+    <li><a href="#基于lammacpp部署推理">基于lamma.cpp部署推理</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="huggingface">huggingface</h1>
+<p>换源</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="k">export</span> <span class="n">HF_ENDPOINT</span><span class="o">=</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">hf</span><span class="o">-</span><span class="n">mirror</span><span class="o">.</span><span class="n">com</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>下载</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">nohup</span> <span class="n">huggingface</span><span class="o">-</span><span class="n">cli</span> <span class="n">download</span> <span class="o">--</span><span class="n">resume</span><span class="o">-</span><span class="n">download</span> <span class="n">Qwen</span><span class="o">/</span><span class="n">Qwen</span><span class="o">-</span><span class="mi">72</span><span class="n">B</span><span class="o">-</span><span class="n">Chat</span><span class="o">-</span><span class="n">Int4</span> <span class="o">--</span><span class="n">local</span><span class="o">-</span><span class="n">dir</span> <span class="o">./</span><span class="n">Qwen</span><span class="o">-</span><span class="mi">72</span><span class="n">B</span><span class="o">-</span><span class="n">Chat</span><span class="o">-</span><span class="n">Int4</span> <span class="o">&gt;</span> <span class="mi">72</span><span class="n">b</span><span class="o">.</span><span class="n">log</span> <span class="o">&amp;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">huggingface</span><span class="o">-</span><span class="n">cli</span> <span class="n">download</span> <span class="o">--</span><span class="n">resume</span><span class="o">-</span><span class="n">download</span> <span class="n">Qwen</span><span class="o">/</span><span class="n">Qwen</span><span class="o">-</span><span class="mi">14</span><span class="n">B</span> <span class="o">--</span><span class="n">local</span><span class="o">-</span><span class="n">dir</span> <span class="o">./</span><span class="n">Qwen</span><span class="o">-</span><span class="mi">14</span><span class="n">B</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">huggingface</span><span class="o">-</span><span class="n">cli</span> <span class="n">download</span> <span class="o">--</span><span class="n">resume</span><span class="o">-</span><span class="n">download</span> <span class="n">Qwen</span><span class="o">/</span><span class="n">Qwen2</span><span class="o">-</span><span class="mi">7</span><span class="n">B</span><span class="o">-</span><span class="n">Instruct</span> <span class="o">--</span><span class="n">local</span><span class="o">-</span><span class="n">dir</span> <span class="o">./</span><span class="n">Qwen</span><span class="o">-</span><span class="mi">7</span><span class="n">B</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">huggingface</span><span class="o">-</span><span class="n">cli</span> <span class="n">download</span> <span class="o">--</span><span class="n">resume</span><span class="o">-</span><span class="n">download</span> <span class="n">Qwen</span><span class="o">/</span><span class="n">Qwen1</span><span class="o">.</span><span class="mi">5</span><span class="o">-</span><span class="mi">14</span><span class="n">B</span><span class="o">-</span><span class="n">Chat</span> <span class="o">--</span><span class="n">local</span><span class="o">-</span><span class="n">dir</span> <span class="o">./</span><span class="n">Qwen1</span><span class="o">.</span><span class="mi">5</span><span class="o">-</span><span class="mi">14</span><span class="n">B</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="启动-vllm-api">启动 vllm api</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">python -m vllm.entrypoints.openai.api_server \
+</span></span><span class="line"><span class="cl">    --model /root/qwen/Qwen-72B-Chat-Int4 \
+</span></span><span class="line"><span class="cl">    --served-model-name qwen2:72b-int4 \
+</span></span><span class="line"><span class="cl">    --trust-remote-code \
+</span></span><span class="line"><span class="cl">    --max-model-len 7000 \
+</span></span><span class="line"><span class="cl">    --max_num_seqs 10 \
+</span></span><span class="line"><span class="cl">     --dtype half \
+</span></span><span class="line"><span class="cl">    --port 13003 \
+</span></span><span class="line"><span class="cl">    --gpu-memory-utilization 0.96 \
+</span></span><span class="line"><span class="cl"> 	--tensor-parallel-size 2 \
+</span></span><span class="line"><span class="cl"> 	--quantization gptq
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">python -m vllm.entrypoints.openai.api_server \
+</span></span><span class="line"><span class="cl">    --model /root/qwen/Qwen-14B \
+</span></span><span class="line"><span class="cl">    --served-model-name qwen2:14b \
+</span></span><span class="line"><span class="cl">    --trust-remote-code \
+</span></span><span class="line"><span class="cl">    --max-model-len 2048 \
+</span></span><span class="line"><span class="cl">    --max_num_seqs 50 \
+</span></span><span class="line"><span class="cl">     --dtype half \
+</span></span><span class="line"><span class="cl">    --port 13003 \
+</span></span><span class="line"><span class="cl">    --gpu-memory-utilization 0.8 \
+</span></span><span class="line"><span class="cl"> 	--tensor-parallel-size 2
+</span></span><span class="line"><span class="cl"> 	
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> # qwen2： 7B 半精度
+</span></span><span class="line"><span class="cl">python -m vllm.entrypoints.openai.api_server \
+</span></span><span class="line"><span class="cl">    --model /root/qwen/Qwen-7B \
+</span></span><span class="line"><span class="cl">    --served-model-name qwen2:7b \
+</span></span><span class="line"><span class="cl">    --trust-remote-code \
+</span></span><span class="line"><span class="cl">    --max-model-len 12000 \
+</span></span><span class="line"><span class="cl">    --max_num_seqs 50 \
+</span></span><span class="line"><span class="cl">     --dtype half \
+</span></span><span class="line"><span class="cl">    --port 13003 \
+</span></span><span class="line"><span class="cl">    --gpu-memory-utilization 0.96 \
+</span></span><span class="line"><span class="cl"> 	--tensor-parallel-size 2
+</span></span><span class="line"><span class="cl"> 	
+</span></span><span class="line"><span class="cl"># qwen2： 7B 全精度
+</span></span><span class="line"><span class="cl">python -m vllm.entrypoints.openai.api_server \
+</span></span><span class="line"><span class="cl">    --model /root/qwen/Qwen-7B \
+</span></span><span class="line"><span class="cl">    --served-model-name qwen2:7b \
+</span></span><span class="line"><span class="cl">    --trust-remote-code \
+</span></span><span class="line"><span class="cl">    --max-model-len 12000 \
+</span></span><span class="line"><span class="cl">    --max_num_seqs 50 \
+</span></span><span class="line"><span class="cl">     --dtype float \
+</span></span><span class="line"><span class="cl">    --port 13003 \
+</span></span><span class="line"><span class="cl">    --gpu-memory-utilization 1 \
+</span></span><span class="line"><span class="cl"> 	--tensor-parallel-size 2
+</span></span><span class="line"><span class="cl"> 	
+</span></span><span class="line"><span class="cl"> 	
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># gemma：9b
+</span></span><span class="line"><span class="cl">python -m vllm.entrypoints.openai.api_server \
+</span></span><span class="line"><span class="cl">    --model /root/qwen/Qwen-7B \
+</span></span><span class="line"><span class="cl">    --served-model-name gemma:9b \
+</span></span><span class="line"><span class="cl">    --trust-remote-code \
+</span></span><span class="line"><span class="cl">    --max-model-len 12000 \
+</span></span><span class="line"><span class="cl">    --max_num_seqs 50 \
+</span></span><span class="line"><span class="cl">     --dtype float \
+</span></span><span class="line"><span class="cl">    --port 13003 \
+</span></span><span class="line"><span class="cl">    --gpu-memory-utilization 1 \
+</span></span><span class="line"><span class="cl"> 	--tensor-parallel-size 2
+</span></span><span class="line"><span class="cl"> 	
+</span></span><span class="line"><span class="cl"> 	
+</span></span><span class="line"><span class="cl"> 	
+</span></span><span class="line"><span class="cl"># meta/llama3:7b
+</span></span><span class="line"><span class="cl">python -m vllm.entrypoints.openai.api_server \
+</span></span><span class="line"><span class="cl">    --model ./models/meta \
+</span></span><span class="line"><span class="cl">    --served-model-name llama:7b \
+</span></span><span class="line"><span class="cl">    --trust-remote-code \
+</span></span><span class="line"><span class="cl">    --max-model-len 8000 \
+</span></span><span class="line"><span class="cl">    --max_num_seqs 50 \
+</span></span><span class="line"><span class="cl">     --dtype float \
+</span></span><span class="line"><span class="cl">    --port 13003 \
+</span></span><span class="line"><span class="cl">    --gpu-memory-utilization 1 \
+</span></span><span class="line"><span class="cl"> 	--tensor-parallel-size 4
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="参数">参数</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">--tensor-parallel-size 2 # 多卡提高显存，且并行运算
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">--served-model-name qwen2:14b  # 调用vllm时用的模型名字
+</span></span><span class="line"><span class="cl">--max-num-seqs &lt;sequences&gt;：每迭代的最大序列数量。严格来说，是并发
+</span></span><span class="line"><span class="cl">--max-model-len &lt;length&gt;：模型上下文长度，未指定时将根据模型配置自动确定。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> --gpu-memory-utilization 。GPU利用上限，默认情况下，该值为 0.9 ，你可以将其调高以应对OOM问题，这个值尽量不要设置到1，容易出问题，给cudagraph留下空间
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> --enable-prefix-caching：开启自动前缀缓存功能。 # 这个功能很重要，对于我这种大量重复的相似任务的。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="模型压缩">模型压缩</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">（1）模型量化（quantization）：旨在通过减少模型参数的表示精度来降低模型的存储空间和计算复杂度；
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="访问">访问</h3>
+<h4 id="completion">completion</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 公网
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">curl http://xxx:13003/v1/completions \
+</span></span><span class="line"><span class="cl">    -H &#34;Content-Type: application/json&#34; \
+</span></span><span class="line"><span class="cl">    -d &#39;{
+</span></span><span class="line"><span class="cl">        &#34;model&#34;: &#34;qwen2:72b-int4&#34;,
+</span></span><span class="line"><span class="cl">        &#34;prompt&#34;: &#34;请你介绍一下腾讯公司，越详细越好&#34;,
+</span></span><span class="line"><span class="cl">        &#34;max_tokens&#34;: 7,
+</span></span><span class="line"><span class="cl">        &#34;temperature&#34;: 0
+</span></span><span class="line"><span class="cl">    }&#39;
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">curl http://xxx:13003/v1/completions \
+</span></span><span class="line"><span class="cl">    -H &#34;Content-Type: application/json&#34; \
+</span></span><span class="line"><span class="cl">    -d &#39;{
+</span></span><span class="line"><span class="cl">        &#34;model&#34;: &#34;qwen2:7b&#34;,
+</span></span><span class="line"><span class="cl">        &#34;prompt&#34;: &#34;假设你是一个文本格式化机器人，请你帮我输出json化的数据.\n 输入内容：今天天气不错&#34;,
+</span></span><span class="line"><span class="cl">        &#34;max_tokens&#34;: 700,
+</span></span><span class="line"><span class="cl">        &#34;temperature&#34;: 0
+</span></span><span class="line"><span class="cl">    }&#39;
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"># idc
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">curl http://gpu4.csubot.cn:13003/v1/completions \
+</span></span><span class="line"><span class="cl">    -H &#34;Content-Type: application/json&#34; \
+</span></span><span class="line"><span class="cl">    -d &#39;{
+</span></span><span class="line"><span class="cl">        &#34;model&#34;: &#34;llama:7b&#34;,
+</span></span><span class="line"><span class="cl">        &#34;prompt&#34;: &#34;请你介绍一下腾讯公司，越详细越好&#34;,
+</span></span><span class="line"><span class="cl">        &#34;max_tokens&#34;: 7,
+</span></span><span class="line"><span class="cl">        &#34;temperature&#34;: 0
+</span></span><span class="line"><span class="cl">    }&#39;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="chatcompletion">ChatCompletion</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 使用system
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">curl http://xxx:13003/v1/chat/completions \
+</span></span><span class="line"><span class="cl">    -H &#34;Content-Type: application/json&#34; \
+</span></span><span class="line"><span class="cl">    -d &#39;{
+</span></span><span class="line"><span class="cl">        &#34;model&#34;: &#34;qwen2:7b&#34;,
+</span></span><span class="line"><span class="cl">        &#34;messages&#34;: [
+</span></span><span class="line"><span class="cl">              {
+</span></span><span class="line"><span class="cl">                &#34;role&#34;: &#34;system&#34;,
+</span></span><span class="line"><span class="cl">                &#34;content&#34;: &#34;假设你是一个文本格式化机器人，请你帮我输出json化的数据&#34;
+</span></span><span class="line"><span class="cl">              },
+</span></span><span class="line"><span class="cl">              {
+</span></span><span class="line"><span class="cl">                &#34;role&#34;: &#34;user&#34;,
+</span></span><span class="line"><span class="cl">                &#34;content&#34;: &#34;输入内容：今天天气不错，&#34;
+</span></span><span class="line"><span class="cl">              }
+</span></span><span class="line"><span class="cl">     		 ],
+</span></span><span class="line"><span class="cl">        &#34;max_tokens&#34;: 700,
+</span></span><span class="line"><span class="cl">        &#34;temperature&#34;: 0
+</span></span><span class="line"><span class="cl">    }&#39;
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 不使用system prompt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">curl http://xxx:13003/v1/chat/completions \
+</span></span><span class="line"><span class="cl">    -H &#34;Content-Type: application/json&#34; \
+</span></span><span class="line"><span class="cl">    -d &#39;{
+</span></span><span class="line"><span class="cl">        &#34;model&#34;: &#34;qwen2:7b&#34;,
+</span></span><span class="line"><span class="cl">        &#34;messages&#34;: [
+</span></span><span class="line"><span class="cl">              {
+</span></span><span class="line"><span class="cl">                &#34;role&#34;: &#34;user&#34;,
+</span></span><span class="line"><span class="cl">                &#34;content&#34;: &#34;假设你是一个文本格式化机器人，请你帮我输出json化的数据。\n输入内容：今天天气不错，&#34;
+</span></span><span class="line"><span class="cl">              }
+</span></span><span class="line"><span class="cl">     		 ],
+</span></span><span class="line"><span class="cl">        &#34;max_tokens&#34;: 700,
+</span></span><span class="line"><span class="cl">        &#34;temperature&#34;: 0
+</span></span><span class="line"><span class="cl">    }&#39;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="坑">坑</h2>
+<p><strong>vllm版本</strong></p>
+<p><code> pip install vllm==0.5.3.post1</code></p>
+<h1 id="启动vllm-web">启动vllm web</h1>
+<p>建议还是用apiserver会更好，支持调整的参数更多，</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 7B </span>
+</span></span><span class="line"><span class="cl"><span class="n">model_path</span><span class="o">=</span><span class="s2">&#34;/root/qwen/Qwen-7B&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">python3</span><span class="o">.</span><span class="mi">10</span> <span class="o">-</span><span class="n">m</span> <span class="n">fastchat</span><span class="o">.</span><span class="n">serve</span><span class="o">.</span><span class="n">controller</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">fastchat</span><span class="o">.</span><span class="n">serve</span><span class="o">.</span><span class="n">vllm_worker</span>   <span class="o">--</span><span class="n">model</span><span class="o">-</span><span class="n">path</span> <span class="o">$</span><span class="n">model_path</span> <span class="o">--</span><span class="n">trust</span><span class="o">-</span><span class="n">remote</span><span class="o">-</span><span class="n">code</span> <span class="o">--</span><span class="n">dtype</span> <span class="ne">float</span> <span class="o">--</span><span class="n">tensor</span><span class="o">-</span><span class="n">parallel</span><span class="o">-</span><span class="n">size</span> <span class="mi">2</span> <span class="o">--</span><span class="n">gpu</span><span class="o">-</span><span class="n">memory</span><span class="o">-</span><span class="n">utilization</span> <span class="mf">0.9</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">python3</span><span class="o">.</span><span class="mi">10</span> <span class="o">-</span><span class="n">m</span> <span class="n">fastchat</span><span class="o">.</span><span class="n">serve</span><span class="o">.</span><span class="n">vllm_worker</span>   <span class="o">--</span><span class="n">model</span><span class="o">-</span><span class="n">path</span> <span class="o">$</span><span class="n">model_path</span> <span class="o">--</span><span class="n">trust</span><span class="o">-</span><span class="n">remote</span><span class="o">-</span><span class="n">code</span> <span class="o">--</span><span class="n">dtype</span> <span class="n">half</span> <span class="o">--</span><span class="n">tensor</span><span class="o">-</span><span class="n">parallel</span><span class="o">-</span><span class="n">size</span> <span class="mi">2</span> <span class="o">--</span><span class="n">gpu</span><span class="o">-</span><span class="n">memory</span><span class="o">-</span><span class="n">utilization</span> <span class="mf">0.8</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">export</span> <span class="n">PYTORCH_CUDA_ALLOC_CONF</span><span class="o">=</span><span class="n">expandable_segments</span><span class="p">:</span><span class="n">True</span>
+</span></span><span class="line"><span class="cl"><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">fastchat</span><span class="o">.</span><span class="n">serve</span><span class="o">.</span><span class="n">gradio_web_server</span> <span class="o">--</span><span class="n">port</span> <span class="mi">8000</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">from vllm_wrapper import vLLMWrapper
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">model = vLLMWrapper(&#39;Qwen/Qwen2-7B-Instruct-GPTQ-Int8&#39;, tensor_parallel_size=1)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">response, history = model.chat(query=&#34;你好&#34;, history=None)
+</span></span><span class="line"><span class="cl">print(response)
+</span></span><span class="line"><span class="cl">response, history = model.chat(query=&#34;给我讲一个年轻人奋斗创业最终取得成功的故事。&#34;, history=history)
+</span></span><span class="line"><span class="cl">print(response)
+</span></span><span class="line"><span class="cl">response, history = model.chat(query=&#34;给这个故事起一个标题&#34;, history=history)
+</span></span><span class="line"><span class="cl">print(response)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">from transformers import AutoModelForCausalLM, AutoTokenizer
+</span></span><span class="line"><span class="cl">import torch
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 设置精度为 float16
+</span></span><span class="line"><span class="cl">dtype = torch.float16
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 加载模型
+</span></span><span class="line"><span class="cl">model_name = &#34;Qwen/Qwen2-7B-Instruct-GPTQ-Int8&#34;
+</span></span><span class="line"><span class="cl">model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=dtype)
+</span></span><span class="line"><span class="cl">tokenizer = AutoTokenizer.from_pretrained(model_name)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 测试模型
+</span></span><span class="line"><span class="cl">input_text = &#34;你好&#34;
+</span></span><span class="line"><span class="cl">inputs = tokenizer(input_text, return_tensors=&#34;pt&#34;)
+</span></span><span class="line"><span class="cl">outputs = model.generate(**inputs)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 解码输出
+</span></span><span class="line"><span class="cl">output_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
+</span></span><span class="line"><span class="cl">print(output_text)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="测速">测速</h1>
+<h1 id="2v100">2*V100</h1>
+<h2 id="qwen-14b-半精度">qwen 14B 半精度</h2>
+<p>38tokens/s</p>
+<h2 id="qwen27b全精度">qwen2:7B全精度</h2>
+<p>42tokens/s</p>
+<h2 id="qwen27b半精度">qwen2:7B半精度</h2>
+<p>65okens/s</p>
+<h1 id="qwen27b半精度-批量测试">qwen2:7B半精度 批量测试</h1>
+<p>全程cpu和内存低占用，差不多20左右，是总tokens数最多的时候</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">并发数: 1, 平均速度: 57.710082036775646 tokens/s
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">并发数: 2, 平均速度: 53.04823362763054 tokens/s
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">并发数: 4, 平均速度: 52.17609420057666 tokens/s
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">并发数: 8, 平均速度: 47.75752326218659 tokens/s
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">并发数: 16, 平均速度: 40.726867780214114 tokens/s
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">并发数: 25, 平均速度: 33.36991664640869 tokens/s
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">并发数: 36, 平均速度: 26.689446034528306 tokens/s
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/f4c0299ddc2d3dd224cf974f4bbd1335/de5f231008d60797b8427194bf142ff4.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/f4c0299ddc2d3dd224cf974f4bbd1335/de5f231008d60797b8427194bf142ff4.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/f4c0299ddc2d3dd224cf974f4bbd1335/de5f231008d60797b8427194bf142ff4.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/f4c0299ddc2d3dd224cf974f4bbd1335/de5f231008d60797b8427194bf142ff4.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/f4c0299ddc2d3dd224cf974f4bbd1335/de5f231008d60797b8427194bf142ff4.png"
+        title="refs/heads/master/image-20240809151139331" /></p>
+<h1 id="自部署gemma">自部署gemma</h1>
+<p>GGUF 模型文件列表：https://modelscope.cn/models/LLM-Research/gemma-2-9b-it-GGUF/files</p>
+<p>GGUF 模型文件名称格式，如<code>gemma-2-9b-it-Q5_K_M.gguf</code>等：</p>
+<ul>
+<li><strong>it</strong>代表本模型是对基线模型进行了微调，用于更好地理解和生成遵循指令（instruction-following）的文本，以提供符合要求的响应</li>
+<li><strong>Q4/Q5 等代表模型权重的量化位数（其中Q是Quantization的缩小，即量化），是一种模型压缩技术，用于减少模型大小，同时降低对计算资源的需求（特别是内存），但又尽量保持模型的性能；数字4或5则代表量化精度的位数（Q4 是 4 位，Q5 是 5 位等），精度越高模型体积和内存使用也会越大，但仍然远小于未量化的基线模型</strong></li>
+<li><strong>K_M/K_S</strong>代表了与注意力机制相关的特定配置，<strong>K_M</strong> 可能是指 Key 的 Mask，即用来屏蔽某些位置的键值对，防止它们在注意力计算中被考虑；而 <strong>K_S</strong> 可能是指 Key 的 Scale 或 Size，涉及到键向量缩放，这是在多头注意力机制中常见的操作，以稳定梯度</li>
+</ul>
+<p>点击<strong>下载</strong>图标即可下载，由于文件较大，浏览器的下载容易过程容易终端，重试可继续下载（假设下载本地的文件名为：<code>Gemma-2-9B-it-Q5_K_M.gguf</code>）：</p>
+<h2 id="启动命令">启动命令</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 启动Llama大模型
+</span></span><span class="line"><span class="cl">python -m llama_cpp.server --host 0.0.0.0 --port 13003 --model ./Gemma-2-9B-it-Q5_K_M.gguf --n_ctx 2048
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="ollama部署">ollama部署</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[Unit]
+</span></span><span class="line"><span class="cl">Description=Ollama Service
+</span></span><span class="line"><span class="cl">After=network-online.target
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[Service]
+</span></span><span class="line"><span class="cl">ExecStart=/usr/local/bin/ollama serve
+</span></span><span class="line"><span class="cl">User=ollama
+</span></span><span class="line"><span class="cl">Group=ollama
+</span></span><span class="line"><span class="cl">Restart=always
+</span></span><span class="line"><span class="cl">RestartSec=3
+</span></span><span class="line"><span class="cl">Environment=&#34;OLLAMA_HOST=0.0.0.0:13003&#34;
+</span></span><span class="line"><span class="cl">Environment=&#34;PATH=/root/.conda/envs/qwen/bin:/usr/share/Modules/bin:/usr/condabin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/root/.ft:/root/.ft&#34;
+</span></span><span class="line"><span class="cl">Environment=&#34;OLLAMA_NUM_PARALLEL=30&#34; #并行处理请求的数量
+</span></span><span class="line"><span class="cl">Environment=&#34;OLLAMA_MAX_LOADED_MODELS=6&#34; #同时加载的模型数量
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[Install]
+</span></span><span class="line"><span class="cl">WantedBy=default.target
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="基于lammacpp部署推理">基于lamma.cpp部署推理</h2>
+<h1 id="web界面">web界面</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker run -it -p 3000:3000 \
+</span></span><span class="line"><span class="cl">   -e OPENAI_API_KEY=sk-xxxx \
+</span></span><span class="line"><span class="cl">   -e CODE=your-password \
+</span></span><span class="line"><span class="cl">   -e PROXY_URL=http://gpu4.csubot.cn:13003 \
+</span></span><span class="line"><span class="cl">   yidadaa/chatgpt-next-web
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="心得以及结论">心得以及结论</h1>
+<p>模型选择很重要，不要盲目相信排名，要实际测试，根据业务去查看到底正确率是多少。</p>
+<p><strong>还有，gemma2：9b确实很牛逼，</strong></p>
+<h1 id="ref">ref</h1>
+<p><a href="https://blog.csdn.net/weixin_54338498/article/details/137110068" target="_blank" rel="noopener noreffer ">LLM并发加速部署方案（llama.cpp、vllm、lightLLM、fastLLM）-CSDN博客</a></p>
+<p><a href="https://www.xiaoiluo.com/article/vllm-gpu-ray-multigpu" target="_blank" rel="noopener noreffer ">vLLM分布式多GPU Docker部署踩坑记 | LittleFish’Blog</a></p>
+<p><a href="https://www.bestblogs.dev/article/714dc8" target="_blank" rel="noopener noreffer ">谷歌开源 Gemma2！魔搭社区推理、微调最佳实践教程 | BestBlogs</a></p>
+<p><a href="https://www.53ai.com/news/qianyanjishu/2024070303852.html" target="_blank" rel="noopener noreffer ">Google 发布了最新的开源大模型 Gemma 2，本地快速部署和体验 - 大模型知识库|大模型训练|开箱即用的企业大模型应用平台|智能体开发|53AI</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-08-13</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E8%87%AA%E9%83%A8%E7%BD%B2%E5%A4%A7%E6%A8%A1%E5%9E%8B/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://kengerlwl.github.io/%E8%87%AA%E9%83%A8%E7%BD%B2%E5%A4%A7%E6%A8%A1%E5%9E%8B/" data-title="自部署大模型实验细节" data-hashtags="pytorch,推理,LLM"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://kengerlwl.github.io/%E8%87%AA%E9%83%A8%E7%BD%B2%E5%A4%A7%E6%A8%A1%E5%9E%8B/" data-hashtag="pytorch"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://kengerlwl.github.io/%E8%87%AA%E9%83%A8%E7%BD%B2%E5%A4%A7%E6%A8%A1%E5%9E%8B/" data-title="自部署大模型实验细节"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://kengerlwl.github.io/%E8%87%AA%E9%83%A8%E7%BD%B2%E5%A4%A7%E6%A8%A1%E5%9E%8B/" data-title="自部署大模型实验细节"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://kengerlwl.github.io/%E8%87%AA%E9%83%A8%E7%BD%B2%E5%A4%A7%E6%A8%A1%E5%9E%8B/" data-title="自部署大模型实验细节"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/pytorch/">Pytorch</a>,&nbsp;<a href="/tags/%E6%8E%A8%E7%90%86/">推理</a>,&nbsp;<a href="/tags/llm/">Llm</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/langchain%E4%BD%BF%E7%94%A8%E5%85%A5%E9%97%A8%E6%8C%87%E5%8C%97/" class="prev" rel="prev" title="langchain使用入门指北"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>langchain使用入门指北</a>
+            <a href="/%E5%A4%A7%E6%A8%A1%E5%9E%8Btoken%E5%8E%8B%E7%BC%A9/" class="next" rel="next" title="大模型token压缩">大模型token压缩<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.132.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kengerlwl.github.io/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"JCTYUNKA9R","algoliaIndex":"kenger","algoliaSearchKey":"3ef68664495033362b7df9cf5a3eee1e","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,24 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Mount - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/mount/</link>
+        <description>Mount - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 20 Mar 2023 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/mount/" rel="self" type="application/rss+xml" /><item>
+    <title>linux文件权限管理</title>
+    <link>https://kengerlwl.github.io/linux%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/</link>
+    <pubDate>Mon, 20 Mar 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/linux%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/</guid>
+    <description><![CDATA[说明 使用的工具 setacl、getacl命令 安装sudo apt-get install acl 对挂载的盘进行支持 1、手动挂载 1 2 3 4 5 6 7 8 9 10 mount -o acl /dev/mapper/vg_server1-logs /home [root@excbjdcpapp05 usr]# mount -l /dev/mapper/VolGroup-lv_root on / type ext4]]></description>
+</item>
+<item>
+    <title>linux挂载</title>
+    <link>https://kengerlwl.github.io/linux%E6%8C%82%E8%BD%BD/</link>
+    <pubDate>Sun, 12 Mar 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/linux%E6%8C%82%E8%BD%BD/</guid>
+    <description><![CDATA[安装必要库 1 sudo apt install nfs-common 启动就挂载 说明 要挂载某个盘到某个目录下面。要保证该目录已经存在 配置 /etc/fstab文件 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15]]></description>
+</item>
+</channel>
+</rss>

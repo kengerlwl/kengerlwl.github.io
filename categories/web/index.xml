@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Web - 分类 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/categories/web/</link>
+        <description>Web - 分类 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 10 Jan 2026 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/categories/web/" rel="self" type="application/rss+xml" /><item>
+    <title>运营web</title>
+    <link>https://kengerlwl.github.io/%E8%BF%90%E8%90%A5web/</link>
+    <pubDate>Sat, 10 Jan 2026 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E8%BF%90%E8%90%A5web/</guid>
+    <description><![CDATA[独立网站运营必备工具：我正在使用的三件套 作为一名独立网站运营者，工具不在多，够用就好。本文分享我目前在用的核心工具组合，帮助你快速搭建网站监]]></description>
+</item>
+</channel>
+</rss>
