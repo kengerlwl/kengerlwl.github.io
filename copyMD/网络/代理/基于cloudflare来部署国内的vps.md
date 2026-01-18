@@ -75,6 +75,10 @@ cloudflared tunnel create my-tunnel
 
 创建配置文件 `~/.cloudflared/config.yml`：
 
+注意有些配置文件：**`/etc/cloudflared/config.yml` 里没有 `xx.xxx.xyz` 的配置！**
+
+你之前看的是 `~/.cloudflared/config.yml`，但 systemd 服务用的是 `/etc/cloudflared/config.yml`。
+
 ```yaml
 tunnel: <你的Tunnel-ID>
 credentials-file: /root/.cloudflared/<你的Tunnel-ID>.json
