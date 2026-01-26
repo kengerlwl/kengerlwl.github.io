@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>协程 - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/%E5%8D%8F%E7%A8%8B/</link>
+        <description>协程 - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 18 Jul 2024 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/%E5%8D%8F%E7%A8%8B/" rel="self" type="application/rss+xml" /><item>
+    <title>python协程</title>
+    <link>https://kengerlwl.github.io/python%E5%8D%8F%E7%A8%8B/</link>
+    <pubDate>Thu, 18 Jul 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/python%E5%8D%8F%E7%A8%8B/</guid>
+    <description><![CDATA[python协程 语法 定义协程 协程是使用 async def 关键字定义的函数。协程可以在执行过程中暂停，并在稍后继续执行。 1 2 3 4 5 6 import asyncio async def my_coroutine(): print(&#34;Hello&#34;) await asyncio.sleep(1) print(&#34;World&#34;) 运行协]]></description>
+</item>
+</channel>
+</rss>

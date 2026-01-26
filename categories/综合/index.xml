@@ -1,0 +1,88 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>综合 - 分类 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/categories/%E7%BB%BC%E5%90%88/</link>
+        <description>综合 - 分类 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 15 Jan 2026 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/categories/%E7%BB%BC%E5%90%88/" rel="self" type="application/rss+xml" /><item>
+    <title>Cookie复制器 隐私权政策</title>
+    <link>https://kengerlwl.github.io/cookie%E5%A4%8D%E5%88%B6%E5%99%A8-%E9%9A%90%E7%A7%81%E6%9D%83%E6%94%BF%E7%AD%96/</link>
+    <pubDate>Thu, 15 Jan 2026 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/cookie%E5%A4%8D%E5%88%B6%E5%99%A8-%E9%9A%90%E7%A7%81%E6%9D%83%E6%94%BF%E7%AD%96/</guid>
+    <description><![CDATA[Cookie复制器 隐私权政策 最后更新日期：2026年1月18日 概述 Cookie复制器（以下简称&quot;本扩展程序&quot;）是一款帮助]]></description>
+</item>
+<item>
+    <title>关于手机推送技术架构</title>
+    <link>https://kengerlwl.github.io/%E5%85%B3%E4%BA%8Esink%E5%9C%A8java%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/</link>
+    <pubDate>Fri, 18 Jul 2025 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E5%85%B3%E4%BA%8Esink%E5%9C%A8java%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/</guid>
+    <description><![CDATA[【Java响应式编程】Project Reactor 实战：从 Flux 入门到 Sinks 进阶 在 Java 后端开发中，随着 Spring WebFlux 的普及（尤其是当前越来越多的LLM流失开始用到FLUX）]]></description>
+</item>
+<item>
+    <title>关于手机推送技术架构</title>
+    <link>https://kengerlwl.github.io/%E5%85%B3%E4%BA%8E%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/</link>
+    <pubDate>Fri, 18 Jul 2025 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E5%85%B3%E4%BA%8E%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/</guid>
+    <description><![CDATA[背景 需要实现手机端的推送 技术调研 FCM：相当于调用安卓系统的原生的，google提供的免费的推送能力，由google来实现统一的推送。 tcp]]></description>
+</item>
+<item>
+    <title>python项目依赖管理</title>
+    <link>https://kengerlwl.github.io/python%E9%A1%B9%E7%9B%AE%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86/</link>
+    <pubDate>Thu, 18 Jul 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/python%E9%A1%B9%E7%9B%AE%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86/</guid>
+    <description><![CDATA[背景 python包管理是一个非常抽象的问题，尤其是设计cuda登显卡环境的时候更加如此。 cu的问题我解决不了，但是普通工程的依赖问题需要解决]]></description>
+</item>
+<item>
+    <title>python协程</title>
+    <link>https://kengerlwl.github.io/python%E5%8D%8F%E7%A8%8B/</link>
+    <pubDate>Thu, 18 Jul 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/python%E5%8D%8F%E7%A8%8B/</guid>
+    <description><![CDATA[python协程 语法 定义协程 协程是使用 async def 关键字定义的函数。协程可以在执行过程中暂停，并在稍后继续执行。 1 2 3 4 5 6 import asyncio async def my_coroutine(): print(&#34;Hello&#34;) await asyncio.sleep(1) print(&#34;World&#34;) 运行协]]></description>
+</item>
+<item>
+    <title>夸克网盘实现nas云备份</title>
+    <link>https://kengerlwl.github.io/%E5%A4%B8%E5%85%8B%E7%BD%91%E7%9B%98%E4%BA%91%E5%A4%87%E4%BB%BD/</link>
+    <pubDate>Mon, 06 May 2024 05:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E5%A4%B8%E5%85%8B%E7%BD%91%E7%9B%98%E4%BA%91%E5%A4%87%E4%BB%BD/</guid>
+    <description><![CDATA[背景 我有很多重要的文件需要上云备份，主要是为了防止本地的文件出问题。比如万一谁把我电脑丢了。 **思路：**决定使用夸克网盘自带的文件夹自动备]]></description>
+</item>
+<item>
+    <title>git子仓库</title>
+    <link>https://kengerlwl.github.io/git%E5%AD%90%E4%BB%93%E5%BA%93/</link>
+    <pubDate>Sun, 28 Apr 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/git%E5%AD%90%E4%BB%93%E5%BA%93/</guid>
+    <description><![CDATA[背景 一个仓库下面用到了另一个仓库。 那么什么是Git的子仓库呢? 通俗上的理解, 一个Git仓库下面放了多个其他的Git仓库,其他的Git仓库就是]]></description>
+</item>
+<item>
+    <title>hugo博客搭建踩坑LoveIt</title>
+    <link>https://kengerlwl.github.io/hugo%E5%8A%A0loveit%E5%8D%9A%E5%AE%A2/</link>
+    <pubDate>Mon, 15 Jan 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/hugo%E5%8A%A0loveit%E5%8D%9A%E5%AE%A2/</guid>
+    <description><![CDATA[背景 hexo的博客编译太慢了。需要升级一下。 注意到LoveIt的主题好像很好用，决定使 踩坑 LoveIt需要使用hugo的extend版本！！]]></description>
+</item>
+<item>
+    <title>chatgpt 仿写</title>
+    <link>https://kengerlwl.github.io/chatgpt%E4%BB%BF%E5%86%99/</link>
+    <pubDate>Tue, 18 Jul 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/chatgpt%E4%BB%BF%E5%86%99/</guid>
+    <description><![CDATA[流程 设定： 1 2 我将给你一些文章内容，请记住这些内容分析它的写作风格和语气。内容我会放在()里。每次我给你内容后，你只需要回答：好的 (在Git]]></description>
+</item>
+<item>
+    <title>docker镜像的逆向分析</title>
+    <link>https://kengerlwl.github.io/docker%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%9B%E7%A8%8B/</link>
+    <pubDate>Wed, 17 May 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/docker%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%9B%E7%A8%8B/</guid>
+    <description><![CDATA[需求 如何用bash启动一个什么也不执行的容器 注意，如果您尝试同时使用 -it 和 -d，则Docker会忽略 -it 选项，并将 -d 的行为应用于容器。例如，以下]]></description>
+</item>
+</channel>
+</rss>

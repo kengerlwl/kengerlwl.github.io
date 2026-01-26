@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>数字图像处理 - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://kengerlwl.github.io/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="数字图像处理">
+  <meta property="og:description" content="数字图像处理 本博客主要涉及算法方面。需要堆图形由一定了解 预处理，加载，存储 使用pillow进行加载 1 2 from PIL import Image im = Image.open(&#39;./../image/lena.png&#39;) 存储 1 2 # 把图像用png">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2020-01-15T15:27:31+00:00">
+    <meta property="article:modified_time" content="2020-01-15T15:27:31+00:00">
+    <meta property="article:tag" content="数字图像处理">
+    <meta property="og:image" content="https://kengerlwl.github.io/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kengerlwl.github.io/logo.png">
+  <meta name="twitter:title" content="数字图像处理">
+  <meta name="twitter:description" content="数字图像处理 本博客主要涉及算法方面。需要堆图形由一定了解 预处理，加载，存储 使用pillow进行加载 1 2 from PIL import Image im = Image.open(&#39;./../image/lena.png&#39;) 存储 1 2 # 把图像用png">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://kengerlwl.github.io/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" /><link rel="prev" href="https://kengerlwl.github.io/%E7%AE%97%E6%B3%95%E6%AF%94%E8%B5%9B%E5%A5%97%E8%B7%AF/" /><link rel="next" href="https://kengerlwl.github.io/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B1%A0%E5%AD%90python/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "数字图像处理",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/kengerlwl.github.io\/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/kengerlwl.github.io\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "数字图像处理","wordcount":  4077 ,
+        "url": "https:\/\/kengerlwl.github.io\/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86\/","datePublished": "2020-01-15T15:27:31+00:00","dateModified": "2020-01-15T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/kengerlwl.github.io\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数字图像处理</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kengerlwl.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%BB%BC%E5%90%88/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>综合</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2020-01-15">2020-01-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 4077 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 9 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#预处理加载存储">预处理，加载，存储</a></li>
+    <li><a href="#关于图像平滑处理">关于图像平滑处理</a>
+      <ul>
+        <li><a href="#首先对图像添加噪声">首先对图像添加噪声</a></li>
+        <li><a href="#定义">定义</a></li>
+        <li><a href="#邻域平均法和均值滤波">邻域平均法和均值滤波</a></li>
+        <li><a href="#高斯平滑">高斯平滑</a></li>
+        <li><a href="#总结">总结</a></li>
+        <li><a href="#引申滤波的概念"><strong>引申滤波的概念</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#图像几何变换缩放图像旋转图像翻转与图像平移">图像几何变换（缩放、图像旋转、图像翻转与图像平移）</a>
+      <ul>
+        <li><a href="#提前概念">提前概念</a></li>
+        <li><a href="#平移">平移</a></li>
+        <li><a href="#缩放">缩放</a></li>
+        <li><a href="#旋转">旋转</a></li>
+        <li><a href="#镜像变换">镜像变换</a></li>
+        <li><a href="#插值算法">插值算法</a>
+          <ul>
+            <li><a href="#邻近插值算法">邻近插值算法</a></li>
+            <li><a href="#双线性插值">双线性插值</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#仿射变换与透视变换">仿射变换与透视变换</a>
+      <ul>
+        <li><a href="#提前概念二维为例子">提前概念（二维为例子）</a></li>
+        <li><a href="#仿射变换">仿射变换</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#什么是透视变换">什么是透视变换</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#图像阈值化">图像阈值化</a></li>
+    <li><a href="#灰度直方图">灰度直方图</a>
+      <ul>
+        <li><a href="#前置概念">前置概念</a></li>
+        <li><a href="#定义-1">定义</a></li>
+        <li><a href="#直方图修正">直方图修正</a></li>
+      </ul>
+    </li>
+    <li><a href="#灰度值处理">灰度值处理</a></li>
+    <li><a href="#图像灰度线性变换">图像灰度线性变换</a></li>
+    <li><a href="#图像锐化">图像锐化</a>
+      <ul>
+        <li><a href="#roberts算子梯度法">Roberts算子（梯度法）</a></li>
+        <li><a href="#sobel算子"><strong>Sobel算子</strong></a></li>
+        <li><a href="#拉普拉斯算子二阶微分"><strong>拉普拉斯算子（二阶微分）</strong></a></li>
+        <li><a href="#canny算子">Canny算子</a></li>
+      </ul>
+    </li>
+    <li><a href="#边缘线检测">边缘线检测</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="数字图像处理">数字图像处理</h1>
+<p>本博客主要涉及算法方面。需要堆图形由一定了解</p>
+<h2 id="预处理加载存储">预处理，加载，存储</h2>
+<p>使用<strong>pillow</strong>进行加载</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">from PIL import Image
+</span></span><span class="line"><span class="cl">im = Image.open(&#39;./../image/lena.png&#39;)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>存储</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 把图像用png格式保存:
+</span></span><span class="line"><span class="cl">im.save(&#39;thumbnail.png&#39;, &#39;png&#39;)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>转换成<strong>numpy</strong>形式</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">img = np.array(im)      # image类 转 numpy
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将<strong>numpy</strong>格式数组用图片显示</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">from matplotlib import pyplot as plt
+</span></span><span class="line"><span class="cl">plt.imshow(img)
+</span></span><span class="line"><span class="cl">plt.show()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/f94e03f541141f10e5ae260eeaf3b346.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/f94e03f541141f10e5ae260eeaf3b346.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/f94e03f541141f10e5ae260eeaf3b346.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/f94e03f541141f10e5ae260eeaf3b346.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/f94e03f541141f10e5ae260eeaf3b346.png"
+        title="refs/heads/master/image-20210515125837128" /></p>
+<p>分为不同得<strong>通道</strong>显示</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">b = img[:,:,0:1]
+</span></span><span class="line"><span class="cl">plt.imshow(img, &#39;Blues&#39;)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/0970dd506bec75a22096a10f6c3409af.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/0970dd506bec75a22096a10f6c3409af.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/0970dd506bec75a22096a10f6c3409af.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/0970dd506bec75a22096a10f6c3409af.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/0970dd506bec75a22096a10f6c3409af.png"
+        title="refs/heads/master/image-20210515125815860" /></p>
+<h2 id="关于图像平滑处理">关于图像平滑处理</h2>
+<h3 id="首先对图像添加噪声">首先对图像添加噪声</h3>
+<p>我们这里添加白色小点得噪声</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/88e7af24819a548676006107387ee677.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/88e7af24819a548676006107387ee677.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/88e7af24819a548676006107387ee677.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/88e7af24819a548676006107387ee677.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/88e7af24819a548676006107387ee677.png"
+        title="refs/heads/master/image-20210515130157855" /></p>
+<p><strong>白色得噪声是（255，255，255）</strong></p>
+<p>得到噪声图</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/1a7eea8b29c386eb818b8a7545ab761b.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/1a7eea8b29c386eb818b8a7545ab761b.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/1a7eea8b29c386eb818b8a7545ab761b.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/1a7eea8b29c386eb818b8a7545ab761b.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/1a7eea8b29c386eb818b8a7545ab761b.png"
+        title="refs/heads/master/image-20210515143316188" /></p>
+<h3 id="定义">定义</h3>
+<p>图像平滑是一种区域增强的算法，平滑算法有<strong>邻域平均法、中指滤波、边界保持类滤波</strong>等。在图像产生、传输和复制过程中，常常会因为多方面原因而<strong>被噪声干扰或出现数据丢失，降低了图像的质量</strong>（某一像素，如果它与周围像素点相比有明显的不同，则该点被噪声所感染）。这就需要<strong>对图像进行一定的增强处理以减小这些缺陷带来的影响</strong>。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/00af0448eb5eaf0c9dec1f5eaf765889.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/00af0448eb5eaf0c9dec1f5eaf765889.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/00af0448eb5eaf0c9dec1f5eaf765889.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/00af0448eb5eaf0c9dec1f5eaf765889.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/00af0448eb5eaf0c9dec1f5eaf765889.png"
+        title="img" /></p>
+<h3 id="邻域平均法和均值滤波">邻域平均法和均值滤波</h3>
+<p>其实就是一个<strong>卷积运算</strong></p>
+<p>可以类比一下卷积神经网络</p>
+<p>$$g(x,y)= 1/M  \sum_{(x,y)∈S} f(x,y)$$</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/39f570ba9bec4752ee89dd997b2561cd.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/39f570ba9bec4752ee89dd997b2561cd.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/39f570ba9bec4752ee89dd997b2561cd.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/39f570ba9bec4752ee89dd997b2561cd.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/39f570ba9bec4752ee89dd997b2561cd.png"
+        title="refs/heads/master/image-20210515132244573" /></p>
+<p><strong>如图</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/12e61be231a5458f8770e4867e00131c.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/12e61be231a5458f8770e4867e00131c.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/12e61be231a5458f8770e4867e00131c.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/12e61be231a5458f8770e4867e00131c.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/12e61be231a5458f8770e4867e00131c.png"
+        title="refs/heads/master/image-20210515132401506" /></p>
+<ul>
+<li>我们这里先写一个单通道单核得卷积</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/cf8b6e055283c133cd7bb2863f06ec80.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/cf8b6e055283c133cd7bb2863f06ec80.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/cf8b6e055283c133cd7bb2863f06ec80.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/cf8b6e055283c133cd7bb2863f06ec80.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/cf8b6e055283c133cd7bb2863f06ec80.png"
+        title="refs/heads/master/image-20210515134556505" /></p>
+<ul>
+<li>
+<p>初始化一个卷积核</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># filterKernel = np.array([
+</span></span><span class="line"><span class="cl">#     [1, 1, 1],
+</span></span><span class="line"><span class="cl">#     [1, 1, 1],
+</span></span><span class="line"><span class="cl">#     [1, 1, 1]
+</span></span><span class="line"><span class="cl"># ])
+</span></span><span class="line"><span class="cl">filterKernel = np.ones((6,6))
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>查看结果</p>
+</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/c0cb034f14a22c8586369fd7181783fb.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/c0cb034f14a22c8586369fd7181783fb.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/c0cb034f14a22c8586369fd7181783fb.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/c0cb034f14a22c8586369fd7181783fb.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/c0cb034f14a22c8586369fd7181783fb.png"
+        title="refs/heads/master/image-20210515134707303" /></p>
+<ul>
+<li>
+<p><strong>很明显有效果， 然后就是变单通道为多通道，单核为多核</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/0c63e5cfbac9c05a15839a2bdff99fe3.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/0c63e5cfbac9c05a15839a2bdff99fe3.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/0c63e5cfbac9c05a15839a2bdff99fe3.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/0c63e5cfbac9c05a15839a2bdff99fe3.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/0c63e5cfbac9c05a15839a2bdff99fe3.png"
+        title="refs/heads/master/image-20210515143402138" /></p>
+</li>
+</ul>
+<p><strong>success</strong></p>
+<h3 id="高斯平滑">高斯平滑</h3>
+<p>为了克服简单局部平均法的弊端(图像模糊)，目前已提出许多保持边缘、细节的局部平滑算法。它们的出发点都集中在如何选择邻域的大小、形状和方向、参数加平均及邻域各店的权重系数等。
+<strong>图像高斯平滑也是邻域平均的思想对图像进行平滑的一种方法</strong>，在图像高斯平滑中，对图像进行平均时，不同位置的像素被赋予了不同的权重。高斯平滑与简单平滑不同，它在对邻域内像素进行平均时，给予不同位置的像素不同的权值，下图的所示的 3 * 3 和 5 * 5 领域的高斯模板。</p>
+<p><strong>其实就是用二维高斯去生成一个卷积核</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/8a28a3b57fe46705d989c0f2740d3511.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/8a28a3b57fe46705d989c0f2740d3511.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/8a28a3b57fe46705d989c0f2740d3511.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/8a28a3b57fe46705d989c0f2740d3511.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/8a28a3b57fe46705d989c0f2740d3511.png"
+        title="refs/heads/master/image-20210517100746197" /></p>
+<h3 id="总结">总结</h3>
+<p>到这里，一些基本得卷积算法就已经剖析完毕，剩下得就只是对这些卷积核做一定处理。</p>
+<h3 id="引申滤波的概念"><strong>引申滤波的概念</strong></h3>
+<p>滤波的目的主要两个：</p>
+<p>1.通过滤波来提取图像特征，简化图像所带的信息作为后续其它的图像处理</p>
+<p>2.为适应图像处理的需求，通过滤波消除图像数字化时所混入的噪声</p>
+<p><strong>其中第一点就是边缘检测中所使用的基本思想，即简化图像信息，使用边缘线代表图像所携带信息</strong></p>
+<p><strong>滤波可理解为滤波器(通常为3<em>3、5</em>5矩阵)在图像上进行从上到下，从左到右的遍历，计算滤波器与对应像素的值并根据滤波目的进行数值计算返回值到当前像素点</strong>，实际就是卷积</p>
+<h2 id="图像几何变换缩放图像旋转图像翻转与图像平移">图像几何变换（缩放、图像旋转、图像翻转与图像平移）</h2>
+<p>主要知识：<strong>线性代数</strong></p>
+<h3 id="提前概念">提前概念</h3>
+<p>对于一个图像，我们可以表达成一个<strong>二维函数</strong></p>
+<p>$$f(x, y) = 色值 $$</p>
+<p><strong>而几何变换，并不改变色值，仅仅改变x，y得位置。</strong></p>
+<p>也就是说</p>
+<p>$$f(x^{<code>}, y^{</code>}) = f(x, y)$$</p>
+<p><strong>是一个映射</strong></p>
+<p><strong>（以下得图转载）</strong></p>
+<h3 id="平移">平移</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/076fe31ea3d3beede9cfb8fe97fc778b.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/076fe31ea3d3beede9cfb8fe97fc778b.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/076fe31ea3d3beede9cfb8fe97fc778b.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/076fe31ea3d3beede9cfb8fe97fc778b.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/076fe31ea3d3beede9cfb8fe97fc778b.png"
+        title="refs/heads/master/image-20210515144701393" /></p>
+<h3 id="缩放">缩放</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/abbcdf7c324d2fe5ecbf12b1b11b9319.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/abbcdf7c324d2fe5ecbf12b1b11b9319.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/abbcdf7c324d2fe5ecbf12b1b11b9319.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/abbcdf7c324d2fe5ecbf12b1b11b9319.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/abbcdf7c324d2fe5ecbf12b1b11b9319.png"
+        title="refs/heads/master/image-20210515144734355" /></p>
+<h3 id="旋转">旋转</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/9faf48eb59ef440fe453efa8fc87b6d4.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/9faf48eb59ef440fe453efa8fc87b6d4.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/9faf48eb59ef440fe453efa8fc87b6d4.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/9faf48eb59ef440fe453efa8fc87b6d4.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/9faf48eb59ef440fe453efa8fc87b6d4.png"
+        title="refs/heads/master/image-20210515144811005" /></p>
+<h3 id="镜像变换">镜像变换</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/2a8fcd4cd9e81aeb1681c1dbba85ecbe.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/2a8fcd4cd9e81aeb1681c1dbba85ecbe.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/2a8fcd4cd9e81aeb1681c1dbba85ecbe.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/2a8fcd4cd9e81aeb1681c1dbba85ecbe.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/2a8fcd4cd9e81aeb1681c1dbba85ecbe.png"
+        title="refs/heads/master/image-20210515145002510" /></p>
+<h3 id="插值算法">插值算法</h3>
+<p>关于以上变换有个要注意得问题。</p>
+<p><strong>变换后得坐标，定义域不一定和值域完全重合。</strong></p>
+<p>也就是说，变换后得点可能落不到整数上（一种情况。）</p>
+<p><strong>那么就需要插值算法了。</strong> （简单起见，这里只讲线性插值算法）</p>
+<p>先讲一下整体得套路：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/09848574492cb96e8618543a2ab1bce7.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/09848574492cb96e8618543a2ab1bce7.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/09848574492cb96e8618543a2ab1bce7.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/09848574492cb96e8618543a2ab1bce7.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/09848574492cb96e8618543a2ab1bce7.png"
+        title="7B0D9C468E20156153764274EE6DAABA" /></p>
+<h4 id="邻近插值算法">邻近插值算法</h4>
+<p>简单来说就是，直接对x和y进行取整。</p>
+<p>按照上述思路实现。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/a9d28767ad1d6502be7cc49cc768ccd1.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/a9d28767ad1d6502be7cc49cc768ccd1.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/a9d28767ad1d6502be7cc49cc768ccd1.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/a9d28767ad1d6502be7cc49cc768ccd1.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/a9d28767ad1d6502be7cc49cc768ccd1.png"
+        title="refs/heads/master/image-20210515185639914" /></p>
+<p>不难看出，效果还行。</p>
+<p>试试旋转矩阵</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/c0d330b5d9ebac7b31702fbc514ed2e8.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/c0d330b5d9ebac7b31702fbc514ed2e8.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/c0d330b5d9ebac7b31702fbc514ed2e8.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/c0d330b5d9ebac7b31702fbc514ed2e8.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/c0d330b5d9ebac7b31702fbc514ed2e8.png"
+        title="refs/heads/master/image-20210515193419491" /></p>
+<h4 id="双线性插值">双线性插值</h4>
+<p>**双线性插值是线性插值在二维时的推广,在两个方向上共做了三次线性插值。**定义了一个双曲抛物面与四个已知点拟合。</p>
+<p>具体操作为在X方向上进行两次线性插值计算，然后在Y方向上进行一次插值计算</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/4fa4f7aa924b01c16cc2f124f2feb0f2.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/4fa4f7aa924b01c16cc2f124f2feb0f2.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/4fa4f7aa924b01c16cc2f124f2feb0f2.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/4fa4f7aa924b01c16cc2f124f2feb0f2.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/4fa4f7aa924b01c16cc2f124f2feb0f2.png"
+        title="refs/heads/master/image-20210515185941228" /></p>
+<p><strong>具体得公式</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/5a2a029603dc329ab1648127d5ba2500.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/5a2a029603dc329ab1648127d5ba2500.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/5a2a029603dc329ab1648127d5ba2500.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/5a2a029603dc329ab1648127d5ba2500.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/5a2a029603dc329ab1648127d5ba2500.png"
+        title="refs/heads/master/image-20210515190007957" /></p>
+<p><strong>（我这里踩了坑，原有的图像数据的大小是8位的，最大255）所以在上述运算中很容易就溢出了。</strong></p>
+<p>结果</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/e52beee2d09d319190019e323ab8c55d.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/e52beee2d09d319190019e323ab8c55d.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/e52beee2d09d319190019e323ab8c55d.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/e52beee2d09d319190019e323ab8c55d.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/e52beee2d09d319190019e323ab8c55d.png"
+        title="refs/heads/master/image-20210515222501615" /></p>
+<p><strong>success</strong></p>
+<h2 id="仿射变换与透视变换">仿射变换与透视变换</h2>
+<h3 id="提前概念二维为例子">提前概念（二维为例子）</h3>
+<ul>
+<li>什么是线性变换？</li>
+</ul>
+<p>$$
+x^{,}= A \cdot x_{0}
+$$</p>
+<p>原点不变，且原有的平行关系和倍数关系都不变</p>
+<h3 id="仿射变换">仿射变换</h3>
+<p>在线性变换的基础上，<strong>原点可以发生变换</strong>。</p>
+<p>仿射变换是单纯对图片进行平移，缩放，倾斜和旋转，而这几个操作都不会改变图片线之间的平行关系。</p>
+<p>$$
+x^{,}= A \cdot x_{0} + b
+$$</p>
+<p>如果用三维去线性表达，那么就是：
+$$
+\begin{bmatrix}
+x^{,}\
+y^{,}\
+1</p>
+<h1 id="endbmatrix">\end{bmatrix}</h1>
+<p>\begin{bmatrix}
+a11 &amp;a12  &amp;b1 \
+a21 &amp;  a22&amp; b2\
+0&amp;0  &amp; 1
+\end{bmatrix}</p>
+<p>\cdot</p>
+<p>\begin{bmatrix}
+x\
+y\
+1</p>
+<p>\end{bmatrix}
+$$</p>
+<h3 id="什么是透视变换">什么是透视变换</h3>
+<p>如果说仿射变换是在二维空间中的旋转，平移和缩放。<strong>那么透视变换则是在三维空间中视角的变化。</strong></p>
+<p><strong>相对于仿射。透视变换能保持“直线性”，即原图像里面的直线，经透视变换后仍为直线</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/6a9dc656fdb51208fb89fa5cae6e9db9.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/6a9dc656fdb51208fb89fa5cae6e9db9.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/6a9dc656fdb51208fb89fa5cae6e9db9.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/6a9dc656fdb51208fb89fa5cae6e9db9.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/6a9dc656fdb51208fb89fa5cae6e9db9.png"
+        title="refs/heads/master/image-20210515224105702" /></p>
+<p>这里讲一下，如果说，仿射变化是三维空间中对某个平面的一些二维变化。</p>
+<p>那么透视变化就是对这个平面进行变换，并且利用视觉原理将图像进行一定处理（近大，远小）。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/7cd9b73c2e30d18cc70089e39cde9ef7.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/7cd9b73c2e30d18cc70089e39cde9ef7.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/7cd9b73c2e30d18cc70089e39cde9ef7.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/7cd9b73c2e30d18cc70089e39cde9ef7.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/7cd9b73c2e30d18cc70089e39cde9ef7.png"
+        title="OpenCV-透视变换及对二维点求透视变换之后的坐标_leonardohaig的博客-CSDN博客" /></p>
+<p><strong>也就是说，先将图像旋转到$A^{,}B^{,}C^{,}$</strong></p>
+<p><strong>然后投影到平面$ABC$</strong></p>
+<p><strong>这里有一下假设，假设我们人是远点，从我们的眼睛去看，垂直与我们的目光的这个轴是$z$轴.</strong></p>
+<p><strong>在离我们一定距离的地方选一个画布$ABC$，其他所有画像都投影到这个画布上。</strong></p>
+<p><strong>那么假设平面$z$轴的距离是1.</strong></p>
+<p><strong>从$A^{,}B^{,}C^{,}$投影到画布$ABC$，计算公式为</strong></p>
+<p>$$
+\begin{bmatrix}
+x\
+y\
+1</p>
+<h1 id="endbmatrix-1">\end{bmatrix}</h1>
+<p>(1/z^{,}) \cdot
+\begin{bmatrix}
+x^{,}\
+y^{,}\
+z^{,}</p>
+<p>\end{bmatrix}
+$$</p>
+<p>有了以上概念，<strong>我们来最后计算一遍</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/cf979213798d2c47c9812aec744257a2.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/cf979213798d2c47c9812aec744257a2.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/cf979213798d2c47c9812aec744257a2.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/cf979213798d2c47c9812aec744257a2.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/cf979213798d2c47c9812aec744257a2.png"
+        title="refs/heads/master/image-20210516140838713" /></p>
+<p><strong>先进行旋转变换。</strong></p>
+<p><strong>然后进行投影变换。</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/6ac973beb6b9b2abd1f3015b67501623.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/6ac973beb6b9b2abd1f3015b67501623.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/6ac973beb6b9b2abd1f3015b67501623.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/6ac973beb6b9b2abd1f3015b67501623.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/6ac973beb6b9b2abd1f3015b67501623.png"
+        title="refs/heads/master/image-20210516140914286" /></p>
+<p>然后就是繁琐的解方程过程，<strong>这里是非齐次线性方程组求解</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/bab59271d7636ce0e8e0deca3e1bcb70.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/bab59271d7636ce0e8e0deca3e1bcb70.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/bab59271d7636ce0e8e0deca3e1bcb70.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/bab59271d7636ce0e8e0deca3e1bcb70.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/bab59271d7636ce0e8e0deca3e1bcb70.png"
+        title="refs/heads/master/image-20210516140938930" /></p>
+<p>让我们来看一下最后效果。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/5aa9315b59033ce612da1ca402b2263b.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/5aa9315b59033ce612da1ca402b2263b.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/5aa9315b59033ce612da1ca402b2263b.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/5aa9315b59033ce612da1ca402b2263b.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/5aa9315b59033ce612da1ca402b2263b.png"
+        title="refs/heads/master/image-20210516141108490" /></p>
+<p>右边是我们手动实现的。</p>
+<p>具体的思路是仿照<strong>opencv</strong>，不过代码是手动用<strong>numpy</strong>实现的，有助于理解。</p>
+<p><strong>核心代码</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#根据四个顶点设置图像透视变换矩阵
+</span></span><span class="line"><span class="cl">pos1 = np.float32([[114, 82], [287, 156], [8, 322], [216, 333]])  # 原来的坐标
+</span></span><span class="line"><span class="cl">pos2 = np.float32([[0, 0], [188, 0], [0, 262], [188, 262]])    # 变换后的坐标
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 实际肉眼看上去的x，y和数组的存储是有区别的
+</span></span><span class="line"><span class="cl">def exchangeXY(pos):
+</span></span><span class="line"><span class="cl">    for i in range(len(pos)):
+</span></span><span class="line"><span class="cl">        pos[i] = [pos[i][1], pos[i][0]]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">exchangeXY(pos1)
+</span></span><span class="line"><span class="cl">exchangeXY(pos2)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 计算透视变换矩阵
+</span></span><span class="line"><span class="cl">def getPerspectiveTransform(pos1, pos2):
+</span></span><span class="line"><span class="cl">    length = len(pos1)
+</span></span><span class="line"><span class="cl">    tmpMatrix = []
+</span></span><span class="line"><span class="cl">    b = []
+</span></span><span class="line"><span class="cl">    for i in range(length):
+</span></span><span class="line"><span class="cl">        x0, y0 = pos1[i]
+</span></span><span class="line"><span class="cl">        xn, yn = pos2[i]
+</span></span><span class="line"><span class="cl">        tmpMatrix.append(
+</span></span><span class="line"><span class="cl">            [x0, y0,1,0,0,0,-1 * x0 * xn, -1 * y0 * xn]
+</span></span><span class="line"><span class="cl">        )
+</span></span><span class="line"><span class="cl">        tmpMatrix.append(
+</span></span><span class="line"><span class="cl">            [0,0,0,x0, y0,1,-1 * x0 * yn, -1 * y0 * yn]
+</span></span><span class="line"><span class="cl">        )
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        b.append(xn)
+</span></span><span class="line"><span class="cl">        b.append(yn)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    tmpMatrix= np.array(tmpMatrix)
+</span></span><span class="line"><span class="cl">    b = np.array(b)
+</span></span><span class="line"><span class="cl">    ans =np.dot(np.linalg.inv(tmpMatrix), b)
+</span></span><span class="line"><span class="cl">    finalMatrix = [
+</span></span><span class="line"><span class="cl">        [ans[0], ans[1], ans[2]],
+</span></span><span class="line"><span class="cl">        [ans[3], ans[4], ans[5]],
+</span></span><span class="line"><span class="cl">        [ans[6], ans[7], 1]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    ]
+</span></span><span class="line"><span class="cl">    return np.array(finalMatrix)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">M = getPerspectiveTransform(pos1, pos2)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="图像阈值化">图像阈值化</h2>
+<p>图像的二值化或阈值化（Binarization）旨在提取图像中的目标物体，将背景以及噪声区分开来。通常会设定一个阈值T，通过T将图像的像素划分为两类：大于T的像素群和小于T的像素群。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/433b35f3bcae835a073b6d32eebbd17a.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/433b35f3bcae835a073b6d32eebbd17a.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/433b35f3bcae835a073b6d32eebbd17a.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/433b35f3bcae835a073b6d32eebbd17a.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/433b35f3bcae835a073b6d32eebbd17a.png"
+        title="refs/heads/master/image-20210516195934138" /></p>
+<p><strong>二进制阈值化</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/a8fbf0daf8cfae6d38d46288b089cb0f.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/a8fbf0daf8cfae6d38d46288b089cb0f.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/a8fbf0daf8cfae6d38d46288b089cb0f.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/a8fbf0daf8cfae6d38d46288b089cb0f.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/a8fbf0daf8cfae6d38d46288b089cb0f.png"
+        title="refs/heads/master/image-20210516200029306" /></p>
+<p>所谓其他阈值化，其实也就是不断在基础形式上都不同的类进行一定处理。</p>
+<h2 id="灰度直方图">灰度直方图</h2>
+<h3 id="前置概念">前置概念</h3>
+<p><strong>RGB图像：</strong></p>
+<p>RGB的值分别为0，0，0 表示的是黑色。</p>
+<p>RGB的值为255，255，255表示的是白色。</p>
+<p><strong>灰度图像：</strong></p>
+<p>灰度值为0表示黑色。</p>
+<p>灰度值为255表示白色。</p>
+<h3 id="定义-1">定义</h3>
+<p>灰度直方图（histogram）是灰度级的函数，描述的是图像中每种灰度级像素的个数，反映图像中每种灰度出现的频率。横坐标是灰度级，纵坐标是灰度级出现的频率。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/40a7560ec1269824078571db3fb345d9.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/40a7560ec1269824078571db3fb345d9.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/40a7560ec1269824078571db3fb345d9.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/40a7560ec1269824078571db3fb345d9.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/40a7560ec1269824078571db3fb345d9.png"
+        title="refs/heads/master/image-20210516200650255" /></p>
+<p><strong>用处：</strong></p>
+<p>在使用轮廓线确定物体边界时，通过直方图更好的选择边界阈值，进行阈值化处理；对物体与背景有较强对比的景物的分割特别有用；简单物体的面积和综合光密度IOD可以通过图像的直方图求得。</p>
+<h3 id="直方图修正">直方图修正</h3>
+<p>图像的直方图修正方法主要有直方图均衡化和直方图规定化直方图修正的目的是，<strong>使修正后的图像的灰度间距拉开或者是图像灰度分布均匀，从而增大反差，使图像细节清晰，从而达到图像增强的目的</strong></p>
+<p>我们这里主要<strong>直方图均衡化</strong>。</p>
+<p>算法原理，把原有的概率乘以一个数（通常是色值的大小，取整）。这样就可以把一些较为相近的值给化到一起了。</p>
+<h2 id="灰度值处理">灰度值处理</h2>
+<p><strong>rbg如何变为灰度值图像呢？</strong></p>
+<p>一种常见的方法是将RGB三个分量求和再取平均值，但更为准确的方法是设置不同的权重，将RGB分量按不同的比例进行灰度划分。比如人类的眼睛感官蓝色的敏感度最低，敏感最高的是绿色，因此将RGB按照0.299、0.587、0.144比例加权平均能得到较合理的灰度图像，</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/502aaa4539120de42999f8496a000538.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/502aaa4539120de42999f8496a000538.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/502aaa4539120de42999f8496a000538.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/502aaa4539120de42999f8496a000538.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/502aaa4539120de42999f8496a000538.png"
+        title="refs/heads/master/image-20210516201613044" /></p>
+<h2 id="图像灰度线性变换">图像灰度线性变换</h2>
+<p>图像的灰度线性变换是通过建立灰度映射来调整原始图像的灰度，从而改善图像的质量，凸显图像的细节，<strong>提高图像的对比度</strong></p>
+<p>$$
+f(D) = S \cdot D + b
+$$</p>
+<p><strong>图像灰度非线性变换</strong></p>
+<ul>
+<li>例如什么一元二次函数</li>
+<li>对数变换</li>
+<li>伽玛变换又称为指数变换或幂次变换，是另一种常用的灰度非线性变换。就是指数函数</li>
+</ul>
+<h2 id="图像锐化">图像锐化</h2>
+<p>展图像锐化和边缘检测处理，加强原图像的高频部分。锐化突出图像的边缘细节，改善图像的对比度，使模糊的图像变得更清晰。</p>
+<p>图像锐化和边缘提取技术可以消除图像中的噪声，<strong>提取图像信息中用来表征图像的一些变量</strong>，为图像识别提供基础。</p>
+<p>通常使用<strong>灰度差分法</strong>对图像的边缘、轮廓进行处理，将其凸显。</p>
+<p><strong>如果把每一种算法都用卷积核来表示成矩阵的乘法，那么实际上就是一种卷积运算了</strong></p>
+<h3 id="roberts算子梯度法">Roberts算子（梯度法）</h3>
+<p><strong>通过计算梯度从而凸显轮廓</strong></p>
+<p>对于图像 <img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://www.zhihu.com/equation?tex=f%28x%2Cy%29"
+        data-srcset="https://www.zhihu.com/equation?tex=f%28x%2Cy%29, https://www.zhihu.com/equation?tex=f%28x%2Cy%29 1.5x, https://www.zhihu.com/equation?tex=f%28x%2Cy%29 2x"
+        data-sizes="auto"
+        alt="https://www.zhihu.com/equation?tex=f%28x%2Cy%29"
+        title="[公式]" /> ,在点 <img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://www.zhihu.com/equation?tex=%28x%2Cy%29"
+        data-srcset="https://www.zhihu.com/equation?tex=%28x%2Cy%29, https://www.zhihu.com/equation?tex=%28x%2Cy%29 1.5x, https://www.zhihu.com/equation?tex=%28x%2Cy%29 2x"
+        data-sizes="auto"
+        alt="https://www.zhihu.com/equation?tex=%28x%2Cy%29"
+        title="[公式]" /> 处的梯度是一个矢量，定义为<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/af44bf51d6163dce5848043bcc3b45a4.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/af44bf51d6163dce5848043bcc3b45a4.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/af44bf51d6163dce5848043bcc3b45a4.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/af44bf51d6163dce5848043bcc3b45a4.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/af44bf51d6163dce5848043bcc3b45a4.png"
+        title="[公式]" />。</p>
+<p>梯度的幅度表示为 <img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/9b7105a5b1496426ed25b23465be24d8.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/9b7105a5b1496426ed25b23465be24d8.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/9b7105a5b1496426ed25b23465be24d8.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/9b7105a5b1496426ed25b23465be24d8.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/9b7105a5b1496426ed25b23465be24d8.png"
+        title="[公式]" /></p>
+<p>对于数字图像而言， <img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/6d4fdcb8e36ea49c8022f6639dfdc5e9.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/6d4fdcb8e36ea49c8022f6639dfdc5e9.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/6d4fdcb8e36ea49c8022f6639dfdc5e9.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/6d4fdcb8e36ea49c8022f6639dfdc5e9.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/6d4fdcb8e36ea49c8022f6639dfdc5e9.png"
+        title="[公式]" /> ，</p>
+<p>该式可以简化成 <img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/862192f8ea6c8e974e6f350ff000ba2b.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/862192f8ea6c8e974e6f350ff000ba2b.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/862192f8ea6c8e974e6f350ff000ba2b.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/862192f8ea6c8e974e6f350ff000ba2b.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/862192f8ea6c8e974e6f350ff000ba2b.png"
+        title="[公式]" /></p>
+<p><strong>当梯度计算完之后，可以根据需要生成不同的梯度增强图像，</strong></p>
+<p>1）第一种， <img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/f3ae902679c7e7dff01e3e0b560d1341.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/f3ae902679c7e7dff01e3e0b560d1341.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/f3ae902679c7e7dff01e3e0b560d1341.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/f3ae902679c7e7dff01e3e0b560d1341.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/f3ae902679c7e7dff01e3e0b560d1341.png"
+        title="[公式]" /> ，只显示灰度变化大的边缘轮廓，灰度变化平缓的呈黑色。</p>
+<p>2）第二种， <img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/cd884a2879adad0a0b1472324bed828a.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/cd884a2879adad0a0b1472324bed828a.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/cd884a2879adad0a0b1472324bed828a.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/cd884a2879adad0a0b1472324bed828a.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/cd884a2879adad0a0b1472324bed828a.png"
+        title="[公式]" /></p>
+<p>可以显示出非常明显的边缘轮廓，又不会破坏原灰度变化平缓的背景。</p>
+<p>3）第三种， <img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/97a3a607639fe7d14c1d78b2f41e5f0f.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/97a3a607639fe7d14c1d78b2f41e5f0f.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/97a3a607639fe7d14c1d78b2f41e5f0f.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/97a3a607639fe7d14c1d78b2f41e5f0f.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/97a3a607639fe7d14c1d78b2f41e5f0f.png"
+        title="[公式]" /></p>
+<p>。。。。还有很多类似的</p>
+<h3 id="sobel算子"><strong>Sobel算子</strong></h3>
+<p>采用梯度微分锐化图像，会让噪声、条纹得到增强，Sobel算子在一定程度上解决了这个问题， <img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/41e073a71a215b55b008f0b760277548.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/41e073a71a215b55b008f0b760277548.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/41e073a71a215b55b008f0b760277548.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/41e073a71a215b55b008f0b760277548.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/41e073a71a215b55b008f0b760277548.png"
+        title="[公式]" /></p>
+<p>从这个式子中，可以得到两个性质，</p>
+<ul>
+<li>
+<p>Sobel引入了平均的因素，因此对噪声有一定的平滑作用</p>
+</li>
+<li>
+<p>Sobel算子的操作就是相隔两个行（列）的差分，所以边缘两侧元素的得到了增强，因此边缘显得粗而亮。</p>
+</li>
+<li>
+<p>Sobel算子表示形式为：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/0e35c51da6c8afd65cd5fce63b02fbf6.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/0e35c51da6c8afd65cd5fce63b02fbf6.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/0e35c51da6c8afd65cd5fce63b02fbf6.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/0e35c51da6c8afd65cd5fce63b02fbf6.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/0e35c51da6c8afd65cd5fce63b02fbf6.png"
+        title="[公式]" /></p>
+</li>
+</ul>
+<h3 id="拉普拉斯算子二阶微分"><strong>拉普拉斯算子（二阶微分）</strong></h3>
+<p>拉普拉斯运算也是各向同性的线性运算。拉普拉斯算子为： <img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://www.zhihu.com/equation?tex=&#43;%5Cnabla&#43;%5E2f%3D%5Cfrac%7B%5Cpartial&#43;%5E2f%7D%7B%5Cpartial&#43;x%5E2%7D%2B%5Cfrac%7B%5Cpartial&#43;%5E2f%7D%7B%5Cpartial&#43;y%5E2%7D&#43;&#43;"
+        data-srcset="https://www.zhihu.com/equation?tex=&#43;%5Cnabla&#43;%5E2f%3D%5Cfrac%7B%5Cpartial&#43;%5E2f%7D%7B%5Cpartial&#43;x%5E2%7D%2B%5Cfrac%7B%5Cpartial&#43;%5E2f%7D%7B%5Cpartial&#43;y%5E2%7D&#43;&#43;, https://www.zhihu.com/equation?tex=&#43;%5Cnabla&#43;%5E2f%3D%5Cfrac%7B%5Cpartial&#43;%5E2f%7D%7B%5Cpartial&#43;x%5E2%7D%2B%5Cfrac%7B%5Cpartial&#43;%5E2f%7D%7B%5Cpartial&#43;y%5E2%7D&#43;&#43; 1.5x, https://www.zhihu.com/equation?tex=&#43;%5Cnabla&#43;%5E2f%3D%5Cfrac%7B%5Cpartial&#43;%5E2f%7D%7B%5Cpartial&#43;x%5E2%7D%2B%5Cfrac%7B%5Cpartial&#43;%5E2f%7D%7B%5Cpartial&#43;y%5E2%7D&#43;&#43; 2x"
+        data-sizes="auto"
+        alt="https://www.zhihu.com/equation?tex=&#43;%5Cnabla&#43;%5E2f%3D%5Cfrac%7B%5Cpartial&#43;%5E2f%7D%7B%5Cpartial&#43;x%5E2%7D%2B%5Cfrac%7B%5Cpartial&#43;%5E2f%7D%7B%5Cpartial&#43;y%5E2%7D&#43;&#43;"
+        title="[公式]" /> ,锐化之后的图像 <img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/7acb21174b6f45d337bd6545f59ded57.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/7acb21174b6f45d337bd6545f59ded57.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/7acb21174b6f45d337bd6545f59ded57.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/7acb21174b6f45d337bd6545f59ded57.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/7acb21174b6f45d337bd6545f59ded57.png"
+        title="[公式]" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/a2b2713bb60871f3f1ec41c2aa6b28b1.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/a2b2713bb60871f3f1ec41c2aa6b28b1.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/a2b2713bb60871f3f1ec41c2aa6b28b1.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/a2b2713bb60871f3f1ec41c2aa6b28b1.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/a2b2713bb60871f3f1ec41c2aa6b28b1.png"
+        title="[公式]" /> 为扩散效应的系数。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/109971bec2577b9104960b127601fe00.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/109971bec2577b9104960b127601fe00.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/109971bec2577b9104960b127601fe00.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/109971bec2577b9104960b127601fe00.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/109971bec2577b9104960b127601fe00.png"
+        title="[公式]" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/d3c44e73ed44a2e0a465c4f92926048d.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/d3c44e73ed44a2e0a465c4f92926048d.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/d3c44e73ed44a2e0a465c4f92926048d.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/d3c44e73ed44a2e0a465c4f92926048d.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/d3c44e73ed44a2e0a465c4f92926048d.png"
+        title="[公式]" /></p>
+<p>由此式可知，数字图像在 <img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/52c725820821186c715be2460f505135.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/52c725820821186c715be2460f505135.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/52c725820821186c715be2460f505135.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/52c725820821186c715be2460f505135.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/52c725820821186c715be2460f505135.png"
+        title="[公式]" /> 点的拉普拉斯算子，可以由该点的灰度值减去该点及其邻域四个点的平均灰度值求得。</p>
+<h3 id="canny算子">Canny算子</h3>
+<p><strong>1.使用高斯平滑（如公式所示）去除噪声。</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/2b12e73be69e86eb73254448684195e8.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/2b12e73be69e86eb73254448684195e8.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/2b12e73be69e86eb73254448684195e8.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/2b12e73be69e86eb73254448684195e8.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/2b12e73be69e86eb73254448684195e8.png"
+        title="refs/heads/master/image-20210517111128781" /></p>
+<p><strong>2.按照Sobel滤波器步骤计算梯度幅值和方向，寻找图像的强度梯度。先将卷积模板分别作用x和y方向，再计算梯度幅值和方向，其公式如下所示。梯度方向一般取0度、45度、90度和135度四个方向。</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/5b62600374d0cce9e566e19e6aa002fa.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/5b62600374d0cce9e566e19e6aa002fa.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/5b62600374d0cce9e566e19e6aa002fa.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/5b62600374d0cce9e566e19e6aa002fa.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/84ec341a66fdbd14311e39fb5b266923/5b62600374d0cce9e566e19e6aa002fa.png"
+        title="refs/heads/master/image-20210517111159837" /></p>
+<p><strong>3.通过非极大值抑制（Non-maximum Suppression）过滤掉非边缘像素，将模糊的边界变得清晰。该过程保留了每个像素点上梯度强度的极大值，过滤掉其他的值。</strong></p>
+<p><strong>4.利用滞后技术来跟踪边界。若某一像素位置和强边界相连的弱边界认为是边界，其他的弱边界则被删除。</strong></p>
+<h2 id="边缘线检测">边缘线检测</h2>
+<p>边缘检测算法主要是基于图像强度的一阶和二阶导数，但<strong>导数通常对噪声很敏感，<strong>因此需要采用</strong>滤波器来过滤噪声</strong>，并<strong>调用图像增强或阈值化算法进行处理</strong>，<strong>最后再进行边缘检测</strong>。</p>
+<p>而所谓边缘检测，其实是用锐化算法算出边缘，然后通过一些细节处理捕捉边缘。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-01-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://kengerlwl.github.io/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" data-title="数字图像处理" data-hashtags="数字图像处理"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://kengerlwl.github.io/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" data-hashtag="数字图像处理"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://kengerlwl.github.io/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" data-title="数字图像处理"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://kengerlwl.github.io/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" data-title="数字图像处理"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://kengerlwl.github.io/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" data-title="数字图像处理"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">数字图像处理</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E7%AE%97%E6%B3%95%E6%AF%94%E8%B5%9B%E5%A5%97%E8%B7%AF/" class="prev" rel="prev" title="算法比赛套路"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>算法比赛套路</a>
+            <a href="/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B1%A0%E5%AD%90python/" class="next" rel="next" title="数据库池子Python">数据库池子Python<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.132.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kengerlwl.github.io/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"JCTYUNKA9R","algoliaIndex":"kenger","algoliaSearchKey":"3ef68664495033362b7df9cf5a3eee1e","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

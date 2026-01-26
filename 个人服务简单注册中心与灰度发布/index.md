@@ -1,0 +1,1108 @@
+# 个人服务简单注册中心与灰度发布V2
+
+
+# Kenger 服务注册中心架构文档
+
+**当前方案的一些问题：**
+
+- nginx这边目前感知比较慢，目前是nginx这边轮训，所以会有一个间隔。（考虑nginx这边提供一个url，由注册中心一有变吗，立刻更新）
+- nginx这边建议新增使用本地缓存兜底(done)
+
+
+
+
+
+## 一、架构概述
+
+Kenger 服务注册中心是一套轻量级的服务发现与负载均衡解决方案，采用 **注册中心 + 网关** 的经典架构模式。
+
+### 1.1 整体架构图
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                              客户端请求                                       │
+│                                  │                                           │
+│                                  ▼                                           │
+│  ┌─────────────────────────────────────────────────────────────────────┐    │
+│  │                     OpenResty / Nginx 网关                           │    │
+│  │  ┌─────────────────────────────────────────────────────────────┐    │    │
+│  │  │  upstream_manager_v2.lua                                     │    │    │
+│  │  │  • 定时从注册中心拉取节点配置                                   │    │    │
+│  │  │  • 加权随机负载均衡                                            │    │    │
+│  │  │  • 健康检查（TCP + HTTP）                                      │    │    │
+│  │  │  • 共享内存存储节点状态                                         │    │    │
+│  │  └─────────────────────────────────────────────────────────────┘    │    │
+│  └─────────────────────────────────────────────────────────────────────┘    │
+│                                  │                                           │
+│                    ┌─────────────┴─────────────┐                            │
+│                    ▼                           ▼                            │
+│  ┌──────────────────────────┐    ┌──────────────────────────┐              │
+│  │   Backend Service A      │    │   Backend Service B      │              │
+│  │   (host:port, weight)    │    │   (host:port, weight)    │              │
+│  └──────────────────────────┘    └──────────────────────────┘              │
+│                    │                           │                            │
+│                    └─────────────┬─────────────┘                            │
+│                                  │ 注册/心跳                                 │
+│                                  ▼                                           │
+│  ┌─────────────────────────────────────────────────────────────────────┐    │
+│  │                    Kenger-Service 注册中心                           │    │
+│  │  ┌─────────────────────────────────────────────────────────────┐    │    │
+│  │  │  Flask Backend                                               │    │    │
+│  │  │  • /api/upstream/node/register   - 服务注册                   │    │    │
+│  │  │  • /api/upstream/node/deregister - 服务注销                   │    │    │
+│  │  │  • /api/upstream/heartbeat       - 心跳上报                   │    │    │
+│  │  │  • /api/upstream/sync            - 配置同步（供网关拉取）       │    │    │
+│  │  └─────────────────────────────────────────────────────────────┘    │    │
+│  │                                  │                                   │    │
+│  │                                  ▼                                   │    │
+│  │  ┌─────────────────────────────────────────────────────────────┐    │    │
+│  │  │                        MySQL 数据库                          │    │    │
+│  │  │  • upstream_namespace - 命名空间表                           │    │    │
+│  │  │  • upstream_node      - 节点表                               │    │    │
+│  │  └─────────────────────────────────────────────────────────────┘    │    │
+│  └─────────────────────────────────────────────────────────────────────┘    │
+│                                                                              │
+│  ┌─────────────────────────────────────────────────────────────────────┐    │
+│  │                       KengerKit SDK (Python)                        │    │
+│  │  • ServiceRegistry 类                                               │    │
+│  │  • 自动注册、心跳、注销                                              │    │
+│  │  • 支持环境变量配置                                                  │    │
+│  └─────────────────────────────────────────────────────────────────────┘    │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+### 1.2 核心组件
+
+| 组件         | 技术栈             | 职责                                   |
+| ------------ | ------------------ | -------------------------------------- |
+| **注册中心** | Flask + MySQL      | 服务注册、心跳管理、配置存储、同步接口 |
+| **网关**     | OpenResty + Lua    | 流量代理、负载均衡、健康检查、配置同步 |
+| **SDK**      | Python (kengerkit) | 服务自动注册、心跳发送、优雅退出       |
+
+### 1.3 数据流向
+
+1. **服务注册流程**: 服务启动 → SDK 调用注册接口 → 注册中心写入数据库
+2. **心跳保活流程**: SDK 定时发送心跳 → 注册中心更新 last_heartbeat
+3. **配置同步流程**: 网关定时拉取 /api/upstream/sync → 更新本地共享内存
+4. **请求代理流程**: 客户端请求 → 网关选择健康节点 → 转发到后端服务
+
+---
+
+## 二、注册中心（Kenger-Service）
+
+### 2.1 数据模型
+
+#### 命名空间表 (upstream_namespace)
+
+```sql
+CREATE TABLE upstream_namespace (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(64) NOT NULL UNIQUE COMMENT '命名空间名称',
+    description VARCHAR(255) COMMENT '描述',
+    health_path VARCHAR(128) DEFAULT '/api/status' COMMENT '默认健康检查路径',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+```
+
+#### 节点表 (upstream_node)
+
+```sql
+CREATE TABLE upstream_node (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    namespace_id INT NOT NULL COMMENT '命名空间ID',
+    host VARCHAR(128) NOT NULL COMMENT '节点地址',
+    port INT NOT NULL COMMENT '端口',
+    weight INT DEFAULT 100 COMMENT '权重',
+    health_path VARCHAR(128) COMMENT '健康检查路径（覆盖命名空间默认值）',
+    status ENUM('online', 'offline') DEFAULT 'online' COMMENT '状态',
+    last_heartbeat TIMESTAMP COMMENT '最后心跳时间',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY uk_ns_host_port (namespace_id, host, port),
+    FOREIGN KEY (namespace_id) REFERENCES upstream_namespace(id) ON DELETE CASCADE
+);
+```
+
+### 2.2 API 接口
+
+#### 命名空间管理
+
+| 接口                             | 方法 | 说明                         |
+| -------------------------------- | ---- | ---------------------------- |
+| `/api/upstream/namespace/list`   | GET  | 获取所有命名空间             |
+| `/api/upstream/namespace/add`    | POST | 新增命名空间                 |
+| `/api/upstream/namespace/update` | POST | 更新命名空间                 |
+| `/api/upstream/namespace/delete` | POST | 删除命名空间（级联删除节点） |
+
+#### 节点管理
+
+| 接口                            | 方法 | 说明                 |
+| ------------------------------- | ---- | -------------------- |
+| `/api/upstream/node/list`       | GET  | 获取节点列表         |
+| `/api/upstream/node/register`   | POST | 注册节点（SDK 调用） |
+| `/api/upstream/node/deregister` | POST | 注销节点             |
+| `/api/upstream/node/weight`     | POST | 调整节点权重         |
+| `/api/upstream/node/update`     | POST | 更新节点（通过ID）   |
+| `/api/upstream/node/delete`     | POST | 删除节点（通过ID）   |
+
+#### 心跳与同步
+
+| 接口                      | 方法 | 说明                       |
+| ------------------------- | ---- | -------------------------- |
+| `/api/upstream/heartbeat` | POST | 心跳上报（SDK 调用）       |
+| `/api/upstream/sync`      | GET  | 获取同步数据（供网关拉取） |
+
+### 2.3 认证方式
+
+所有接口需要 Token 认证：
+
+```bash
+# 方式1: Authorization Header
+Authorization: Bearer <your_api_token>
+
+# 方式2: X-API-Token Header
+X-API-Token: <your_api_token>
+```
+
+---
+
+## 三、网关层（OpenResty）
+
+### 3.1 Lua 脚本核心功能
+
+`upstream_manager_v2.lua` 提供以下功能：
+
+| 功能     | 函数                    | 说明                              |
+| -------- | ----------------------- | --------------------------------- |
+| 初始化   | `init(config)`          | 配置注册中心地址、Token、同步间隔 |
+| 启动同步 | `start_sync_timer()`    | 启动定时同步任务                  |
+| 获取后端 | `get_backend(ns)`       | 加权随机选择健康节点              |
+| 健康检查 | `health_check()`        | 检查所有节点健康状态              |
+| 获取节点 | `get_all_nodes(ns)`     | 获取指定命名空间的节点列表        |
+| 获取状态 | `get_health_status(ns)` | 获取健康状态统计                  |
+
+### 3.2 负载均衡算法
+
+采用 **加权随机** 算法：
+
+```lua
+-- 加权随机选择
+local rand = math.random(1, total_weight)
+local cumulative = 0
+
+for _, node in ipairs(available_nodes) do
+    cumulative = cumulative + node.weight
+    if rand <= cumulative then
+        return node
+    end
+end
+```
+
+### 3.3 健康检查机制
+
+- **检查方式**: TCP 连接 + HTTP GET 请求
+- **检查间隔**: 5 秒
+- **超时时间**: 2 秒
+- **健康判定**: HTTP 200 响应
+- **状态存储**: ngx.shared.healthcheck（TTL 30秒）
+
+### 3.4 Nginx 配置示例
+
+```nginx
+http {
+    # 共享内存
+    lua_shared_dict upstream_nodes 10m;
+    lua_shared_dict healthcheck 1m;
+
+    # Lua 脚本路径
+    lua_package_path "/www/server/nginx/nginx/conf/lua/?.lua;;";
+
+    # 初始化
+    init_by_lua_block {
+        local upstream = require "upstream_manager_v2"
+        upstream.init({
+            registry_url = "http://127.0.0.1:5000",
+            registry_token = "your_token_here",
+            sync_interval = 10
+        })
+    }
+
+    # Worker 初始化
+    init_worker_by_lua_block {
+        local upstream = require "upstream_manager_v2"
+        if ngx.worker.id() == 0 then
+            -- 启动同步定时器
+            upstream.start_sync_timer()
+
+            -- 启动健康检查定时器
+            ngx.timer.every(5, function()
+                upstream.health_check()
+            end)
+        end
+    }
+
+    # 代理配置
+    server {
+        listen 18080;
+        server_name _;
+
+        location / {
+            set $backend "";
+
+            access_by_lua_block {
+                local upstream = require "upstream_manager_v2"
+                local backend = upstream.get_backend("jrebel")
+                if not backend then
+                    ngx.exit(503)
+                end
+                ngx.var.backend = backend
+            }
+
+            proxy_pass http://$backend;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+        }
+    }
+}
+```
+
+---
+
+## 四、SDK 使用指南（KengerKit）
+
+### 4.1 安装
+
+```bash
+pip install kengerkit
+```
+
+### 4.2 基本使用
+
+```python
+from kengerkit import KengerClient
+from kengerkit.registry import ServiceRegistry
+
+# 创建客户端
+client = KengerClient(
+    base_url="https://your-kenger-service.com",
+    token="your_api_token"
+)
+
+# 创建注册器
+registry = ServiceRegistry(
+    client=client,
+    namespace="jrebel",           # 命名空间
+    port=58081,                   # 服务端口
+    host="43.143.21.219",         # 可选，默认自动获取
+    weight=100,                   # 权重
+    health_path="/api/status",    # 健康检查路径
+    heartbeat_interval=10,        # 心跳间隔（秒）
+)
+
+# 启动（注册 + 心跳）
+registry.start()
+
+# 你的 Flask 应用
+app.run(host='0.0.0.0', port=58081)
+
+# 程序退出时自动注销
+```
+
+### 4.3 环境变量配置
+
+支持通过环境变量配置：
+
+| 环境变量                             | 说明           | 默认值      |
+| ------------------------------------ | -------------- | ----------- |
+| `KENGER_REGISTRY_HOST`               | 注册的主机地址 | 自动检测    |
+| `KENGER_REGISTRY_PORT`               | 注册的端口     | 必需        |
+| `KENGER_REGISTRY_NAMESPACE`          | 命名空间       | 必需        |
+| `KENGER_REGISTRY_WEIGHT`             | 权重           | 100         |
+| `KENGER_REGISTRY_HEALTH_PATH`        | 健康检查路径   | /api/status |
+| `KENGER_REGISTRY_HEARTBEAT_INTERVAL` | 心跳间隔（秒） | 10          |
+
+```python
+# 从环境变量创建
+registry = ServiceRegistry.from_env(client)
+registry.start()
+```
+
+### 4.4 Flask 集成示例
+
+```python
+from flask import Flask, jsonify
+from kengerkit import KengerClient
+from kengerkit.registry import ServiceRegistry
+
+app = Flask(__name__)
+
+@app.route('/api/status')
+def health_check():
+    return jsonify({"status": "ok"})
+
+@app.route('/api/hello')
+def hello():
+    return jsonify({"message": "Hello from JRebel service!"})
+
+if __name__ == '__main__':
+    # 初始化注册中心客户端
+    client = KengerClient(
+        base_url="http://127.0.0.1:5000",
+        token="defaultToken"
+    )
+
+    # 创建并启动服务注册
+    registry = ServiceRegistry(
+        client=client,
+        namespace="jrebel",
+        port=58081,
+        host="43.143.21.219",
+        weight=100
+    )
+    registry.start()
+
+    # 启动 Flask 应用
+    app.run(host='0.0.0.0', port=58081)
+```
+
+---
+
+## 五、实操流程
+
+### 5.1 部署注册中心
+
+```bash
+cd kenger-service
+pip install -r requirements.txt
+python app.py
+```
+
+确保 MySQL 数据库已创建，表会自动创建。在配置管理中设置 `api_tokens` 配置项。
+
+---
+
+### 5.2 配置文件一：Lua 脚本
+
+**文件路径**: `/www/server/nginx/nginx/conf/lua/upstream_manager_v2.lua`
+
+```lua
+-- upstream_manager_v2.lua
+-- 动态 upstream 管理模块（注册中心模式）
+-- 从注册中心拉取配置，Nginx 只负责负载均衡
+-- 所有节点管理通过后端注册中心完成
+
+local _M = {}
+
+local cjson = require "cjson"
+local http = require "resty.http"
+
+-- 共享内存
+local upstream_nodes = ngx.shared.upstream_nodes
+local healthcheck = ngx.shared.healthcheck
+
+-- 常量
+local DEFAULT_NS = "default"
+local HEALTH_CHECK_PATH = "/api/status"
+local HEALTH_CHECK_TIMEOUT = 2000  -- 2秒
+local SYNC_INTERVAL = 10  -- 同步间隔（秒）
+
+-- 注册中心配置（模块级变量，可通过 init 配置）
+local REGISTRY_URL = ""
+local REGISTRY_TOKEN = ""
+local SYNC_VERSION_KEY = "sync:version"
+
+-- 获取 namespace 的 key
+local function get_ns_key(ns)
+    return "ns:" .. (ns or DEFAULT_NS)
+end
+
+-- 初始化（传入注册中心配置）
+function _M.init(config)
+    config = config or {}
+    REGISTRY_URL = config.registry_url or os.getenv("KENGER_REGISTRY_URL") or "http://127.0.0.1:5000"
+    REGISTRY_TOKEN = config.registry_token or os.getenv("KENGER_REGISTRY_TOKEN") or ""
+
+    if config.sync_interval then
+        SYNC_INTERVAL = config.sync_interval
+    end
+
+    ngx.log(ngx.INFO, "upstream_manager_v2 initialized, registry: ", REGISTRY_URL, ", sync_interval: ", SYNC_INTERVAL, "s")
+end
+
+-- 获取指定 namespace 的所有节点
+function _M.get_all_nodes(ns)
+    local ns_key = get_ns_key(ns)
+    local nodes_json = upstream_nodes:get(ns_key)
+    if not nodes_json then
+        return {}
+    end
+
+    local ok, nodes = pcall(cjson.decode, nodes_json)
+    if not ok then
+        ngx.log(ngx.ERR, "failed to decode nodes for ", ns_key, ": ", nodes)
+        return {}
+    end
+
+    -- 添加健康状态
+    for _, node in ipairs(nodes) do
+        local key = ns_key .. ":" .. node.host .. ":" .. node.port
+        local health = healthcheck:get(key)
+        node.healthy = (health ~= "unhealthy")
+    end
+
+    return nodes
+end
+
+-- 获取所有 namespace 及其节点
+function _M.get_all_namespaces()
+    local keys = upstream_nodes:get_keys(100)  -- 最多获取 100 个
+    local result = {}
+
+    for _, key in ipairs(keys) do
+        if key:sub(1, 3) == "ns:" then
+            local ns = key:sub(4)
+            result[ns] = _M.get_all_nodes(ns)
+        end
+    end
+
+    return result
+end
+
+-- 保存节点列表（内部使用）
+local function save_nodes(ns, nodes)
+    local ns_key = get_ns_key(ns)
+    local ok, json = pcall(cjson.encode, nodes)
+    if not ok then
+        return false, "failed to encode nodes"
+    end
+
+    local ok, err = upstream_nodes:set(ns_key, json)
+    if not ok then
+        return false, err
+    end
+
+    return true
+end
+
+-- 加权随机选择算法
+local function weighted_random_select(ns, nodes)
+    local ns_key = get_ns_key(ns)
+    local total_weight = 0
+    local available_nodes = {}
+
+    -- 只选择健康且权重大于0的节点
+    for _, node in ipairs(nodes) do
+        local key = ns_key .. ":" .. node.host .. ":" .. node.port
+        local health = healthcheck:get(key)
+
+        if health ~= "unhealthy" and node.weight > 0 then
+            total_weight = total_weight + node.weight
+            table.insert(available_nodes, node)
+        end
+    end
+
+    if #available_nodes == 0 then
+        return nil
+    end
+
+    if #available_nodes == 1 then
+        return available_nodes[1]
+    end
+
+    -- 加权随机选择
+    local rand = math.random(1, total_weight)
+    local cumulative = 0
+
+    for _, node in ipairs(available_nodes) do
+        cumulative = cumulative + node.weight
+        if rand <= cumulative then
+            return node
+        end
+    end
+
+    return available_nodes[1]
+end
+
+-- 获取后端地址（指定 namespace）
+function _M.get_backend(ns)
+    local nodes = _M.get_all_nodes(ns)
+
+    if #nodes == 0 then
+        ngx.log(ngx.WARN, "no nodes available for ns=", ns or DEFAULT_NS)
+        return nil
+    end
+
+    local node = weighted_random_select(ns, nodes)
+    if not node then
+        ngx.log(ngx.WARN, "no healthy nodes available for ns=", ns or DEFAULT_NS)
+        return nil
+    end
+
+    return node.host .. ":" .. node.port
+end
+
+-- 健康检查（检查所有 namespace 的节点）
+function _M.health_check()
+    local all_ns = _M.get_all_namespaces()
+
+    for ns, nodes in pairs(all_ns) do
+        local ns_key = get_ns_key(ns)
+
+        for _, node in ipairs(nodes) do
+            local key = ns_key .. ":" .. node.host .. ":" .. node.port
+            local health_path = node.health_path or HEALTH_CHECK_PATH
+
+            local sock = ngx.socket.tcp()
+            sock:settimeout(HEALTH_CHECK_TIMEOUT)
+
+            local ok, err = sock:connect(node.host, node.port)
+            if ok then
+                local req = "GET " .. health_path .. " HTTP/1.0\r\nHost: " .. node.host .. ":" .. node.port .. "\r\n\r\n"
+                sock:send(req)
+
+                local line, err = sock:receive("*l")
+                if line and line:match("200") then
+                    healthcheck:set(key, "healthy", 30)
+                    ngx.log(ngx.DEBUG, "health check passed: ", key)
+                else
+                    healthcheck:set(key, "unhealthy", 30)
+                    ngx.log(ngx.WARN, "health check failed: ", key, " - ", err or "non-200")
+                end
+
+                sock:close()
+            else
+                healthcheck:set(key, "unhealthy", 30)
+                ngx.log(ngx.WARN, "health check failed: ", key, " - ", err)
+            end
+        end
+    end
+end
+
+-- 获取健康状态（只读）
+function _M.get_health_status(ns)
+    local nodes
+    if ns then
+        nodes = _M.get_all_nodes(ns)
+    else
+        -- 返回所有 namespace 的状态
+        return _M.get_all_namespaces()
+    end
+
+    local ns_key = get_ns_key(ns)
+    local result = {
+        namespace = ns or DEFAULT_NS,
+        total = #nodes,
+        healthy = 0,
+        unhealthy = 0,
+        nodes = {}
+    }
+
+    for _, node in ipairs(nodes) do
+        local key = ns_key .. ":" .. node.host .. ":" .. node.port
+        local health = healthcheck:get(key)
+        local is_healthy = (health ~= "unhealthy")
+
+        if is_healthy then
+            result.healthy = result.healthy + 1
+        else
+            result.unhealthy = result.unhealthy + 1
+        end
+
+        table.insert(result.nodes, {
+            address = node.host .. ":" .. node.port,
+            weight = node.weight,
+            healthy = is_healthy,
+            health_path = node.health_path
+        })
+    end
+
+    return result
+end
+
+-- ==================== 注册中心同步功能 ====================
+
+-- 从注册中心拉取配置
+function _M.sync_from_registry(ns)
+    if REGISTRY_URL == "" then
+        ngx.log(ngx.WARN, "REGISTRY_URL not configured, skip sync")
+        return false, "registry url not configured"
+    end
+
+    local httpc = http.new()
+    httpc:set_timeout(5000)  -- 5秒超时
+
+    local url = REGISTRY_URL .. "/api/upstream/sync"
+    if ns then
+        url = url .. "?ns=" .. ns
+    end
+
+    local headers = {
+        ["Content-Type"] = "application/json"
+    }
+
+    if REGISTRY_TOKEN ~= "" then
+        headers["Authorization"] = "Bearer " .. REGISTRY_TOKEN
+    end
+
+    local res, err = httpc:request_uri(url, {
+        method = "GET",
+        headers = headers
+    })
+
+    if not res then
+        ngx.log(ngx.ERR, "failed to sync from registry: ", err)
+        return false, err
+    end
+
+    if res.status ~= 200 then
+        ngx.log(ngx.ERR, "registry returned status: ", res.status)
+        return false, "status " .. res.status
+    end
+
+    local ok, data = pcall(cjson.decode, res.body)
+    if not ok then
+        ngx.log(ngx.ERR, "failed to decode registry response: ", data)
+        return false, "decode error"
+    end
+
+    if data.code ~= 0 then
+        ngx.log(ngx.ERR, "registry error: ", data.message)
+        return false, data.message
+    end
+
+    -- 检查版本号，避免重复更新
+    local current_version = upstream_nodes:get(SYNC_VERSION_KEY)
+    if current_version and data.version and tonumber(current_version) >= tonumber(data.version) then
+        ngx.log(ngx.DEBUG, "sync skipped, version unchanged: ", current_version)
+        return true
+    end
+
+    -- 更新节点数据
+    local sync_data = data.data
+    if not sync_data then
+        return true
+    end
+
+    for namespace, ns_data in pairs(sync_data) do
+        local nodes = {}
+        for _, node in ipairs(ns_data.nodes or {}) do
+            table.insert(nodes, {
+                host = node.host,
+                port = node.port,
+                weight = node.weight or 100,
+                health_path = node.health_path or ns_data.health_path or HEALTH_CHECK_PATH,
+                created_at = ngx.time(),
+                updated_at = ngx.time()
+            })
+        end
+
+        local ok, err = save_nodes(namespace, nodes)
+        if ok then
+            ngx.log(ngx.INFO, "synced namespace: ", namespace, " nodes: ", #nodes)
+        else
+            ngx.log(ngx.ERR, "failed to save nodes for ", namespace, ": ", err)
+        end
+    end
+
+    -- 更新版本号
+    if data.version then
+        upstream_nodes:set(SYNC_VERSION_KEY, data.version)
+    end
+
+    return true
+end
+
+-- 定时同步任务（在 init_worker_by_lua 中调用）
+function _M.start_sync_timer()
+    if REGISTRY_URL == "" then
+        ngx.log(ngx.WARN, "REGISTRY_URL not configured, sync timer not started")
+        return
+    end
+
+    local handler
+    handler = function(premature)
+        if premature then
+            return
+        end
+
+        -- 执行同步
+        local ok, err = pcall(_M.sync_from_registry)
+        if not ok then
+            ngx.log(ngx.ERR, "sync error: ", err)
+        end
+
+        -- 重新设置定时器
+        local ok, err = ngx.timer.at(SYNC_INTERVAL, handler)
+        if not ok then
+            ngx.log(ngx.ERR, "failed to create sync timer: ", err)
+        end
+    end
+
+    -- 启动首次同步（延迟1秒）
+    local ok, err = ngx.timer.at(1, handler)
+    if not ok then
+        ngx.log(ngx.ERR, "failed to create initial sync timer: ", err)
+    else
+        ngx.log(ngx.INFO, "sync timer started, interval: ", SYNC_INTERVAL, "s, registry: ", REGISTRY_URL)
+    end
+end
+
+-- 获取当前配置信息（只读）
+function _M.get_config()
+    return {
+        registry_url = REGISTRY_URL,
+        token_set = (REGISTRY_TOKEN ~= ""),
+        sync_interval = SYNC_INTERVAL
+    }
+end
+
+return _M
+```
+
+---
+
+### 5.3 配置文件二：Nginx 主配置
+
+**文件路径**: `/www/server/nginx/nginx/conf/nginx.conf`
+
+在 `http {}` 块内添加以下配置（放在 `include proxy.conf;` 之后）：
+
+```nginx
+        #####################################################
+        # 动态 upstream 配置 V2（注册中心模式）
+        #####################################################
+
+        # Lua 共享内存
+        lua_shared_dict upstream_nodes 10m;
+        lua_shared_dict healthcheck 1m;
+
+        # Lua 脚本路径
+        lua_package_path "/www/server/nginx/nginx/conf/lua/?.lua;;";
+
+        # 初始化（配置注册中心地址和 Token）
+        init_by_lua_block {
+            local upstream = require "upstream_manager_v2"
+            upstream.init({
+                registry_url = "http://127.0.0.1:5000",
+                registry_token = "这里是token鉴权的",
+                sync_interval = 10
+            })
+        }
+
+        # Worker 初始化（启动同步和健康检查定时器）
+        init_worker_by_lua_block {
+            local upstream = require "upstream_manager_v2"
+            if ngx.worker.id() == 0 then
+                -- 启动注册中心同步定时器
+                upstream.start_sync_timer()
+
+                -- 启动健康检查定时器
+                local ok, err = ngx.timer.every(5, function()
+                    upstream.health_check()
+                end)
+                if not ok then
+                    ngx.log(ngx.ERR, "failed to create health check timer: ", err)
+                end
+            end
+        }
+
+```
+
+**注意**: 修改 `registry_token` 为你实际的 API Token。
+
+---
+
+### 5.4 配置文件三：网站代理配置
+
+**文件路径**: `/www/server/panel/vhost/nginx/jrebel.conf`
+
+```nginx
+server {
+    listen 18080;
+    server_name _;
+
+    # 访问日志（可选）
+    access_log /www/wwwlogs/jrebel.log;
+    error_log /www/wwwlogs/jrebel.error.log;
+
+    location / {
+        set $backend "";
+
+        # 动态选择后端
+        access_by_lua_block {
+            local upstream = require "upstream_manager_v2"
+            local backend = upstream.get_backend("jrebel")  -- 命名空间名称
+            if not backend then
+                ngx.log(ngx.ERR, "no available backend for jrebel")
+                ngx.exit(503)
+            end
+            ngx.var.backend = backend
+        }
+    
+        # 关键：传递原始 Host 头（包含端口）
+        proxy_set_header Host $host:$server_port;
+        # 或者使用 $http_host（如果客户端请求中包含端口）
+        # proxy_set_header Host $http_host;
+
+        # 其他常用头部
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Port $server_port;
+
+        # 代理到动态后端
+        proxy_pass http://$backend;
+
+        # 超时设置
+        proxy_connect_timeout 10s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 60s;
+    }
+}
+```
+
+**说明**:
+- `listen 18080` - 监听端口，根据需要修改
+- `get_backend("jrebel")` - 命名空间名称，需要与注册中心的命名空间一致
+
+---
+
+### 5.5 踩坑记录：Lua HTTP 模块缺失
+
+#### 问题现象
+
+Nginx 启动时报错：
+
+```
+nginx: [error] init_by_lua error: ...lua/upstream_manager_v2.lua:9: module 'resty.http' not found
+```
+
+或者：
+
+```
+nginx: [error] init_by_lua error: ...resty/http.lua:xx: module 'resty.http_connect' not found
+```
+
+#### 原因分析
+
+宝塔面板安装的 OpenResty 默认不包含 `lua-resty-http` 模块，这是一个第三方 HTTP 客户端库，用于在 Lua 中发起 HTTP 请求。
+
+#### 解决方案
+
+手动下载安装三个文件到 `/www/server/nginx/lualib/resty/` 目录：
+
+```bash
+cd /www/server/nginx/lualib/resty/
+
+# 1. 下载主模块
+wget https://raw.githubusercontent.com/ledgetech/lua-resty-http/master/lib/resty/http.lua
+
+# 2. 下载 headers 模块
+wget https://raw.githubusercontent.com/ledgetech/lua-resty-http/master/lib/resty/http_headers.lua
+
+# 3. 下载 connect 模块（重要！很容易漏掉）
+wget https://raw.githubusercontent.com/ledgetech/lua-resty-http/master/lib/resty/http_connect.lua
+```
+
+**⚠️ 特别注意**: `http_connect.lua` 是 `lua-resty-http` 较新版本引入的依赖，很容易被忽略。如果只下载了 `http.lua` 和 `http_headers.lua`，启动时会报 `module 'resty.http_connect' not found` 错误。
+
+#### 验证安装
+
+```bash
+ls -la /www/server/nginx/lualib/resty/ | grep http
+# 应该看到：
+# http.lua
+# http_connect.lua
+# http_headers.lua
+```
+
+---
+
+### 5.6 部署步骤汇总
+
+```bash
+# 1. 创建 Lua 脚本目录（如果不存在）
+mkdir -p /www/server/nginx/nginx/conf/lua
+
+# 2. 上传 Lua 脚本
+# 将 upstream_manager_v2.lua 内容保存到：
+# /www/server/nginx/nginx/conf/lua/upstream_manager_v2.lua
+
+# 3. 安装 HTTP 模块依赖
+cd /www/server/nginx/lualib/resty/
+wget https://raw.githubusercontent.com/ledgetech/lua-resty-http/master/lib/resty/http.lua
+wget https://raw.githubusercontent.com/ledgetech/lua-resty-http/master/lib/resty/http_headers.lua
+wget https://raw.githubusercontent.com/ledgetech/lua-resty-http/master/lib/resty/http_connect.lua
+
+# 4. 修改 nginx.conf（添加 init_by_lua_block 等配置）
+
+# 5. 创建网站配置
+# 将代理配置保存到：/www/server/panel/vhost/nginx/jrebel.conf
+
+# 6. 测试配置
+nginx -t
+
+# 7. 重启 Nginx
+systemctl restart nginx
+# 或
+/etc/init.d/nginx restart
+
+# 8. 查看日志确认启动成功
+tail -f /www/wwwlogs/nginx_error.log
+# 应该看到：
+# upstream_manager_v2 initialized, registry: http://127.0.0.1:5000
+# sync timer started, interval: 10s
+```
+
+---
+
+### 5.7 验证服务
+
+```bash
+# 1. 查看同步数据（从注册中心）
+curl -X GET "http://localhost:5000/api/upstream/sync?ns=jrebel" \
+  -H "Authorization: Bearer defaultToken"
+
+# 2. 查看 Nginx 缓存的节点
+curl http://127.0.0.1:8081/nodes?ns=jrebel
+
+# 3. 查看健康状态
+curl http://127.0.0.1:8081/health?ns=jrebel
+
+# 4. 查看配置信息
+curl http://127.0.0.1:8081/config
+
+# 5. 测试代理
+curl http://43.143.21.219:18080/api/status
+```
+
+---
+
+## 六、运维指南
+
+### 6.1 节点生命周期
+
+| 状态    | 触发条件            | 说明                       |
+| ------- | ------------------- | -------------------------- |
+| online  | 注册成功 / 心跳成功 | 正常状态，参与负载均衡     |
+| offline | 心跳超时 30s        | 不参与负载均衡，但保留记录 |
+| 删除    | 心跳超时 120s       | 自动从数据库删除           |
+
+### 6.2 权重调整
+
+```bash
+# 降低某节点权重（灰度发布）
+curl -X POST "http://localhost:5000/api/upstream/node/weight" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer defaultToken" \
+  -d '{"ns": "jrebel", "host": "43.143.21.219", "port": 58081, "weight": 10}'
+
+# 恢复权重
+curl -X POST "http://localhost:5000/api/upstream/node/weight" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer defaultToken" \
+  -d '{"ns": "jrebel", "host": "43.143.21.219", "port": 58081, "weight": 100}'
+```
+
+### 6.3 手动注销节点
+
+```bash
+curl -X POST "http://localhost:5000/api/upstream/node/deregister" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer defaultToken" \
+  -d '{"ns": "jrebel", "host": "43.143.21.219", "port": 58081}'
+```
+
+### 6.4 故障排查
+
+| 问题                    | 排查方向                                |
+| ----------------------- | --------------------------------------- |
+| 503 Service Unavailable | 检查是否有健康节点、同步定时器是否启动  |
+| 节点不同步              | 检查注册中心连接、Token 是否正确        |
+| 健康检查失败            | 检查 health_path 是否正确、服务是否正常 |
+| 心跳超时                | 检查网络连接、SDK 是否正常运行          |
+
+---
+
+## 七、最佳实践
+
+### 7.1 命名空间规划
+
+- 按服务类型划分：`jrebel`、`api-gateway`、`user-service`
+- 按环境划分：`prod-jrebel`、`test-jrebel`
+
+### 7.2 权重策略
+
+- 新节点上线：先设置低权重（如 10），观察稳定后逐步提升
+- 节点下线：先降权重到 0，等待流量排空后再注销
+- 灰度发布：新版本节点设置低权重，逐步提升
+
+### 7.3 健康检查路径
+
+- 建议使用专门的健康检查接口：`/api/status` 或 `/health`
+- 健康检查接口应该轻量、快速响应
+- 返回 HTTP 200 表示健康
+
+### 7.4 心跳间隔
+
+- 推荐值：10 秒
+- 不宜过短（增加注册中心压力）
+- 不宜过长（故障发现延迟）
+
+---
+
+## 八、附录
+
+### 8.1 配置参数汇总
+
+#### 注册中心配置
+
+| 参数                | 说明                 | 默认值 |
+| ------------------- | -------------------- | ------ |
+| 心跳超时（offline） | 标记为离线的超时时间 | 30 秒  |
+| 心跳超时（删除）    | 自动删除的超时时间   | 120 秒 |
+
+#### 网关配置
+
+| 参数                    | 说明         | 默认值 |
+| ----------------------- | ------------ | ------ |
+| sync_interval           | 同步间隔     | 10 秒  |
+| health_check_interval   | 健康检查间隔 | 5 秒   |
+| health_check_timeout    | 健康检查超时 | 2 秒   |
+| upstream_nodes 共享内存 | 节点数据存储 | 10m    |
+| healthcheck 共享内存    | 健康状态存储 | 1m     |
+
+### 8.2 相关文件路径
+
+| 文件           | 路径                                                       |
+| -------------- | ---------------------------------------------------------- |
+| Lua 脚本       | `/www/server/nginx/nginx/conf/lua/upstream_manager_v2.lua` |
+| Nginx 主配置   | `/www/server/nginx/nginx/conf/nginx.conf`                  |
+| 网站配置目录   | `/www/server/panel/vhost/nginx/`                           |
+| Nginx 错误日志 | `/www/wwwlogs/nginx_error.log`                             |
+| Lua 模块目录   | `/www/server/nginx/lualib/resty/`                          |
+
+### 8.3 常用命令
+
+```bash
+# 测试 Nginx 配置
+nginx -t
+
+# 重启 Nginx
+systemctl restart nginx
+
+# 查看 Nginx 日志
+tail -f /www/wwwlogs/nginx_error.log
+
+# 查看同步数据
+curl -X GET "http://localhost:5000/api/upstream/sync" \
+  -H "Authorization: Bearer defaultToken"
+
+# 查看节点状态
+curl http://127.0.0.1:8081/nodes
+curl http://127.0.0.1:8081/health
+
+# 查看配置信息
+curl http://127.0.0.1:8081/config
+

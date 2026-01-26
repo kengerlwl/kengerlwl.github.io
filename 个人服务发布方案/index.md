@@ -1,0 +1,1058 @@
+# 个人服务发布方案V1
+
+
+# 背景
+
+我有一个个人服务，这个服务有一定的用户量，之前是单机的，只有一个容器。
+但是如果我想要升级，而这个时候正好有用户在使用，部署期间将会导致服务不可用。
+**注意**：这个服务并没有长连接情况，无需考虑优雅停机。
+
+
+
+
+
+# 方案
+
+参考企业级的方案，动态上线下线。
+
+基于nginx动态配置后端的容器的流量权重，后端一个服务，起两个容器，不同端口，配置流量。
+不过我希望能够动态注册上线下线。
+
+
+
+底层，基于Upstream 
+
+什么是Upstream
+
+**Upstream** 在 Nginx/OpenResty 中指的是 **后端服务器（组）**，即 Nginx 作为反向代理时，请求最终要转发到的目标服务器。
+
+
+
+OpenResty热更新更好，更加安全，更加强大。
+
+
+
+# 实操
+
+# OpenResty 动态 Upstream 平滑发布方案（V2 多租户版）
+
+## 一、方案概述
+
+基于 OpenResty + Lua 实现动态服务注册/注销、权重调整、健康检查，支持多个网站/服务独立管理后端节点池，实现零停机平滑发布。
+
+### 架构图
+
+```
+                         ┌─────────────────┐
+                         │    用户请求      │
+                         └────────┬────────┘
+                                  │
+                                  ▼
+                         ┌─────────────────┐
+                         │   OpenResty     │
+                         │  (动态负载均衡)  │
+                         │    Port: 80     │
+                         └────────┬────────┘
+                                  │
+           ┌──────────────────────┼──────────────────────┐
+           │                      │                      │
+           ▼                      ▼                      ▼
+    ┌─────────────┐       ┌─────────────┐       ┌─────────────┐
+    │ ns: jrebel  │       │ ns: blog    │       │ ns: api     │
+    ├─────────────┤       ├─────────────┤       ├─────────────┤
+    │ :58081 w=50 │       │ :3000 w=100 │       │ :8000 w=100 │
+    │ :58082 w=50 │       │ :3001 w=100 │       └─────────────┘
+    └─────────────┘       └─────────────┘
+```
+
+### 核心特性
+
+- **多租户隔离**：每个网站/服务使用独立的 namespace
+- **动态注册/注销**：通过 API 管理节点，无需修改配置文件
+- **动态权重调整**：实时调整流量分配比例
+- **自动健康检查**：每 5 秒检查后端节点，自动摘除故障节点
+- **自定义健康检查路径**：每个服务可配置不同的健康检查接口
+
+---
+
+## 二、环境信息
+
+| 项目         | 值                                      |
+| ------------ | --------------------------------------- |
+| 服务器 IP    | 43.143.21.219                           |
+| 面板         | 宝塔面板                                |
+| Web 服务器   | OpenResty                               |
+| Nginx 路径   | /www/server/nginx/nginx/                |
+| 配置路径     | /www/server/nginx/nginx/conf/nginx.conf |
+| Lua 脚本路径 | /www/server/nginx/nginx/conf/lua/       |
+| 网站配置路径 | /www/server/panel/vhost/nginx/          |
+
+---
+
+## 三、文件清单
+
+```
+服务器目录结构：
+/www/server/nginx/nginx/conf/
+├── nginx.conf                              # 主配置文件
+└── lua/
+    └── upstream_manager_v2.lua             # 动态 upstream 管理模块
+
+本地项目目录：
+jrebel-license-server/
+├── openresty/
+│   └── lua/
+│       └── upstream_manager_v2.lua         # Lua 脚本源文件
+└── deploy-smooth.sh                        # 平滑发布脚本
+```
+
+---
+
+## 四、配置文件
+
+### 4.1 Lua 脚本：upstream_manager_v2.lua
+
+**路径**：`/www/server/nginx/nginx/conf/lua/upstream_manager_v2.lua`
+
+```lua
+-- upstream_manager_v2.lua
+-- 多租户动态 upstream 管理模块
+-- 支持多个 namespace，每个网站可以有独立的后端节点池
+
+local _M = {}
+
+local cjson = require "cjson"
+
+-- 共享内存
+local upstream_nodes = ngx.shared.upstream_nodes
+local healthcheck = ngx.shared.healthcheck
+
+-- 常量
+local DEFAULT_NS = "default"
+local HEALTH_CHECK_PATH = "/api/status"
+local HEALTH_CHECK_TIMEOUT = 2000  -- 2秒
+
+-- 获取 namespace 的 key
+local function get_ns_key(ns)
+    return "ns:" .. (ns or DEFAULT_NS)
+end
+
+-- 初始化
+function _M.init()
+    ngx.log(ngx.INFO, "upstream_manager_v2 initialized (multi-tenant mode)")
+end
+
+-- 获取指定 namespace 的所有节点
+function _M.get_all_nodes(ns)
+    local ns_key = get_ns_key(ns)
+    local nodes_json = upstream_nodes:get(ns_key)
+    if not nodes_json then
+        return {}
+    end
+
+    local ok, nodes = pcall(cjson.decode, nodes_json)
+    if not ok then
+        ngx.log(ngx.ERR, "failed to decode nodes for ", ns_key, ": ", nodes)
+        return {}
+    end
+
+    -- 添加健康状态
+    for _, node in ipairs(nodes) do
+        local key = ns_key .. ":" .. node.host .. ":" .. node.port
+        local health = healthcheck:get(key)
+        node.healthy = (health ~= "unhealthy")
+    end
+
+    return nodes
+end
+
+-- 获取所有 namespace 及其节点
+function _M.get_all_namespaces()
+    local keys = upstream_nodes:get_keys(100)  -- 最多获取 100 个
+    local result = {}
+    
+    for _, key in ipairs(keys) do
+        if key:sub(1, 3) == "ns:" then
+            local ns = key:sub(4)
+            result[ns] = _M.get_all_nodes(ns)
+        end
+    end
+    
+    return result
+end
+
+-- 保存节点列表
+local function save_nodes(ns, nodes)
+    local ns_key = get_ns_key(ns)
+    local ok, json = pcall(cjson.encode, nodes)
+    if not ok then
+        return false, "failed to encode nodes"
+    end
+
+    local ok, err = upstream_nodes:set(ns_key, json)
+    if not ok then
+        return false, err
+    end
+
+    return true
+end
+
+-- 注册节点
+function _M.register(ns, host, port, weight, health_path)
+    local nodes = _M.get_all_nodes(ns)
+
+    -- 检查是否已存在
+    for i, node in ipairs(nodes) do
+        if node.host == host and node.port == port then
+            -- 更新
+            nodes[i].weight = weight
+            nodes[i].health_path = health_path or HEALTH_CHECK_PATH
+            nodes[i].updated_at = ngx.time()
+            return save_nodes(ns, nodes)
+        end
+    end
+
+    -- 添加新节点
+    table.insert(nodes, {
+        host = host,
+        port = port,
+        weight = weight,
+        health_path = health_path or HEALTH_CHECK_PATH,
+        created_at = ngx.time(),
+        updated_at = ngx.time()
+    })
+
+    ngx.log(ngx.INFO, "registered node: ns=", ns or DEFAULT_NS, " ", host, ":", port, " weight=", weight)
+    return save_nodes(ns, nodes)
+end
+
+-- 注销节点
+function _M.deregister(ns, host, port)
+    local nodes = _M.get_all_nodes(ns)
+    local new_nodes = {}
+    local found = false
+
+    for _, node in ipairs(nodes) do
+        if node.host == host and node.port == port then
+            found = true
+            ngx.log(ngx.INFO, "deregistered node: ns=", ns or DEFAULT_NS, " ", host, ":", port)
+        else
+            table.insert(new_nodes, node)
+        end
+    end
+
+    if not found then
+        return false, "node not found"
+    end
+
+    return save_nodes(ns, new_nodes)
+end
+
+-- 设置权重
+function _M.set_weight(ns, host, port, weight)
+    local nodes = _M.get_all_nodes(ns)
+
+    for i, node in ipairs(nodes) do
+        if node.host == host and node.port == port then
+            nodes[i].weight = weight
+            nodes[i].updated_at = ngx.time()
+            ngx.log(ngx.INFO, "updated weight: ns=", ns or DEFAULT_NS, " ", host, ":", port, " -> ", weight)
+            return save_nodes(ns, nodes)
+        end
+    end
+
+    return false, "node not found"
+end
+
+-- 加权随机选择算法
+local function weighted_random_select(ns, nodes)
+    local ns_key = get_ns_key(ns)
+    local total_weight = 0
+    local available_nodes = {}
+
+    -- 只选择健康且权重大于0的节点
+    for _, node in ipairs(nodes) do
+        local key = ns_key .. ":" .. node.host .. ":" .. node.port
+        local health = healthcheck:get(key)
+
+        if health ~= "unhealthy" and node.weight > 0 then
+            total_weight = total_weight + node.weight
+            table.insert(available_nodes, node)
+        end
+    end
+
+    if #available_nodes == 0 then
+        return nil
+    end
+
+    if #available_nodes == 1 then
+        return available_nodes[1]
+    end
+
+    -- 加权随机选择
+    local rand = math.random(1, total_weight)
+    local cumulative = 0
+
+    for _, node in ipairs(available_nodes) do
+        cumulative = cumulative + node.weight
+        if rand <= cumulative then
+            return node
+        end
+    end
+
+    return available_nodes[1]
+end
+
+-- 获取后端地址（指定 namespace）
+function _M.get_backend(ns)
+    local nodes = _M.get_all_nodes(ns)
+
+    if #nodes == 0 then
+        ngx.log(ngx.WARN, "no nodes available for ns=", ns or DEFAULT_NS)
+        return nil
+    end
+
+    local node = weighted_random_select(ns, nodes)
+    if not node then
+        ngx.log(ngx.WARN, "no healthy nodes available for ns=", ns or DEFAULT_NS)
+        return nil
+    end
+
+    return node.host .. ":" .. node.port
+end
+
+-- 健康检查（检查所有 namespace 的节点）
+function _M.health_check()
+    local all_ns = _M.get_all_namespaces()
+    
+    for ns, nodes in pairs(all_ns) do
+        local ns_key = get_ns_key(ns)
+        
+        for _, node in ipairs(nodes) do
+            local key = ns_key .. ":" .. node.host .. ":" .. node.port
+            local health_path = node.health_path or HEALTH_CHECK_PATH
+
+            local sock = ngx.socket.tcp()
+            sock:settimeout(HEALTH_CHECK_TIMEOUT)
+
+            local ok, err = sock:connect(node.host, node.port)
+            if ok then
+                local req = "GET " .. health_path .. " HTTP/1.0\r\nHost: " .. node.host .. ":" .. node.port .. "\r\n\r\n"
+                sock:send(req)
+
+                local line, err = sock:receive("*l")
+                if line and line:match("200") then
+                    healthcheck:set(key, "healthy", 30)
+                    ngx.log(ngx.DEBUG, "health check passed: ", key)
+                else
+                    healthcheck:set(key, "unhealthy", 30)
+                    ngx.log(ngx.WARN, "health check failed: ", key, " - ", err or "non-200")
+                end
+
+                sock:close()
+            else
+                healthcheck:set(key, "unhealthy", 30)
+                ngx.log(ngx.WARN, "health check failed: ", key, " - ", err)
+            end
+        end
+    end
+end
+
+-- 获取健康状态
+function _M.get_health_status(ns)
+    local nodes
+    if ns then
+        nodes = _M.get_all_nodes(ns)
+    else
+        -- 返回所有 namespace 的状态
+        return _M.get_all_namespaces()
+    end
+    
+    local ns_key = get_ns_key(ns)
+    local result = {
+        namespace = ns or DEFAULT_NS,
+        total = #nodes,
+        healthy = 0,
+        unhealthy = 0,
+        nodes = {}
+    }
+
+    for _, node in ipairs(nodes) do
+        local key = ns_key .. ":" .. node.host .. ":" .. node.port
+        local health = healthcheck:get(key)
+        local is_healthy = (health ~= "unhealthy")
+
+        if is_healthy then
+            result.healthy = result.healthy + 1
+        else
+            result.unhealthy = result.unhealthy + 1
+        end
+
+        table.insert(result.nodes, {
+            address = node.host .. ":" .. node.port,
+            weight = node.weight,
+            healthy = is_healthy,
+            health_path = node.health_path
+        })
+    end
+
+    return result
+end
+
+return _M
+```
+
+### 4.2 OpenResty 主配置：nginx.conf
+
+**路径**：`/www/server/nginx/nginx/conf/nginx.conf`
+
+```nginx
+user  www www;
+
+worker_processes auto;
+
+error_log  /www/wwwlogs/nginx_error.log  crit;
+
+pid        /www/server/nginx/logs/nginx.pid;
+
+worker_rlimit_nofile 51200;
+
+stream {
+    log_format tcp_format '$time_local|$remote_addr|$protocol|$status|$bytes_sent|$bytes_received|$session_time|$upstream_addr|$upstream_bytes_sent|$upstream_bytes_received|$upstream_connect_time';
+    access_log /www/wwwlogs/tcp-access.log tcp_format;
+    error_log /www/wwwlogs/tcp-error.log;
+    include /www/server/panel/vhost/nginx/tcp/*.conf;
+}
+
+events
+    {
+        use epoll;
+        worker_connections 51200;
+        multi_accept on;
+    }
+
+http
+    {
+        include       mime.types;
+        #include luawaf.conf;
+        include proxy.conf;
+        default_type  application/octet-stream;
+
+        server_names_hash_bucket_size 512;
+        client_header_buffer_size 32k;
+        large_client_header_buffers 4 32k;
+        client_max_body_size 50m;
+
+        sendfile   on;
+        tcp_nopush on;
+        keepalive_timeout 60;
+        tcp_nodelay on;
+
+        fastcgi_connect_timeout 300;
+        fastcgi_send_timeout 300;
+        fastcgi_read_timeout 300;
+        fastcgi_buffer_size 64k;
+        fastcgi_buffers 4 64k;
+        fastcgi_busy_buffers_size 128k;
+        fastcgi_temp_file_write_size 256k;
+        fastcgi_intercept_errors on;
+
+        gzip on;
+        gzip_min_length  1k;
+        gzip_buffers     4 16k;
+        gzip_http_version 1.1;
+        gzip_comp_level 5;
+        gzip_types     text/plain application/javascript application/x-javascript text/javascript text/css application/xml application/json image/jpeg image/gif image/png font/ttf font/otf image/svg+xml application/xml+rss text/x-js;
+        gzip_vary on;
+        gzip_proxied   expired no-cache no-store private auth;
+        gzip_disable   "MSIE [1-6]\.";
+
+        limit_conn_zone $binary_remote_addr zone=perip:10m;
+        limit_conn_zone $server_name zone=perserver:10m;
+
+        server_tokens off;
+        access_log off;
+
+        #####################################################
+        # 动态 upstream 配置 V2（多租户版本）
+        #####################################################
+        
+        # Lua 共享内存
+        lua_shared_dict upstream_nodes 10m;
+        lua_shared_dict healthcheck 1m;
+        
+        # Lua 脚本路径
+        lua_package_path "/www/server/nginx/nginx/conf/lua/?.lua;;";
+        
+        # 初始化
+        init_by_lua_block {
+            local upstream = require "upstream_manager_v2"
+            upstream.init()
+        }
+        
+        # 健康检查定时器
+        init_worker_by_lua_block {
+            local upstream = require "upstream_manager_v2"
+            if ngx.worker.id() == 0 then
+                local ok, err = ngx.timer.every(5, function()
+                    upstream.health_check()
+                end)
+                if not ok then
+                    ngx.log(ngx.ERR, "failed to create health check timer: ", err)
+                end
+            end
+        }
+        
+        #####################################################
+        # 动态 upstream 配置 - 结束
+        #####################################################
+
+server
+    {
+        listen 888;
+        server_name phpmyadmin;
+        index index.html index.htm index.php;
+        root  /www/server/phpmyadmin;
+
+        #error_page   404   /404.html;
+        include enable-php.conf;
+
+        location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$
+        {
+            expires      30d;
+        }
+
+        location ~ .*\.(js|css)?$
+        {
+            expires      12h;
+        }
+
+        location ~ /\.
+        {
+            deny all;
+        }
+
+        access_log  /www/wwwlogs/access.log;
+    }
+
+        #####################################################
+        # 动态 upstream 管理接口（仅本地访问）
+        #####################################################
+        server {
+            listen 127.0.0.1:8081;
+            server_name localhost;
+            
+            # 注册节点
+            location /register {
+                content_by_lua_block {
+                    local upstream = require "upstream_manager_v2"
+                    local cjson = require "cjson"
+                    local args = ngx.req.get_uri_args()
+                    
+                    local ns = args.ns or "default"
+                    local host = args.host
+                    local port = tonumber(args.port)
+                    local weight = tonumber(args.weight) or 100
+                    local health_path = args.health_path or "/api/status"
+                    
+                    if not host or not port then
+                        ngx.status = 400
+                        ngx.say(cjson.encode({success = false, error = "missing host or port"}))
+                        return
+                    end
+                    
+                    local ok, err = upstream.register(ns, host, port, weight, health_path)
+                    if ok then
+                        ngx.say(cjson.encode({
+                            success = true, 
+                            namespace = ns,
+                            node = host .. ":" .. port, 
+                            weight = weight,
+                            health_path = health_path
+                        }))
+                    else
+                        ngx.status = 500
+                        ngx.say(cjson.encode({success = false, error = err or "unknown"}))
+                    end
+                }
+            }
+            
+            # 注销节点
+            location /deregister {
+                content_by_lua_block {
+                    local upstream = require "upstream_manager_v2"
+                    local cjson = require "cjson"
+                    local args = ngx.req.get_uri_args()
+                    
+                    local ns = args.ns or "default"
+                    local host = args.host
+                    local port = tonumber(args.port)
+                    
+                    if not host or not port then
+                        ngx.status = 400
+                        ngx.say(cjson.encode({success = false, error = "missing host or port"}))
+                        return
+                    end
+                    
+                    local ok, err = upstream.deregister(ns, host, port)
+                    if ok then
+                        ngx.say(cjson.encode({success = true, namespace = ns, node = host .. ":" .. port}))
+                    else
+                        ngx.say(cjson.encode({success = false, error = err or "node not found"}))
+                    end
+                }
+            }
+            
+            # 调整权重
+            location /weight {
+                content_by_lua_block {
+                    local upstream = require "upstream_manager_v2"
+                    local cjson = require "cjson"
+                    local args = ngx.req.get_uri_args()
+                    
+                    local ns = args.ns or "default"
+                    local host = args.host
+                    local port = tonumber(args.port)
+                    local weight = tonumber(args.weight)
+                    
+                    if not host or not port or not weight then
+                        ngx.status = 400
+                        ngx.say(cjson.encode({success = false, error = "missing host, port or weight"}))
+                        return
+                    end
+                    
+                    local ok, err = upstream.set_weight(ns, host, port, weight)
+                    if ok then
+                        ngx.say(cjson.encode({success = true, namespace = ns, node = host .. ":" .. port, weight = weight}))
+                    else
+                        ngx.say(cjson.encode({success = false, error = err or "node not found"}))
+                    end
+                }
+            }
+            
+            # 查看节点
+            location /nodes {
+                content_by_lua_block {
+                    local upstream = require "upstream_manager_v2"
+                    local cjson = require "cjson"
+                    local args = ngx.req.get_uri_args()
+                    
+                    local ns = args.ns
+                    ngx.header["Content-Type"] = "application/json"
+                    
+                    if ns then
+                        local nodes = upstream.get_all_nodes(ns)
+                        ngx.say(cjson.encode({success = true, namespace = ns, nodes = nodes, total = #nodes}))
+                    else
+                        local all = upstream.get_all_namespaces()
+                        ngx.say(cjson.encode({success = true, namespaces = all}))
+                    end
+                }
+            }
+            
+            # 健康状态
+            location /health {
+                content_by_lua_block {
+                    local upstream = require "upstream_manager_v2"
+                    local cjson = require "cjson"
+                    local args = ngx.req.get_uri_args()
+                    
+                    local health = upstream.get_health_status(args.ns)
+                    ngx.header["Content-Type"] = "application/json"
+                    ngx.say(cjson.encode(health))
+                }
+            }
+        }
+
+include /www/server/panel/vhost/nginx/*.conf;
+
+}
+```
+
+### 4.3 网站配置示例：43.143.21.219.conf
+
+**路径**：`/www/server/panel/vhost/nginx/43.143.21.219.conf`
+
+```nginx
+server
+{
+    listen 80;
+    server_name 43.143.21.219;
+    index index.php index.html index.htm default.php default.htm default.html;
+    root /www/wwwroot/43.143.21.219;
+    include /www/server/panel/vhost/nginx/extension/43.143.21.219/*.conf;
+
+    #SSL-START SSL相关配置，请勿删除或修改下一行带注释的404规则
+    #error_page 404/404.html;
+    #SSL-END
+
+    #ERROR-PAGE-START  错误页配置，可以注释、删除或修改
+    #error_page 404 /404.html;
+    #error_page 502 /502.html;
+    #ERROR-PAGE-END
+
+    #PHP-INFO-START  PHP引用配置，可以注释或修改
+    include enable-php-74.conf;
+    #PHP-INFO-END
+
+    #REWRITE-START URL重写规则引用,修改后将导致面板设置的伪静态规则失效
+    include /www/server/panel/vhost/rewrite/43.143.21.219.conf;
+    #REWRITE-END
+
+    #禁止访问的文件或目录
+    location ~ ^/(\.user.ini|\.htaccess|\.git|\.env|\.svn|\.project|LICENSE|README.md)
+    {
+        return 404;
+    }
+
+    #一键申请SSL证书验证目录相关设置
+    location ~ \.well-known{
+        allow all;
+    }
+
+    #禁止在证书验证目录放入敏感文件
+    if ( $uri ~ "^/\.well-known/.*\.(php|jsp|py|js|css|lua|ts|go|zip|tar\.gz|rar|7z|sql|bak)$" ) {
+        return 403;
+    }
+
+    # 动态代理到后端服务（namespace: jrebel）
+    location / {
+        set $backend "";
+        
+        rewrite_by_lua_block {
+            local upstream = require "upstream_manager_v2"
+            local backend = upstream.get_backend("jrebel")
+            if not backend then
+                ngx.exit(503)
+            end
+            ngx.var.backend = backend
+        }
+        
+        proxy_pass http://$backend;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 60s;
+    }
+
+    location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$
+    {
+        expires      30d;
+        error_log /dev/null;
+        access_log /dev/null;
+    }
+
+    location ~ .*\.(js|css)?$
+    {
+        expires      12h;
+        error_log /dev/null;
+        access_log /dev/null;
+    }
+
+    access_log  /www/wwwlogs/43.143.21.219.log;
+    error_log  /www/wwwlogs/43.143.21.219.error.log;
+}
+```
+
+---
+
+## 五、部署步骤
+
+### 5.1 上传 Lua 脚本
+
+```bash
+# 创建目录
+mkdir -p /www/server/nginx/nginx/conf/lua
+
+# 上传文件（本地执行）
+scp openresty/lua/upstream_manager_v2.lua root@43.143.21.219:/www/server/nginx/nginx/conf/lua/
+```
+
+### 5.2 更新 OpenResty 主配置
+
+宝塔面板 → 软件商店 → OpenResty → 设置 → 配置修改
+
+用上面的 `nginx.conf` 内容替换。
+
+### 5.3 更新网站配置
+
+宝塔面板 → 网站 → 43.143.21.219 → 设置 → 配置文件
+
+用上面的 `43.143.21.219.conf` 内容替换。
+
+### 5.4 测试并重载配置
+
+```bash
+# 测试配置
+/www/server/nginx/nginx/sbin/nginx -t
+
+# 重载配置
+/www/server/nginx/nginx/sbin/nginx -s reload
+```
+
+### 5.5 注册服务节点
+
+```bash
+# 注册当前运行的服务到 jrebel namespace
+curl "http://127.0.0.1:8081/register?ns=jrebel&host=127.0.0.1&port=58080&weight=100"
+
+# 验证
+curl http://127.0.0.1:8081/nodes
+```
+
+---
+
+## 六、管理 API 参考
+
+### 6.1 注册节点
+
+```bash
+curl "http://127.0.0.1:8081/register?ns=<namespace>&host=<host>&port=<port>&weight=<weight>&health_path=<path>"
+
+# 示例
+curl "http://127.0.0.1:8081/register?ns=jrebel&host=127.0.0.1&port=58080&weight=100"
+curl "http://127.0.0.1:8081/register?ns=blog&host=127.0.0.1&port=3000&weight=100&health_path=/health"
+```
+
+### 6.2 注销节点
+
+```bash
+curl "http://127.0.0.1:8081/deregister?ns=<namespace>&host=<host>&port=<port>"
+
+# 示例
+curl "http://127.0.0.1:8081/deregister?ns=jrebel&host=127.0.0.1&port=58080"
+```
+
+### 6.3 调整权重
+
+```bash
+curl "http://127.0.0.1:8081/weight?ns=<namespace>&host=<host>&port=<port>&weight=<weight>"
+
+# 示例
+curl "http://127.0.0.1:8081/weight?ns=jrebel&host=127.0.0.1&port=58080&weight=50"
+```
+
+### 6.4 查看节点
+
+```bash
+# 查看所有 namespace
+curl http://127.0.0.1:8081/nodes
+
+# 查看指定 namespace
+curl "http://127.0.0.1:8081/nodes?ns=jrebel"
+```
+
+### 6.5 健康状态
+
+```bash
+# 查看所有
+curl http://127.0.0.1:8081/health
+
+# 查看指定 namespace
+curl "http://127.0.0.1:8081/health?ns=jrebel"
+```
+
+---
+
+## 七、平滑发布流程
+
+### 7.1 手动发布
+
+```bash
+# 1. 当前状态：容器运行在 58080 端口
+docker ps
+
+# 2. 构建新镜像
+docker build -t jrebel-license-server:latest .
+
+# 3. 启动新容器（使用 58081 端口）
+docker run -d --name jrebel-new \
+  -p 58081:58080 \
+  -e PORT=58080 \
+  jrebel-license-server:latest
+
+# 4. 等待新容器健康检查通过
+while ! curl -sf http://127.0.0.1:58081/api/status; do sleep 2; echo "等待..."; done
+echo "新容器已就绪"
+
+# 5. 注册新节点（权重 0）
+curl "http://127.0.0.1:8081/register?ns=jrebel&host=127.0.0.1&port=58081&weight=0"
+
+# 6. 逐步切换流量
+curl "http://127.0.0.1:8081/weight?ns=jrebel&host=127.0.0.1&port=58080&weight=80"
+curl "http://127.0.0.1:8081/weight?ns=jrebel&host=127.0.0.1&port=58081&weight=20"
+sleep 10
+
+curl "http://127.0.0.1:8081/weight?ns=jrebel&host=127.0.0.1&port=58080&weight=50"
+curl "http://127.0.0.1:8081/weight?ns=jrebel&host=127.0.0.1&port=58081&weight=50"
+sleep 10
+
+curl "http://127.0.0.1:8081/weight?ns=jrebel&host=127.0.0.1&port=58080&weight=0"
+curl "http://127.0.0.1:8081/weight?ns=jrebel&host=127.0.0.1&port=58081&weight=100"
+
+# 7. 注销旧节点
+curl "http://127.0.0.1:8081/deregister?ns=jrebel&host=127.0.0.1&port=58080"
+
+# 8. 停止旧容器
+docker stop jrebel-license-server
+docker rm jrebel-license-server
+
+# 9. 重命名新容器
+docker rename jrebel-new jrebel-license-server
+
+# 完成
+curl "http://127.0.0.1:8081/nodes?ns=jrebel"
+```
+
+### 7.2 回滚操作
+
+```bash
+# 1. 将流量切回旧节点
+curl "http://127.0.0.1:8081/weight?ns=jrebel&host=127.0.0.1&port=58080&weight=100"
+curl "http://127.0.0.1:8081/weight?ns=jrebel&host=127.0.0.1&port=58081&weight=0"
+
+# 2. 注销新节点
+curl "http://127.0.0.1:8081/deregister?ns=jrebel&host=127.0.0.1&port=58081"
+
+# 3. 停止新容器
+docker stop jrebel-new
+docker rm jrebel-new
+```
+
+---
+
+## 八、多网站配置示例
+
+### 8.1 Blog 服务
+
+**网站配置** `/www/server/panel/vhost/nginx/blog.example.com.conf`：
+
+```nginx
+server {
+    listen 80;
+    server_name blog.example.com;
+    
+    location / {
+        set $backend "";
+        
+        rewrite_by_lua_block {
+            local upstream = require "upstream_manager_v2"
+            local backend = upstream.get_backend("blog")
+            if not backend then
+                ngx.exit(503)
+            end
+            ngx.var.backend = backend
+        }
+        
+        proxy_pass http://$backend;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+```
+
+**注册节点**：
+
+```bash
+curl "http://127.0.0.1:8081/register?ns=blog&host=127.0.0.1&port=3000&weight=100&health_path=/health"
+```
+
+### 8.2 API 服务
+
+**网站配置** `/www/server/panel/vhost/nginx/api.example.com.conf`：
+
+```nginx
+server {
+    listen 80;
+    server_name api.example.com;
+    
+    location / {
+        set $backend "";
+        
+        rewrite_by_lua_block {
+            local upstream = require "upstream_manager_v2"
+            local backend = upstream.get_backend("api")
+            if not backend then
+                ngx.exit(503)
+            end
+            ngx.var.backend = backend
+        }
+        
+        proxy_pass http://$backend;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+```
+
+**注册节点**：
+
+```bash
+curl "http://127.0.0.1:8081/register?ns=api&host=127.0.0.1&port=8000&weight=100&health_path=/ping"
+```
+
+---
+
+## 九、常用命令速查
+
+| 操作         | 命令                                                         |
+| ------------ | ------------------------------------------------------------ |
+| 测试配置     | `/www/server/nginx/nginx/sbin/nginx -t`                      |
+| 重载配置     | `/www/server/nginx/nginx/sbin/nginx -s reload`               |
+| 查看所有节点 | `curl http://127.0.0.1:8081/nodes`                           |
+| 查看指定 ns  | `curl "http://127.0.0.1:8081/nodes?ns=jrebel"`               |
+| 注册节点     | `curl "http://127.0.0.1:8081/register?ns=NS&host=HOST&port=PORT&weight=100"` |
+| 注销节点     | `curl "http://127.0.0.1:8081/deregister?ns=NS&host=HOST&port=PORT"` |
+| 调整权重     | `curl "http://127.0.0.1:8081/weight?ns=NS&host=HOST&port=PORT&weight=50"` |
+| 健康状态     | `curl "http://127.0.0.1:8081/health?ns=jrebel"`              |
+
+---
+
+## 十、故障排查
+
+### 10.1 503 Service Unavailable
+
+```bash
+# 检查是否有注册节点
+curl "http://127.0.0.1:8081/nodes?ns=jrebel"
+
+# 检查节点健康状态
+curl "http://127.0.0.1:8081/health?ns=jrebel"
+
+# 直接测试后端服务
+curl http://127.0.0.1:58080/api/status
+```
+
+### 10.2 配置测试失败
+
+```bash
+# 检查 Lua 文件是否存在
+ls -la /www/server/nginx/nginx/conf/lua/
+
+# 检查语法错误
+/www/server/nginx/nginx/sbin/nginx -t 2>&1
+```
+
+### 10.3 查看错误日志
+
+```bash
+tail -f /www/wwwlogs/nginx_error.log
+tail -f /www/wwwlogs/43.143.21.219.error.log
+```
+
+
+
+# ref
+
+https://zhuanlan.zhihu.com/p/1960085380712870342
+
+
+
+
+
+

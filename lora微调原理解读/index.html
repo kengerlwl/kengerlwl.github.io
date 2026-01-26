@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>LoRA微调原理解读，及相关经验 - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://kengerlwl.github.io/lora%E5%BE%AE%E8%B0%83%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="LoRA微调原理解读，及相关经验">
+  <meta property="og:description" content="介绍 LoRA属于PEFT。一种利用微调训练少量参数，来达到全量微调的效果的技术。 在实际工程中非常常用。 文本主要将LoRA原理以及为什么LoR">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-05-28T15:27:31+00:00">
+    <meta property="article:modified_time" content="2024-05-28T15:27:31+00:00">
+    <meta property="article:tag" content="Pytorch">
+    <meta property="article:tag" content="LoRA">
+    <meta property="article:tag" content="Llm">
+    <meta property="og:image" content="https://kengerlwl.github.io/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kengerlwl.github.io/logo.png">
+  <meta name="twitter:title" content="LoRA微调原理解读，及相关经验">
+  <meta name="twitter:description" content="介绍 LoRA属于PEFT。一种利用微调训练少量参数，来达到全量微调的效果的技术。 在实际工程中非常常用。 文本主要将LoRA原理以及为什么LoR">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://kengerlwl.github.io/lora%E5%BE%AE%E8%B0%83%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB/" /><link rel="prev" href="https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3/" /><link rel="next" href="https://kengerlwl.github.io/python%E5%8D%8F%E7%A8%8B/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "LoRA微调原理解读，及相关经验",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/kengerlwl.github.io\/lora%E5%BE%AE%E8%B0%83%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/kengerlwl.github.io\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "pytorch, LoRA, LLM","wordcount":  1401 ,
+        "url": "https:\/\/kengerlwl.github.io\/lora%E5%BE%AE%E8%B0%83%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB\/","datePublished": "2024-05-28T15:27:31+00:00","dateModified": "2024-05-28T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/kengerlwl.github.io\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/lora%E5%BE%AE%E8%B0%83%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/lora%E5%BE%AE%E8%B0%83%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">LoRA微调原理解读，及相关经验</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kengerlwl.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%AD%A6%E6%9C%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>学术</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-05-28">2024-05-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1401 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#低阶自适应参数高效微调-lora-简介"><strong>低阶自适应参数高效微调 (LoRA) 简介</strong></a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#函数">函数</a></li>
+    <li><a href="#lora为什么快和占用显存低呢">LoRA为什么快和占用显存低呢</a>
+      <ul>
+        <li><a href="#显存">显存</a></li>
+        <li><a href="#为什么速度快">为什么速度快</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#选择精度">选择精度</a></li>
+    <li><a href="#通用参数">通用参数</a></li>
+    <li><a href="#lora参数">lora参数</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="介绍">介绍</h1>
+<p>LoRA属于PEFT。一种利用微调训练少量参数，来达到全量微调的效果的技术。</p>
+<p>在实际工程中非常常用。</p>
+<p>文本主要将LoRA原理以及为什么LoRA这么快。</p>
+<h2 id="低阶自适应参数高效微调-lora-简介"><strong>低阶自适应参数高效微调 (LoRA) 简介</strong></h2>
+<p>一些微调的最佳实践包括使用强正则化、使用较小的学习率和少量的epochs。一般来说，像卷积神经网络用于图像分类的神经网络并不完全微调，这样做很昂贵，可能导致灾难性遗忘。我们只微调最后一层或最后几层。</p>
+<p>对于LLM，我们使用一种类似的方法，称为参数高效微调（PEFT）。其中一种流行的PEFT方法是低秩适应（LoRA），LoRA 是低秩适应 (Low-Rank Adaptation) 的缩写，其是一种用于微调深度学习模型的新技术，它在模型中添加了少量可训练参数模型，而原始模型参数保持冻结。LoRA 是用于训练定制 LLM 的最广泛使用、参数高效的微调技术之一。</p>
+<p>LoRA 可以将可训练参数数量减少 10,000 倍，GPU 内存需求减少 3 倍。尽管可训练参数更少、训练吞吐量更高且无需额外推理，LoRA 在 RoBERTa、DeBERTa、GPT-2 和 GPT-3 上的模型质量表现与微调相当或更好延迟。</p>
+<h1 id="模型结构">模型结构</h1>
+<p>输入：原来的x，</p>
+<p>计算：原来的Transformer模型固定不动。</p>
+<ul>
+<li>原模型计算</li>
+<li>新加的低秩矩阵运算。</li>
+</ul>
+<p>输出：将两个计算相加合并起来。</p>
+<p><strong>这样，保证了输出输出维度不变，整体的原模型结构不变，想要转换下游任务，只需要更换lora的旁路举证即可。</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2334a36e26dc4a650f990ba36b6135d4/9a44b99c0b54b9d84cab5cd93c5ecf1a.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2334a36e26dc4a650f990ba36b6135d4/9a44b99c0b54b9d84cab5cd93c5ecf1a.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2334a36e26dc4a650f990ba36b6135d4/9a44b99c0b54b9d84cab5cd93c5ecf1a.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2334a36e26dc4a650f990ba36b6135d4/9a44b99c0b54b9d84cab5cd93c5ecf1a.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2334a36e26dc4a650f990ba36b6135d4/9a44b99c0b54b9d84cab5cd93c5ecf1a.png"
+        title="1" /></p>
+<p><strong>运算图</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2334a36e26dc4a650f990ba36b6135d4/3247ebac413cbc584577a25b76210f9f.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2334a36e26dc4a650f990ba36b6135d4/3247ebac413cbc584577a25b76210f9f.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2334a36e26dc4a650f990ba36b6135d4/3247ebac413cbc584577a25b76210f9f.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2334a36e26dc4a650f990ba36b6135d4/3247ebac413cbc584577a25b76210f9f.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/2334a36e26dc4a650f990ba36b6135d4/3247ebac413cbc584577a25b76210f9f.png"
+        title="refs/heads/master/image-20240528163601110" /></p>
+<h2 id="函数">函数</h2>
+<p>LoRA 的实现相对简单。我们可以将其视为 LLM 中全连接层的修改前向传递。在伪代码中，如下所示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">input_dim</span> <span class="o">=</span> <span class="mi">768</span> <span class="c1"># e.g., the hidden size of the pre-trained model</span>
+</span></span><span class="line"><span class="cl"><span class="n">output_dim</span> <span class="o">=</span> <span class="mi">768</span> <span class="c1"># e.g., the output size of the layer</span>
+</span></span><span class="line"><span class="cl"><span class="n">rank</span> <span class="o">=</span> <span class="mi">8</span> <span class="c1"># The rank &#39;r&#39; for the low-rank adaptation</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">W</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># from pretrained network with shape input_dim x output_dim</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">W_A</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">input_dim</span><span class="p">,</span> <span class="n">rank</span><span class="p">))</span> <span class="c1"># LoRA weight A</span>
+</span></span><span class="line"><span class="cl"><span class="n">W_B</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">rank</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">))</span> <span class="c1"># LoRA weight B</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Initialization of LoRA weights</span>
+</span></span><span class="line"><span class="cl"><span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">kaiming_uniform_</span><span class="p">(</span><span class="n">W_A</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">zeros_</span><span class="p">(</span><span class="n">W_B</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">regular_forward_matmul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">W</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">h</span> <span class="o">=</span> <span class="n">x</span> <span class="o">@</span> <span class="n">W</span>
+</span></span><span class="line"><span class="cl"><span class="k">return</span> <span class="n">h</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">lora_forward_matmul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">W_A</span><span class="p">,</span> <span class="n">W_B</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">h</span> <span class="o">=</span> <span class="n">x</span> <span class="o">@</span> <span class="n">W</span>  <span class="c1"># regular matrix multiplication</span>
+</span></span><span class="line"><span class="cl">    <span class="n">h</span> <span class="o">+=</span> <span class="n">x</span> <span class="o">@</span> <span class="p">(</span><span class="n">W_A</span> <span class="o">@</span> <span class="n">W_B</span><span class="p">)</span><span class="o">*</span><span class="n">alpha</span> <span class="c1"># use scaled LoRA weights</span>
+</span></span><span class="line"><span class="cl"><span class="k">return</span> <span class="n">h</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="lora为什么快和占用显存低呢">LoRA为什么快和占用显存低呢</h2>
+<h3 id="显存">显存</h3>
+<p><strong>LoRA的显存节省在于梯度和优化器状态部分</strong>。被冻结住的参数不用更新，自然也就不需要相应的梯度，以及Adam一阶和二阶动量。设模型参数的显存占用为<strong>x</strong>，原本全量训练时显存占用为<strong>4x</strong>，LoRA冻结住主干参数，增加了<strong>m</strong>%可训练的LoRA权重，则LoRA训练时，显存占用为：</p>
+<ul>
+<li>参数部分：<strong>(1+m%)x</strong>；</li>
+<li>梯度部分：<strong>m%x</strong>；</li>
+<li>优化器状态部分：<strong>2m%x.</strong></li>
+</ul>
+<p>加起来就是**(1+4m%)x。<strong>如</strong>m**=1%时，最终的显存占用就从<strong>4x</strong>降低到了<strong>1.04x</strong>。</p>
+<h3 id="为什么速度快">为什么速度快</h3>
+<p>首先分析，正常训练模型，耗时在哪。</p>
+<p><strong>一个epoch：</strong></p>
+<ul>
+<li>正向传播，O(n)</li>
+<li>反向传播，O(n)</li>
+<li>梯度更新，O(n)</li>
+</ul>
+<p>加入LoRA后，各部分的耗时。</p>
+<ul>
+<li><strong>由于显存占用更低：batch size可以更大，</strong></li>
+<li><strong>正向传播没有减小</strong>
+<ul>
+<li>因为有了旁路矩阵，所以对于后面的层的输入X就发生的变化，所以每次都需要完整的，进行前向传播</li>
+</ul>
+</li>
+<li><strong>反向传播可以计算并更新更少的梯度。</strong></li>
+</ul>
+<h1 id="微调经验">微调经验</h1>
+<h2 id="选择精度">选择精度</h2>
+<p>选择半精度，节约显存，提高速度</p>
+<h2 id="通用参数">通用参数</h2>
+<p>通用性的参数：学习器，学习率，epoch，batch，选择base模型</p>
+<h2 id="lora参数">lora参数</h2>
+<ul>
+<li>
+<p>是否在不同的层加入lora</p>
+</li>
+<li>
+<p><strong>平衡 LoRA 超参数：R 和 Alpha</strong>（r是秩，alpha是因子，是训练时可以设置的两个参数）</p>
+<ul>
+<li>
+<p>LoRA 权重的值越大，影响就越大。</p>
+<p>在之前的实验中，我采用的参数是 r=8，alpha=16，这导致了 2 倍的扩展。在用 LoRA 为大模型减重时，将 alpha 设置为 r 的两倍是一种常见的经验法则。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>一般来说，让参数量到主模型5%，就能有不少效果</strong></p>
+</li>
+</ul>
+<h1 id="ref">ref</h1>
+<p><a href="https://zhuanlan.zhihu.com/p/672999750" target="_blank" rel="noopener noreffer ">大模型实战：使用 LoRA（低阶适应）微调 LLM - 知乎</a></p>
+<p>目前常用LLAMA lora</p>
+<p><a href="https://github.com/tloen/alpaca-lora" target="_blank" rel="noopener noreffer ">tloen/alpaca-lora: Instruct-tune LLaMA on consumer hardware</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-05-28</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/lora%E5%BE%AE%E8%B0%83%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://kengerlwl.github.io/lora%E5%BE%AE%E8%B0%83%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB/" data-title="LoRA微调原理解读，及相关经验" data-hashtags="pytorch,LoRA,LLM"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://kengerlwl.github.io/lora%E5%BE%AE%E8%B0%83%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB/" data-hashtag="pytorch"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://kengerlwl.github.io/lora%E5%BE%AE%E8%B0%83%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB/" data-title="LoRA微调原理解读，及相关经验"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://kengerlwl.github.io/lora%E5%BE%AE%E8%B0%83%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB/" data-title="LoRA微调原理解读，及相关经验"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://kengerlwl.github.io/lora%E5%BE%AE%E8%B0%83%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB/" data-title="LoRA微调原理解读，及相关经验"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/pytorch/">Pytorch</a>,&nbsp;<a href="/tags/lora/">LoRA</a>,&nbsp;<a href="/tags/llm/">Llm</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3/" class="prev" rel="prev" title="大模型推理参数详解"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>大模型推理参数详解</a>
+            <a href="/python%E5%8D%8F%E7%A8%8B/" class="next" rel="next" title="python协程">python协程<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.132.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kengerlwl.github.io/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"JCTYUNKA9R","algoliaIndex":"kenger","algoliaSearchKey":"3ef68664495033362b7df9cf5a3eee1e","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

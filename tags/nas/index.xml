@@ -1,0 +1,24 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Nas - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/nas/</link>
+        <description>Nas - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 06 May 2024 05:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/nas/" rel="self" type="application/rss+xml" /><item>
+    <title>夸克网盘实现nas云备份</title>
+    <link>https://kengerlwl.github.io/%E5%A4%B8%E5%85%8B%E7%BD%91%E7%9B%98%E4%BA%91%E5%A4%87%E4%BB%BD/</link>
+    <pubDate>Mon, 06 May 2024 05:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E5%A4%B8%E5%85%8B%E7%BD%91%E7%9B%98%E4%BA%91%E5%A4%87%E4%BB%BD/</guid>
+    <description><![CDATA[背景 我有很多重要的文件需要上云备份，主要是为了防止本地的文件出问题。比如万一谁把我电脑丢了。 **思路：**决定使用夸克网盘自带的文件夹自动备]]></description>
+</item>
+<item>
+    <title>truenas教程与入门</title>
+    <link>https://kengerlwl.github.io/truenas%E6%95%99%E7%A8%8B/</link>
+    <pubDate>Tue, 20 Jun 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/truenas%E6%95%99%E7%A8%8B/</guid>
+    <description><![CDATA[需求 需要一个大的存储来存放一些我的个人数据。折腾了很久，要虚拟化，要功能强大，那就truenas scale了。 实操 esxi 安装truenas， sk]]></description>
+</item>
+</channel>
+</rss>

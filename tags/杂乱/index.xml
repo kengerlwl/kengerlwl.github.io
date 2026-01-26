@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>杂乱 - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/%E6%9D%82%E4%B9%B1/</link>
+        <description>杂乱 - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 01 Mar 2023 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/%E6%9D%82%E4%B9%B1/" rel="self" type="application/rss+xml" /><item>
+    <title>各种杂乱的网络工具知识点</title>
+    <link>https://kengerlwl.github.io/%E5%90%84%E7%A7%8D%E6%9D%82%E4%B9%B1%E7%9A%84%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E7%9F%A5%E8%AF%86%E7%82%B9/</link>
+    <pubDate>Wed, 01 Mar 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E5%90%84%E7%A7%8D%E6%9D%82%E4%B9%B1%E7%9A%84%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E7%9F%A5%E8%AF%86%E7%82%B9/</guid>
+    <description><![CDATA[各种名词解读 关于光纤接口类别 双lc（双就是两根的意思），sc **光纤跳线：**就是同一根线两端有不同的光纤接口 单模单纤与单模双纤 单纤光纤收发]]></description>
+</item>
+</channel>
+</rss>

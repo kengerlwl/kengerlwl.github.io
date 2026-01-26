@@ -1,0 +1,32 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>数据库 - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+        <description>数据库 - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 26 Mar 2024 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="self" type="application/rss+xml" /><item>
+    <title>数据库索引</title>
+    <link>https://kengerlwl.github.io/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/</link>
+    <pubDate>Tue, 26 Mar 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/</guid>
+    <description><![CDATA[索引介绍分类 索引是一种用于快速查询和检索数据的数据结构，其本质可以看成是一种排序好的数据结构。 我们可以按照四个角度来分类索引。 按「数据结构」]]></description>
+</item>
+<item>
+    <title>数据库原理</title>
+    <link>https://kengerlwl.github.io/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/</link>
+    <pubDate>Tue, 12 Mar 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/</guid>
+    <description><![CDATA[事务 事务指的是满足 ACID 特性的一组操作，可以通过 Commit 提交一个事务，也可以使用 Rollback 进行回滚。 ACID 1. 原子性（Atomicity） 事务被视为不可分割的最小单]]></description>
+</item>
+<item>
+    <title>数据库池子Python</title>
+    <link>https://kengerlwl.github.io/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B1%A0%E5%AD%90python/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B1%A0%E5%AD%90python/</guid>
+    <description><![CDATA[Python 数据库池子 引言 假设网站一天有很大的访问量，数据库服务器就需要为每次连接创建一次数据库连接，极大的浪费数据库的资源，并且极易造成数据库服务器]]></description>
+</item>
+</channel>
+</rss>

@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Ts - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/ts/</link>
+        <description>Ts - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 05 Sep 2025 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/ts/" rel="self" type="application/rss+xml" /><item>
+    <title>TypeScript学习</title>
+    <link>https://kengerlwl.github.io/typescript%E5%AD%A6%E4%B9%A0/</link>
+    <pubDate>Fri, 05 Sep 2025 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/typescript%E5%AD%A6%E4%B9%A0/</guid>
+    <description><![CDATA[demo 我们新建一个 app.ts 的文件，代码如下： var message:string = &ldquo;Hello World&rdquo; console.log(message) 通常我们使用 .ts 作为 TypeScript 代码文件的扩展名。 然后执行以下命令将 TypeScript 转换为 JavaScript 代码： 1 tsc app.ts 这时候在当前目录]]></description>
+</item>
+</channel>
+</rss>

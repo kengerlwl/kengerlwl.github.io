@@ -1,0 +1,24 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>计算机网络 - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</link>
+        <description>计算机网络 - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 22 Aug 2023 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="self" type="application/rss+xml" /><item>
+    <title>HTTP连接</title>
+    <link>https://kengerlwl.github.io/http%E8%BF%9E%E6%8E%A5/</link>
+    <pubDate>Tue, 22 Aug 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/http%E8%BF%9E%E6%8E%A5/</guid>
+    <description><![CDATA[基础概念 请求和响应报文 客户端发送一个请求报文给服务器，服务器根据请求报文中的信息进行处理，并将处理结果放入响应报文中返回给客户端。 URL HTTP 使用 U]]></description>
+</item>
+<item>
+    <title>计算机网络</title>
+    <link>https://kengerlwl.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</link>
+    <pubDate>Tue, 22 Aug 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</guid>
+    <description><![CDATA[概述 ISP 互联网服务提供商 ISP 主机之间的通信方式 客户-服务器（C/S）：客户是服务的请求方，服务器是服务的提供方。 对等（P2P）：不区分客户和服务]]></description>
+</item>
+</channel>
+</rss>

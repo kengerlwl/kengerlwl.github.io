@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>基于cloudflare来部署国内的vps - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://kengerlwl.github.io/%E5%9F%BA%E4%BA%8Ecloudflare%E6%9D%A5%E9%83%A8%E7%BD%B2%E5%9B%BD%E5%86%85%E7%9A%84vps/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="基于cloudflare来部署国内的vps">
+  <meta property="og:description" content="使用 Cloudflare Tunnel 绕过国内域名备案限制 背景 当你的域名未备案，但服务器部署在国内（如腾讯云、阿里云）时，通过 Cloudflare CDN 代理访问会遇到以下问题： 1 用户 → Cloudflare CDN → 回">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-01-02T15:27:31+00:00">
+    <meta property="article:modified_time" content="2026-01-02T15:27:31+00:00">
+    <meta property="article:tag" content="Cloudflare">
+    <meta property="article:tag" content="代理">
+    <meta property="article:tag" content="Ssl">
+    <meta property="og:image" content="https://kengerlwl.github.io/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kengerlwl.github.io/logo.png">
+  <meta name="twitter:title" content="基于cloudflare来部署国内的vps">
+  <meta name="twitter:description" content="使用 Cloudflare Tunnel 绕过国内域名备案限制 背景 当你的域名未备案，但服务器部署在国内（如腾讯云、阿里云）时，通过 Cloudflare CDN 代理访问会遇到以下问题： 1 用户 → Cloudflare CDN → 回">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://kengerlwl.github.io/%E5%9F%BA%E4%BA%8Ecloudflare%E6%9D%A5%E9%83%A8%E7%BD%B2%E5%9B%BD%E5%86%85%E7%9A%84vps/" /><link rel="prev" href="https://kengerlwl.github.io/%E4%B8%AA%E4%BA%BA%E6%9C%8D%E5%8A%A1%E7%AE%80%E5%8D%95%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83%E4%B8%8E%E7%81%B0%E5%BA%A6%E5%8F%91%E5%B8%83/" /><link rel="next" href="https://kengerlwl.github.io/%E8%BF%90%E8%90%A5web/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "基于cloudflare来部署国内的vps",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/kengerlwl.github.io\/%E5%9F%BA%E4%BA%8Ecloudflare%E6%9D%A5%E9%83%A8%E7%BD%B2%E5%9B%BD%E5%86%85%E7%9A%84vps\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/kengerlwl.github.io\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "cloudflare, 代理, ssl","wordcount":  1153 ,
+        "url": "https:\/\/kengerlwl.github.io\/%E5%9F%BA%E4%BA%8Ecloudflare%E6%9D%A5%E9%83%A8%E7%BD%B2%E5%9B%BD%E5%86%85%E7%9A%84vps\/","datePublished": "2026-01-02T15:27:31+00:00","dateModified": "2026-01-02T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/kengerlwl.github.io\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/%E5%9F%BA%E4%BA%8Ecloudflare%E6%9D%A5%E9%83%A8%E7%BD%B2%E5%9B%BD%E5%86%85%E7%9A%84vps/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/%E5%9F%BA%E4%BA%8Ecloudflare%E6%9D%A5%E9%83%A8%E7%BD%B2%E5%9B%BD%E5%86%85%E7%9A%84vps/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">基于cloudflare来部署国内的vps</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kengerlwl.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E4%BB%A3%E7%90%86/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>代理</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2026-01-02">2026-01-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1153 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#背景">背景</a></li>
+    <li><a href="#解决方案cloudflare-tunnel">解决方案：Cloudflare Tunnel</a></li>
+    <li><a href="#实操步骤">实操步骤</a>
+      <ul>
+        <li><a href="#1-安装-cloudflared">1. 安装 cloudflared</a></li>
+        <li><a href="#2-登录-cloudflare">2. 登录 Cloudflare</a></li>
+        <li><a href="#3-创建-tunnel">3. 创建 Tunnel</a></li>
+        <li><a href="#4-配置-tunnel">4. 配置 Tunnel</a></li>
+        <li><a href="#5-配置-dns">5. 配置 DNS</a></li>
+        <li><a href="#6-测试运行">6. 测试运行</a></li>
+        <li><a href="#7-配置开机自启">7. 配置开机自启</a></li>
+        <li><a href="#8-验证">8. 验证</a></li>
+      </ul>
+    </li>
+    <li><a href="#常用命令">常用命令</a></li>
+    <li><a href="#多域名配置">多域名配置</a></li>
+    <li><a href="#注意事项">注意事项</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="使用-cloudflare-tunnel-绕过国内域名备案限制">使用 Cloudflare Tunnel 绕过国内域名备案限制</h1>
+<h2 id="背景">背景</h2>
+<p>当你的域名未备案，但服务器部署在国内（如腾讯云、阿里云）时，通过 Cloudflare CDN 代理访问会遇到以下问题：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">用户 → Cloudflare CDN → 回源到国内服务器 → 被拦截（域名未备案）
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>即使 Cloudflare 开启了 Proxy 和 SSL，回源时仍会被国内云厂商拦截，返回 <code>525</code> 错误或跳转到备案提示页。</p>
+<h2 id="解决方案cloudflare-tunnel">解决方案：Cloudflare Tunnel</h2>
+<p>Cloudflare Tunnel 的原理是<strong>反向建立连接</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">传统方式：Cloudflare → 入站连接到你的服务器 → 被拦截
+</span></span><span class="line"><span class="cl">Tunnel：  你的服务器 → 主动出站连接到 Cloudflare → 不被拦截
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为是服务器<strong>主动向外连接</strong>，属于出站流量，不会触发备案检查。</p>
+<h2 id="实操步骤">实操步骤</h2>
+<h3 id="1-安装-cloudflared">1. 安装 cloudflared</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Debian/Ubuntu</span>
+</span></span><span class="line"><span class="cl">curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb -o cloudflared.deb
+</span></span><span class="line"><span class="cl">dpkg -i cloudflared.deb
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># CentOS/RHEL</span>
+</span></span><span class="line"><span class="cl">curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.rpm -o cloudflared.rpm
+</span></span><span class="line"><span class="cl">rpm -i cloudflared.rpm
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 验证安装</span>
+</span></span><span class="line"><span class="cl">cloudflared version
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2-登录-cloudflare">2. 登录 Cloudflare</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cloudflared tunnel login
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>执行后会输出一个 URL，复制到浏览器打开，选择你的域名进行授权。授权成功后会在 <code>~/.cloudflared/</code> 生成 <code>cert.pem</code>。</p>
+<h3 id="3-创建-tunnel">3. 创建 Tunnel</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cloudflared tunnel create my-tunnel
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>记住输出的 Tunnel ID（类似 <code>e68531cc-f521-4f8e-bd53-cd1a697993d3</code>）。</p>
+<h3 id="4-配置-tunnel">4. 配置 Tunnel</h3>
+<p>创建配置文件 <code>~/.cloudflared/config.yml</code>：</p>
+<p>注意有些配置文件：<strong><code>/etc/cloudflared/config.yml</code> 里没有 <code>xx.xxx.xyz</code> 的配置！</strong></p>
+<p>你之前看的是 <code>~/.cloudflared/config.yml</code>，但 systemd 服务用的是 <code>/etc/cloudflared/config.yml</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">tunnel</span><span class="p">:</span><span class="w"> </span><span class="l">&lt;你的Tunnel-ID&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">credentials-file</span><span class="p">:</span><span class="w"> </span><span class="l">/root/.cloudflared/&lt;你的Tunnel-ID&gt;.json</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">ingress</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l">your-domain.com</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">service</span><span class="p">:</span><span class="w"> </span><span class="l">http://localhost:8080</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">service</span><span class="p">:</span><span class="w"> </span><span class="l">http_status:404</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>hostname</code>: 你要代理的域名</li>
+<li><code>service</code>: 本地服务地址（Nginx/应用监听的端口）</li>
+</ul>
+<h3 id="5-配置-dns">5. 配置 DNS</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cloudflared tunnel route dns my-tunnel your-domain.com
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这会自动在 Cloudflare DNS 中添加一条 CNAME 记录，指向你的 Tunnel。</p>
+<h3 id="6-测试运行">6. 测试运行</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cloudflared tunnel run my-tunnel
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>看到 <code>Registered tunnel connection</code> 表示连接成功。</p>
+<h3 id="7-配置开机自启">7. 配置开机自启</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cloudflared service install
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>一条命令搞定！它会：</p>
+<ul>
+<li>复制配置到 <code>/etc/cloudflared/config.yml</code></li>
+<li>创建 systemd 服务</li>
+<li>启动服务并设置开机自启</li>
+</ul>
+<h3 id="8-验证">8. 验证</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 查看服务状态</span>
+</span></span><span class="line"><span class="cl">systemctl status cloudflared
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看日志</span>
+</span></span><span class="line"><span class="cl">journalctl -u cloudflared -f
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 测试访问</span>
+</span></span><span class="line"><span class="cl">curl https://your-domain.com
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="常用命令">常用命令</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 服务管理</span>
+</span></span><span class="line"><span class="cl">systemctl start cloudflared
+</span></span><span class="line"><span class="cl">systemctl stop cloudflared
+</span></span><span class="line"><span class="cl">systemctl restart cloudflared
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看所有 Tunnel</span>
+</span></span><span class="line"><span class="cl">cloudflared tunnel list
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 删除 Tunnel</span>
+</span></span><span class="line"><span class="cl">cloudflared tunnel delete my-tunnel
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 卸载服务</span>
+</span></span><span class="line"><span class="cl">cloudflared service uninstall
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="多域名配置">多域名配置</h2>
+<p>一个 Tunnel 可以代理多个域名：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">tunnel</span><span class="p">:</span><span class="w"> </span><span class="l">&lt;Tunnel-ID&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">credentials-file</span><span class="p">:</span><span class="w"> </span><span class="l">/root/.cloudflared/&lt;Tunnel-ID&gt;.json</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">ingress</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l">api.example.com</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">service</span><span class="p">:</span><span class="w"> </span><span class="l">http://localhost:5000</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l">web.example.com</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">service</span><span class="p">:</span><span class="w"> </span><span class="l">http://localhost:3000</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;*.example.com&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">service</span><span class="p">:</span><span class="w"> </span><span class="l">http://localhost:8080</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">service</span><span class="p">:</span><span class="w"> </span><span class="l">http_status:404</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>记得为每个域名添加 DNS 路由：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cloudflared tunnel route dns my-tunnel api.example.com
+</span></span><span class="line"><span class="cl">cloudflared tunnel route dns my-tunnel web.example.com
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="注意事项">注意事项</h2>
+<ol>
+<li><strong>Cloudflare DNS 托管</strong>：域名必须托管在 Cloudflare DNS 上</li>
+<li><strong>出站网络</strong>：服务器需要能访问外网（出站 443 端口）</li>
+<li><strong>本地服务</strong>：Tunnel 代理的是本地服务，确保本地端口正常监听</li>
+<li><strong>免费额度</strong>：Cloudflare Tunnel 基础功能免费，无流量限制</li>
+</ol>
+<h2 id="总结">总结</h2>
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>传统 CDN 代理</th>
+<th>Cloudflare Tunnel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>连接方向</td>
+<td>Cloudflare → 服务器（入站）</td>
+<td>服务器 → Cloudflare（出站）</td>
+</tr>
+<tr>
+<td>备案检查</td>
+<td>会触发</td>
+<td>不触发</td>
+</tr>
+<tr>
+<td>开放端口</td>
+<td>需要开放 80/443</td>
+<td>无需开放任何入站端口</td>
+</tr>
+<tr>
+<td>暴露 IP</td>
+<td>可能泄露</td>
+<td>完全隐藏</td>
+</tr>
+</tbody>
+</table>
+<p>Cloudflare Tunnel 是目前绕过国内备案限制最优雅的方案，同时还能获得更好的安全性。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2026-01-02</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E5%9F%BA%E4%BA%8Ecloudflare%E6%9D%A5%E9%83%A8%E7%BD%B2%E5%9B%BD%E5%86%85%E7%9A%84vps/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://kengerlwl.github.io/%E5%9F%BA%E4%BA%8Ecloudflare%E6%9D%A5%E9%83%A8%E7%BD%B2%E5%9B%BD%E5%86%85%E7%9A%84vps/" data-title="基于cloudflare来部署国内的vps" data-hashtags="cloudflare,代理,ssl"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://kengerlwl.github.io/%E5%9F%BA%E4%BA%8Ecloudflare%E6%9D%A5%E9%83%A8%E7%BD%B2%E5%9B%BD%E5%86%85%E7%9A%84vps/" data-hashtag="cloudflare"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://kengerlwl.github.io/%E5%9F%BA%E4%BA%8Ecloudflare%E6%9D%A5%E9%83%A8%E7%BD%B2%E5%9B%BD%E5%86%85%E7%9A%84vps/" data-title="基于cloudflare来部署国内的vps"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://kengerlwl.github.io/%E5%9F%BA%E4%BA%8Ecloudflare%E6%9D%A5%E9%83%A8%E7%BD%B2%E5%9B%BD%E5%86%85%E7%9A%84vps/" data-title="基于cloudflare来部署国内的vps"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://kengerlwl.github.io/%E5%9F%BA%E4%BA%8Ecloudflare%E6%9D%A5%E9%83%A8%E7%BD%B2%E5%9B%BD%E5%86%85%E7%9A%84vps/" data-title="基于cloudflare来部署国内的vps"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/cloudflare/">Cloudflare</a>,&nbsp;<a href="/tags/%E4%BB%A3%E7%90%86/">代理</a>,&nbsp;<a href="/tags/ssl/">Ssl</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E4%B8%AA%E4%BA%BA%E6%9C%8D%E5%8A%A1%E7%AE%80%E5%8D%95%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83%E4%B8%8E%E7%81%B0%E5%BA%A6%E5%8F%91%E5%B8%83/" class="prev" rel="prev" title="个人服务简单注册中心与灰度发布V2"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>个人服务简单注册中心与灰度发布V2</a>
+            <a href="/%E8%BF%90%E8%90%A5web/" class="next" rel="next" title="运营web">运营web<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.132.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kengerlwl.github.io/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"JCTYUNKA9R","algoliaIndex":"kenger","algoliaSearchKey":"3ef68664495033362b7df9cf5a3eee1e","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

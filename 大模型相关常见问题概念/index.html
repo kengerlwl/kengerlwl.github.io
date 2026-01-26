@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>大模型相关常见问题概念 - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%9B%B8%E5%85%B3%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%A6%82%E5%BF%B5/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="大模型相关常见问题概念">
+  <meta property="og:description" content="背景 有些东西，名词，经常听见，也大概知道是什么意思，但是就是总记不住，列个case。 幻觉 **如果AI模型所生成输出没有任何已知事实的支持，幻">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-07-23T15:27:31+00:00">
+    <meta property="article:modified_time" content="2024-07-23T15:27:31+00:00">
+    <meta property="article:tag" content="Pytorch">
+    <meta property="article:tag" content="推理">
+    <meta property="article:tag" content="Llm">
+    <meta property="og:image" content="https://kengerlwl.github.io/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kengerlwl.github.io/logo.png">
+  <meta name="twitter:title" content="大模型相关常见问题概念">
+  <meta name="twitter:description" content="背景 有些东西，名词，经常听见，也大概知道是什么意思，但是就是总记不住，列个case。 幻觉 **如果AI模型所生成输出没有任何已知事实的支持，幻">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%9B%B8%E5%85%B3%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%A6%82%E5%BF%B5/" /><link rel="prev" href="https://kengerlwl.github.io/%E8%87%AA%E9%83%A8%E7%BD%B2%E5%B9%B6%E5%8F%91%E8%B0%83%E6%9F%A5/" /><link rel="next" href="https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8Bsystem-prompt%E4%B8%BA%E4%BB%80%E4%B9%88%E9%87%8D%E8%A6%81/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "大模型相关常见问题概念",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/kengerlwl.github.io\/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%9B%B8%E5%85%B3%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%A6%82%E5%BF%B5\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/kengerlwl.github.io\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "pytorch, 推理, LLM","wordcount":  9269 ,
+        "url": "https:\/\/kengerlwl.github.io\/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%9B%B8%E5%85%B3%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%A6%82%E5%BF%B5\/","datePublished": "2024-07-23T15:27:31+00:00","dateModified": "2024-07-23T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/kengerlwl.github.io\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%9B%B8%E5%85%B3%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%A6%82%E5%BF%B5/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%9B%B8%E5%85%B3%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%A6%82%E5%BF%B5/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">大模型相关常见问题概念</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kengerlwl.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%AD%A6%E6%9C%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>学术</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-07-23">2024-07-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 9269 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 19 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#根据来源分类">根据来源分类</a></li>
+    <li><a href="#为什么会幻觉">为什么会幻觉</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#向量数据库">向量数据库</a>
+      <ul>
+        <li><a href="#hnsw算法">HNSW算法</a></li>
+      </ul>
+    </li>
+    <li><a href="#多路召回重排">多路召回重排</a>
+      <ul>
+        <li><a href="#rrf">RRF</a></li>
+        <li><a href="#rf的基本原理">RF的基本原理</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#chatcompletion">ChatCompletion</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#megatron-和deep-speedtodo">Megatron 和deep speed（TODO：）</a></li>
+    <li><a href="#rlhf">RLHF</a>
+      <ul>
+        <li><a href="#rlhf的基本流程">RLHF的基本流程</a></li>
+      </ul>
+    </li>
+    <li><a href="#moe">MOE</a>
+      <ul>
+        <li><a href="#moe结构大模型">MoE结构大模型</a></li>
+        <li><a href="#对比普通模型">对比普通模型</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#fp16bf16-的区别">fp16/bf16 的区别</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#gguf">GGUF</a></li>
+    <li><a href="#onnx文件">ONNX文件</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#方式1大模型调度小模型">方式1：大模型调度小模型</a></li>
+    <li><a href="#方式2大模型反馈">方式2：大模型反馈</a>
+      <ul>
+        <li><a href="#优点">优点：</a></li>
+      </ul>
+    </li>
+    <li><a href="#方式3分层推理">方式3：分层推理</a>
+      <ul>
+        <li><a href="#优点-1">优点：</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-pretraining--预训练阶段">1. Pretraining — 预训练阶段</a></li>
+        <li><a href="#2-supervised-finetuningsft--监督微调也叫指令微调阶段">2. Supervised Finetuning（SFT） — 监督微调，也叫指令微调阶段</a></li>
+        <li><a href="#3-reward-modeling--奖励模型训练阶段">3. Reward Modeling — 奖励模型训练阶段</a></li>
+        <li><a href="#4-reinforcement-learningrl-增强学习微调阶段">4. Reinforcement Learning（RL）— 增强学习微调阶段</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#milvus">Milvus</a></li>
+    <li><a href="#faiss">Faiss</a></li>
+    <li><a href="#tencent-cloud-vectordb">Tencent Cloud VectorDB</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#byte-pair-encoding-bpe与wordpiece">Byte Pair Encoding (BPE)与wordpiece</a></li>
+    <li><a href="#sentencepiece">SentencePiece</a></li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#glm和llama2架构的区别">GLM和LLAMA2架构的区别</a></li>
+        <li><a href="#gpt3llamachatglm-的layer-normalization-的区别是什么各自的优缺点是什么">GPT3、LLAMA、ChatGLM 的Layer Normalization 的区别是什么？各自的优缺点是什么？</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="背景">背景</h1>
+<p>有些东西，名词，经常听见，也大概知道是什么意思，但是就是总记不住，列个case。</p>
+<h1 id="幻觉">幻觉</h1>
+<p>**如果AI模型所生成输出没有任何已知事实的支持，幻觉便会发生。**产生与训练数据不一致或与输入无关的输出的模型。</p>
+<p>简而言之：一本正经，胡说八道</p>
+<p>包括RAG在内的自回归模型中幻觉的不可避免性可以最小化，但不能完全根除。</p>
+<h2 id="根据来源分类">根据来源分类</h2>
+<p><strong>内在幻觉：生成的内容与输入上下文不一致</strong></p>
+<p><strong>外在幻觉：生成的内容不能被证伪</strong></p>
+<p>例如：明天会下雨</p>
+<p>内在幻觉：明天会晴天</p>
+<p>外在幻觉：明天好好玩呀（不知道真假）</p>
+<h2 id="为什么会幻觉">为什么会幻觉</h2>
+<p>预训练数据本身就有矛盾，错误的信息</p>
+<p>大模型本身是一个概率模型，幻觉理论上是不可避免的，只能是低概率。</p>
+<h1 id="rag相关">RAG相关</h1>
+<h2 id="向量数据库">向量数据库</h2>
+<h3 id="hnsw算法">HNSW算法</h3>
+<p>HNSW（Hierarchical Navigable Small World）算法是一种用于<strong>高效近似最近邻搜索</strong>（Approximate Nearest Neighbor Search, ANNS）的图结构算法。它在处理高维数据时表现出色，广泛应用于图像检索、推荐系统、自然语言处理等领域。HNSW算法的核心思想是通过构建一个分层的小世界图（Small World Graph），<strong>使得在高维空间中进行近似最近邻搜索变得更加高效。</strong></p>
+<p><strong>HNSW算法的基本原理</strong></p>
+<ol>
+<li><strong>分层结构</strong>：HNSW构建了一个多层次的图结构，每一层都是一个小世界图。顶层的图节点较少，底层的图节点较多。每一层的图都是前一层的子集，顶层的图节点是底层图节点的超集。</li>
+<li><strong>小世界图</strong>：每一层的图都是一个小世界图，具有较短的平均路径长度和较高的聚类系数。小世界图的特性使得在图中进行搜索时，可以快速接近目标节点。</li>
+<li><strong>导航机制</strong>：搜索过程从顶层开始，逐层向下进行。在每一层中，算法会从当前节点的邻居中选择最接近目标节点的节点，直到到达底层。在底层进行精确的近邻搜索。</li>
+</ol>
+<h2 id="多路召回重排">多路召回重排</h2>
+<h3 id="rrf">RRF</h3>
+<h3 id="rf的基本原理">RF的基本原理</h3>
+<p>**倒数排序融合（RRF）**是基于倒数排名的概念。其核心思想是，一个项目在各个源中的排名的倒数可以被累加，从而得到一个综合分数，用于最终的排名。RRF的公式如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b097c8b7700f2508ebb1f27f6bab4d5b/b5120cd3566f65794b810a7ef13c03b0.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b097c8b7700f2508ebb1f27f6bab4d5b/b5120cd3566f65794b810a7ef13c03b0.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b097c8b7700f2508ebb1f27f6bab4d5b/b5120cd3566f65794b810a7ef13c03b0.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b097c8b7700f2508ebb1f27f6bab4d5b/b5120cd3566f65794b810a7ef13c03b0.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b097c8b7700f2508ebb1f27f6bab4d5b/b5120cd3566f65794b810a7ef13c03b0.png"
+        title="img" /></p>
+<ul>
+<li>其中，<strong>rank<em>i</em> 是一个项目在第 <em>i</em> 个源中的排名。</strong>（倒数可以让排名越高，得到的分数越高）</li>
+<li><em>k</em> 是源的数量。</li>
+<li><em>c</em> 是一个<strong>常数，通常设为60，用于减轻排名靠后的项目的权重。</strong></li>
+</ul>
+<h1 id="chat-和-completion-的区别">Chat 和 Completion 的区别</h1>
+<p>OpenAI的ChatCompletion和Completion都是自然语言生成模型的接口，但它们的用途和应用场景略有不同。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>ChatCompletion</th>
+<th>Completion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>区别</td>
+<td>专为生成<strong>对话和聊天</strong>场景而设计。</td>
+<td>是一个<strong>通用</strong>的自然语言生成接口，支持生成各种类型的文本，包括段落、摘要、建议、答案等等。</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>ChatCompletion接口生成的文本通常会更具有人类对话的风格和语调，可以用于智能客服、聊天机器人等场景，以及在日常聊天中帮助用户自动生成回复。</td>
+<td><strong>Completion接口的输出更为多样化，可能会更加严谨和专业，适用于各种文本生成场景，例如文章创作、信息提取、机器翻译、自然语言问题回答等等。</strong></td>
+</tr>
+</tbody>
+</table>
+<p>本质上，是类似的，都是通过构造prompt输入给大模型，只是输入的方式不一样，一个是直接总结好所有的背景，要求输入给大模型，一个是把历史对话记录输入给大模型。</p>
+<h2 id="chatcompletion">ChatCompletion</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Note: you need to be using OpenAI Python v0.27.0 for the code below to work</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">openai</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">openai</span><span class="o">.</span><span class="n">ChatCompletion</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="n">model</span><span class="o">=</span><span class="s2">&#34;gpt-3.5-turbo&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span><span class="s2">&#34;role&#34;</span><span class="p">:</span> <span class="s2">&#34;system&#34;</span><span class="p">,</span> <span class="s2">&#34;content&#34;</span><span class="p">:</span> <span class="s2">&#34;You are a helpful assistant.&#34;</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span><span class="s2">&#34;role&#34;</span><span class="p">:</span> <span class="s2">&#34;user&#34;</span><span class="p">,</span> <span class="s2">&#34;content&#34;</span><span class="p">:</span> <span class="s2">&#34;Who won the world series in 2020?&#34;</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span><span class="s2">&#34;role&#34;</span><span class="p">:</span> <span class="s2">&#34;assistant&#34;</span><span class="p">,</span> <span class="s2">&#34;content&#34;</span><span class="p">:</span> <span class="s2">&#34;The Los Angeles Dodgers won the World Series in 2020.&#34;</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span><span class="s2">&#34;role&#34;</span><span class="p">:</span> <span class="s2">&#34;user&#34;</span><span class="p">,</span> <span class="s2">&#34;content&#34;</span><span class="p">:</span> <span class="s2">&#34;Where was it played?&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>messages必须是消息对象的数组，其中每个对象都有一个角色（“system”、“user”、“assistant”）和内容（消息的内容）。对话可以短至 1 条消息或填满许多页面。</p>
+<p>通常，对话的格式首先是system消息，然后是交替的user和assistant消息。</p>
+<ul>
+<li>system消息有助于设置聊天AI助手的行为。在上面的例子中，被指示“你是一个乐于助人的助手”。</li>
+<li>user消息有助于指示助手。它们可以由应用程序的最终用户生成，也可以由开发人员设置为指令。</li>
+<li>assistant消息有助于存储先前的响应。它们<strong>也可以由开发人员编写，以帮助提供所需行为的示例。</strong></li>
+</ul>
+<h1 id="微调">微调</h1>
+<h2 id="megatron-和deep-speedtodo">Megatron 和deep speed（TODO：）</h2>
+<h2 id="rlhf">RLHF</h2>
+<h3 id="rlhf的基本流程">RLHF的基本流程</h3>
+<p>RLHF的基本流程通常包括以下几个步骤：</p>
+<ol>
+<li>
+<p><strong>初始训练</strong>：</p>
+<ul>
+<li>使用传统的强化学习方法或监督学习方法对智能体进行初始训练，使其具备基本的任务执行能力。</li>
+</ul>
+</li>
+<li>
+<p><strong>收集人类反馈</strong>：</p>
+<ul>
+<li>人类观察智能体的行为，并提供反馈。这些反馈可以是对智能体行为的评分、偏好比较（如选择更好的行为）或其他形式的评价。</li>
+</ul>
+</li>
+<li>
+<p><strong>反馈建模</strong>：（<strong>形成一个reward model</strong>）</p>
+<ul>
+<li>将人类反馈转化为奖励信号或偏好模型。常见的方法包括使用监督学习模型来预测人类的评分或偏好。</li>
+</ul>
+</li>
+<li>
+<p><strong>强化学习优化</strong>：（<strong>结合奖励模型利用强化学习算法如PPO算法来优化策略</strong>）</p>
+<ul>
+<li>使用强化学习算法（如策略梯度、Q学习等）结合人类反馈进行优化。智能体根据新的奖励信号或偏好模型进行学习和改进。</li>
+</ul>
+</li>
+<li>
+<p><strong>迭代训练</strong>：</p>
+<ul>
+<li>重复收集人类反馈和强化学习优化的过程，逐步提高智能体的性能。</li>
+</ul>
+</li>
+</ol>
+<h2 id="moe">MOE</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b097c8b7700f2508ebb1f27f6bab4d5b/4948a4824ca85f4317e992b6df265c95.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b097c8b7700f2508ebb1f27f6bab4d5b/4948a4824ca85f4317e992b6df265c95.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b097c8b7700f2508ebb1f27f6bab4d5b/4948a4824ca85f4317e992b6df265c95.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b097c8b7700f2508ebb1f27f6bab4d5b/4948a4824ca85f4317e992b6df265c95.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b097c8b7700f2508ebb1f27f6bab4d5b/4948a4824ca85f4317e992b6df265c95.png"
+        title="refs/heads/master/image-20240814164819635" /></p>
+<h3 id="moe结构大模型">MoE结构大模型</h3>
+<ol>
+<li><strong>多专家网络</strong>：MoE模型包含多个专家网络，每个专家网络可以是一个独立的神经网络。专家网络的数量可以非常多，从几十到上千不等。</li>
+<li><strong>门控机制</strong>：<strong>MoE模型使用一个门控网络（Gate）来决定在每次推理时激活哪些专家。门控网络根据输入数据的特征，选择最适合处理该数据的专家。</strong></li>
+<li><strong>稀疏激活</strong>：在每次推理过程中，MoE模型只激活一小部分专家（例如，2-4个），而不是所有专家。这种稀疏激活机制大大减少了计算量。</li>
+<li><strong>高效计算</strong>：由于只激活少量专家，MoE模型在保持高表达能力的同时，显著降低了计算成本。</li>
+</ol>
+<h3 id="对比普通模型">对比普通模型</h3>
+<ol>
+<li><strong>计算效率</strong>：
+<ul>
+<li><strong>MoE模型</strong>：通过稀疏激活机制，<strong>只计算少量专家的输出，计算效率更高。</strong></li>
+<li><strong>普通模型</strong>：所有参数和层都参与计算，计算量较大。</li>
+</ul>
+</li>
+<li><strong>模型容量</strong>：
+<ul>
+<li><strong>MoE模型</strong>：可以包含大量专家网络，<strong>总参数量可以非常大，但每次推理只使用一部分参数。</strong></li>
+<li><strong>普通模型</strong>：参数量固定，所有参数都参与计算，模型容量受限于计算资源。</li>
+</ul>
+</li>
+</ol>
+<p><strong>占用的显存还是变大了，只是计算速度确实很快，且性能大大提高了。</strong></p>
+<p>Mixtral 8x7B同样是一个Decoder Only的模型，区别于传统的LLaMA等模型，FNN层由8个前馈神经网络（Expert）组成。如果我们从某一个Token的视角看，这个Token会经过其中的2个前馈神经网络或者说Expert。也就是说虽然<strong>整个模型的参数量是46B，但是在推理过程中激活的参数只有13B。</strong></p>
+<p>虽然Mixtral 8x7B在推理过程中同一时间激活的参数只有13B左右，<strong>但是为了保证推理性能，还是需要将全部参数（46B）读入显存</strong>，以A100-80GB为例，对于46B的参数的模型，按照FP16精度来估算，参数预期占用92GB显存。以batch为20、Context length=1024、Generate length=1024来看、KV Cache需要的显存为20GB**[2]** ，也就是说理想态下（不考虑显存碎片，Activate output），<strong>至少需要2张A100-80GB完成推理</strong>。</p>
+<h1 id="量化与精度">量化与精度</h1>
+<p>量化是大模型压缩方法的一种，</p>
+<p>常见的精度。</p>
+<table>
+<thead>
+<tr>
+<th>dtype</th>
+<th>每10亿参数需要占内存</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>float32</td>
+<td>4G</td>
+</tr>
+<tr>
+<td>fp16/bf16</td>
+<td>2G</td>
+</tr>
+<tr>
+<td>int8</td>
+<td>1G</td>
+</tr>
+<tr>
+<td>int4</td>
+<td>0.5G</td>
+</tr>
+</tbody>
+</table>
+<h2 id="fp16bf16-的区别">fp16/bf16 的区别</h2>
+<p>两个都是16位的浮点数，但是其中整数位和浮点数的数量占比不一样。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/TransformersWsz/picx-refs/heads/master/images-hosting/refs/heads/master/image.1hs0v083jb.png"
+        data-srcset="https://raw.githubusercontent.com/TransformersWsz/picx-refs/heads/master/images-hosting/refs/heads/master/image.1hs0v083jb.png, https://raw.githubusercontent.com/TransformersWsz/picx-refs/heads/master/images-hosting/refs/heads/master/image.1hs0v083jb.png 1.5x, https://raw.githubusercontent.com/TransformersWsz/picx-refs/heads/master/images-hosting/refs/heads/master/image.1hs0v083jb.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/TransformersWsz/picx-refs/heads/master/images-hosting/refs/heads/master/image.1hs0v083jb.png"
+        title="16" /></p>
+<p>二者都是占用16bit空间。</p>
+<ul>
+<li>FP16由1个符号位、5<strong>个指数位和10个尾数位组成</strong>。FP16在表达小数时具有较高的精度，但表示的最大范围相对BF16比较小。相比BF16，在表达较大的数时更容易出现上溢的情况。</li>
+<li>BF16由1个符号位、<strong>8个指数位和7个尾数位组成</strong>。相比于FP16，BF16牺牲了一些尾数位以增加指数位，扩大了表达的范围，但是精度降低了，因此对于对精度需求比较高的模型，模型可能效果不如FP16。</li>
+</ul>
+<p>模型训练时使用BF16和FP16都可以降低内存使用和传输量，提高训练效率。</p>
+<h1 id="模型格式">模型格式</h1>
+<h2 id="gguf">GGUF</h2>
+<p><strong>GGUF文件全称是GPT-Generated Unified Format，是由Georgi Gerganov定义发布的一种大模型文件格式。Georgi Gerganov是著名开源项目llama.cpp的创始人。</strong></p>
+<p><strong>GGUF就是一种二进制格式文件的规范，原始的大模型预训练结果经过转换后变成GGUF格式可以更快地被载入使用，也会消耗更低的资源</strong>。</p>
+<p>经常是量化后的大模型</p>
+<h2 id="onnx文件">ONNX文件</h2>
+<p><strong>ONNX（Open Neural Network Exchange）文件是一种开放的神经网络交换格式，由微软和Facebook共同发起。ONNX旨在促进不同深度学习框架之间的互操作性，使得模型可以在不同的框架之间无缝转换和部署。</strong></p>
+<h1 id="大小模型协同">大小模型协同</h1>
+<p><strong>大模型在云端，能够提供更高的算力以及更加丰富的资源。</strong></p>
+<p><strong>小模型在本地，可以实现高速的推理，更加个性化的适配，两个模型协作推理。</strong></p>
+<h2 id="方式1大模型调度小模型">方式1：大模型调度小模型</h2>
+<p>让大模型选择不同的小模型进行调度，任务规划，模型选择</p>
+<h2 id="方式2大模型反馈">方式2：大模型反馈</h2>
+<p><strong>大模型在云端进行复杂的计算和分析后，将结果反馈给本地的小模型。小模型根据大模型的反馈进行进一步的推理和决策</strong>，从而实现更高效的本地处理。这种方式可以充分利用大模型的强大计算能力，同时发挥小模型的快速响应优势。</p>
+<h3 id="优点">优点：</h3>
+<ol>
+<li><strong>高效利用资源</strong>：大模型负责复杂计算，小模型负责快速响应，资源利用更高效。</li>
+<li><strong>个性化适配</strong>：小模型可以根据大模型的反馈进行个性化调整，满足用户的特定需求。</li>
+<li><strong>降低延迟</strong>：通过本地小模型的快速响应，减少了云端计算带来的延迟。</li>
+</ol>
+<h2 id="方式3分层推理">方式3：分层推理</h2>
+<p>在这种方式中，推理任务被分层处理。简单的任务由本地小模型直接处理，而复杂的任务则被发送到云端的大模型进行处理。大模型处理完后，将结果返回给小模型，继续进行后续的推理和决策。</p>
+<h3 id="优点-1">优点：</h3>
+<ol>
+<li><strong>任务分层</strong>：根据任务的复杂度进行分层处理，提高了系统的整体效率。</li>
+<li><strong>灵活性</strong>：可以根据实际需求动态调整任务的分配，提高系统的灵活性。</li>
+<li><strong>资源优化</strong>：充分利用本地和云端的资源，避免资源浪费。</li>
+</ol>
+<h1 id="关于ai训练相关概念">关于AI训练相关概念</h1>
+<p>在自然语言处理（NLP）领域，特别是大规模语言模型的训练过程中，通常会经历多个阶段，以逐步提升模型的性能和适应性。以下是这些阶段的综合讲述：</p>
+<h3 id="1-pretraining--预训练阶段">1. Pretraining — 预训练阶段</h3>
+<p><strong>预训练阶段</strong>是整个训练过程的基础。在这个阶段，模型在大规模的无监督文本数据上进行训练。目标是让模型学习语言的基本结构、语法、词汇和一些常见的知识。</p>
+<ul>
+<li><strong>数据来源</strong>：互联网文本、书籍、文章、维基百科等。</li>
+<li><strong>训练目标</strong>：通常使用自监督学习方法，如掩码语言模型（Masked Language Model, MLM）或自回归语言模型（Autoregressive Language Model）。</li>
+<li><strong>结果</strong>：模型在广泛的语言理解和生成任务上具备基本能力，但对特定任务的适应性较差。</li>
+</ul>
+<p><strong>例子</strong>：GPT-3在大量互联网文本上进行预训练，学习了广泛的语言知识。</p>
+<h3 id="2-supervised-finetuningsft--监督微调也叫指令微调阶段">2. Supervised Finetuning（SFT） — 监督微调，也叫指令微调阶段</h3>
+<p><strong>监督微调阶段</strong>，也称为指令微调阶段，是在预训练模型的基础上，使用特定任务的数据进行进一步训练。这个阶段的目标是让模型更好地理解和执行特定的指令或任务。</p>
+<ul>
+<li><strong>数据来源</strong>：标注好的任务数据集，如问答对、翻译对、情感分析数据等。</li>
+<li><strong>训练目标</strong>：通过监督学习方法，优化模型在特定任务上的表现。</li>
+<li><strong>结果</strong>：模型在特定任务上的性能显著提升，能够更准确地理解和执行指令。</li>
+</ul>
+<p><strong>例子</strong>：使用标注好的问答数据集对预训练的GPT-3进行微调，使其在问答任务上表现更好。</p>
+<h3 id="3-reward-modeling--奖励模型训练阶段">3. Reward Modeling — 奖励模型训练阶段</h3>
+<p><strong>奖励模型训练阶段</strong>是为了进一步优化模型的输出质量。在这个阶段，训练一个奖励模型来评估生成的文本质量，并为后续的增强学习提供奖励信号。</p>
+<ul>
+<li><strong>数据来源</strong>：人类反馈数据，通常是人类对模型生成的文本进行评分或排序。</li>
+<li><strong>训练目标</strong>：训练一个奖励模型，使其能够根据人类反馈评估生成文本的质量。</li>
+<li><strong>结果</strong>：奖励模型能够为生成的文本提供质量评分，指导后续的增强学习过程。</li>
+</ul>
+<p><strong>例子</strong>：人类对GPT-3生成的回答进行评分，训练一个奖励模型来评估回答的质量。</p>
+<h3 id="4-reinforcement-learningrl-增强学习微调阶段">4. Reinforcement Learning（RL）— 增强学习微调阶段</h3>
+<p><strong>增强学习微调阶段</strong>使用奖励模型提供的反馈信号，通过增强学习方法进一步优化模型的行为。这个阶段的目标是让模型在实际应用中生成更高质量的输出。</p>
+<ul>
+<li><strong>数据来源</strong>：奖励模型提供的反馈信号。</li>
+<li><strong>训练目标</strong>：通过增强学习算法（如Proximal Policy Optimization, PPO），优化模型的策略，使其生成的文本在奖励模型的评分下表现更好。</li>
+<li><strong>结果</strong>：模型在实际应用中的表现进一步提升，生成的文本质量更高，更符合人类期望。</li>
+</ul>
+<p><strong>例子</strong>：使用PPO算法，根据奖励模型的反馈信号，对GPT-3进行增强学习微调，使其生成的回答更符合人类期望。</p>
+<h1 id="微调数据集构建">微调数据集构建</h1>
+<ul>
+<li>人工手写</li>
+<li>数据爬取</li>
+<li>大模型辅助生成
+<ul>
+<li>大模型规范化qa对</li>
+<li>大模型生成，抽取</li>
+</ul>
+</li>
+</ul>
+<h1 id="cpu和gpu区别">CPU和GPU区别</h1>
+<p>CPU（中央处理器）和GPU（图形处理器）是计算机中的两种不同处理器，主要区别如下：</p>
+<ol>
+<li>
+<p><strong>结构和设计</strong>：</p>
+<ul>
+<li><strong>CPU</strong>：设计用于处理复杂的指令和任务，具有少量强大的核心，适合单线程任务。</li>
+<li><strong>GPU</strong>：设计用于并行计算，具有大量简单的核心，适合大规模并行任务。</li>
+</ul>
+</li>
+<li>
+<p><strong>用途</strong>：</p>
+<ul>
+<li><strong>CPU</strong>：用于执行操作系统和应用程序的指令，处理日常计算任务。</li>
+<li><strong>GPU</strong>：最初用于图形渲染，现在广泛用于科学计算、机器学习等并行计算任务。</li>
+</ul>
+</li>
+<li>
+<p><strong>性能特点</strong>：</p>
+<ul>
+<li><strong>CPU</strong>：高时钟速度和强大的单线程性能。</li>
+<li><strong>GPU</strong>：极高的并行处理能力。</li>
+</ul>
+</li>
+<li>
+<p><strong>内存架构</strong>：</p>
+<ul>
+<li><strong>CPU</strong>：具有较大的缓存（Cache）。</li>
+<li><strong>GPU</strong>：具有专用的显存（VRAM）。</li>
+</ul>
+</li>
+</ol>
+<p>总结：CPU擅长处理复杂、高精度任务，GPU擅长处理大规模并行计算任务。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b097c8b7700f2508ebb1f27f6bab4d5b/617c19137bff1a9650f189ed1296c986.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b097c8b7700f2508ebb1f27f6bab4d5b/617c19137bff1a9650f189ed1296c986.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b097c8b7700f2508ebb1f27f6bab4d5b/617c19137bff1a9650f189ed1296c986.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b097c8b7700f2508ebb1f27f6bab4d5b/617c19137bff1a9650f189ed1296c986.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b097c8b7700f2508ebb1f27f6bab4d5b/617c19137bff1a9650f189ed1296c986.png"
+        title="refs/heads/master/image-20240817205835274" /></p>
+<h1 id="大模型分布式训练">大模型分布式训练</h1>
+<p><strong>DeepSpeed</strong></p>
+<ul>
+<li><strong>数据并行（Data Parallelism）</strong>：在数据并行中，<strong>模型的参数在所有设备上保持相同</strong>。训练数据被分割成多个子集，<strong>每个设备处理一个子集。设备独立地计算梯度，然后将梯度聚合并更新模型参数</strong>。这种方法可以有效地利用多个设备的计算能力，但可能受到通信开销的影响。</li>
+<li><strong>模型并行（Model Parallelism）</strong>：在模型并行中，<strong>模型的参数被划分成多个部分，并分布在不同的设备上</strong>。<strong>每个设备只负责计算其对应部分的前向和反向传播</strong>。这种方法适用于参数量非常大的模型，但需要对模型结构进行精细的划分，以平衡计算负载和减少通信开销。</li>
+</ul>
+<h1 id="大模型微调数据集构建流程">大模型微调数据集构建流程</h1>
+<p><a href="https://github.com/naginoa/LLMs_interview_notes/blob/main/%E5%A4%A7%E6%A8%A1%E5%9E%8B%EF%BC%88LLMs%EF%BC%89%E5%BE%AE%E8%B0%83%E9%9D%A2.md" target="_blank" rel="noopener noreffer ">LLMs_interview_notes/大模型（LLMs）微调面.md at main · naginoa/LLMs_interview_notes</a></p>
+<ol>
+<li>首先确认任务，</li>
+<li>收集原始数据，例如从wiki爬取，聊天记录汇总</li>
+<li>数据清洗，变成比较正常的文本，如果是爬取的，考虑去除掉一些不合理的html标签，如果是文章，最好结构化html格式，针对其中的表格，图片，都要有办法。</li>
+<li>注意数据集一定要能够match到你要使用的情景，要够丰富。不然可能效果很差。</li>
+<li>训练后，通用能力会下降，解决办法如下：
+<ol>
+<li>训练时保留一定通用数据</li>
+<li>如果是RLHF，那么需要让LLM对通用回答也保持一定奖励</li>
+</ol>
+</li>
+<li>**数据增强：**中文数据集可能相对有限，可以考虑使用数据增强技术来扩充数据集。例如，可以使用同义词替换、随机插入或删除词语、句子重组等方法来生成新的训练样本。（我考虑用LLM来直接扩写问题）</li>
+<li>💡 <strong>微调后的模型出现能力劣化，灾难性遗忘是怎么回事？</strong>
+<ol>
+<li>数据分布差异，和以前的数据冲突了，</li>
+<li>引入多任务，增量学习</li>
+</ol>
+</li>
+</ol>
+<h1 id="prefix-lm-和-causal-lm-区别是什么"><strong>prefix LM 和 causal LM 区别是什么？</strong></h1>
+<ol>
+<li>Prefix LM：<strong>Encoder-Decoder 模型的一种变体。 在 Prefix LM 中，Encoder 和 Decoder 共享同一个 Transformer 结构</strong>。前缀语言模型是一种生成模型，它在生成每个词时都可以考虑之前的上下文信息。<strong>在生成时，前缀语言模型会根据给定的前缀（即部分文本序列）预测下一个可能的词</strong>。这种模型可以用于文本生成、机器翻译等任务。
+<ol>
+<li>与标准Encoder-Decoder类似，<strong>Prefix LM在Encoder部分采用Auto Encoding (AE-自编码)模式，即前缀序列中任意两个token都相互可见</strong>，而<strong>Decoder部分采用Auto Regressive (AR-自回归)模式，即待生成的token可以看到Encoder侧所有token(包括上下文)和Decoder侧已经生成的token</strong>，但不能看未来尚未产生的token。</li>
+<li><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b097c8b7700f2508ebb1f27f6bab4d5b/9a1bbba7930c77c26075092881da9c8a.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b097c8b7700f2508ebb1f27f6bab4d5b/9a1bbba7930c77c26075092881da9c8a.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b097c8b7700f2508ebb1f27f6bab4d5b/9a1bbba7930c77c26075092881da9c8a.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b097c8b7700f2508ebb1f27f6bab4d5b/9a1bbba7930c77c26075092881da9c8a.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b097c8b7700f2508ebb1f27f6bab4d5b/9a1bbba7930c77c26075092881da9c8a.png"
+        title="refs/heads/master/image-20240817220745307" /></li>
+</ol>
+</li>
+<li>Causal LM：因果语言模型是一种<strong>自回归模型</strong>，它只能根据之前的文本生成后续的文本，而不能根据后续的文本生成之前的文本。在训练时，因果语言模型的目标是预测下一个词的概率，给定之前的所有词作为上下文。这种模型可以用于文本生成、语言建模等任务。<strong>Causal LM是因果语言模型，目前流行地大多数模型都是这种结构，别无他因，因为GPT系列模型内部结构就是它，还有开源界的LLaMa也是。</strong>
+<ol>
+<li>Causal LM只涉及到Encoder-Decoder中的Decoder部分，采用Auto Regressive模式，直白地说，就是根据历史的token来预测下一个token，也是在Attention Mask这里做的手脚。</li>
+<li><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b097c8b7700f2508ebb1f27f6bab4d5b/4b1adc6f7598572cd209954acf224792.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b097c8b7700f2508ebb1f27f6bab4d5b/4b1adc6f7598572cd209954acf224792.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b097c8b7700f2508ebb1f27f6bab4d5b/4b1adc6f7598572cd209954acf224792.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b097c8b7700f2508ebb1f27f6bab4d5b/4b1adc6f7598572cd209954acf224792.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/b097c8b7700f2508ebb1f27f6bab4d5b/4b1adc6f7598572cd209954acf224792.png"
+        title="refs/heads/master/image-20240817220752822" /></li>
+</ol>
+</li>
+</ol>
+<h1 id="大模型涌现能力">大模型涌现能力</h1>
+<ul>
+<li>数据量大</li>
+<li>模型大</li>
+<li>预训练和微调+人类反馈强化</li>
+</ul>
+<h1 id="常见向量库">常见向量库</h1>
+<h2 id="milvus">Milvus</h2>
+<ul>
+<li>优点：Milvus 是一个开源的向量数据库，支持多种类型的向量索引，如IVF、HNSW、Flat等。它提供了可扩展的架构，可以处理大量数据，并支持云原生部署。</li>
+<li>缺点：由于是较新的项目，社区和文档可能不如一些老牌数据库成熟。</li>
+</ul>
+<h2 id="faiss">Faiss</h2>
+<ul>
+<li>
+<p>优点：Faiss 是由Facebook AI团队开发的高效相似性搜索和密集向量聚类库。它提供了多种向量索引算法，性能极高。</p>
+</li>
+<li>
+<p>缺点：作为一个库而不是完整的数据库系统，Faiss 不提供完整的数据管理功能，需要用户自己集成到应用中。</p>
+</li>
+</ul>
+<h2 id="tencent-cloud-vectordb">Tencent Cloud VectorDB</h2>
+<h1 id="大模型分词技术">大模型分词技术</h1>
+<h2 id="byte-pair-encoding-bpe与wordpiece">Byte Pair Encoding (BPE)与wordpiece</h2>
+<p>字节对编码（Byte Pair Encoding，BPE）算法是一种用于文本数据压缩和自然语言处理中的词汇表生成的方法。BPE的核心思想是通过频繁出现的字符对来合并字符，从而减少文本的大小。以下是BPE算法的流程：</p>
+<ol>
+<li>将文本分割成单词，然后将每个单词分割成字符，用空格分隔每个字符。例如，单词 &ldquo;apple&rdquo; 可以表示为 &ldquo;a p p l e&rdquo;。</li>
+<li><strong>统计所有字符对（即相邻字符）在文本中出现的频率。</strong>（不同的是，**WordPiece 算法在选择子词时，**相比于 BPE 算法，WordPiece 的区别主要是在选取待合并的两个单元时所采取的方法不同，其他部分的算法流程是相同的。<strong>在 WordPiece 中使用点互信息表示两个子词之间的凝聚程度的高低。在选取待合并的两个单元时就选取点互信息最高的。</strong>）</li>
+<li><strong>寻找出现频率最高的字符对，将其合并为一个新的字符。例如，如果 &ldquo;e s&rdquo; 是出现频率最高的字符对，那么将所有 &ldquo;e s&rdquo; 替换为 &ldquo;es&rdquo;。</strong></li>
+<li>重复步骤2和3，直到达到预设的迭代次数或者没有更多的字符对可以合并。每次迭代会生成一个新的字符，这些新字符可以看作是文本中的子词（subword）。</li>
+<li>根据生成的子词，重新构建词汇表。词汇表中的每个词都可以表示为一个或多个子词的组合。</li>
+</ol>
+<p>BPE算法的优点在于它可以生成一个较小的词汇表，同时保留了文本中的语义信息。这使得BPE在自然语言处理任务中非常有用，特别是在处理未知词汇或者低频词汇的情况下。</p>
+<p><strong>WordPiece 是一种基于子词的分词方法，与 BPE 类似，通过合并频繁出现的字符对来生成子词。</strong></p>
+<p><strong>常见模型：Bert，GPT 和 LAMA 一般采用 BPE 算法进行分词</strong></p>
+<h2 id="sentencepiece">SentencePiece</h2>
+<p>SentencePiece 是一种统一的分词框架，它提供了一种简单且高效的方法来处理神经网络自然语言处理任务中的文本预处理。SentencePiece 支持多种分词方法，如 BPE（Byte Pair Encoding）和 Unigram。下面分别介绍 BPE 和 Unigram 在 SentencePiece 中的原理。</p>
+<ol>
+<li>BPE（Byte Pair Encoding）：</li>
+</ol>
+<p>BPE 的原理在之前的回答中已经介绍过，这里再简要概括一下。BPE 的核心思想是通过频繁出现的字符对来合并字符，从而减少文本的大小。SentencePiece 中的 BPE 算法与标准 BPE 算法非常相似，主要区别在于 SentencePiece 的 BPE 是基于字节而非字符进行合并。</p>
+<ol start="2">
+<li>Unigram：</li>
+</ol>
+<p>Unigram 是一种基于子词的分词方法，它的目标是找到一组子词，使得给定文本的概率最大化。Unigram 分词的原理如下：</p>
+<ol>
+<li>初始化：首先，将所有的字符加入到词汇表中。</li>
+<li>构建语言模型：<strong>然后，使用训练语料库，统计每个可能的子词在语料库中出现的次数，并计算它们的概率。这里的子词可以是一个字符，也可以是由多个字符组成的字符串</strong>。</li>
+<li>选择和合并子词：接下来，根据子词的概率，选择概率最大的子词，然后将其合并为一个新的子词，并更新词汇表。这个过程会重复进行，直到词汇表的大小达到预设的上限。</li>
+<li>分词：最后，对于任意一个单词，如果它完全包含在词汇表中，则不需要分词；否则，将其分解为多个子词。分解的原则是尽可能选择最长的子词，且这些子词都必须包含在词汇表中。</li>
+</ol>
+<p>多种语言和字符集，同时支持多种分词方法。此外，由于它不依赖于预先定义的词汇表，因此可以轻松地应用于大规模的文本数据和预训练模型。</p>
+<h1 id="有哪些省内存的大语言模型训练微调推理方法">有哪些省内存的大语言模型训练/微调/推理方法？</h1>
+<ul>
+<li>模型<strong>剪枝</strong>：通过移除模型中的冗余结构和参数，减少模型的内存占用。</li>
+<li>知识<strong>蒸馏</strong>：使用一个大型教师模型来指导一个小型学生模型，使学生模型能够学习到教师模型的知识，同时减少内存占用。</li>
+<li><strong>量化</strong>：将模型的权重和激活从浮点数转换为低精度整数，减少模型的内存占用和计算需求。</li>
+<li>模型<strong>并行</strong>：将大型模型分割到多个设备上进行训练和推理，减少单个设备的内存需求。</li>
+<li>数据并行：将训练数据分割到多个设备上，每个设备训练模型的一个副本，减少单个设备的内存需求。</li>
+<li><strong>动态批处理</strong>：根据可用内存动态调整批量大小，以适应内存限制。</li>
+</ul>
+<h1 id="常见大模型得架构区别">常见大模型得架构区别</h1>
+<h3 id="glm和llama2架构的区别">GLM和LLAMA2架构的区别</h3>
+<p>GLM和LLaMA在架构和设计理念上有显著的区别。<strong>GLM使用完整的Transformer架构，结合了双向和自回归注意力机制，适用于多种NLP任务。</strong></p>
+<p><strong>LLaMA则使用Transformer的解码器部分</strong>，采用单向注意力机制，擅长生成自然语言文本。选择哪种模型取决于具体的任务需求和应用场景。</p>
+<h3 id="gpt3llamachatglm-的layer-normalization-的区别是什么各自的优缺点是什么">GPT3、LLAMA、ChatGLM 的Layer Normalization 的区别是什么？各自的优缺点是什么？</h3>
+<ul>
+<li>GPT3：采用了Post-Layer Normalization（后标准化）的结构，即先进行自注意力或前馈神经网络的计算，然后进行Layer Normalization。这种结构有助于稳定训练过程，提高模型性能。</li>
+<li>LLAMA：采用了Pre-Layer Normalization（前标准化）的结构，即先进行Layer Normalization，然后进行自注意力或前馈神经网络的计算。这种结构有助于提高模型的泛化能力和<a href="https://www.zhihu.com/search?q=%e9%b2%81%e6%a3%92%e6%80%a7&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7b%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A3402960181%7d" target="_blank" rel="noopener noreffer ">鲁棒性</a>。</li>
+<li>ChatGLM：采用了[Post-Layer Normalization](<a href="https://www.zhihu.com/search?q=Post-Layer" target="_blank" rel="noopener noreffer ">https://www.zhihu.com/search?q=Post-Layer</a> Normalization&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra={&ldquo;sourceType&rdquo;%3A&quot;answer&quot;%2C&quot;sourceId&quot;%3A3402960181})的结构，类似于GPT3。这种结构可以提高模型的性能和稳定性。</li>
+</ul>
+<h1 id="qps和qpm">QPS和QPM</h1>
+<p>QPS（Queries Per Second）和 QPM（Queries Per Minute）是衡量系统处理请求能力的性能指标，分别表示每秒和每分钟处理的查询请求数。它们的区别在于时间单位不同，QPS以秒为单位，QPM以分钟为单位。</p>
+<p><strong>LLM建议一般用QPM好点。</strong></p>
+<h1 id="ref">ref</h1>
+<p><a href="https://blog.csdn.net/wdnshadow/article/details/135433235?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-1-135433235-blog-134389457.235%5ev43%5epc_blog_bottom_relevance_base2&amp;spm=1001.2101.3001.4242.2&amp;utm_relevant_index=2" target="_blank" rel="noopener noreffer ">大型语言模型的幻觉问题_大语言模型幻觉问题-CSDN博客</a></p>
+<p><a href="https://www.aithinkings.com.cn/?p=76" target="_blank" rel="noopener noreffer ">Reciprocal Rank Fusion (RRF) – 我的AI</a></p>
+<p><a href="http://www.tecorigin.com/newsdetails/110/77.html" target="_blank" rel="noopener noreffer ">MOE模型的详解     太初（无锡）电子科技有限公司</a></p>
+<p><a href="https://github.com/naginoa/LLMs_interview_notes" target="_blank" rel="noopener noreffer ">naginoa/LLMs_interview_notes: LLMs interview notes and answers:该仓库主要记录大模型（LLMs）算法工程师相关的面试题和参考答案</a></p>
+<p><a href="https://dongnian.icu/note/llm/llm_concept/llm%E5%85%AB%E8%82%A1.html" target="_blank" rel="noopener noreffer ">37.2° Blog | 37.2° Blog</a></p>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzI1MTQxMTIyMg==&amp;mid=2247484561&amp;idx=1&amp;sn=fea61acf1af6f4af71dceba549704e9b&amp;chksm=e9f22ae8de85a3fed217f9f53e0714f5dfdeda5dccce2e712aaa42c50fde380c4a1e94de8e2e&amp;token=936982037&amp;lang=zh_CN#rd" target="_blank" rel="noopener noreffer ">大模型算法岗常见面试题100道（值得收藏）</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-07-23</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%9B%B8%E5%85%B3%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%A6%82%E5%BF%B5/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%9B%B8%E5%85%B3%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%A6%82%E5%BF%B5/" data-title="大模型相关常见问题概念" data-hashtags="pytorch,推理,LLM"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%9B%B8%E5%85%B3%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%A6%82%E5%BF%B5/" data-hashtag="pytorch"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%9B%B8%E5%85%B3%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%A6%82%E5%BF%B5/" data-title="大模型相关常见问题概念"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%9B%B8%E5%85%B3%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%A6%82%E5%BF%B5/" data-title="大模型相关常见问题概念"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%9B%B8%E5%85%B3%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%A6%82%E5%BF%B5/" data-title="大模型相关常见问题概念"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/pytorch/">Pytorch</a>,&nbsp;<a href="/tags/%E6%8E%A8%E7%90%86/">推理</a>,&nbsp;<a href="/tags/llm/">Llm</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E8%87%AA%E9%83%A8%E7%BD%B2%E5%B9%B6%E5%8F%91%E8%B0%83%E6%9F%A5/" class="prev" rel="prev" title="大模型自部署调查"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>大模型自部署调查</a>
+            <a href="/%E5%A4%A7%E6%A8%A1%E5%9E%8Bsystem-prompt%E4%B8%BA%E4%BB%80%E4%B9%88%E9%87%8D%E8%A6%81/" class="next" rel="next" title="大模型system Prompt为什么重要">大模型system Prompt为什么重要<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.132.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kengerlwl.github.io/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"JCTYUNKA9R","algoliaIndex":"kenger","algoliaSearchKey":"3ef68664495033362b7df9cf5a3eee1e","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

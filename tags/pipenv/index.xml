@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Pipenv - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/pipenv/</link>
+        <description>Pipenv - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/pipenv/" rel="self" type="application/rss+xml" /><item>
+    <title>pipenv虚拟环境实用</title>
+    <link>https://kengerlwl.github.io/pipenv%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E5%AE%9E%E7%94%A8/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/pipenv%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E5%AE%9E%E7%94%A8/</guid>
+    <description><![CDATA[pipenv虚拟环境管理 安装 运行以下命令安装： 1 pip install pipenv 查看是否安装成功 1 pipenv --help 进行环境配置 进入项目文件夹下，安装虚拟环境 1 pipenv install 进入虚拟环境 1 pipenv]]></description>
+</item>
+</channel>
+</rss>

@@ -1,0 +1,476 @@
+# 自部署大模型实验细节
+
+
+# huggingface
+
+
+
+换源
+
+```
+export HF_ENDPOINT=https://hf-mirror.com
+
+```
+
+下载
+
+```
+nohup huggingface-cli download --resume-download Qwen/Qwen-72B-Chat-Int4 --local-dir ./Qwen-72B-Chat-Int4 > 72b.log &
+
+
+huggingface-cli download --resume-download Qwen/Qwen-14B --local-dir ./Qwen-14B
+
+
+huggingface-cli download --resume-download Qwen/Qwen2-7B-Instruct --local-dir ./Qwen-7B
+
+
+huggingface-cli download --resume-download Qwen/Qwen1.5-14B-Chat --local-dir ./Qwen1.5-14B
+```
+
+
+
+## 启动 vllm api
+
+```
+python -m vllm.entrypoints.openai.api_server \
+    --model /root/qwen/Qwen-72B-Chat-Int4 \
+    --served-model-name qwen2:72b-int4 \
+    --trust-remote-code \
+    --max-model-len 7000 \
+    --max_num_seqs 10 \
+     --dtype half \
+    --port 13003 \
+    --gpu-memory-utilization 0.96 \
+ 	--tensor-parallel-size 2 \
+ 	--quantization gptq
+
+
+python -m vllm.entrypoints.openai.api_server \
+    --model /root/qwen/Qwen-14B \
+    --served-model-name qwen2:14b \
+    --trust-remote-code \
+    --max-model-len 2048 \
+    --max_num_seqs 50 \
+     --dtype half \
+    --port 13003 \
+    --gpu-memory-utilization 0.8 \
+ 	--tensor-parallel-size 2
+ 	
+ 
+ # qwen2： 7B 半精度
+python -m vllm.entrypoints.openai.api_server \
+    --model /root/qwen/Qwen-7B \
+    --served-model-name qwen2:7b \
+    --trust-remote-code \
+    --max-model-len 12000 \
+    --max_num_seqs 50 \
+     --dtype half \
+    --port 13003 \
+    --gpu-memory-utilization 0.96 \
+ 	--tensor-parallel-size 2
+ 	
+# qwen2： 7B 全精度
+python -m vllm.entrypoints.openai.api_server \
+    --model /root/qwen/Qwen-7B \
+    --served-model-name qwen2:7b \
+    --trust-remote-code \
+    --max-model-len 12000 \
+    --max_num_seqs 50 \
+     --dtype float \
+    --port 13003 \
+    --gpu-memory-utilization 1 \
+ 	--tensor-parallel-size 2
+ 	
+ 	
+
+# gemma：9b
+python -m vllm.entrypoints.openai.api_server \
+    --model /root/qwen/Qwen-7B \
+    --served-model-name gemma:9b \
+    --trust-remote-code \
+    --max-model-len 12000 \
+    --max_num_seqs 50 \
+     --dtype float \
+    --port 13003 \
+    --gpu-memory-utilization 1 \
+ 	--tensor-parallel-size 2
+ 	
+ 	
+ 	
+# meta/llama3:7b
+python -m vllm.entrypoints.openai.api_server \
+    --model ./models/meta \
+    --served-model-name llama:7b \
+    --trust-remote-code \
+    --max-model-len 8000 \
+    --max_num_seqs 50 \
+     --dtype float \
+    --port 13003 \
+    --gpu-memory-utilization 1 \
+ 	--tensor-parallel-size 4
+```
+
+
+
+
+
+### 参数
+
+```
+--tensor-parallel-size 2 # 多卡提高显存，且并行运算
+
+--served-model-name qwen2:14b  # 调用vllm时用的模型名字
+--max-num-seqs <sequences>：每迭代的最大序列数量。严格来说，是并发
+--max-model-len <length>：模型上下文长度，未指定时将根据模型配置自动确定。
+
+
+
+ --gpu-memory-utilization 。GPU利用上限，默认情况下，该值为 0.9 ，你可以将其调高以应对OOM问题，这个值尽量不要设置到1，容易出问题，给cudagraph留下空间
+ 
+ 
+ --enable-prefix-caching：开启自动前缀缓存功能。 # 这个功能很重要，对于我这种大量重复的相似任务的。
+
+
+```
+
+
+
+
+
+### 模型压缩
+
+```
+（1）模型量化（quantization）：旨在通过减少模型参数的表示精度来降低模型的存储空间和计算复杂度；
+
+
+```
+
+
+
+
+
+### 访问
+
+
+
+#### completion
+
+
+
+```
+# 公网
+    
+curl http://xxx:13003/v1/completions \
+    -H "Content-Type: application/json" \
+    -d '{
+        "model": "qwen2:72b-int4",
+        "prompt": "请你介绍一下腾讯公司，越详细越好",
+        "max_tokens": 7,
+        "temperature": 0
+    }'
+    
+curl http://xxx:13003/v1/completions \
+    -H "Content-Type: application/json" \
+    -d '{
+        "model": "qwen2:7b",
+        "prompt": "假设你是一个文本格式化机器人，请你帮我输出json化的数据.\n 输入内容：今天天气不错",
+        "max_tokens": 700,
+        "temperature": 0
+    }'
+    
+    
+# idc
+
+
+
+curl http://gpu4.csubot.cn:13003/v1/completions \
+    -H "Content-Type: application/json" \
+    -d '{
+        "model": "llama:7b",
+        "prompt": "请你介绍一下腾讯公司，越详细越好",
+        "max_tokens": 7,
+        "temperature": 0
+    }'
+```
+
+#### ChatCompletion
+
+```
+# 使用system
+
+curl http://xxx:13003/v1/chat/completions \
+    -H "Content-Type: application/json" \
+    -d '{
+        "model": "qwen2:7b",
+        "messages": [
+              {
+                "role": "system",
+                "content": "假设你是一个文本格式化机器人，请你帮我输出json化的数据"
+              },
+              {
+                "role": "user",
+                "content": "输入内容：今天天气不错，"
+              }
+     		 ],
+        "max_tokens": 700,
+        "temperature": 0
+    }'
+    
+
+
+# 不使用system prompt
+
+curl http://xxx:13003/v1/chat/completions \
+    -H "Content-Type: application/json" \
+    -d '{
+        "model": "qwen2:7b",
+        "messages": [
+              {
+                "role": "user",
+                "content": "假设你是一个文本格式化机器人，请你帮我输出json化的数据。\n输入内容：今天天气不错，"
+              }
+     		 ],
+        "max_tokens": 700,
+        "temperature": 0
+    }'
+```
+
+
+
+## 坑
+
+**vllm版本**
+
+` pip install vllm==0.5.3.post1`
+
+
+
+
+
+
+
+
+
+# 启动vllm web
+
+建议还是用apiserver会更好，支持调整的参数更多，
+
+```
+
+
+# 7B 
+model_path="/root/qwen/Qwen-7B"
+
+python3.10 -m fastchat.serve.controller
+
+
+python -m fastchat.serve.vllm_worker   --model-path $model_path --trust-remote-code --dtype float --tensor-parallel-size 2 --gpu-memory-utilization 0.9
+
+
+python3.10 -m fastchat.serve.vllm_worker   --model-path $model_path --trust-remote-code --dtype half --tensor-parallel-size 2 --gpu-memory-utilization 0.8
+
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+python -m fastchat.serve.gradio_web_server --port 8000
+
+```
+
+
+
+
+
+
+
+
+
+```
+from vllm_wrapper import vLLMWrapper
+
+model = vLLMWrapper('Qwen/Qwen2-7B-Instruct-GPTQ-Int8', tensor_parallel_size=1)
+
+response, history = model.chat(query="你好", history=None)
+print(response)
+response, history = model.chat(query="给我讲一个年轻人奋斗创业最终取得成功的故事。", history=history)
+print(response)
+response, history = model.chat(query="给这个故事起一个标题", history=history)
+print(response)
+
+
+
+
+
+
+
+
+from transformers import AutoModelForCausalLM, AutoTokenizer
+import torch
+
+# 设置精度为 float16
+dtype = torch.float16
+
+# 加载模型
+model_name = "Qwen/Qwen2-7B-Instruct-GPTQ-Int8"
+model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=dtype)
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+
+# 测试模型
+input_text = "你好"
+inputs = tokenizer(input_text, return_tensors="pt")
+outputs = model.generate(**inputs)
+
+# 解码输出
+output_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
+print(output_text)
+```
+
+
+
+
+
+
+
+# 测速
+
+
+
+# 2*V100
+
+
+
+## qwen 14B 半精度
+
+38tokens/s
+
+
+
+## qwen2:7B全精度
+
+42tokens/s
+
+
+
+## qwen2:7B半精度
+
+65okens/s
+
+
+
+
+
+# qwen2:7B半精度 批量测试
+
+全程cpu和内存低占用，差不多20左右，是总tokens数最多的时候
+
+```
+
+并发数: 1, 平均速度: 57.710082036775646 tokens/s
+
+并发数: 2, 平均速度: 53.04823362763054 tokens/s
+
+并发数: 4, 平均速度: 52.17609420057666 tokens/s
+
+并发数: 8, 平均速度: 47.75752326218659 tokens/s
+
+
+并发数: 16, 平均速度: 40.726867780214114 tokens/s
+
+
+并发数: 25, 平均速度: 33.36991664640869 tokens/s
+
+
+并发数: 36, 平均速度: 26.689446034528306 tokens/s
+```
+
+![refs/heads/master/image-20240809151139331](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/f4c0299ddc2d3dd224cf974f4bbd1335/de5f231008d60797b8427194bf142ff4.png)
+
+
+
+
+
+# 自部署gemma
+
+GGUF 模型文件列表：https://modelscope.cn/models/LLM-Research/gemma-2-9b-it-GGUF/files
+
+GGUF 模型文件名称格式，如`gemma-2-9b-it-Q5_K_M.gguf`等：
+
+- **it**代表本模型是对基线模型进行了微调，用于更好地理解和生成遵循指令（instruction-following）的文本，以提供符合要求的响应
+- **Q4/Q5 等代表模型权重的量化位数（其中Q是Quantization的缩小，即量化），是一种模型压缩技术，用于减少模型大小，同时降低对计算资源的需求（特别是内存），但又尽量保持模型的性能；数字4或5则代表量化精度的位数（Q4 是 4 位，Q5 是 5 位等），精度越高模型体积和内存使用也会越大，但仍然远小于未量化的基线模型**
+- **K_M/K_S**代表了与注意力机制相关的特定配置，**K_M** 可能是指 Key 的 Mask，即用来屏蔽某些位置的键值对，防止它们在注意力计算中被考虑；而 **K_S** 可能是指 Key 的 Scale 或 Size，涉及到键向量缩放，这是在多头注意力机制中常见的操作，以稳定梯度
+
+点击**下载**图标即可下载，由于文件较大，浏览器的下载容易过程容易终端，重试可继续下载（假设下载本地的文件名为：`Gemma-2-9B-it-Q5_K_M.gguf`）：
+
+
+
+
+
+
+
+## 启动命令
+
+```
+# 启动Llama大模型
+python -m llama_cpp.server --host 0.0.0.0 --port 13003 --model ./Gemma-2-9B-it-Q5_K_M.gguf --n_ctx 2048
+```
+
+
+
+## ollama部署
+
+```
+[Unit]
+Description=Ollama Service
+After=network-online.target
+
+[Service]
+ExecStart=/usr/local/bin/ollama serve
+User=ollama
+Group=ollama
+Restart=always
+RestartSec=3
+Environment="OLLAMA_HOST=0.0.0.0:13003"
+Environment="PATH=/root/.conda/envs/qwen/bin:/usr/share/Modules/bin:/usr/condabin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/root/.ft:/root/.ft"
+Environment="OLLAMA_NUM_PARALLEL=30" #并行处理请求的数量
+Environment="OLLAMA_MAX_LOADED_MODELS=6" #同时加载的模型数量
+
+
+
+[Install]
+WantedBy=default.target
+```
+
+
+
+## 基于lamma.cpp部署推理
+
+
+
+
+
+# web界面
+
+```
+docker run -it -p 3000:3000 \
+   -e OPENAI_API_KEY=sk-xxxx \
+   -e CODE=your-password \
+   -e PROXY_URL=http://gpu4.csubot.cn:13003 \
+   yidadaa/chatgpt-next-web
+```
+
+
+
+
+
+# 心得以及结论
+
+模型选择很重要，不要盲目相信排名，要实际测试，根据业务去查看到底正确率是多少。
+
+**还有，gemma2：9b确实很牛逼，**
+
+# ref
+
+[LLM并发加速部署方案（llama.cpp、vllm、lightLLM、fastLLM）-CSDN博客](https://blog.csdn.net/weixin_54338498/article/details/137110068)
+
+[vLLM分布式多GPU Docker部署踩坑记 | LittleFish’Blog](https://www.xiaoiluo.com/article/vllm-gpu-ray-multigpu)
+
+[谷歌开源 Gemma2！魔搭社区推理、微调最佳实践教程 | BestBlogs](https://www.bestblogs.dev/article/714dc8)
+
+[Google 发布了最新的开源大模型 Gemma 2，本地快速部署和体验 - 大模型知识库|大模型训练|开箱即用的企业大模型应用平台|智能体开发|53AI](https://www.53ai.com/news/qianyanjishu/2024070303852.html)

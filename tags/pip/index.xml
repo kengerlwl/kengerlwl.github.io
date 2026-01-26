@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Pip - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/pip/</link>
+        <description>Pip - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 18 Jul 2024 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/pip/" rel="self" type="application/rss+xml" /><item>
+    <title>python项目依赖管理</title>
+    <link>https://kengerlwl.github.io/python%E9%A1%B9%E7%9B%AE%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86/</link>
+    <pubDate>Thu, 18 Jul 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/python%E9%A1%B9%E7%9B%AE%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86/</guid>
+    <description><![CDATA[背景 python包管理是一个非常抽象的问题，尤其是设计cuda登显卡环境的时候更加如此。 cu的问题我解决不了，但是普通工程的依赖问题需要解决]]></description>
+</item>
+</channel>
+</rss>

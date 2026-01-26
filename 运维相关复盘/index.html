@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>运维相关复盘 - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://kengerlwl.github.io/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E5%A4%8D%E7%9B%98/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="运维相关复盘">
+  <meta property="og:description" content="OOM内存溢出问题 java程序内存溢出问题 jstat—–查看GC情况 jstat -gc 1 由于我是进入docker 容器中执行的top">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-04-11T15:27:31+00:00">
+    <meta property="article:modified_time" content="2024-04-11T15:27:31+00:00">
+    <meta property="article:tag" content="运维">
+    <meta property="og:image" content="https://kengerlwl.github.io/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kengerlwl.github.io/logo.png">
+  <meta name="twitter:title" content="运维相关复盘">
+  <meta name="twitter:description" content="OOM内存溢出问题 java程序内存溢出问题 jstat—–查看GC情况 jstat -gc 1 由于我是进入docker 容器中执行的top">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://kengerlwl.github.io/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E5%A4%8D%E7%9B%98/" /><link rel="prev" href="https://kengerlwl.github.io/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E9%9D%A2%E8%AF%95%E9%A2%98/" /><link rel="next" href="https://kengerlwl.github.io/k8s%E5%AD%A6%E4%B9%A0/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "运维相关复盘",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/kengerlwl.github.io\/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E5%A4%8D%E7%9B%98\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/kengerlwl.github.io\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "运维","wordcount":  4391 ,
+        "url": "https:\/\/kengerlwl.github.io\/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E5%A4%8D%E7%9B%98\/","datePublished": "2024-04-11T15:27:31+00:00","dateModified": "2024-04-11T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/kengerlwl.github.io\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E5%A4%8D%E7%9B%98/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E5%A4%8D%E7%9B%98/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">运维相关复盘</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kengerlwl.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/find-job/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Find JOB</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-04-11">2024-04-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 4391 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 9 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#java程序内存溢出问题">java程序内存溢出问题</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#java程序高占用">java程序高占用</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#docker底层">docker底层</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#文件权限">文件权限</a></li>
+    <li><a href="#inode-硬链接和软连接">inode 硬链接和软连接</a></li>
+    <li><a href="#什么是交换空间">什么是交换空间？</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#ansible了解">ansible了解</a></li>
+    <li><a href="#脚本能直接执行但是cron里面就不能直接执行">脚本能直接执行，但是cron里面就不能直接执行</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="oom内存溢出问题">OOM内存溢出问题</h1>
+<h2 id="java程序内存溢出问题">java程序内存溢出问题</h2>
+<p><strong>jstat&mdash;&ndash;查看GC情况</strong></p>
+<p><code>jstat -gc 1</code>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/6a942e0fbd78bbacf026b27ac02bef3b/35a73b67618fcc08f48b44f8b8fa741a.png#pic_center"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/6a942e0fbd78bbacf026b27ac02bef3b/35a73b67618fcc08f48b44f8b8fa741a.png#pic_center, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/6a942e0fbd78bbacf026b27ac02bef3b/35a73b67618fcc08f48b44f8b8fa741a.png#pic_center 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/6a942e0fbd78bbacf026b27ac02bef3b/35a73b67618fcc08f48b44f8b8fa741a.png#pic_center 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/6a942e0fbd78bbacf026b27ac02bef3b/35a73b67618fcc08f48b44f8b8fa741a.png#pic_center"
+        title="在这里插入图片描述" /></p>
+<blockquote>
+<p>由于我是进入docker 容器中执行的top命令， 所以我的java的进程id是1</p>
+</blockquote>
+<p>其中参数简单说明下：
+S0C：第一个幸存区的大小
+S1C：第二个幸存区的大小
+S0U：第一个幸存区的使用大小
+S1U：第二个幸存区的使用大小
+EC：伊甸园区的大小
+EU：伊甸园区的使用大小
+OC：老年代大小
+OU：老年代使用大小
+MC：方法区大小
+MU：方法区使用大小
+CCSC:压缩类空间大小
+CCSU:压缩类空间使用大小
+YGC：年轻代垃圾回收次数
+YGCT：年轻代垃圾回收消耗时间
+FGC：老年代垃圾回收次数
+FGCT：老年代垃圾回收消耗时间
+GCT：垃圾回收消耗总时间</p>
+<p><strong>jmat&mdash;&mdash;工具内存堆dump</strong></p>
+<p>5.使用 <strong>jmap</strong> -dump:format=b,file=heap.log pid <strong>保存了堆现场，然后重启了应用服务</strong></p>
+<p>堆文件都是一些二进制数据，在命令行查看非常麻烦，Java 为我们提供的工具都是可视化的，Linux 服务器上又没法查看，那么首先要把文件下载到本地。</p>
+<p>由于我们设置的堆内存为 4G，所以 dump 出来的堆文件也很大，下载它确实非常费事，不过我们可以先对它进行一次压缩。</p>
+<p>然后，借助内存分析工具<strong>MAT</strong>(Memory Analyzer Tool)：可以查看到是哪个对象导致了大量的堆占用</p>
+<h1 id="cpu占用飙高问题jstack">CPU占用飙高问题JSTACK</h1>
+<h2 id="java程序高占用">java程序高占用</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class JStackDemo {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        int a = 10;
+</span></span><span class="line"><span class="cl">        while (true) {
+</span></span><span class="line"><span class="cl">            a = 100;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>第一步先查询PID和计算PID的16进制</strong></p>
+<p><strong>第二步使用jstack得到线程堆栈信息</strong></p>
+<blockquote>
+<p>使用jstack pid |grep tid查看线程堆栈信息，并且输出到jstack.log文件中</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">jstack 2552 |grep 9f9 -A 30 &gt; jstack.log
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>分析线程堆栈信息</strong></p>
+<blockquote>
+<p>此时应该得到了一个jstack.log的堆栈日志文件.</p>
+<p>分析具体代码逻辑，溯源</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">cat </span><span class="n">jstack</span><span class="p">.</span><span class="py">log</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;main&#34;</span> <span class="c">#1 prio=5 os_prio=0 tid=0x00007f3f8004b800 nid=0xa50 runnable [0x00007f3f86ee8000]</span>
+</span></span><span class="line"><span class="cl">   <span class="n">java</span><span class="p">.</span><span class="py">lang</span><span class="p">.</span><span class="py">Thread</span><span class="p">.</span><span class="n">State</span><span class="err">:</span> <span class="n">RUNNABLE</span>
+</span></span><span class="line"><span class="cl">	<span class="n">at</span> <span class="n">JStackDemo</span><span class="p">.</span><span class="py">main</span><span class="p">(</span><span class="n">JStackDemo</span><span class="p">.</span><span class="n">java</span><span class="err">:</span><span class="mf">6</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;VM Thread&#34;</span> <span class="n">os_prio</span><span class="p">=</span><span class="mf">0</span> <span class="n">tid</span><span class="p">=</span><span class="n">0x00007f3f800cb800</span> <span class="n">nid</span><span class="p">=</span><span class="n">0xa51</span> <span class="n">runnable</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;VM Periodic Task Thread&#34;</span> <span class="n">os_prio</span><span class="p">=</span><span class="mf">0</span> <span class="n">tid</span><span class="p">=</span><span class="n">0x00007f3f8011d000</span> <span class="n">nid</span><span class="p">=</span><span class="n">0xa58</span> <span class="n">waiting</span> <span class="n">on</span> <span class="n">condition</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">JNI</span> <span class="n">global</span> <span class="n">references</span><span class="err">:</span> <span class="mf">5</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>第三步然后再使用 top 命令查看进程中线程（shift +h）的占用情况，找到占用 CPU 较高的线程 ID。</strong></p>
+<p><strong>第四步在日志中检索相关进程的信息，找到对应的堆栈信息</strong></p>
+<p><strong>实际上，遇到CPU高的问题，也是要看业务的，毕竟很多时候，只是因为请求变多了！！！！！</strong></p>
+<h1 id="一个程序基本的内存结构">一个程序基本的内存结构</h1>
+<p>一个程序的基本内存结构通常包括堆（Heap）、栈（Stack）以及代码区（Code Area）和静态区（Static Area）。</p>
+<ol>
+<li><strong>堆（Heap）</strong>：堆是程序运行时动态分配内存的区域，用于存储对象实例和数组等动态分配的数据。堆是由垃圾收集器（Garbage Collector）管理的，它负责在不再需要时回收对象的内存空间。在Java中，所有通过 <code>new</code> 关键字创建的对象都存储在堆中。</li>
+<li><strong>栈（Stack）</strong>：栈是程序运行时的一种数据结构，用于存储方法的调用栈和局部变量。每当调用一个方法时，都会在栈上创建一个对应的栈帧（Stack Frame），栈帧包含了方法的参数、局部变量以及方法返回的地址等信息。当方法执行完毕时，对应的栈帧会被弹出栈。栈是线程私有的，每个线程都有自己的栈。</li>
+<li><strong>代码区（Code Area）</strong>：代码区存储程序执行的字节码指令，包括所有的方法和函数代码。在Java中，字节码被加载到代码区，并由JVM执行。</li>
+<li><strong>静态区（Static Area）</strong>：静态区存储类的静态变量、常量、类信息等。静态区在程序启动时被分配，并且在整个程序生命周期内存在。</li>
+</ol>
+<h1 id="业内常用的分布式数据库">业内常用的分布式数据库</h1>
+<ol>
+<li><strong>MongoDB</strong>：一种文档型数据库，可水平扩展，适用于大规模应用和复杂的数据结构。</li>
+<li><strong>Cassandra：一个高度可扩展的分布式数据库，适用于大规模数据的分布式存储和处理。</strong></li>
+<li><strong>Redis</strong>：一个支持多种数据结构的内存数据库，可以用作缓存和消息传递系统。</li>
+<li><strong>Apache HBase：基于Hadoop的分布式数据库，适用于大规模结构化数据的存储和实时查询。</strong></li>
+<li><strong>Amazon DynamoDB</strong>：一种托管的NoSQL数据库服务，具有高可用性和可伸缩性。</li>
+<li><strong>Google Cloud Spanner：一种全球分布式的关系型数据库服务，提供了ACID事务和水平扩展的能力。</strong></li>
+<li><strong>Apache Kafka</strong>：一种分布式流处理平台和消息队列系统，用于实时数据流处理。</li>
+<li><strong>Apache CouchDB</strong>：一种面向文档的NoSQL数据库，具有分布式特性和支持数据同步。</li>
+<li><strong>TiDB</strong>：一个开源的分布式SQL数据库，兼容MySQL协议，适用于OLTP和OLAP场景。</li>
+<li><strong>Neo4j</strong>：一个图形数据库，用于存储和处理具有复杂关系的数据，例如社交网络和推荐系统。</li>
+</ol>
+<h1 id="常用运维命令">常用运维命令</h1>
+<ol>
+<li>
+<p><strong>iftop</strong>：<code>iftop</code> 是一个命令行工具，用于实时显示<strong>网络接口上的带宽使用情</strong>况。它以类似于 &ldquo;top&rdquo; 的方式显示网络连接的实时更新列表。这对于监控网络使用情况并确定哪些主机正在消耗大量带宽非常有用。</p>
+</li>
+<li>
+<p><strong>iotop</strong>：<code>iotop</code> 是一个类似于 <code>top</code> 命令的工具，但是它<strong>专注于显示磁盘 I/O 活动</strong>。它可以实时显示系统上每个进程的磁盘 I/O 使用情况，包括读取和写入速率，以及累计的总量。</p>
+</li>
+<li>
+<p><strong>netstat</strong>：<code>netstat</code> 是一个用于显示网络连接、路由表和网络接口等网络相关信息的命令。它可以显示当前系统的网络连接状态，包括正在进行的连接、监听端口和路由表等。</p>
+</li>
+<li>
+<p><strong>lsof</strong>：<code>lsof</code> 是 &ldquo;list open files&rdquo; 的缩写，用于列出当前系统上已打开的文件。它可以显示<strong>哪些进程正在使用哪些文件、目录或网络套接字等资源。</strong></p>
+</li>
+<li>
+<p><strong>pstree</strong>：<code>pstree</code> 是一个用于显示进程树的命令。它以树状结构显示当前系统中运行的进程及其关系，以便于理解进程之间的父子关系和衍生关系。</p>
+</li>
+<li>
+<p><code>stat</code> 是一个命令行实用程序，用于在类Unix操作系统中显示文件或文件系统的详细信息。当您运行 <code>stat</code> 命令，后面跟着文件或目录的名称时，它会提供诸如以下信息：</p>
+<ol>
+<li>文件类型</li>
+<li>权限</li>
+<li>inode 号</li>
+<li>UID 和 GID（用户和组标识符）</li>
+<li>大小</li>
+<li>时间戳（最后访问时间、最后修改时间和最后状态更改时间）</li>
+<li>文件系统类型</li>
+</ol>
+</li>
+<li></li>
+</ol>
+<h1 id="虚拟机和docker区别">虚拟机和docker区别</h1>
+<ul>
+<li><strong>虚拟机提供了完整的虚拟化环境，每个虚拟机都运行独立的操作系统实例，而 Docker 则共享主机操作系统内核，容器之间相互隔离。</strong></li>
+<li>Docker 容器更加轻量级和高效，启动速度更快，资源占用更少，而虚拟机则较为笨重。</li>
+<li>Docker 适用于轻量级的应用容器化和快速部署，而虚拟机适用于需要完全隔离和独立的应用场景。</li>
+</ul>
+<h2 id="docker底层">docker底层</h2>
+<p>Docker 的底层是基于 Linux 内核的核心特性，主要是利用了 Linux 的容器技术。具体来说，Docker 使用了 Linux 内核的以下特性来实现容器化：</p>
+<ol>
+<li><strong>Linux 容器（LXC）：</strong> Docker 最初是建立在 LXC 上的，LXC 是 Linux 提供的一种基于内核的容器化技术，允许在单个 Linux 实例上运行多个隔离的 Linux 系统容器。</li>
+<li><strong>命名空间（Namespaces）（执行隔离）：</strong> Linux 内核提供了多种命名空间，包括PID（进程）、UTS（主机名）、IPC（进程间通信）、网络和挂载。Docker 使用这些<strong>命名空间来实现容器之间的隔离，使得每个容器都拥有自己独立的进程、网络和文件系统等资源。</strong></li>
+<li><strong>控制组（cgroups）（资源隔离）：</strong> 控制组是 Linux 内核提供的一种资源限制和优先级控制机制，它<strong>允许对系统资源（如 CPU、内存、网络带宽等）进行分组和限制</strong>。Docker 使用控制组来限制容器的资源使用，以确保它们不会互相干扰。</li>
+<li><strong>联合文件系统（UnionFS）：</strong> Docker 使用联合文件系统来实现容器镜像的分层和共享。联合文件系统允许将多个文件系统挂载为单个文件系统，使得容器镜像可以由多个层次组成，每个层次都可以添加、修改或删除文件，而不会影响到其他层次，从而实现镜像的轻量化和高效共享。</li>
+</ol>
+<p>定节点，具体来说，依赖的是lable标签的办法来指定节点。</p>
+<h1 id="linux目录概述">linux目录概述</h1>
+<ol>
+<li><strong>/bin</strong>：基本命令二进制文件存放目录。</li>
+<li><strong>/boot</strong>：<strong>引导加载程序和内核镜像文件存放目录</strong>。</li>
+<li><strong>/dev</strong>：设备文件存放目录。</li>
+<li><strong>/etc</strong>：系统<strong>配置文件存放目录</strong>。</li>
+<li><strong>/home</strong>：用户主目录存放目录。</li>
+<li><strong>/lib</strong>：系统共享库文件存放目录。</li>
+<li><strong>/media</strong>：挂载可移动设备的目录。</li>
+<li><strong>/mnt</strong>：手动挂载临时文件系统的目录。</li>
+<li><strong>/opt</strong>：可选软件包安装目录。</li>
+<li><strong>/proc</strong>：虚拟文件系统，包含<strong>系统运行时信息，以及各种进程的具体信息</strong>。</li>
+<li><strong>/root</strong>：超级用户的主目录。</li>
+<li><strong>/sbin</strong>：系统管理命令存放目录。</li>
+<li><strong>/srv</strong>：服务相关数据存放目录。</li>
+<li><strong>/sys</strong>：虚拟文件系统，包含与内核相关信息。</li>
+<li><strong>/tmp</strong>：临时文件存放目录。</li>
+<li><strong>/usr</strong>：<strong>系统应用程序和文件存放目</strong>录。</li>
+<li><strong>/var</strong>：经常变化文件存放目录。</li>
+</ol>
+<h1 id="proc目录">/proc目录</h1>
+<p>Linux系统上的/proc目录是一种文件系统，即proc文件系统。与其它常见的文件系统不同的是，/proc是一种伪文件系统（也即虚拟文件系统），<strong>存储的是当前内核运行状态的一系列特殊文件，用户可以通过这些文件查看有关系统硬件及当前正在运行进程的信息</strong>，甚至可以通过更改其中某些文件来改变内核的运行状态。</p>
+<p><strong><code>/proc</code>目录是开机后才会有的，关机就没了。具体访问是<code>/proc/&lt;PID&gt;/xxx</code></strong> ，linux万物皆文件</p>
+<h1 id="linux文件系统">linux文件系统</h1>
+<h2 id="文件权限">文件权限</h2>
+<p><code>chmod 777 xxx</code></p>
+<p>7对应着<code>rwx</code>二进制<code>111</code></p>
+<p>还有一个改变权限的方法，从之前的介绍中我们可以发现，基本上就九个权限分别是：</p>
+<ul>
+<li>user：用户</li>
+<li>group：组</li>
+<li>others：其他</li>
+</ul>
+<h2 id="inode-硬链接和软连接">inode 硬链接和软连接</h2>
+<p>inode是Unix和类Unix操作系统中的一个重要概念，用于存储文件或目录的元数据信息，包括文件大小、拥有者、权限、时间戳以及文件数据的存放位置等</p>
+<ul>
+<li><strong>硬链接</strong>更像是原始文件的副本，<strong>与原始文件共享相同的inode和数据块</strong>，因此对硬链接的修改会影响到原始文件，反之亦然。（<strong>不可以跨不同文件系统</strong>）</li>
+<li><strong>软链接</strong>更像是一个指针，<strong>指向原始文件或目录的路径</strong>，因此对软链接的修改不会影响到原始文件，也不会影响到软链接指向的文件或目录。（<strong>可以跨不同文件系统</strong>）</li>
+</ul>
+<h2 id="什么是交换空间">什么是交换空间？</h2>
+<ul>
+<li>交换空间是Linux使用的一定空间，用于临时保存一些并发运行的程序。当RAM没有足够的内存来容纳正在执行的所有程序时，就会发生这种情况。</li>
+</ul>
+<h1 id="其他">其他</h1>
+<h2 id="ansible了解">ansible了解</h2>
+<p>Ansible是一种<strong>自动化工具，用于自动化配置管理、应用程序部署、任务自动化等</strong>。它具有简单易用、轻量级、可扩展等特点，广泛应用于IT基础设施的自动化管理领域。</p>
+<h2 id="脚本能直接执行但是cron里面就不能直接执行">脚本能直接执行，但是cron里面就不能直接执行</h2>
+<p>如果你的脚本在直接执行时正常工作，但在cron中无法正常执行，可能有几个原因导致这种情况发生：</p>
+<ol>
+<li><strong>环境变量</strong>：cron中的环境变量可能与你的交互式 shell 环境不同。在脚本中使用了依赖于特定环境变量的路径或命令时，可能会导致脚本无法执行。为了解决这个问题，你可以在cron任务中设置合适的环境变量或者使用绝对路径。</li>
+<li><strong>路径问题</strong>：在cron中执行脚本时，默认的工作目录可能不同于你的交互式 shell 环境。如果脚本中使用了相对路径，可能无法找到对应的文件。你可以在脚本中使用绝对路径来解决这个问题。</li>
+<li><strong>权限问题</strong>：cron任务可能以不同的用户身份运行。如果你的脚本需要特定的权限或者在特定的用户环境中运行，需要确保cron任务以正确的用户身份运行。</li>
+<li><strong>日志问题</strong>：cron任务默认不会像交互式 shell 环境那样输出到终端，因此你可能无法直接看到脚本执行时的输出。你可以在cron任务中设置输出重定向到日志文件，以便查看脚本执行时的输出。</li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-04-11</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E5%A4%8D%E7%9B%98/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://kengerlwl.github.io/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E5%A4%8D%E7%9B%98/" data-title="运维相关复盘" data-hashtags="运维"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://kengerlwl.github.io/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E5%A4%8D%E7%9B%98/" data-hashtag="运维"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://kengerlwl.github.io/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E5%A4%8D%E7%9B%98/" data-title="运维相关复盘"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://kengerlwl.github.io/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E5%A4%8D%E7%9B%98/" data-title="运维相关复盘"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://kengerlwl.github.io/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E5%A4%8D%E7%9B%98/" data-title="运维相关复盘"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E8%BF%90%E7%BB%B4/">运维</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E9%9D%A2%E8%AF%95%E9%A2%98/" class="prev" rel="prev" title="运维相关面试题"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>运维相关面试题</a>
+            <a href="/k8s%E5%AD%A6%E4%B9%A0/" class="next" rel="next" title="K8S学习">K8S学习<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.132.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kengerlwl.github.io/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"JCTYUNKA9R","algoliaIndex":"kenger","algoliaSearchKey":"3ef68664495033362b7df9cf5a3eee1e","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

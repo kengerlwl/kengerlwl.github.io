@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Categories - Category - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/en/categories/</link>
+        <description>Categories - Category - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><atom:link href="https://kengerlwl.github.io/en/categories/" rel="self" type="application/rss+xml" /><item>
+    <title>Documentation</title>
+    <link>https://kengerlwl.github.io/en/categories/documentation/</link>
+    <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/en/categories/documentation/</guid>
+    <description><![CDATA[]]></description>
+</item>
+</channel>
+</rss>

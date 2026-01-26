@@ -1,0 +1,24 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>镜像网站 - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/%E9%95%9C%E5%83%8F%E7%BD%91%E7%AB%99/</link>
+        <description>镜像网站 - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 13 Apr 2023 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/%E9%95%9C%E5%83%8F%E7%BD%91%E7%AB%99/" rel="self" type="application/rss+xml" /><item>
+    <title>clash的规则编辑</title>
+    <link>https://kengerlwl.github.io/clash%E7%9A%84%E8%A7%84%E5%88%99%E7%BC%96%E8%BE%91/</link>
+    <pubDate>Thu, 13 Apr 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/clash%E7%9A%84%E8%A7%84%E5%88%99%E7%BC%96%E8%BE%91/</guid>
+    <description><![CDATA[结构 节点proxy Proxy 部分是 Clash 配置文件的一部分，用于定义代理服务器列表及其属性。 1 2 proxies: - {cipher: auto, name: test2, alterId: 0, port: 52333, server: gpu2.csubot.cn, type: vmess, uuid: 8FF6627C-C247-44EB-A9AA-A7EAB8385D4A} 节点组 proxy-groups 是 Clash 配置文件中的一]]></description>
+</item>
+<item>
+    <title>镜像网站搭建------nginx</title>
+    <link>https://kengerlwl.github.io/%E9%95%9C%E5%83%8F%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA------nginx/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E9%95%9C%E5%83%8F%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA------nginx/</guid>
+    <description><![CDATA[代理 代理后登录服务一般都会用不了。 一般只能针对单个域名进行代理，如果使用子域名一多，就无法代理了。 关于国内域名备案与解析 国内每一个服务器，如]]></description>
+</item>
+</channel>
+</rss>

@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>AISre技术点汇总 - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://kengerlwl.github.io/aisre%E6%8A%80%E6%9C%AF%E7%82%B9%E6%B1%87%E6%80%BB/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="AISre技术点汇总">
+  <meta property="og:description" content="技术点 强，为什么强（我有经历，github，博客） 知识面广，适合万兴（结合岗位）：（开发，运维，AI） 未来 我以后留在长沙，我对万兴非常向往 A">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-08-22T15:27:31+00:00">
+    <meta property="article:modified_time" content="2023-08-22T15:27:31+00:00">
+    <meta property="article:tag" content="找工作">
+    <meta property="og:image" content="https://kengerlwl.github.io/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kengerlwl.github.io/logo.png">
+  <meta name="twitter:title" content="AISre技术点汇总">
+  <meta name="twitter:description" content="技术点 强，为什么强（我有经历，github，博客） 知识面广，适合万兴（结合岗位）：（开发，运维，AI） 未来 我以后留在长沙，我对万兴非常向往 A">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://kengerlwl.github.io/aisre%E6%8A%80%E6%9C%AF%E7%82%B9%E6%B1%87%E6%80%BB/" /><link rel="prev" href="https://kengerlwl.github.io/git%E4%BD%BF%E7%94%A8/" /><link rel="next" href="https://kengerlwl.github.io/ai-agent%E5%85%AB%E8%82%A1/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "AISre技术点汇总",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/kengerlwl.github.io\/aisre%E6%8A%80%E6%9C%AF%E7%82%B9%E6%B1%87%E6%80%BB\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/kengerlwl.github.io\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "找工作","wordcount":  2788 ,
+        "url": "https:\/\/kengerlwl.github.io\/aisre%E6%8A%80%E6%9C%AF%E7%82%B9%E6%B1%87%E6%80%BB\/","datePublished": "2023-08-22T15:27:31+00:00","dateModified": "2023-08-22T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/kengerlwl.github.io\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/aisre%E6%8A%80%E6%9C%AF%E7%82%B9%E6%B1%87%E6%80%BB/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/aisre%E6%8A%80%E6%9C%AF%E7%82%B9%E6%B1%87%E6%80%BB/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">AISre技术点汇总</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kengerlwl.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/find-job/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Find JOB</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-08-22">2023-08-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2788 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#数据分割">数据分割</a></li>
+    <li><a href="#文档检索">文档检索</a></li>
+    <li><a href="#检索扩展">检索扩展</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#文档过滤">文档过滤</a></li>
+    <li><a href="#答案生成一开始的离线版本不要求首字速度">答案生成（一开始的离线版本，不要求首字速度）</a></li>
+    <li><a href="#首字客服版本">首字客服版本</a></li>
+    <li><a href="#token压缩">token压缩</a></li>
+    <li><a href="#根据业务灵活选择模型大小模型协同">根据业务，灵活选择模型（大小模型协同）</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#vllmqwen">vllm,qwen</a></li>
+    <li><a href="#gemmalammacpp">gemma，lamma.cpp</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#自定义agent">自定义agent</a></li>
+    <li><a href="#自定义chain">自定义chain</a></li>
+    <li><a href="#agent业务逻辑">agent业务逻辑</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#企业微信">企业微信</a></li>
+    <li><a href="#议事厅">议事厅</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#验证业务可行性的trick">验证业务可行性的trick</a></li>
+    <li><a href="#prompt工程">prompt工程</a>
+      <ul>
+        <li><a href="#判断llm回答正确性">判断LLM回答正确性</a></li>
+        <li><a href="#基于参考文献判断">基于参考文献判断</a></li>
+      </ul>
+    </li>
+    <li><a href="#prompt优化">prompt优化</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#case1如果效果不好可能需要特定的system-prompt">case1：如果效果不好，可能需要特定的system prompt</a></li>
+    <li><a href="#case2如何判断学习了">case2：如何判断学习了</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#关于文档更新的回滚">关于文档更新的回滚。</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#http">http</a></li>
+    <li><a href="#xrpc兼容其他项目业务">xrpc，兼容其他项目业务</a></li>
+    <li><a href="#性能">性能</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#粗排">粗排</a></li>
+    <li><a href="#精排">精排</a></li>
+    <li><a href="#重排">重排</a></li>
+    <li><a href="#关于流式回答">关于流式回答</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><ul>
+<li>
+<p>技术点</p>
+<ul>
+<li>强，为什么强（我有经历，github，博客）</li>
+<li>知识面广，适合万兴（结合岗位）：（开发，运维，AI）</li>
+</ul>
+</li>
+<li>
+<p>未来</p>
+<ul>
+<li>我以后留在长沙，我对万兴非常向往</li>
+</ul>
+</li>
+</ul>
+<h1 id="aisre技术点汇总">AISre技术点汇总</h1>
+<p>项目介绍</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">这个项目主要是针对我们小组的智能化运营提供LLM支撑。首先我们小组的业务是和在游戏领域的账号处罚领域。然后我这边主要是提供两个智能化能力，一个是QA知识库问答，另一个是内部常见业务接入。
+</span></span><span class="line"><span class="cl">问答的话，我们这边参考了公司内部成熟项目的做法，以及网络上的主流架构。首先构建知识库，我这边用到的公司内的wiki，首先解析成md，然后将md树状化，方便提供更多的元信息。
+</span></span><span class="line"><span class="cl">然后存储检索库，本项目用的多路召回，重排，然后是知识问答，引入大小模型协同来保证回答的准确率和相应快速。有COT机制和通用。引入审核机制
+</span></span><span class="line"><span class="cl">业务接入我们用的langchain这种单智能体框架，通过多个Tools业务，结合ReAct机制，来完成指定业务，具体来说，Tool这边主要还是一些数据查询，error故障分析，tlog平台故障分析。
+</span></span><span class="line"><span class="cl">微调这边我们做的不多，主要是针对内部的一个诊断告警的业务来做的，针对pm这边的告警，触发了什么处罚，来预测最后采取的治愈方案，自部署qwen。
+</span></span><span class="line"><span class="cl">业务技术上来说，这边有用到redis来实现分布式锁，然后用消息队列来解耦LLM生成，然后针对数据库建立索引。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">业务接入，
+</span></span><span class="line"><span class="cl">故障：比如出了一个普通的问题，例如数据流平台的一个错误，从error分析错误问题，从知识库检索答案，最后思考总结
+</span></span><span class="line"><span class="cl">生成：lua脚本生成，内部有一些知识字段是纯内部的，外部不可见，加入知识库
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>重复消费的方案</p>
+<p><strong>乐观锁重试机制，重试机制，相关框架</strong></p>
+<p>mybp</p>
+<p>es分片集群。</p>
+<p>索引文档过程。还是ES分片</p>
+<p>如何删除链表：快速失败异常，迭代器删除。</p>
+<p>关于agent架构</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">- 易用性：直接从人工窗口接入，支持多模态输入
+</span></span><span class="line"><span class="cl">- 可靠性：使用mysql，redis作为中间数据层
+</span></span><span class="line"><span class="cl">- 为什么单agent，其实也多少是有一定之前考虑步不周，一开始就是单纯的选择看能不能执行完。后续发现确实有些地方可能需要优化
+</span></span><span class="line"><span class="cl">- 大小模型协同
+</span></span><span class="line"><span class="cl">- 用户如何接入，多种接入方式，确定使用场景
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="retrieval">Retrieval</h1>
+<h2 id="数据分割">数据分割</h2>
+<ul>
+<li>
+<p>数据获取，webhook，crontab</p>
+</li>
+<li>
+<p>数据解析，html-&gt;md。json解析成树。</p>
+</li>
+<li>
+<p>数据切分。语义切分，递归切分</p>
+</li>
+<li>
+<p>数据增强，无QA对，-》增强生成qa对（但是实际上不好用）</p>
+</li>
+<li>
+<p>文档重写更新优化</p>
+</li>
+<li>
+<p>图片生文，增强数据（直接将图片的描述加到图片下方）</p>
+</li>
+</ul>
+<h2 id="文档检索">文档检索</h2>
+<ul>
+<li>多路检索</li>
+<li>重排，时间，重要性</li>
+</ul>
+<h2 id="检索扩展">检索扩展</h2>
+<ul>
+<li>query重写，增强，用户不一定知道自己想问什么，或者问的不像一个问题</li>
+<li>需求抽取，带上需求不利于检索。但是需求需要保留。</li>
+</ul>
+<h1 id="增强生成">增强生成</h1>
+<h2 id="文档过滤">文档过滤</h2>
+<p>过滤无关文档</p>
+<h2 id="答案生成一开始的离线版本不要求首字速度">答案生成（一开始的离线版本，不要求首字速度）</h2>
+<ul>
+<li>
+<p>分块生成</p>
+</li>
+<li>
+<p>主次模型：</p>
+<ul>
+<li>主模型语言理解能力，概括能力更强，但是上下文能力不足</li>
+<li>引入次模型，来辅助长上下文处理。</li>
+</ul>
+</li>
+<li>
+<p>通用问题保底</p>
+</li>
+<li>
+<p>一致性判断，回答是否正确（因为大模型太容易幻觉了）</p>
+</li>
+</ul>
+<h2 id="首字客服版本">首字客服版本</h2>
+<ul>
+<li>
+<p>要求输入问题，很快就要有吞吐输出，不能够做完了再回复</p>
+</li>
+<li></li>
+</ul>
+<h2 id="token压缩">token压缩</h2>
+<p>生成tokens往往是整个业务中最耗时的部分，因此如何优化这个过程非常重要。</p>
+<p>实际体验容易压缩导致语义损失，give up</p>
+<h2 id="根据业务灵活选择模型大小模型协同">根据业务，灵活选择模型（大小模型协同）</h2>
+<p><strong>将一些关键的，但是耗时比较少，token输出少哦业务逻辑，用大模型，其他地方可以用小模型</strong></p>
+<p><strong>例如：文档过滤，意图识别，逻辑选择</strong></p>
+<h1 id="模型部署">模型部署</h1>
+<h2 id="vllmqwen">vllm,qwen</h2>
+<h2 id="gemmalammacpp">gemma，lamma.cpp</h2>
+<h1 id="agent智能接入业务">agent智能接入业务</h1>
+<h2 id="自定义agent">自定义agent</h2>
+<ul>
+<li>自动结束任务，改后的react</li>
+</ul>
+<h2 id="自定义chain">自定义chain</h2>
+<h2 id="agent业务逻辑">agent业务逻辑</h2>
+<p>先故障诊断，诊断完以后，LLM判断需要进行资源扩缩容，这就是一个良好的react架构逻辑</p>
+<ul>
+<li>
+<p>query，data，analysis</p>
+</li>
+<li>
+<p>qa问题</p>
+</li>
+<li>
+<p>cal计算</p>
+</li>
+<li>
+<p>error诊断</p>
+</li>
+<li>
+<p>zy error</p>
+</li>
+<li>
+<p>数据报表总结生成</p>
+</li>
+</ul>
+<h1 id="业务接入与落地">业务接入与落地</h1>
+<h2 id="企业微信">企业微信</h2>
+<h2 id="议事厅">议事厅</h2>
+<h1 id="一些trick">一些trick</h1>
+<h2 id="验证业务可行性的trick">验证业务可行性的trick</h2>
+<p>一开始直接上最好的模型，不要一开始就省资源，验证基于大模型能够跑通。后续在看能不能优化，用小模型替换。</p>
+<h2 id="prompt工程">prompt工程</h2>
+<h3 id="判断llm回答正确性">判断LLM回答正确性</h3>
+<h3 id="基于参考文献判断">基于参考文献判断</h3>
+<p><strong>为什么该方法重要，对于RAG：</strong></p>
+<ul>
+<li>可以确认回答是否幻觉了</li>
+<li>回答是否与参考文献一致</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/2c31db40af8be05bbc11af0070ad1394/67fd917113ef00bccb65cedb5950080c.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/2c31db40af8be05bbc11af0070ad1394/67fd917113ef00bccb65cedb5950080c.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/2c31db40af8be05bbc11af0070ad1394/67fd917113ef00bccb65cedb5950080c.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/2c31db40af8be05bbc11af0070ad1394/67fd917113ef00bccb65cedb5950080c.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/master/image/2c31db40af8be05bbc11af0070ad1394/67fd917113ef00bccb65cedb5950080c.png"
+        title="refs/heads/master/refs/heads/master/image-20240815102605090" /></p>
+<h2 id="prompt优化">prompt优化</h2>
+<ul>
+<li>让LLM帮你重写（其实一般般）</li>
+<li>让大模型针对错误case，进行多轮对话
+<ul>
+<li>比如：让大模型判断对错，大模型判断错误了</li>
+<li>让大模型给出理由，针对大模型给出的理由去优化prompt</li>
+</ul>
+</li>
+</ul>
+<h1 id="微调">微调</h1>
+<h2 id="case1如果效果不好可能需要特定的system-prompt">case1：如果效果不好，可能需要特定的system prompt</h2>
+<p>比如，可能需要加上，你是一个由openai开发的人工助手</p>
+<h2 id="case2如何判断学习了">case2：如何判断学习了</h2>
+<p>直接看loss，一个是train上的loss，一个是val上的loss</p>
+<p>如果loss都没有下降，那直接凉凉，得反思是不是数据有问题</p>
+<h1 id="ai业务开发上的">AI业务开发上的</h1>
+<h2 id="关于文档更新的回滚">关于文档更新的回滚。</h2>
+<h1 id="接口暴露">接口暴露</h1>
+<h2 id="http">http</h2>
+<h2 id="xrpc兼容其他项目业务">xrpc，兼容其他项目业务</h2>
+<h2 id="性能">性能</h2>
+<p>日活用户最高50。周末约等于没有，主要是内部平台。</p>
+<p>自己压测大概qps200。ai能力的接口大概是这样的。内部第三方模型提供qps100.自部署模型qps200.。6*V100 *2</p>
+<h1 id="数据库设计">数据库设计</h1>
+<p>知识文章信息表</p>
+<p>知识文章打分表</p>
+<p>日志表，聊天记录</p>
+<h1 id="数据集">数据集</h1>
+<p>指标日志，从pm里面，然后错误信息。</p>
+<p>输出处理方案。</p>
+<h1 id="业界成功案例">业界成功案例</h1>
+<ul>
+<li>一个team做的sre ai方案</li>
+</ul>
+<p><a href="https://www.runwhen.com/" target="_blank" rel="noopener noreffer ">RunWhen Home</a></p>
+<ul>
+<li>一个智能的k8s分析器，这个star数很高</li>
+</ul>
+<p><a href="https://github.com/k8sgpt-ai/k8sgpt" target="_blank" rel="noopener noreffer ">k8sgpt-ai/k8sgpt: Giving Kubernetes Superpowers to everyone</a></p>
+<ul>
+<li>智能客服</li>
+<li>生成类
+<ul>
+<li>数据库分析（实际上也是sql生成）</li>
+<li>表单生成（辅助生成一个json，或者一个格式化的数据结构）</li>
+<li>文章重写润色</li>
+<li>实体抽取</li>
+</ul>
+</li>
+<li>分析类
+<ul>
+<li>代码分析</li>
+<li>错误分析</li>
+<li>报表生成分析</li>
+</ul>
+</li>
+<li>智能体
+<ul>
+<li>终端智能体：辅助操作，执行任务</li>
+</ul>
+</li>
+<li>多智能体
+<ul>
+<li>项目研发，</li>
+</ul>
+</li>
+</ul>
+<h1 id="后日谈">后日谈</h1>
+<p>感觉有必要看看论文，国外论坛怎么用，他们比我们早，经验更多，值得借鉴</p>
+<h1 id="个人开发经验">个人开发经验</h1>
+<p>还是非常有必要写单测，测试完再上传，而且一次性测试，就得测试所有的。因为不好说你改动了这边，导致其他地方繃了</p>
+<h1 id="关于可控性问题">关于可控性问题</h1>
+<p>严防换觉</p>
+<ul>
+<li>rag</li>
+<li>prompt限定</li>
+<li>生成效验</li>
+</ul>
+<p>安全审核</p>
+<ul>
+<li>接入关键字审核</li>
+<li>接入人工审核</li>
+</ul>
+<h1 id="关于回答加速">关于回答加速</h1>
+<p>可以压缩prompt，</p>
+<p>结合业务上下文拆分prompt，比如prompt里面有多个可以并行的任务，那么拆分出来，并行执行。</p>
+<h1 id="关于数据治理">关于数据治理</h1>
+<p>如何保证数据的干净和有效，</p>
+<ul>
+<li>
+<p>一个是知识库的数据</p>
+</li>
+<li>
+<p>一个是微调的数据</p>
+</li>
+<li>
+<p>增量数据的治理，例如和用户的回答记录，如果有用户的正反馈，那这就是一种很好的数据，需要入库。</p>
+</li>
+</ul>
+<h1 id="关于搜索的粗排和精排">关于搜索的粗排和精排</h1>
+<h2 id="粗排">粗排</h2>
+<p>从多个维度，检索出比较多的文档记录。</p>
+<h2 id="精排">精排</h2>
+<p>常见的方法</p>
+<ul>
+<li>重排打分模型</li>
+<li>分数倒数融合排序算法</li>
+</ul>
+<h2 id="重排">重排</h2>
+<p>为了接入业务，即使精排阶段已经产生了准确的推荐结果，但由于业务规则、多样性需求等因素，还需要对推荐结果进行重新排序。</p>
+<h2 id="关于流式回答">关于流式回答</h2>
+<p>为了应对流式回答，那么必须一次性喂给prompt。</p>
+<p>那么多篇文章可能一次性输出，那么就需要rerank模型了。在粗排和精排后，需要重排模型，公司内有现成的。</p>
+<h1 id="es用redis来加速查询">ES用redis来加速查询</h1>
+<p>es 在数据量很大的情况下（数十亿级别）如何提高查询效率啊？</p>
+<ul>
+<li>可以用到redissearch</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-08-22</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/aisre%E6%8A%80%E6%9C%AF%E7%82%B9%E6%B1%87%E6%80%BB/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://kengerlwl.github.io/aisre%E6%8A%80%E6%9C%AF%E7%82%B9%E6%B1%87%E6%80%BB/" data-title="AISre技术点汇总" data-hashtags="找工作"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://kengerlwl.github.io/aisre%E6%8A%80%E6%9C%AF%E7%82%B9%E6%B1%87%E6%80%BB/" data-hashtag="找工作"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://kengerlwl.github.io/aisre%E6%8A%80%E6%9C%AF%E7%82%B9%E6%B1%87%E6%80%BB/" data-title="AISre技术点汇总"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://kengerlwl.github.io/aisre%E6%8A%80%E6%9C%AF%E7%82%B9%E6%B1%87%E6%80%BB/" data-title="AISre技术点汇总"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://kengerlwl.github.io/aisre%E6%8A%80%E6%9C%AF%E7%82%B9%E6%B1%87%E6%80%BB/" data-title="AISre技术点汇总"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E6%89%BE%E5%B7%A5%E4%BD%9C/">找工作</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/git%E4%BD%BF%E7%94%A8/" class="prev" rel="prev" title="git使用"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>git使用</a>
+            <a href="/ai-agent%E5%85%AB%E8%82%A1/" class="next" rel="next" title="ai-agent八股">ai-agent八股<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.132.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kengerlwl.github.io/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"JCTYUNKA9R","algoliaIndex":"kenger","algoliaSearchKey":"3ef68664495033362b7df9cf5a3eee1e","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

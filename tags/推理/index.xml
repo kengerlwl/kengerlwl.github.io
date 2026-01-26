@@ -1,0 +1,72 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>推理 - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/%E6%8E%A8%E7%90%86/</link>
+        <description>推理 - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 20 Jan 2026 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/%E6%8E%A8%E7%90%86/" rel="self" type="application/rss+xml" /><item>
+    <title>大模型缓存命中原理</title>
+    <link>https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%BC%93%E5%AD%98%E5%91%BD%E4%B8%AD%E5%8E%9F%E7%90%86/</link>
+    <pubDate>Tue, 20 Jan 2026 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%BC%93%E5%AD%98%E5%91%BD%E4%B8%AD%E5%8E%9F%E7%90%86/</guid>
+    <description><![CDATA[大模型的缓存命中机制：为什么我改了最后一条消息还会命中？ 很多人在用大模型时都会遇到一个现象： 明明改了最后一条 message 的内容，为什么系统还显示“缓存]]></description>
+</item>
+<item>
+    <title>从工程角度理解到底什么是交错思考</title>
+    <link>https://kengerlwl.github.io/%E4%BB%8E%E5%B7%A5%E7%A8%8B%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3%E5%88%B0%E5%BA%95%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%A4%E9%94%99%E6%80%9D%E8%80%83/</link>
+    <pubDate>Sun, 11 Jan 2026 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E4%BB%8E%E5%B7%A5%E7%A8%8B%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3%E5%88%B0%E5%BA%95%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%A4%E9%94%99%E6%80%9D%E8%80%83/</guid>
+    <description><![CDATA[背景 最近做业务需要了解什么是交错思考，以前我只知道thinking机制。 本质上就是在模型正式输出前，让其输出。内部有具体的思考活动。 但是这种]]></description>
+</item>
+<item>
+    <title>自部署大模型实验细节</title>
+    <link>https://kengerlwl.github.io/%E8%87%AA%E9%83%A8%E7%BD%B2%E5%A4%A7%E6%A8%A1%E5%9E%8B/</link>
+    <pubDate>Tue, 13 Aug 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E8%87%AA%E9%83%A8%E7%BD%B2%E5%A4%A7%E6%A8%A1%E5%9E%8B/</guid>
+    <description><![CDATA[huggingface 换源 1 export HF_ENDPOINT=https://hf-mirror.com 下载 1 2 3 4 5 6 7 8 9 10 nohup huggingface-cli download --resume-download Qwen/Qwen-72B-Chat-Int4 --local-dir ./Qwen-72B-Chat-Int4 &gt; 72b.log &amp; huggingface-cli download --resume-download Qwen/Qwen-14B --local-dir ./Qwen-14B huggingface-cli download --resume-download Qwen/Qwen2-7B-Instruct --local-dir ./Qwen-7B huggingface-cli download --resume-download Qwen/Qwen1.5-14B-Chat --local-dir ./Qwen1.5-14B 启动 vllm api 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20]]></description>
+</item>
+<item>
+    <title>大模型agent框架调研</title>
+    <link>https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8Bagent%E6%A1%86%E6%9E%B6%E8%B0%83%E7%A0%94/</link>
+    <pubDate>Thu, 25 Jul 2024 14:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8Bagent%E6%A1%86%E6%9E%B6%E8%B0%83%E7%A0%94/</guid>
+    <description><![CDATA[背景 最近需要用到这玩意儿，但是我目前只知道langchain等框架，对市场缺乏一个调研。 需要做一个技术选型。 实际上：agent，本质上就是一]]></description>
+</item>
+<item>
+    <title>大模型system Prompt为什么重要</title>
+    <link>https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8Bsystem-prompt%E4%B8%BA%E4%BB%80%E4%B9%88%E9%87%8D%E8%A6%81/</link>
+    <pubDate>Tue, 23 Jul 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8Bsystem-prompt%E4%B8%BA%E4%BB%80%E4%B9%88%E9%87%8D%E8%A6%81/</guid>
+    <description><![CDATA[背景 一直知道这玩意儿，也知道一部分其底层原理，但是没有实际深究过，决定mark一下。 大模型的记忆原理 从计算机科学的角度来看，最好将LLM的推]]></description>
+</item>
+<item>
+    <title>大模型相关常见问题概念</title>
+    <link>https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%9B%B8%E5%85%B3%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%A6%82%E5%BF%B5/</link>
+    <pubDate>Tue, 23 Jul 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%9B%B8%E5%85%B3%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%A6%82%E5%BF%B5/</guid>
+    <description><![CDATA[背景 有些东西，名词，经常听见，也大概知道是什么意思，但是就是总记不住，列个case。 幻觉 **如果AI模型所生成输出没有任何已知事实的支持，幻]]></description>
+</item>
+<item>
+    <title>大模型自部署调查</title>
+    <link>https://kengerlwl.github.io/%E8%87%AA%E9%83%A8%E7%BD%B2%E5%B9%B6%E5%8F%91%E8%B0%83%E6%9F%A5/</link>
+    <pubDate>Tue, 23 Jul 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E8%87%AA%E9%83%A8%E7%BD%B2%E5%B9%B6%E5%8F%91%E8%B0%83%E6%9F%A5/</guid>
+    <description><![CDATA[自部署并发调查 由于我们的模型可能需要用到自己的第三方模型，因此需要自己部署。 一个是自己部署，自己维护可靠性，在一站式不成熟的情况下，避免和第]]></description>
+</item>
+<item>
+    <title>大模型推理参数详解</title>
+    <link>https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3/</link>
+    <pubDate>Tue, 28 May 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3/</guid>
+    <description><![CDATA[背景 一直在用大模型，也大概知道有哪些参数，但是一直没有详细了解其底层是什么原理，决定学习一下。 推理相关参数 LLM看似很神奇，但本质还是一个概]]></description>
+</item>
+</channel>
+</rss>

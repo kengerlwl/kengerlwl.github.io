@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>秒杀系统概述 - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://kengerlwl.github.io/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="秒杀系统概述">
+  <meta property="og:description" content="1 2 3 4 【流量控制】: 使用Nginx从网关服务器反向代理，实现将请求分发到不同的服务器上，使用spring-session-redis来实现">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-03-12T15:27:31+00:00">
+    <meta property="article:modified_time" content="2024-03-12T15:27:31+00:00">
+    <meta property="article:tag" content="秒杀系统">
+    <meta property="og:image" content="https://kengerlwl.github.io/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kengerlwl.github.io/logo.png">
+  <meta name="twitter:title" content="秒杀系统概述">
+  <meta name="twitter:description" content="1 2 3 4 【流量控制】: 使用Nginx从网关服务器反向代理，实现将请求分发到不同的服务器上，使用spring-session-redis来实现">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://kengerlwl.github.io/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" /><link rel="prev" href="https://kengerlwl.github.io/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/" /><link rel="next" href="https://kengerlwl.github.io/sql%E7%BC%96%E5%86%99/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "秒杀系统概述",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/kengerlwl.github.io\/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/kengerlwl.github.io\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "秒杀系统","wordcount":  4511 ,
+        "url": "https:\/\/kengerlwl.github.io\/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0\/","datePublished": "2024-03-12T15:27:31+00:00","dateModified": "2024-03-12T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/kengerlwl.github.io\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">秒杀系统概述</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kengerlwl.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/find-job/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Find JOB</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-03-12">2024-03-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 4511 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 10 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#时间轮">时间轮</a></li>
+    <li><a href="#rabbitmq死信队列">RabbitMQ死信队列</a></li>
+    <li><a href="#redis实现延迟执行功能">Redis实现延迟执行功能</a>
+      <ul>
+        <li><a href="#redis过期监听">Redis过期监听</a></li>
+        <li><a href="#redisson">Redisson</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">【流量控制】: 使用Nginx从网关服务器反向代理，实现将请求分发到不同的服务器上，使用spring-session-redis来实现用户会话信息共享
+</span></span><span class="line"><span class="cl">【缓存】: 提前将秒杀商品信息缓存至Redis进行预热，并采用版本号和乐观锁预减库存以解决超卖问题，在高并发情况下显著减少数据库读写。
+</span></span><span class="line"><span class="cl">【消息队列】: 使用消息队列RabbitMQ实现异步下单，并对流量削峰。从而提升系统性能。
+</span></span><span class="line"><span class="cl">【微服务架构】: 搭建商品、鉴权、抢单、订单和通知五大微服务，有效减少代码耦合，实现代码复用。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="库存扣减">库存扣减</h1>
+<p>使用redis存储库存脚本，基于lua脚本实现原子性。</p>
+<p>但是要实现redis和数据库的一致性。可以基于异步消息队列，异步的把库存同步到数据库。</p>
+<p><a href="https://zhuanlan.zhihu.com/p/473990908" target="_blank" rel="noopener noreffer ">秒杀系统扣减库存方案 - 知乎</a></p>
+<ul>
+<li>库存拆分</li>
+</ul>
+<h1 id="长业务问题">长业务问题</h1>
+<p>引入状态模式，实现分布步骤可持久化。</p>
+<p>部分可以放入异步后台。</p>
+<h1 id="redis热点数据">redis热点数据</h1>
+<p>预先把商品数据放入redis。</p>
+<h1 id="消息队列使用">消息队列使用</h1>
+<p>一般来说消息队列用于订单的解耦和晓峰。</p>
+<p><a href="https://zhuanlan.zhihu.com/p/479404605" target="_blank" rel="noopener noreffer ">秒杀实现中常见的消息队列有哪些？ - 知乎</a></p>
+<h1 id="微服务通信">微服务通信</h1>
+<p><strong>OpenFeign 是一个基于注解的声明式 HTTP 客户端</strong>，用于简化微服务之间的通信。它内置了负载均衡和错误处理等功能，可以与 Spring Cloud 集成，使得微服务之间的通信更加便捷。</p>
+<p>使用 OpenFeign，你可以通过定义接口来描述目标服务的 HTTP API，然后在需要调用该服务的地方直接注入该接口，OpenFeign 将自动处理 HTTP 请求的生成和发送。</p>
+<p>下面是一个简单的目录结构示例，展示了订单模块和用户模块的组织方式，并说明了如何通过 OpenFeign 实现两个模块之间的通信：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">project
+</span></span><span class="line"><span class="cl">│
+</span></span><span class="line"><span class="cl">├── order-module
+</span></span><span class="line"><span class="cl">│   ├── src
+</span></span><span class="line"><span class="cl">│   │   ├── main
+</span></span><span class="line"><span class="cl">│   │   │   ├── java
+</span></span><span class="line"><span class="cl">│   │   │   │   ├── com
+</span></span><span class="line"><span class="cl">│   │   │   │   │   ├── example
+</span></span><span class="line"><span class="cl">│   │   │   │   │   │   ├── order
+</span></span><span class="line"><span class="cl">│   │   │   │   │   │   │   ├── controller          # 订单模块的控制器
+</span></span><span class="line"><span class="cl">│   │   │   │   │   │   │   ├── model               # 订单模块的实体类
+</span></span><span class="line"><span class="cl">│   │   │   │   │   │   │   ├── service             # 订单模块的服务类
+</span></span><span class="line"><span class="cl">│   │   │   │   │   │   │   ├── OrderModuleApplication.java   # 订单模块的启动类
+</span></span><span class="line"><span class="cl">│   │   │   ├── resources
+</span></span><span class="line"><span class="cl">│   │   │   │   ├── application.properties           # 订单模块的配置文件
+</span></span><span class="line"><span class="cl">│   │   │   │   ├── ...
+</span></span><span class="line"><span class="cl">│   │   │   │
+</span></span><span class="line"><span class="cl">│   │   ├── test   # 测试目录
+</span></span><span class="line"><span class="cl">│   │   │   ├── ...
+</span></span><span class="line"><span class="cl">│   │
+</span></span><span class="line"><span class="cl">├── user-module
+</span></span><span class="line"><span class="cl">│   ├── src
+</span></span><span class="line"><span class="cl">│   │   ├── main
+</span></span><span class="line"><span class="cl">│   │   │   ├── java
+</span></span><span class="line"><span class="cl">│   │   │   │   ├── com
+</span></span><span class="line"><span class="cl">│   │   │   │   │   ├── example
+</span></span><span class="line"><span class="cl">│   │   │   │   │   │   ├── user
+</span></span><span class="line"><span class="cl">│   │   │   │   │   │   │   ├── controller          # 用户模块的控制器
+</span></span><span class="line"><span class="cl">│   │   │   │   │   │   │   ├── model               # 用户模块的实体类
+</span></span><span class="line"><span class="cl">│   │   │   │   │   │   │   ├── service             # 用户模块的服务类
+</span></span><span class="line"><span class="cl">│   │   │   │   │   │   │   ├── UserModuleApplication.java   # 用户模块的启动类
+</span></span><span class="line"><span class="cl">│   │   │   ├── resources
+</span></span><span class="line"><span class="cl">│   │   │   │   ├── application.properties           # 用户模块的配置文件
+</span></span><span class="line"><span class="cl">│   │   │   │   ├── ...
+</span></span><span class="line"><span class="cl">│   │   ├── test   # 测试目录
+</span></span><span class="line"><span class="cl">│   │   │   ├── ...
+</span></span><span class="line"><span class="cl">│
+</span></span><span class="line"><span class="cl">├── pom.xml    # Maven 依赖文件
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在这个目录结构中，订单模块和用户模块各自独立，都包含了自己的控制器、实体类、服务类和启动类等。它们通过 RESTful API 来提供服务。</p>
+<p>订单模块中的 <code>OrderService</code> 可以通过 OpenFeign 来调用用户模块中的 <code>UserService</code>。下面是一个简单的使用示例：</p>
+<ol>
+<li>在用户模块中定义 OpenFeign 接口：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.cloud.openfeign.FeignClient</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.bind.annotation.PathVariable</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@FeignClient</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;user-module&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;http://localhost:8081&#34;</span><span class="p">)</span><span class="w"> </span><span class="c1">// 根据实际情况修改 URL</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">UserServiceClient</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&#34;/api/users/{userId}&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">User</span><span class="w"> </span><span class="nf">getUserById</span><span class="p">(</span><span class="nd">@PathVariable</span><span class="p">(</span><span class="s">&#34;userId&#34;</span><span class="p">)</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="n">userId</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>在订单模块的服务类中注入 OpenFeign 接口，并调用用户模块的方法：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.stereotype.Service</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Service</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">OrderService</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Autowired</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">UserServiceClient</span><span class="w"> </span><span class="n">userServiceClient</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="nf">getUserById</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">userId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">userServiceClient</span><span class="p">.</span><span class="na">getUserById</span><span class="p">(</span><span class="n">userId</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过这样的方式，订单模块和用户模块之间可以通过 OpenFeign 实现通信，而不需要直接调用 RESTful API。</p>
+<h1 id="redis预热">redis预热</h1>
+<p><strong>如果大部分时候没有预热，你可以在获取商品信息时，先尝试从Redis缓存中获取，如果缓存中不存在则从数据库中获取，并将获取到的数据写入Redis缓存，以便下次访问时可以直接从缓存中获取，从而提高系统性能和响应速度。以下是修改后的示例代码：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">javaCopy codeimport redis.clients.jedis.Jedis;
+</span></span><span class="line"><span class="cl">import redis.clients.jedis.exceptions.JedisException;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">public class SeckillService {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    private static final String REDIS_HOST = &#34;localhost&#34;;
+</span></span><span class="line"><span class="cl">    private static final int REDIS_PORT = 6379;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public String getSeckillItem(int itemId) {
+</span></span><span class="line"><span class="cl">        try {
+</span></span><span class="line"><span class="cl">            // 连接Redis服务器
+</span></span><span class="line"><span class="cl">            Jedis jedis = new Jedis(REDIS_HOST, REDIS_PORT);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            // 尝试从Redis缓存中获取秒杀商品信息
+</span></span><span class="line"><span class="cl">            String seckillItemJson = jedis.get(&#34;seckill:item:&#34; + itemId);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            if (seckillItemJson == null) {
+</span></span><span class="line"><span class="cl">                // 如果缓存中不存在，则从数据库中获取，并写入Redis缓存
+</span></span><span class="line"><span class="cl">                seckillItemJson = fetchSeckillItemFromDatabase(itemId);
+</span></span><span class="line"><span class="cl">                if (seckillItemJson != null) {
+</span></span><span class="line"><span class="cl">                    jedis.set(&#34;seckill:item:&#34; + itemId, seckillItemJson);
+</span></span><span class="line"><span class="cl">                    // 设置秒杀商品信息的过期时间（假设设置为1小时）
+</span></span><span class="line"><span class="cl">                    jedis.expire(&#34;seckill:item:&#34; + itemId, 3600);
+</span></span><span class="line"><span class="cl">                }
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            // 关闭连接
+</span></span><span class="line"><span class="cl">            jedis.close();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            return seckillItemJson;
+</span></span><span class="line"><span class="cl">        } catch (JedisException e) {
+</span></span><span class="line"><span class="cl">            e.printStackTrace();
+</span></span><span class="line"><span class="cl">            return null;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    private String fetchSeckillItemFromDatabase(int itemId) {
+</span></span><span class="line"><span class="cl">        // 模拟从数据库中获取秒杀商品信息的逻辑
+</span></span><span class="line"><span class="cl">        // 实际情况下根据业务需求从数据库中查询数据并返回
+</span></span><span class="line"><span class="cl">        if (itemId == 1) {
+</span></span><span class="line"><span class="cl">            return &#34;{\&#34;id\&#34;: 1, \&#34;name\&#34;: \&#34;商品1\&#34;, \&#34;price\&#34;: 100, \&#34;stock\&#34;: 1000}&#34;;
+</span></span><span class="line"><span class="cl">        } else if (itemId == 2) {
+</span></span><span class="line"><span class="cl">            return &#34;{\&#34;id\&#34;: 2, \&#34;name\&#34;: \&#34;商品2\&#34;, \&#34;price\&#34;: 200, \&#34;stock\&#34;: 500}&#34;;
+</span></span><span class="line"><span class="cl">        } else {
+</span></span><span class="line"><span class="cl">            return null; // 商品不存在
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        SeckillService seckillService = new SeckillService();
+</span></span><span class="line"><span class="cl">        String seckillItemJson = seckillService.getSeckillItem(1);
+</span></span><span class="line"><span class="cl">        if (seckillItemJson != null) {
+</span></span><span class="line"><span class="cl">            System.out.println(&#34;Seckill item found: &#34; + seckillItemJson);
+</span></span><span class="line"><span class="cl">        } else {
+</span></span><span class="line"><span class="cl">            System.out.println(&#34;Seckill item not found.&#34;);
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在这个修改后的示例代码中，<code>getSeckillItem()</code> 方法先尝试从Redis缓存中获取商品信息，如果缓存中不存在，则调用 <code>fetchSeckillItemFromDatabase()</code> 方法从数据库中获取，并将获取到的商品信息写入Redis缓存中。</p>
+<p><strong>加了redis预热的判断逻辑后，对于不用预热的普通阶段，有性能影响吗</strong></p>
+<p>对于普通阶段不使用预热的情况，添加了预热判断逻辑后，可能会对系统性能产生一定的影响，但通常情况下影响较小且可以忽略。这主要取决于预热判断逻辑的复杂程度和执行频率。</p>
+<p><strong>在使用 Redis 进行缓存预热时，确保与数据库保持同步是至关重要的，以确保缓存中的数据与数据库中的数据保持一致性。以下是一些常用的方法来实现缓存预热和与数据库保持同步：</strong></p>
+<ol>
+<li><strong>定时任务更新缓存</strong>：编写定时任务，周期性地从数据库中读取数据，并更新到 Redis 缓存中。这样可以确保缓存中的数据与数据库中的数据保持同步。</li>
+<li><strong>数据库操作时更新缓存</strong>：在执行数据库写操作（如新增、更新、删除）时，同时更新 Redis 缓存。这样可以保证数据库和缓存中的数据始终保持一致。</li>
+<li><strong>订阅数据库变更并更新缓存</strong>：使用数据库的订阅（例如 MySQL 的 binlog）功能，监控数据库变更事件，一旦发生变更，立即更新对应的 Redis 缓存数据。</li>
+<li><strong>使用消息队列同步数据</strong>：将数据库变更事件发送到消息队列中，然后由消费者监听消息队列，一旦收到消息，即可更新对应的 Redis 缓存数据。</li>
+<li><strong>增量同步数据</strong>：记录每次缓存更新的时间戳或者版本号，在预热时只更新那些时间戳或版本号大于当前缓存中记录的时间戳或版本号的数据，从而减少不必要的数据传输和处理。</li>
+</ol>
+<h1 id="nginx分发策略">nginx分发策略</h1>
+<ul>
+<li>
+<p>Round Robin（轮询）：按照请求的顺序依次将请求分配给不同的后端服务器。</p>
+</li>
+<li>
+<p>Least Connections（最小连接数）：将请求发送到当前具有最少活动连接数的后端服务器。</p>
+</li>
+<li>
+<p>IP Hash（IP哈希）：基于客户端的IP地址将请求发送到同一个后端服务器，有助于保持会话一致性。</p>
+</li>
+<li>
+<p>Weighted Load Balancing（加权负载均衡）：根据后端服务器的处理能力配置权重，分发流量以反映其相对性能。</p>
+</li>
+<li>
+<p>Server Health Checks（服务器健康检查）：定期检查后端服务器的健康状态，避免将请求发往不可用的服务器。</p>
+</li>
+</ul>
+<ol>
+<li>添加Spring Session与Redis的依赖：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">xmlCopy code&lt;dependency&gt;
+</span></span><span class="line"><span class="cl">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+</span></span><span class="line"><span class="cl">    &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;
+</span></span><span class="line"><span class="cl">&lt;/dependency&gt;
+</span></span><span class="line"><span class="cl">&lt;dependency&gt;
+</span></span><span class="line"><span class="cl">    &lt;groupId&gt;org.springframework.session&lt;/groupId&gt;
+</span></span><span class="line"><span class="cl">    &lt;artifactId&gt;spring-session-data-redis&lt;/artifactId&gt;
+</span></span><span class="line"><span class="cl">&lt;/dependency&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>配置Redis连接信息：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">propertiesCopy codespring.redis.host=127.0.0.1
+</span></span><span class="line"><span class="cl">spring.redis.port=6379
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="业务">业务</h1>
+<p>单系统的业务逻辑流程通常包括以下步骤：</p>
+<ol>
+<li><strong>用户浏览商品</strong>：
+<ul>
+<li>用户通过前端界面浏览商品列表，选择感兴趣的商品。</li>
+</ul>
+</li>
+<li><strong>商品详情页</strong>：
+<ul>
+<li>用户点击商品进入商品详情页，查看商品的详细信息，包括价格、库存、描述等。</li>
+</ul>
+</li>
+<li><strong>加入购物车</strong>：
+<ul>
+<li>用户选择要购买的商品数量，并将商品加入购物车。</li>
+</ul>
+</li>
+<li><strong>查看购物车</strong>：
+<ul>
+<li>用户可以查看购物车中的商品列表，修改商品数量或者删除商品。</li>
+</ul>
+</li>
+<li><strong>结算订单</strong>：
+<ul>
+<li>用户确认购物车中的商品信息，并选择配送方式、支付方式等。</li>
+</ul>
+</li>
+<li><strong>生成订单</strong>：
+<ul>
+<li>用户点击结算按钮后，系统根据用户的选择生成订单，包括订单编号、商品信息、配送信息、支付金额等。</li>
+</ul>
+</li>
+<li><strong>支付订单</strong>：
+<ul>
+<li>用户选择支付方式，并完成支付流程，支付成功后订单状态更新为已支付。</li>
+</ul>
+</li>
+<li><strong>订单处理</strong>：
+<ul>
+<li>商家收到订单后进行处理，包括准备商品、配送商品等。</li>
+</ul>
+</li>
+<li><strong>配送商品</strong>：
+<ul>
+<li>商家将商品配送给用户，用户收到商品后确认收货。</li>
+</ul>
+</li>
+<li><strong>订单完成</strong>：
+<ul>
+<li>用户确认收货后，订单状态更新为已完成，交易完成。</li>
+</ul>
+</li>
+</ol>
+<h1 id="订单超时逻辑与方案">订单超时逻辑与方案</h1>
+<p>假设我这里有一个订单系统，要实现订单延时取消，具体实现方案：</p>
+<h2 id="时间轮">时间轮</h2>
+<p>时间轮可被视为一种环形结构，分割为多个时间槽，每个槽表示一个时间段，其中可以存放多个任务。采用链表结构保存每个时间槽中所有到期的任务**。随着时间的推移，时间轮的时针逐渐移动，执行每个槽中所有到期的任务。**</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/1f4068f1aaaf6bb422f55c70fb8ec23e/4bace14e4527d7f9495a1e0c2109ce11.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/1f4068f1aaaf6bb422f55c70fb8ec23e/4bace14e4527d7f9495a1e0c2109ce11.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/1f4068f1aaaf6bb422f55c70fb8ec23e/4bace14e4527d7f9495a1e0c2109ce11.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/1f4068f1aaaf6bb422f55c70fb8ec23e/4bace14e4527d7f9495a1e0c2109ce11.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/1f4068f1aaaf6bb422f55c70fb8ec23e/4bace14e4527d7f9495a1e0c2109ce11.png"
+        title="img" /></p>
+<h2 id="rabbitmq死信队列">RabbitMQ死信队列</h2>
+<p>RabbitMQ中的TTL可以设置任意时长。一旦一条正常消息因为TTL过期、队列长度超限或被消费者拒绝等原因无法被及时消费，它将成为Dead Message，即死信，会被重新发送到死信队列</p>
+<p><strong>rabbitmq_delayed_message_exchange 插件</strong></p>
+<p>在RabbitMQ中，也可以利用<code>rabbitmq_delayed_message_exchange</code>插件实现延时消息，该方案解决了通过死信队列引起的消息阻塞问题</p>
+<h2 id="redis实现延迟执行功能">Redis实现延迟执行功能</h2>
+<p>基于Redis也可以实现延时消息的功能，有以下三种方案：</p>
+<h3 id="redis过期监听">Redis过期监听</h3>
+<p>通过在配置文件<code>redis.conf</code>中增加配置<code>notify-keyspace-events Ex</code> 即可实现消息的过期监听，然后可以在业务代码实现<code>KeyExpirationEventMessageListener</code>监听器来接收过期消息，这样就可以实现延时关闭订单的操作</p>
+<h3 id="redisson">Redisson</h3>
+<p>Redisson是在Redis基础上实现的框架，提供了分布式的Java常用对象和许多分布式服务。其中，Redisson定义了分布式延迟队列<code>RDelayedQueue</code>，这是基于zset实现的延迟队列，它允许将元素以指定的延迟时长放入目标队列中。</p>
+<h1 id="分布式全局id">分布式全局id</h1>
+<p><a href="https://pdai.tech/md/arch/arch-z-id.html" target="_blank" rel="noopener noreffer ">分布式系统 - 全局唯一ID实现方案 | Java 全栈知识体系</a></p>
+<ul>
+<li><strong>UUID</strong></li>
+<li><strong>Snowflake 算法（雪花算法）</strong>：Snowflake 是 Twitter 提出的一种分布式唯一 ID 生成算法。</li>
+<li>Redis 实现分布式全局唯一ID，它的性能比较高，生成的数据是有序的，对排序业务有利，但是同样它依赖于redis，<strong>需要系统引进redis组件，增加了系统的配置复杂性</strong>。</li>
+</ul>
+<h1 id="分布式事务seata框架">分布式事务(seata框架)</h1>
+<p>参考：<a href="https://zhuanlan.zhihu.com/p/256374135?utm_psn=1761485912683319297" target="_blank" rel="noopener noreffer ">两天，我把分布式事务搞完了 - 知乎</a></p>
+<p>由于引入了微服务，可能导致原有的的一个事务需要跨越多个容器节点的多条执行逻辑。<strong>具体应用场景</strong></p>
+<ol>
+<li><strong>库存服务与订单服务</strong>：
+<ul>
+<li>在电子商务平台中，下单时需要扣减库存。</li>
+<li>应用逻辑：
+<ol>
+<li>订单服务创建订单后，需要调用库存服务扣减商品库存。</li>
+<li>库存服务收到扣减库存请求后，检查库存是否充足，如果充足则扣减库存，否则返回错误信息。</li>
+<li>扣减库存成功后，库存服务更新商品库存信息。</li>
+<li>订单服务收到库存扣减成功的响应后，更新订单状态为已支付。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+<p>在这些场景中，需要保证跨服务的操作是原子性的，即要么全部成功，要么全部失败，以确保数据的一致性。为了实现分布式事务，可以采用以下几种方案：</p>
+<ul>
+<li><strong>两阶段提交（2PC）</strong>：在第一阶段，所有参与者向协调者发送准备请求，协调者收到所有的准备请求后，向所有参与者发送提交请求。在第二阶段，所有参与者收到提交请求后，如果都同意提交，则执行事务提交操作，否则回滚事务。</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/1f4068f1aaaf6bb422f55c70fb8ec23e/cfc4ab71de65961779e7b2dc7bb766db.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/1f4068f1aaaf6bb422f55c70fb8ec23e/cfc4ab71de65961779e7b2dc7bb766db.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/1f4068f1aaaf6bb422f55c70fb8ec23e/cfc4ab71de65961779e7b2dc7bb766db.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/1f4068f1aaaf6bb422f55c70fb8ec23e/cfc4ab71de65961779e7b2dc7bb766db.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/1f4068f1aaaf6bb422f55c70fb8ec23e/cfc4ab71de65961779e7b2dc7bb766db.png"
+        title="img" /></p>
+<p>由事务协调者给每个参与者发送准备命令，<strong>每个参与者收到命令之后会执行相关事务操作，你可以认为除了事务的提交啥都做了。</strong></p>
+<p>然后每个参与者会返回响应告知协调者自己是否准备成功。</p>
+<p><strong>协调者收到每个参与者的响应之后就进入第二阶段</strong>，根据收集的响应，<strong>如果有一个参与者响应准备失败那么就向所有参与者发送回滚命令，反之发送提交命令。</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">start transaction
+</span></span><span class="line"><span class="cl">commit
+</span></span><span class="line"><span class="cl">rollback
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>2PC 主要有三大缺点</strong>：</p>
+<ul>
+<li>同步阻塞(所有节点一起阻塞)</li>
+<li>单点故障（协调者挂了就全g）</li>
+<li>数据不一致问题。（网络问题导致数据不一致）</li>
+</ul>
+<h1 id="微服务架构示意图">微服务架构示意图</h1>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/1f4068f1aaaf6bb422f55c70fb8ec23e/7b90ecc1d9cdf726f3380cedf3618e74.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/1f4068f1aaaf6bb422f55c70fb8ec23e/7b90ecc1d9cdf726f3380cedf3618e74.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/1f4068f1aaaf6bb422f55c70fb8ec23e/7b90ecc1d9cdf726f3380cedf3618e74.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/1f4068f1aaaf6bb422f55c70fb8ec23e/7b90ecc1d9cdf726f3380cedf3618e74.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/1f4068f1aaaf6bb422f55c70fb8ec23e/7b90ecc1d9cdf726f3380cedf3618e74.png"
+        title="微服务组件示意图" /></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-03-12</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://kengerlwl.github.io/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" data-title="秒杀系统概述" data-hashtags="秒杀系统"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://kengerlwl.github.io/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" data-hashtag="秒杀系统"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://kengerlwl.github.io/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" data-title="秒杀系统概述"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://kengerlwl.github.io/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" data-title="秒杀系统概述"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://kengerlwl.github.io/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" data-title="秒杀系统概述"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F/">秒杀系统</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/" class="prev" rel="prev" title="数据库原理"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>数据库原理</a>
+            <a href="/sql%E7%BC%96%E5%86%99/" class="next" rel="next" title="SQL编写">SQL编写<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.132.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kengerlwl.github.io/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"JCTYUNKA9R","algoliaIndex":"kenger","algoliaSearchKey":"3ef68664495033362b7df9cf5a3eee1e","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

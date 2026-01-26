@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>RLHF - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/rlhf/</link>
+        <description>RLHF - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 23 Jul 2024 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/rlhf/" rel="self" type="application/rss+xml" /><item>
+    <title>RLHF算法</title>
+    <link>https://kengerlwl.github.io/rlhf/</link>
+    <pubDate>Tue, 23 Jul 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/rlhf/</guid>
+    <description><![CDATA[背景 PPO(Proximal Policy Optimization)近端策略优化算法 它属于策略梯度方法的一种，旨在通过限制新策略和旧策略之间的差异来稳定训练过程。PPO通过引]]></description>
+</item>
+</channel>
+</rss>

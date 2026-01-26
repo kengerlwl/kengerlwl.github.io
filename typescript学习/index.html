@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>TypeScript学习 - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://kengerlwl.github.io/typescript%E5%AD%A6%E4%B9%A0/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="TypeScript学习">
+  <meta property="og:description" content="demo 我们新建一个 app.ts 的文件，代码如下： var message:string = “Hello World” console.log(message) 通常我们使用 .ts 作为 TypeScript 代码文件的扩展名。 然后执行以下命令将 TypeScript 转换为 JavaScript 代码： 1 tsc app.ts 这时候在当前目录">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-09-05T15:27:31+00:00">
+    <meta property="article:modified_time" content="2025-09-05T15:27:31+00:00">
+    <meta property="article:tag" content="Ts">
+    <meta property="og:image" content="https://kengerlwl.github.io/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kengerlwl.github.io/logo.png">
+  <meta name="twitter:title" content="TypeScript学习">
+  <meta name="twitter:description" content="demo 我们新建一个 app.ts 的文件，代码如下： var message:string = “Hello World” console.log(message) 通常我们使用 .ts 作为 TypeScript 代码文件的扩展名。 然后执行以下命令将 TypeScript 转换为 JavaScript 代码： 1 tsc app.ts 这时候在当前目录">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://kengerlwl.github.io/typescript%E5%AD%A6%E4%B9%A0/" /><link rel="prev" href="https://kengerlwl.github.io/mcp%E5%8D%8F%E8%AE%AE%E4%B8%8E%E4%BD%BF%E7%94%A8/" /><link rel="next" href="https://kengerlwl.github.io/privacy_policy/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "TypeScript学习",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/kengerlwl.github.io\/typescript%E5%AD%A6%E4%B9%A0\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/kengerlwl.github.io\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "ts","wordcount":  1961 ,
+        "url": "https:\/\/kengerlwl.github.io\/typescript%E5%AD%A6%E4%B9%A0\/","datePublished": "2025-09-05T15:27:31+00:00","dateModified": "2025-09-05T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/kengerlwl.github.io\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/typescript%E5%AD%A6%E4%B9%A0/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/typescript%E5%AD%A6%E4%B9%A0/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">TypeScript学习</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kengerlwl.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%8A%80%E6%9C%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>技术</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-09-05">2025-09-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1961 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#let-和-var-都是-javascript-中用于声明变量的关键字但它们有一些重要的区别">let 和 var 都是 JavaScript 中用于声明变量的关键字，但它们有一些重要的区别：</a>
+      <ul>
+        <li><a href="#作用域不同">作用域不同</a></li>
+        <li><a href="#重复声明">重复声明</a></li>
+      </ul>
+    </li>
+    <li><a href="#模块">模块</a>
+      <ul>
+        <li><a href="#模块和命名空间"><strong>模块和命名空间</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#函数声明function-declarations">函数声明（Function Declarations）</a></li>
+    <li><a href="#类型推断type-inference">类型推断（Type Inference）</a></li>
+    <li><a href="#异步编程asynchronous-programming">异步编程（Asynchronous Programming）</a></li>
+    <li><a href="#类">类</a></li>
+    <li><a href="#对象">对象</a></li>
+    <li><a href="#接口">接口</a></li>
+    <li><a href="#typescript-的-interface只有类型没有实例">TypeScript 的 <code>interface</code>：只有“类型”，没有实例</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#为什么ts项目一定要先-build-才能-run-start">为什么TS项目一定要先 Build 才能 Run Start？</a>
+      <ul>
+        <li><a href="#-核心原因">📊 核心原因</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#可选变量">可选变量</a></li>
+    <li><a href="#类的属性默认值">类的属性默认值</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="demo">demo</h1>
+<p>我们新建一个 app.ts 的文件，代码如下：</p>
+<p>var message:string = &ldquo;Hello World&rdquo;  console.log(message)</p>
+<p>通常我们使用 <strong>.ts</strong> 作为 TypeScript 代码文件的扩展名。</p>
+<p>然后执行以下命令将 TypeScript 转换为 JavaScript 代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">tsc app.ts
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://www.runoob.com/wp-content/uploads/2019/01/typescript_compiler.png"
+        data-srcset="https://www.runoob.com/wp-content/uploads/2019/01/typescript_compiler.png, https://www.runoob.com/wp-content/uploads/2019/01/typescript_compiler.png 1.5x, https://www.runoob.com/wp-content/uploads/2019/01/typescript_compiler.png 2x"
+        data-sizes="auto"
+        alt="https://www.runoob.com/wp-content/uploads/2019/01/typescript_compiler.png"
+        title="img" /></p>
+<p>这时候在当前目录下（与 app.ts 同一目录）就会生成一个 app.js 文件，代码如下：</p>
+<p>var message = &ldquo;Hello World&rdquo;; console.log(message);</p>
+<p>使用 node 命令来执行 app.js 文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ node app.js 
+</span></span><span class="line"><span class="cl">Hello World
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="特性">特性</h1>
+<p>TypeScript 的一些关键特性：</p>
+<ul>
+<li><strong>静态类型检查</strong>：TypeScript 在编译时就会检查代码的类型是否匹配，能够发现很多潜在的错误。即使是简单的错误（例如拼写错误或类型不一致），也可以在编写代码时被捕获到。</li>
+<li><strong>类型推断</strong>：TypeScript 能够自动推断变量的类型。比如当你声明一个变量并赋值时，TypeScript 会根据赋值来推断这个变量的类型，不需要每次都显式声明类型。</li>
+<li><strong>接口和类型定义</strong>：TypeScript 提供了 <code>interface</code> 和 <code>type</code> 关键字，允许你定义复杂的数据结构。这对于项目中不同部分的代码协作和数据交互来说非常重要。</li>
+<li><strong>类和模块支持</strong>：TypeScript 支持面向对象编程中的类（class）概念，增加了构造函数、继承、访问控制修饰符（如 <code>public</code>、<code>private</code>、<code>protected</code>），并且支持 ES 模块化规范。</li>
+<li><strong>工具和编辑器支持</strong>：TypeScript 拥有良好的编辑器支持，特别是与 Visual Studio Code 集成时，能提供智能提示、自动补全、重构等工具，使开发过程更高效。</li>
+<li><strong>兼容 JavaScript</strong>：TypeScript 是 JavaScript 的超集，这意味着所有合法的 JavaScript 代码都是合法的 TypeScript 代码。这使得 JavaScript 项目可以逐步迁移到 TypeScript，而无需完全重写。</li>
+</ul>
+<p><strong>总结：ts和java很像了，很多java这边的特性，ts也有，面向对象，枚举，类型，接口，继承，抽象类，泛型。但是细节语法不一样</strong></p>
+<p>同时，ts还有其特性，函数能够脱离类而存在，其模块逻辑和python比较像</p>
+<h1 id="语法">语法</h1>
+<h2 id="let-和-var-都是-javascript-中用于声明变量的关键字但它们有一些重要的区别">let 和 var 都是 JavaScript 中用于声明变量的关键字，但它们有一些重要的区别：</h2>
+<ul>
+<li><code>let</code> 推荐用于现代 JavaScript 编码，具有更安全的作用域和更少的意外行为。</li>
+</ul>
+<h3 id="作用域不同">作用域不同</h3>
+<ul>
+<li><strong>var</strong> 声明的变量是<strong>函数作用域</strong>（function scope），即在函数内部声明的变量在整个函数内都可访问，在函数外声明则为全局变量。</li>
+<li><strong>let</strong> 声明的变量是<strong>块级作用域</strong>（block scope），即只在最近的一对花括号 <code>{}</code> 内有效，比如在 if、for、while、代码块等内部声明的变量只在该块内有效。</li>
+</ul>
+<h3 id="重复声明">重复声明</h3>
+<ul>
+<li><strong>var</strong> 允许在同一作用域内重复声明同一个变量，不会报错。</li>
+<li><strong>let</strong> 不允许在同一作用域内重复声明同一个变量，会报错。</li>
+</ul>
+<p>const和let一样，但是是常量。</p>
+<h2 id="模块">模块</h2>
+<h3 id="模块和命名空间"><strong>模块和命名空间</strong></h3>
+<p>TypeScript 提供了基于 ES6 的模块系统，使用 <code>import</code> 和 <code>export</code> 导入和导出模块。此外，TypeScript 还支持命名空间（Namespace），用于组织代码和避免命名冲突。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">//</span> <span class="n">math</span><span class="o">.</span><span class="n">ts</span>
+</span></span><span class="line"><span class="cl"><span class="k">export</span> <span class="n">function</span> <span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">number</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">number</span><span class="p">):</span> <span class="n">number</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="n">main</span><span class="o">.</span><span class="n">ts</span>
+</span></span><span class="line"><span class="cl"><span class="n">import</span> <span class="p">{</span> <span class="n">add</span> <span class="p">}</span> <span class="n">from</span> <span class="s2">&#34;./math&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">));</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>必须使用 <code>export</code>，否则无法被其他模块导入和使用。</strong></p>
+<h2 id="函数声明function-declarations">函数声明（Function Declarations）</h2>
+<p>函数声明：TypeScript 允许声明带有类型注解的函数，包括参数类型和返回值类型。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">function greet(name: string): string {
+</span></span><span class="line"><span class="cl">  return &#34;Hello, &#34; + name;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="类型推断type-inference">类型推断（Type Inference）</h2>
+<p>TypeScript 在某些情况下会自动推断变量的类型。例如，在声明变量并赋值时，TypeScript 会推断出该变量的类型。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">let num = 10; *// TypeScript 推断 num 为 number 类型*
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="异步编程asynchronous-programming">异步编程（Asynchronous Programming）</h2>
+<p>TypeScript 完全支持异步编程，可以使用 async/await 语法来处理异步操作。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">async</span> <span class="n">function</span> <span class="n">fetchData</span><span class="p">():</span> <span class="n">Promise</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="n">response</span> <span class="o">=</span> <span class="n">await</span> <span class="n">fetch</span><span class="p">(</span><span class="s2">&#34;https://example.com&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="n">data</span> <span class="o">=</span> <span class="n">await</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">data</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="类">类</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="k">class</span> <span class="n">Car</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">    <span class="o">//</span> <span class="err">字段</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">engine</span><span class="p">:</span><span class="n">string</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">    <span class="o">//</span> <span class="err">构造函数</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">constructor</span><span class="p">(</span><span class="n">engine</span><span class="p">:</span><span class="n">string</span><span class="p">)</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">this</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="n">engine</span> 
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>  
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">    <span class="o">//</span> <span class="err">方法</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">disp</span><span class="p">():</span><span class="n">void</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&#34;发动机为 :   &#34;</span><span class="o">+</span><span class="n">this</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> 
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>实例化：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="k">var</span> <span class="n">object_name</span> <span class="o">=</span> <span class="n">new</span> <span class="n">class_name</span><span class="p">([</span> <span class="n">arguments</span> <span class="p">])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="对象">对象</h2>
+<p>对象是包含一组键值对的实例。 值可以是标量、函数、数组、对象等，如下实例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="k">var</span> <span class="n">object_name</span> <span class="o">=</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">key1</span><span class="p">:</span> <span class="s2">&#34;value1&#34;</span><span class="p">,</span> <span class="o">//</span> <span class="err">标量</span>
+</span></span><span class="line"><span class="cl">    <span class="n">key2</span><span class="p">:</span> <span class="s2">&#34;value&#34;</span><span class="p">,</span>  
+</span></span><span class="line"><span class="cl">    <span class="n">key3</span><span class="p">:</span> <span class="n">function</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">函数</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">key4</span><span class="p">:[</span><span class="s2">&#34;content1&#34;</span><span class="p">,</span> <span class="s2">&#34;content2&#34;</span><span class="p">]</span> <span class="o">//</span><span class="err">集合</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="接口">接口</h2>
+<p><strong>在 JavaScript 里本身是没有 “interface（接口）” 这个概念的，所以也就不存在“接口实例”</strong></p>
+<h2 id="typescript-的-interface只有类型没有实例">TypeScript 的 <code>interface</code>：只有“类型”，没有实例</h2>
+<p>例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">interface</span> <span class="n">User</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">id</span><span class="p">:</span> <span class="n">number</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">name</span><span class="p">:</span> <span class="n">string</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="n">u</span><span class="p">:</span> <span class="n">User</span> <span class="o">=</span> <span class="p">{</span> <span class="n">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="s1">&#39;Tom&#39;</span> <span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p><code>User</code> 只是一个<strong>类型约束</strong>，帮助你在写代码时做检查、补全。</p>
+</li>
+<li>
+<p>编译成 JS 后，大概是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="k">const</span> <span class="n">u</span> <span class="o">=</span> <span class="p">{</span> <span class="n">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="s1">&#39;Tom&#39;</span> <span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>interface User { ... }</code> 整段会被删掉，运行时根本没有 <code>User</code> 这个东西，也不可能 <code>new User()</code> 或 <code>User instanceof xxx</code>。</p>
+</li>
+</ul>
+<h1 id="杂谈">杂谈</h1>
+<h2 id="为什么ts项目一定要先-build-才能-run-start">为什么TS项目一定要先 Build 才能 Run Start？</h2>
+<h3 id="-核心原因">📊 核心原因</h3>
+<p>这个项目使用 <strong>TypeScript</strong>，而 Node.js 只能直接运行 <strong>JavaScript</strong>。所以必须经过编译步骤：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">TypeScript 源代码 (.ts/.tsx)
+</span></span><span class="line"><span class="cl">        ↓
+</span></span><span class="line"><span class="cl">    编译 (Build)
+</span></span><span class="line"><span class="cl">        ↓
+</span></span><span class="line"><span class="cl">JavaScript 代码 (.js)
+</span></span><span class="line"><span class="cl">        ↓
+</span></span><span class="line"><span class="cl">    Node.js 执行 (npm start)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="语法糖">语法糖</h1>
+<h2 id="可选变量">可选变量</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">deleted_file?: string;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>逐个解释：</p>
+<ol>
+<li><strong><code>deleted_file</code></strong>
+字段名（属性名），叫 <code>deleted_file</code>。</li>
+<li><strong><code>?</code>（问号）</strong>
+代表<strong>可选属性</strong>（optional）。
+含义：这个字段<strong>可以有，也可以没有</strong>。
+<ul>
+<li>有的话：必须是 <code>string</code> 类型</li>
+<li>没有也合法</li>
+</ul>
+</li>
+<li><strong><code>string</code></strong>
+这是这个属性的<strong>类型</strong>，表示值必须是字符串</li>
+</ol>
+<h2 id="类的属性默认值">类的属性默认值</h2>
+<p>如果你用的是 class：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">ts</span>
+</span></span><span class="line"><span class="cl"><span class="err">复制代码</span><span class="k">class</span> <span class="n">DeleteFileOutput</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">deleted_file</span><span class="err">?</span><span class="p">:</span> <span class="n">string</span> <span class="o">=</span> <span class="s2">&#34;default.txt&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="n">o</span> <span class="o">=</span> <span class="n">new</span> <span class="n">DeleteFileOutput</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">deleted_file</span><span class="p">);</span> <span class="o">//</span> <span class="s2">&#34;default.txt&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2025-09-05</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/typescript%E5%AD%A6%E4%B9%A0/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://kengerlwl.github.io/typescript%E5%AD%A6%E4%B9%A0/" data-title="TypeScript学习" data-hashtags="ts"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://kengerlwl.github.io/typescript%E5%AD%A6%E4%B9%A0/" data-hashtag="ts"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://kengerlwl.github.io/typescript%E5%AD%A6%E4%B9%A0/" data-title="TypeScript学习"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://kengerlwl.github.io/typescript%E5%AD%A6%E4%B9%A0/" data-title="TypeScript学习"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://kengerlwl.github.io/typescript%E5%AD%A6%E4%B9%A0/" data-title="TypeScript学习"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/ts/">Ts</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/mcp%E5%8D%8F%E8%AE%AE%E4%B8%8E%E4%BD%BF%E7%94%A8/" class="prev" rel="prev" title="mcp协议与使用"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>mcp协议与使用</a>
+            <a href="/privacy_policy/" class="next" rel="next" title="HttpInterceptor隐私政策">HttpInterceptor隐私政策<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.132.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kengerlwl.github.io/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"JCTYUNKA9R","algoliaIndex":"kenger","algoliaSearchKey":"3ef68664495033362b7df9cf5a3eee1e","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

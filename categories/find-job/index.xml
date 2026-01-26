@@ -1,0 +1,88 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Find JOB - 分类 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/categories/find-job/</link>
+        <description>Find JOB - 分类 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 30 Aug 2024 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/categories/find-job/" rel="self" type="application/rss+xml" /><item>
+    <title>python八股题</title>
+    <link>https://kengerlwl.github.io/python%E5%85%AB%E8%82%A1%E9%A2%98/</link>
+    <pubDate>Fri, 30 Aug 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/python%E5%85%AB%E8%82%A1%E9%A2%98/</guid>
+    <description><![CDATA[TOSEE: 【建议收藏】50 道硬核的 Python 面试题.._python程序员面试题-CSDN博客 taizilongxu/interview_python: 关于Python的面试题 基础语法特性 列表（list）和元组（]]></description>
+</item>
+<item>
+    <title>go测试</title>
+    <link>https://kengerlwl.github.io/go%E8%AF%AD%E8%A8%80%E6%B5%8B%E8%AF%95/</link>
+    <pubDate>Mon, 22 Jul 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/go%E8%AF%AD%E8%A8%80%E6%B5%8B%E8%AF%95/</guid>
+    <description><![CDATA[背景 正在编写go的测试用例case，但是对基本流程不熟。 建议还是用goland开发，用vscode有点难受 方法 在Go语言中，编写测试函数和设]]></description>
+</item>
+<item>
+    <title>K8S学习</title>
+    <link>https://kengerlwl.github.io/k8s%E5%AD%A6%E4%B9%A0/</link>
+    <pubDate>Thu, 11 Apr 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/k8s%E5%AD%A6%E4%B9%A0/</guid>
+    <description><![CDATA[K8S学习 ref kubernetes面试题汇总详解-腾讯云开发者社区-腾讯云 Document - K8S 教程 - 易文档 为什么需要K8S 传统的docker应用，虽然能够直]]></description>
+</item>
+<item>
+    <title>运维相关复盘</title>
+    <link>https://kengerlwl.github.io/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E5%A4%8D%E7%9B%98/</link>
+    <pubDate>Thu, 11 Apr 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E5%A4%8D%E7%9B%98/</guid>
+    <description><![CDATA[OOM内存溢出问题 java程序内存溢出问题 jstat&mdash;&ndash;查看GC情况 jstat -gc 1 由于我是进入docker 容器中执行的top]]></description>
+</item>
+<item>
+    <title>运维相关面试题</title>
+    <link>https://kengerlwl.github.io/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+    <pubDate>Thu, 11 Apr 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+    <description><![CDATA[操作系统 swap是什么 Linux 的VM（虚拟内存）=RM（物理内存）+SWAP（交换分区） Swap的大小是由你自己决定的。Swap是通过硬盘虚拟出来]]></description>
+</item>
+<item>
+    <title>java-IO</title>
+    <link>https://kengerlwl.github.io/java-io/</link>
+    <pubDate>Wed, 10 Apr 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/java-io/</guid>
+    <description><![CDATA[计算机IO结构 运算器、控制器、存储器、输入设备、输出设备。 冯诺依曼体系结构 **输入设备（比如键盘）和输出设备（比如显示器）**都属于外部设备]]></description>
+</item>
+<item>
+    <title>排序算法</title>
+    <link>https://kengerlwl.github.io/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</link>
+    <pubDate>Mon, 08 Apr 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</guid>
+    <description><![CDATA[排序算法对比 快排最坏时间复杂度为O(n^2)。 最坏情况发生在待排序序列已经有序或基本有序的情况下。 分类： 位图排序解决海量数据排序问题 位图排序]]></description>
+</item>
+<item>
+    <title>Spring Cloud.md</title>
+    <link>https://kengerlwl.github.io/spring-cloud/</link>
+    <pubDate>Sat, 06 Apr 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/spring-cloud/</guid>
+    <description><![CDATA[为什么需要微服务 传统的Web项目 传统的WEB应用核心分为业务逻辑、适配器以及API或通过UI访问的WEB界面。业务逻辑定义业务流程、业务规则]]></description>
+</item>
+<item>
+    <title>Spring常见问题</title>
+    <link>https://kengerlwl.github.io/spring%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</link>
+    <pubDate>Fri, 05 Apr 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/spring%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</guid>
+    <description><![CDATA[基础概念 spring的底层 底层都依赖于它的两个核心特性，也就是**(IOC)依赖注入**（dependency injection，DI）和面]]></description>
+</item>
+<item>
+    <title>数据库索引</title>
+    <link>https://kengerlwl.github.io/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/</link>
+    <pubDate>Tue, 26 Mar 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/</guid>
+    <description><![CDATA[索引介绍分类 索引是一种用于快速查询和检索数据的数据结构，其本质可以看成是一种排序好的数据结构。 我们可以按照四个角度来分类索引。 按「数据结构」]]></description>
+</item>
+</channel>
+</rss>

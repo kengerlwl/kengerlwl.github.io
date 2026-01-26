@@ -1,0 +1,32 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Clash - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/clash/</link>
+        <description>Clash - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 25 Jan 2026 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/clash/" rel="self" type="application/rss+xml" /><item>
+    <title>Clash Verge 内网域名 &#43; 代理共存配置指南</title>
+    <link>https://kengerlwl.github.io/clash%E5%86%85%E7%BD%91%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/</link>
+    <pubDate>Sun, 25 Jan 2026 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/clash%E5%86%85%E7%BD%91%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/</guid>
+    <description><![CDATA[Clash Verge 内网域名 + 代理共存配置指南 问题场景 公司内网有自部署域名（如 *.tencent.com），需要通过内网 DNS 解析并直连访问；同时需要代理访问外]]></description>
+</item>
+<item>
+    <title>clash定制化的订阅构建</title>
+    <link>https://kengerlwl.github.io/clash%E5%AE%9A%E5%88%B6%E5%8C%96%E7%9A%84%E8%AE%A2%E9%98%85%E6%9E%84%E5%BB%BA/</link>
+    <pubDate>Fri, 26 May 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/clash%E5%AE%9A%E5%88%B6%E5%8C%96%E7%9A%84%E8%AE%A2%E9%98%85%E6%9E%84%E5%BB%BA/</guid>
+    <description><![CDATA[需求 我目前工作环境和家庭环境是分布两个不同的内网环境，并且我分别给两个环境搭建了v2ray代理，实现从公网代理到内网。因此，我需要： 在内网环]]></description>
+</item>
+<item>
+    <title>高效内网分流策略</title>
+    <link>https://kengerlwl.github.io/%E9%AB%98%E6%95%88%E5%86%85%E7%BD%91%E5%88%86%E6%B5%81%E7%AD%96%E7%95%A5/</link>
+    <pubDate>Wed, 15 Jan 2020 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E9%AB%98%E6%95%88%E5%86%85%E7%BD%91%E5%88%86%E6%B5%81%E7%AD%96%E7%95%A5/</guid>
+    <description><![CDATA[用clash 1 2 3 4 5 6 7 8 - DOMAIN-SUFFIX,dl.acm.org,SchoolLAN - DOMAIN-SUFFIX,csubot.cn,SchoolLAN - DOMAIN-SUFFIX,csu.edu.cn,SchoolLAN - DOMAIN-SUFFIX,sciencedirect.com,SchoolLAN - DOMAIN-SUFFIX,springer.com,SchoolLAN - DOMAIN-SUFFIX,csuoss.cn,SchoolLAN - DOMAIN-SUFFIX,ieee.org,SchoolLAN - DOMAIN-SUFFIX,cnki.net,SchoolLAN]]></description>
+</item>
+</channel>
+</rss>

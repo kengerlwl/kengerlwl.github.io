@@ -1,0 +1,88 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Llm - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/llm/</link>
+        <description>Llm - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 20 Jan 2026 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/llm/" rel="self" type="application/rss+xml" /><item>
+    <title>大模型缓存命中原理</title>
+    <link>https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%BC%93%E5%AD%98%E5%91%BD%E4%B8%AD%E5%8E%9F%E7%90%86/</link>
+    <pubDate>Tue, 20 Jan 2026 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%BC%93%E5%AD%98%E5%91%BD%E4%B8%AD%E5%8E%9F%E7%90%86/</guid>
+    <description><![CDATA[大模型的缓存命中机制：为什么我改了最后一条消息还会命中？ 很多人在用大模型时都会遇到一个现象： 明明改了最后一条 message 的内容，为什么系统还显示“缓存]]></description>
+</item>
+<item>
+    <title>从工程角度理解到底什么是交错思考</title>
+    <link>https://kengerlwl.github.io/%E4%BB%8E%E5%B7%A5%E7%A8%8B%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3%E5%88%B0%E5%BA%95%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%A4%E9%94%99%E6%80%9D%E8%80%83/</link>
+    <pubDate>Sun, 11 Jan 2026 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E4%BB%8E%E5%B7%A5%E7%A8%8B%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3%E5%88%B0%E5%BA%95%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%A4%E9%94%99%E6%80%9D%E8%80%83/</guid>
+    <description><![CDATA[背景 最近做业务需要了解什么是交错思考，以前我只知道thinking机制。 本质上就是在模型正式输出前，让其输出。内部有具体的思考活动。 但是这种]]></description>
+</item>
+<item>
+    <title>关于LLM上下文管理</title>
+    <link>https://kengerlwl.github.io/%E5%85%B3%E4%BA%8Ellm%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86/</link>
+    <pubDate>Wed, 16 Jul 2025 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E5%85%B3%E4%BA%8Ellm%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86/</guid>
+    <description><![CDATA[背景 方法 1. 裁剪 超过一定长度的token，或者超过指定阈值。 就将更远（旧）的上下文直接裁剪掉。 2. 压缩 同上，但是不是裁剪，而是压缩更旧的上下文。]]></description>
+</item>
+<item>
+    <title>阅读12-factor-agents</title>
+    <link>https://kengerlwl.github.io/%E9%98%85%E8%AF%BB12-factor-agents/</link>
+    <pubDate>Wed, 16 Jul 2025 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E9%98%85%E8%AF%BB12-factor-agents/</guid>
+    <description><![CDATA[第一章，认识软件 要认识到：软件是一个有向图。我们过去用流程图来表示程序是有原因的。 其流程，边界，是完全严谨可控的。 让大模型自己去找这么编排处]]></description>
+</item>
+<item>
+    <title>tokenizer使用指北</title>
+    <link>https://kengerlwl.github.io/tokenizer%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8C%97/</link>
+    <pubDate>Sat, 26 Oct 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/tokenizer%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8C%97/</guid>
+    <description><![CDATA[背景 文本到向量需要有个中间层，用来将文本分词，然后将不同的文本编码为序号。 例如一个文本 i am your father. 就应该分词为四个单词，然后其中首位还应该加入首]]></description>
+</item>
+<item>
+    <title>大模型底层八股</title>
+    <link>https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BA%95%E5%B1%82%E5%85%AB%E8%82%A1/</link>
+    <pubDate>Sun, 18 Aug 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BA%95%E5%B1%82%E5%85%AB%E8%82%A1/</guid>
+    <description><![CDATA[Transformer八股 为什么在Transformer模型中使用Layer Normalization（Layer Norm）而不是Batch]]></description>
+</item>
+<item>
+    <title>大模型token压缩</title>
+    <link>https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8Btoken%E5%8E%8B%E7%BC%A9/</link>
+    <pubDate>Wed, 14 Aug 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8Btoken%E5%8E%8B%E7%BC%A9/</guid>
+    <description><![CDATA[背景 最近在大模型推理方面遇到了瓶颈，需要进一步优化性能，因此决定记录一下这方面的研究。 Tokens 压缩旨在减少语言模型处理的文本量，以提高效率和泛化能]]></description>
+</item>
+<item>
+    <title>自部署大模型实验细节</title>
+    <link>https://kengerlwl.github.io/%E8%87%AA%E9%83%A8%E7%BD%B2%E5%A4%A7%E6%A8%A1%E5%9E%8B/</link>
+    <pubDate>Tue, 13 Aug 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E8%87%AA%E9%83%A8%E7%BD%B2%E5%A4%A7%E6%A8%A1%E5%9E%8B/</guid>
+    <description><![CDATA[huggingface 换源 1 export HF_ENDPOINT=https://hf-mirror.com 下载 1 2 3 4 5 6 7 8 9 10 nohup huggingface-cli download --resume-download Qwen/Qwen-72B-Chat-Int4 --local-dir ./Qwen-72B-Chat-Int4 &gt; 72b.log &amp; huggingface-cli download --resume-download Qwen/Qwen-14B --local-dir ./Qwen-14B huggingface-cli download --resume-download Qwen/Qwen2-7B-Instruct --local-dir ./Qwen-7B huggingface-cli download --resume-download Qwen/Qwen1.5-14B-Chat --local-dir ./Qwen1.5-14B 启动 vllm api 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20]]></description>
+</item>
+<item>
+    <title>langchain使用入门指北</title>
+    <link>https://kengerlwl.github.io/langchain%E4%BD%BF%E7%94%A8%E5%85%A5%E9%97%A8%E6%8C%87%E5%8C%97/</link>
+    <pubDate>Mon, 05 Aug 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/langchain%E4%BD%BF%E7%94%A8%E5%85%A5%E9%97%A8%E6%8C%87%E5%8C%97/</guid>
+    <description><![CDATA[背景 需要用ai来实现提效。 1 2 3 4 5 6 7 8 9 10 11 【业务背景】针对运维开发中的业务问题引入LLM进行提效，实现自动化，智能化解决运维问题，面向]]></description>
+</item>
+<item>
+    <title>大模型agent框架调研</title>
+    <link>https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8Bagent%E6%A1%86%E6%9E%B6%E8%B0%83%E7%A0%94/</link>
+    <pubDate>Thu, 25 Jul 2024 14:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8Bagent%E6%A1%86%E6%9E%B6%E8%B0%83%E7%A0%94/</guid>
+    <description><![CDATA[背景 最近需要用到这玩意儿，但是我目前只知道langchain等框架，对市场缺乏一个调研。 需要做一个技术选型。 实际上：agent，本质上就是一]]></description>
+</item>
+</channel>
+</rss>

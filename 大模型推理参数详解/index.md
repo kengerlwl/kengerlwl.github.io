@@ -1,0 +1,167 @@
+# 大模型推理参数详解
+
+
+
+
+# 背景
+
+一直在用大模型，也大概知道有哪些参数，但是一直没有详细了解其底层是什么原理，决定学习一下。
+
+
+
+
+
+# 推理相关参数
+
+LLM看似很神奇，但本质还是一个概率问题，神**经网络根据输入的文本，从预训练的模型里面生成一堆候选词，选择概率高的作为输出，下面这三个参数，都是跟采样有关（也就是要如何从候选词里选择输出）。**
+
+## **temperature**
+
+用于控制模型输出的结果的随机性，这个值越大随机性越大。一般我们多次输入相同的prompt之后，模型的每次输出都不一样。
+
+- 设置为 0，对每个prompt都生成固定的输出
+- 较低的值，输出更集中，更有确定性
+- 较高的值，输出更随机（更有创意 ）
+  ![在这里插入图片描述](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/46bca30e69d1901883a91805ea846e16/4c17644a807f2e5741d4e7455e39e9fc.png)
+  一般来说，prompt 越长，描述得越清楚，模型生成的输出质量就越好，置信度越高，这时可以适当调高 temperature 的值；反过来，如果 prompt 很短，很含糊，这时再设置一个比较高的 temperature 值，模型的输出就很不稳定了。
+
+> 
+
+
+
+
+
+## **top_k & top_p**
+
+这俩也是采样参数，跟 temperature 不一样的采样方式。
+
+前面有介绍到，模型在输出之前，会生成一堆 token，这些 token 根据质量高低排名。
+
+比如下面这个图片，输入 `The name of that country is the` 这句话，模型生成了一堆 token，然后根据不同的 `decoding strategy` 从 tokens 中选择输出。
+
+![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/46bca30e69d1901883a91805ea846e16/337001f699c3334f9f1908a88cb136de.webp)
+
+The model calculates a likelihood for each token in its vocabulary. The decoding strategy then picks one as the output.
+
+这里的 `decoding strategy` 可以选择
+
+- **greedy decoding: 总是选择最高分的 token，有用但是有些弊端，详见下文**
+- **top-k: 从 tokens 里选择 k 个作为候选，然后根据它们的 `likelihood scores` 来采样**
+- **top-p: 候选词列表是动态的，从 tokens 里按百分比选择候选词**
+
+top-k 与 top-p 为选择 token 引入了随机性，让其他高分的 token 有被选择的机会，不像 greedy decoding 一样总是选最高分的。
+
+### **greedy decoding**
+
+好处是简单，坏处是容易生成循环、重复的内容
+
+> Greedy decoding is a reasonable strategy but has some drawbacks such as outputs with repetitive loops of text. Think of the suggestions in your smartphone's auto-suggest. When you continually pick the highest suggested word, it may devolve into repeated sentences.
+
+### **top-k**
+
+设置越大，生成的内容可能性越大；
+
+设置越小，生成的内容越固定；
+
+**设置为1时，和 `greedy decoding` 效果一样。**
+
+![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/46bca30e69d1901883a91805ea846e16/3be989e76b9897500db5b9912cfb8e62.webp)
+
+Adjusting to the top-k setting.
+
+> Changing the top-k parameter sets the size of the shortlist the model samples from as it outputs each token. Setting top-k to 1 gives us greedy decoding.
+
+### **top-p**
+
+top-p 又名 *Nucleus Sampling*（核采样）
+
+与 top-k 固定选取前 k 个 tokens 不同，top-p 选取的 tokens 数量不是固定的，这个方法是设定一个概率阈值。
+
+继续上面的例子，**将 top-p 设定为 0.15，即选择前 15% 概率的 tokens 作为候选。**如下图所示，United 和 Netherlands 的概率加起来为 15% ，所以候选词就是这俩，最后再从这些候选词里，根据概率分数，选择 united 这个词。
+
+![img](https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/46bca30e69d1901883a91805ea846e16/1d67f5d28ea1736e7d0425d7b3ceb8a1.webp)
+
+In top-p, the size of the shortlist is dynamically selected based on the sum of likelihood scores reaching some threshold.
+
+> Top-p is usually set to a high value (like 0.75) with the purpose of limiting the long tail of low-probability tokens that may be sampled. We can use both top-k and top-p together. If both `k` and `p` are enabled, `p` acts after `k`.
+
+经常遇到的默认 top-p 值就是 0.7/0.8 这样，还是那个说法，设置太低模型的输出太固定，设置太高，模型彻底放飞自我也不好。
+
+
+
+
+
+## 控制输出策略的参数
+
+是否使用采样，否则使用贪婪解码 。
+
+generate默认使用贪婪的搜索解码，所以你不需要传递任何参数来启用它。这意味着参数num_beams被设置为1，do_sample=False。
+
+
+
+
+
+### 惩罚参数
+
+**在ChatGPT模型中，惩罚机制（Penalty Mechanism）主要用于控制生成文本的质量和多样性。惩罚机制通过调整生成过程中的概率分布，避免模型生成重复、无意义或不相关的内容。以下是一些常见的惩罚机制：**
+
+**重复惩罚（Repetition Penalty）**
+
+重复惩罚机制用于减少生成文本中的重复内容。
+
+ **长度惩罚（Length Penalty）**
+
+长度惩罚机制用于控制生成文本的长度，避免生成过长或过短的文本。
+
+
+
+
+
+
+
+
+
+# 输出长度
+
+
+
+## 上下文长度
+
+相当于视野，每次计算下一个token看到的视野长度
+
+
+
+## 输出长度
+
+就是字面意识，对输出没什么影响，就是直接截断不输出了。
+
+
+
+
+
+# 推理的搜索算法
+
+贪婪搜索、束搜索（beam search）或采样方法等。**贪婪搜索只考虑当前最有可能的输出，束搜索会考虑多个候选输出，采样方法会根据概率分布进行随机采样。**
+
+## beam搜索
+
+**束搜索是一种改进的贪婪搜索算法，它在每一步保留多个候选序列（称为“束”），以增加找到全局最优解的可能性。**
+
+- **过程**:
+  1. 从起始标记开始。
+  2. **在每一步，保留前k个概率最高的候选序列（k为束宽）。**
+  3. 对每个候选序列，扩展所有可能的下一个词，并计算其联合概率。
+  4. 从所有扩展的候选序列中选择前k个概率最高的序列。
+  5. 重复步骤2到4，直到生成结束标记或达到最大长度。
+
+- **优点**:
+  - **增加了找到全局最优解的可能性。**
+  - **生成的文本质量通常比贪婪搜索高**。
+- **缺点**:
+  - 计算复杂度较高，束宽越大，计算量越大。
+  - 仍然可能会错过一些高质量的序列，特别是在束宽较小时。
+
+# ref
+
+[知乎](https://zhuanlan.zhihu.com/p/631786282)
+

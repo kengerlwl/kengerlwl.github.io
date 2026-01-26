@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>opengl学习 - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://kengerlwl.github.io/opengl%E5%AD%A6%E4%B9%A0/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="opengl学习">
+  <meta property="og:description" content="opengl学习 安装 安装的时候注意系统版本（pip默认下载32位的） 去官网下载64位的安装包链接 基本入门 OpenGL 库及函数简介 OpenGL函数的命名">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2020-01-15T15:27:31+00:00">
+    <meta property="article:modified_time" content="2020-01-15T15:27:31+00:00">
+    <meta property="article:tag" content="OpenGL">
+    <meta property="og:image" content="https://kengerlwl.github.io/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kengerlwl.github.io/logo.png">
+  <meta name="twitter:title" content="opengl学习">
+  <meta name="twitter:description" content="opengl学习 安装 安装的时候注意系统版本（pip默认下载32位的） 去官网下载64位的安装包链接 基本入门 OpenGL 库及函数简介 OpenGL函数的命名">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://kengerlwl.github.io/opengl%E5%AD%A6%E4%B9%A0/" /><link rel="prev" href="https://kengerlwl.github.io/openwrt-docker%E6%97%81%E8%B7%AF%E7%94%B1/" /><link rel="next" href="https://kengerlwl.github.io/nginx%E9%85%8D%E7%BD%AE/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "opengl学习",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/kengerlwl.github.io\/opengl%E5%AD%A6%E4%B9%A0\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/kengerlwl.github.io\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "OpenGL","wordcount":  6079 ,
+        "url": "https:\/\/kengerlwl.github.io\/opengl%E5%AD%A6%E4%B9%A0\/","datePublished": "2020-01-15T15:27:31+00:00","dateModified": "2020-01-15T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/kengerlwl.github.io\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/opengl%E5%AD%A6%E4%B9%A0/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/opengl%E5%AD%A6%E4%B9%A0/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">opengl学习</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kengerlwl.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%BB%BC%E5%90%88/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>综合</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2020-01-15">2020-01-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 6079 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 13 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#安装">安装</a></li>
+    <li><a href="#基本入门">基本入门</a>
+      <ul>
+        <li><a href="#opengl-库及函数简介">OpenGL 库及函数简介</a></li>
+        <li><a href="#opengl-核心库-gl">OpenGL 核心库 GL</a>
+          <ul>
+            <li><a href="#绘制基本几何图元的函数">绘制基本几何图元的函数：</a></li>
+            <li><a href="#矩阵操作几何变换和投影变换的函数">矩阵操作、几何变换和投影变换的函数：</a></li>
+            <li><a href="#颜色光照和材质的函数">颜色、光照和材质的函数：</a></li>
+            <li><a href="#显示列表函数">显示列表函数：</a></li>
+            <li><a href="#纹理映射函数">纹理映射函数：</a></li>
+            <li><a href="#特殊效果函数">特殊效果函数：</a></li>
+            <li><a href="#光栅化象素操作函数">光栅化、象素操作函数：</a></li>
+            <li><a href="#选择与反馈函数">选择与反馈函数：</a></li>
+            <li><a href="#曲线与曲面的绘制函数">曲线与曲面的绘制函数：</a></li>
+            <li><a href="#状态设置与查询函数">状态设置与查询函数：</a></li>
+          </ul>
+        </li>
+        <li><a href="#opengl-实用库-glu">OpenGL 实用库 GLU</a>
+          <ul>
+            <li><a href="#辅助纹理贴图函数">辅助纹理贴图函数：</a></li>
+            <li><a href="#坐标转换和投影变换函数">坐标转换和投影变换函数：</a></li>
+            <li><a href="#多边形镶嵌工具">多边形镶嵌工具：</a></li>
+            <li><a href="#二次曲面绘制工具">二次曲面绘制工具：</a></li>
+          </ul>
+        </li>
+        <li><a href="#opengl-工具库-glut">OpenGL 工具库 GLUT</a>
+          <ul>
+            <li><a href="#窗口操作函数">窗口操作函数：</a></li>
+            <li><a href="#回调函数">回调函数：</a></li>
+            <li><a href="#创建复杂的三维物体">创建复杂的三维物体：</a></li>
+            <li><a href="#菜单函数">菜单函数：</a></li>
+            <li><a href="#程序运行函数">程序运行函数：</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#入门之线段的绘制">入门之线段的绘制</a>
+      <ul>
+        <li><a href="#函数讲解-----void-gllinestippleglint-factorglshort-pattern">函数讲解&mdash;&ndash;void glLineStipple(GLint factor,GLshort pattern)</a></li>
+        <li><a href="#启用线性插值----glshademodelgl_smooth">启用线性插值&mdash;-glShadeModel(GL_SMOOTH)</a></li>
+      </ul>
+    </li>
+    <li><a href="#几何变换">几何变换</a>
+      <ul>
+        <li><a href="#函数glmatrixmode">函数glMatrixMode（）</a></li>
+        <li><a href="#函数glloadidentity">函数glLoadIdentity()</a></li>
+        <li><a href="#三维中的视角投影">三维中的视角投影</a>
+          <ul>
+            <li><a href="#平行投影">平行投影</a></li>
+            <li><a href="#透视投影">透视投影</a></li>
+          </ul>
+        </li>
+        <li><a href="#函数glortho平行投影">函数glOrtho（），平行投影</a></li>
+        <li><a href="#透视投影glfrustum">透视投影glFrustum（）</a></li>
+        <li><a href="#平移">平移</a></li>
+        <li><a href="#旋转">旋转</a></li>
+        <li><a href="#缩放">缩放</a></li>
+        <li><a href="#观察矩阵入栈与出栈">观察矩阵入栈与出栈</a></li>
+        <li><a href="#关于视图模式下几何变换的矩阵计算顺序非常重要的一个概念">关于视图模式下几何变换的矩阵计算顺序（非常重要的一个概念）</a></li>
+      </ul>
+    </li>
+    <li><a href="#深度测试">深度测试</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="opengl学习">opengl学习</h1>
+<h2 id="安装">安装</h2>
+<p>安装的时候注意系统版本（pip默认下载32位的）</p>
+<p>去官网下载64位的安装包<a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyopengl" target="_blank" rel="noopener noreffer ">链接</a></p>
+<h2 id="基本入门">基本入门</h2>
+<h3 id="opengl-库及函数简介">OpenGL 库及函数简介</h3>
+<p>OpenGL函数的命名格式如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;库前缀&gt;&lt;根命令&gt;&lt;可选的参数个数&gt;&lt;可选的参数类型&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>常见的库前缀</strong>有 gl、glu、glut、aux、wgl、glx、agl 等。库前缀表示该函数属于 OpenGL 哪一个开发库。</p>
+<p><strong>从函数名后面中还可以看出需要多少个参数以及参数的类型。I 代表 int 型，f 代表 float 型，d 代表 double 型，u 代表无符号整型。例如 glColor3f() 表示了该函数属于gl库，参数是三个浮点数。</strong></p>
+<p>OpenGL 函数库相关的 API 有核心库(gl)、实用库(glu)、实用工具库(glut)、辅助库(aux)、窗口库(glx、agl、wgl)和扩展函数库等。gl是核心，glu是对gl的部分封装。glut是为跨平台的OpenGL程序的工具包，比aux功能强大。glx、agl、wgl 是针对不同窗口系统的函数。扩展函数库是硬件厂商为实现硬件更新利用OpenGL的扩展机制开发的函数。本文仅对常用的四个库做简单介绍。</p>
+<h3 id="opengl-核心库-gl">OpenGL 核心库 GL</h3>
+<p>核心库包含有115个函数，函数名的前缀为gl。这部分函数用于常规的、核心的图形处理。此函数由gl.dll来负责解释执行。由于许多函数可以接收不同数以下几类。据类型的参数，因此派生出来的函数原形多达300多个。核心库中的函数主要可以分为以下几类函数：</p>
+<h4 id="绘制基本几何图元的函数">绘制基本几何图元的函数：</h4>
+<p><code>glBegain()、glEnd()、glNormal*()、glVertex*()</code></p>
+<h4 id="矩阵操作几何变换和投影变换的函数">矩阵操作、几何变换和投影变换的函数：</h4>
+<p>如矩阵入栈函数<strong>glPushMatrix</strong>()，矩阵出栈函数<strong>glPopMatrix</strong>()，装载矩阵函数<strong>glLoadMatrix</strong>()，矩阵相乘函数<strong>glMultMatrix</strong>()，当前矩阵函数<strong>glMatrixMode</strong>()和矩阵标准化函数<strong>glLoadIdentity</strong>()，几何变换函数<strong>glTranslate</strong>*()、<strong>glRotate</strong>*()和<strong>glScale</strong>*()，投影变换函数<strong>glOrtho</strong>()、<strong>glFrustum</strong>()和视口变换函数<strong>glViewport</strong>()</p>
+<h4 id="颜色光照和材质的函数">颜色、光照和材质的函数：</h4>
+<p>如设置颜色模式函数glColor*()、glIndex*()，设置光照效果的函数glLight*() 、glLightModel*()和设置材质效果函数glMaterial()</p>
+<h4 id="显示列表函数">显示列表函数：</h4>
+<p>主要有创建、结束、生成、删除和调用显示列表的函数glNewList()、glEndList()、glGenLists()、glCallList()和glDeleteLists()</p>
+<h4 id="纹理映射函数">纹理映射函数：</h4>
+<p>主要有一维纹理函数glTexImage1D()、二维纹理函数glTexImage2D()、设置纹理参数、纹理环境和纹理坐标的函数glTexParameter*()、glTexEnv*()和glTetCoord*()</p>
+<h4 id="特殊效果函数">特殊效果函数：</h4>
+<p>融合函数glBlendFunc()、反走样函数glHint()和雾化效果glFog*()</p>
+<h4 id="光栅化象素操作函数">光栅化、象素操作函数：</h4>
+<p>如象素位置glRasterPos*()、线型宽度glLineWidth()、多边形绘制模式glPolygonMode()，读取象素glReadPixel()、复制象素glCopyPixel()</p>
+<h4 id="选择与反馈函数">选择与反馈函数：</h4>
+<p>主要有渲染模式glRenderMode()、选择缓冲区glSelectBuffer()和反馈缓冲区glFeedbackBuffer()</p>
+<h4 id="曲线与曲面的绘制函数">曲线与曲面的绘制函数：</h4>
+<p>生成曲线或曲面的函数glMap*()、glMapGrid*()，求值器的函数glEvalCoord*() glEvalMesh*()</p>
+<h4 id="状态设置与查询函数">状态设置与查询函数：</h4>
+<p>glGet*()、glEnable()、glGetError()</p>
+<h3 id="opengl-实用库-glu">OpenGL 实用库 GLU</h3>
+<p>包含有43个函数，函数名的前缀为glu。OpenGL提供了强大的但是为数不多的绘图命令，所有较复杂的绘图都必须从点、线、面开始。Glu 为了减轻繁重的编程工作，封装了OpenGL函数，Glu函数通过调用核心库的函数，为开发者提供相对简单的用法，实现一些较为复杂的操作。此函数由glu.dll来负责解释执行。OpenGL中的核心库和实用库可以在所有的OpenGL平台上运行。主要包括了以下几种：</p>
+<h4 id="辅助纹理贴图函数">辅助纹理贴图函数：</h4>
+<p>gluScaleImage() 、gluBuild1Dmipmaps()、gluBuild2Dmipmaps()</p>
+<h4 id="坐标转换和投影变换函数">坐标转换和投影变换函数：</h4>
+<p>定义投影方式函数gluPerspective()、gluOrtho2D() 、gluLookAt()，拾取投影视景体函数gluPickMatrix()，投影矩阵计算gluProject()和gluUnProject()</p>
+<h4 id="多边形镶嵌工具">多边形镶嵌工具：</h4>
+<p>gluNewTess()、gluDeleteTess()、gluTessCallback()、gluBeginPolygon()、gluTessVertex()、gluNextContour()、gluEndPolygon()</p>
+<h4 id="二次曲面绘制工具">二次曲面绘制工具：</h4>
+<p>主要有绘制球面、锥面、柱面、圆环面gluNewQuadric()、gluSphere()、gluCylinder()、gluDisk()、gluPartialDisk()、gluDeleteQuadric()</p>
+<h3 id="opengl-工具库-glut">OpenGL 工具库 GLUT</h3>
+<p>包含大约30多个函数，函数名前缀为glut。glut是不依赖于窗口平台的OpenGL工具包，由Mark KLilgrad在SGI编写（现在在Nvidia），目的是隐藏不同窗口平台API的复杂度。函数以glut开头，它们作为aux库功能更强的替代品，提供更为复杂的绘制功能，此函数由glut.dll来负责解释执行。由于glut中的窗口管理函数是不依赖于运行环境的，因此OpenGL中的工具库可以在X-Window, Windows NT, OS/2等系统下运行，特别适合于开发不需要复杂界面的OpenGL示例程序。对于有经验的程序员来说，一般先用glut理顺3D图形代码，然后再集成为完整的应用程序。这部分函数主要包括：</p>
+<h4 id="窗口操作函数">窗口操作函数：</h4>
+<p>窗口初始化、窗口大小、窗口位置函数等 glutInit()、glutInitDisplayMode()、glutInitWindowSize()、glutInitWindowPosition()</p>
+<h4 id="回调函数">回调函数：</h4>
+<p>响应刷新消息、键盘消息、鼠标消息、定时器函数 GlutDisplayFunc()、glutPostRedisplay()、glutReshapeFunc()、glutTimerFunc()、glutKeyboardFunc()、glutMouseFunc()</p>
+<h4 id="创建复杂的三维物体">创建复杂的三维物体：</h4>
+<p>这些和aux库的函数功能相同</p>
+<h4 id="菜单函数">菜单函数：</h4>
+<p>创建添加菜单的函数 GlutCreateMenu()、glutSetMenu()、glutAddMenuEntry()、glutAddSubMenu() 和 glutAttachMenu()</p>
+<h4 id="程序运行函数">程序运行函数：</h4>
+<p>glutMainLoop()</p>
+<h2 id="入门之线段的绘制">入门之线段的绘制</h2>
+<p><strong>先上代码</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># -*- coding: utf-8 -*-
+</span></span><span class="line"><span class="cl">from OpenGL.GL import *
+</span></span><span class="line"><span class="cl">from OpenGL.GLU import *
+</span></span><span class="line"><span class="cl">from OpenGL.GLUT import *
+</span></span><span class="line"><span class="cl">import numpy as np
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">def init():
+</span></span><span class="line"><span class="cl">    glClearColor(1.0, 1.0, 1.0, 0.0)  # 设置画布背景色。注意：这里必须是4个参数
+</span></span><span class="line"><span class="cl">    # glClear(GL_COLOR_BUFFER_BIT)  # 将上面的颜色赋值给窗口, 只要有这个先后顺序就行
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glMatrixMode(GL_PROJECTION)  #设置投影模式
+</span></span><span class="line"><span class="cl">    gluOrtho2D(0,200,0,200)  # 设置画布x，y的范围
+</span></span><span class="line"><span class="cl">    glDisable(GL_BLEND)  # 关闭颜色混合
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glEnable(GL_LINE_STIPPLE)  #启用线型，可以绘制虚线之类的了
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 绘制图像函数
+</span></span><span class="line"><span class="cl">def drawFunc():
+</span></span><span class="line"><span class="cl">    global x
+</span></span><span class="line"><span class="cl">    global y
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # 清除屏幕
+</span></span><span class="line"><span class="cl">    glClear(GL_COLOR_BUFFER_BIT)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glLineWidth(10.0)  # 设置线的宽度
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glBegin(GL_LINE_STRIP)  # 绘制连续线段
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glColor4f(1.0, 0.0, 0.0, 1.0)        # 设置当前颜色为红色不透明
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    for i in range(len(x)):
+</span></span><span class="line"><span class="cl">        glVertex2f(x[i]*100,y[i])
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glEnd()
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # 刷新显示图像，保证前面的OpenGL命令立即执行，而不是让它们在缓冲区中等待。
+</span></span><span class="line"><span class="cl">    glFlush()
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 主函数
+</span></span><span class="line"><span class="cl">if __name__ == &#34;__main__&#34;:
+</span></span><span class="line"><span class="cl">    # 使用glut库初始化OpenGL
+</span></span><span class="line"><span class="cl">    glutInit()
+</span></span><span class="line"><span class="cl">    # 显示模式 GLUT_SINGLE无缓冲直接显示|GLUT_RGBA采用RGB(A非alpha)
+</span></span><span class="line"><span class="cl">    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA)
+</span></span><span class="line"><span class="cl">    # 设置窗口位置及大小
+</span></span><span class="line"><span class="cl">    glutInitWindowPosition(0, 0)  # 位置是指在屏幕的位置
+</span></span><span class="line"><span class="cl">    glutInitWindowSize(400, 400)
+</span></span><span class="line"><span class="cl">    # 创建窗口
+</span></span><span class="line"><span class="cl">    glutCreateWindow(&#34;myTest1&#34;)
+</span></span><span class="line"><span class="cl">    global x
+</span></span><span class="line"><span class="cl">    global y
+</span></span><span class="line"><span class="cl">    x = np.linspace(0,2* np.pi,num=1000)
+</span></span><span class="line"><span class="cl">    y = np.sin(x)* 200
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    init()
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # 调用display()函数绘制图像
+</span></span><span class="line"><span class="cl">    glutDisplayFunc(drawFunc)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # 进入glut主循环
+</span></span><span class="line"><span class="cl">    glutMainLoop()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="函数讲解-----void-gllinestippleglint-factorglshort-pattern">函数讲解&mdash;&ndash;void glLineStipple(GLint factor,GLshort pattern)</h3>
+<p>这是用来设置线型的。</p>
+<p>**从这个模式的低位开始，**一个像素一个像素的进行处理。如果模式中对应的位是1，就绘制这个像素，否则就不绘制。模式可以使用factor参数（表示重复因子）进行扩展，它与1和0的连续子序列相乘。因此，如果模式中出现了3个1，并且factor是2，那么它们就扩展为6个连续的1。必须以GL_LINE_STIPPLE为参数调用glEnable()才能启用直线点画功能。为了禁用直线点画功能，可以向glDisable()函数传递同一个参数。</p>
+<p>例如：</p>
+<p><strong>glLineStipple(1, 0x3F07);</strong></p>
+<p>glEnable(GL_LINE_STIPPLE);  //启用线型</p>
+<p>此时模式为Ox3F07（二进制形式为0011111100000111）<strong>低位开始，从右往左</strong>，它所画出来的直线是这样的：先连续绘制3个像素，然后连续5个像素留空，再连续绘制6个像素，最后两个像素留空（注意，首先是从低位开始的）。如果factor是2，那么这个模式便被扩展为：先连续绘制6个像素，然后连续10个像素留空，再连续绘制12个像素，最后4个像素留空。</p>
+<p>如果没有启用点画线功能，OpenGL会自动把pattern当做为OxFFFF，把factor当成1。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># -*- coding: utf-8 -*-
+</span></span><span class="line"><span class="cl">from OpenGL.GL import *
+</span></span><span class="line"><span class="cl">from OpenGL.GLU import *
+</span></span><span class="line"><span class="cl">from OpenGL.GLUT import *
+</span></span><span class="line"><span class="cl">import numpy as np
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">def init():
+</span></span><span class="line"><span class="cl">    glClearColor(1.0, 1.0, 1.0, 0.0)  # 设置画布背景色。注意：这里必须是4个参数
+</span></span><span class="line"><span class="cl">    # glClear(GL_COLOR_BUFFER_BIT)  # 将上面的颜色赋值给窗口, 只要有这个先后顺序就行
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glMatrixMode(GL_PROJECTION)  #设置投影模式
+</span></span><span class="line"><span class="cl">    gluOrtho2D(0,200,0,200)  # 设置画布x，y的范围
+</span></span><span class="line"><span class="cl">    glDisable(GL_BLEND)  # 关闭颜色混合
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glEnable(GL_LINE_STIPPLE)  #启用线型，可以绘制虚线之类的了
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 绘制图像函数
+</span></span><span class="line"><span class="cl">def drawFunc():
+</span></span><span class="line"><span class="cl">    global x
+</span></span><span class="line"><span class="cl">    global y
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # 清除屏幕
+</span></span><span class="line"><span class="cl">    glClear(GL_COLOR_BUFFER_BIT)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glLineWidth(3.0)  # 设置线的宽度
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glLineStipple(1, 0xFFFF);  # 设置线型,直线
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glBegin(GL_LINE_STRIP)  # 绘制连续线段
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glColor4f(1.0, 0.0, 0.0, 1.0)        # 设置当前颜色为红色不透明
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    for i in range(len(x)):
+</span></span><span class="line"><span class="cl">        glVertex2f(x[i]*100,y[i])
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glEnd()
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glLineStipple(1, 0x00FF);  # 设置线型,虚线
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glBegin(GL_LINE_STRIP)  # 绘制连续线段
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glColor4f(0.0, 1.0, 0.0, 1.0)        # 设置当前颜色为红色不透明
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    for i in range(len(x)):
+</span></span><span class="line"><span class="cl">        glVertex2f(x[i]*100,y[i] -20)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glEnd()
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # 刷新显示图像，保证前面的OpenGL命令立即执行，而不是让它们在缓冲区中等待。
+</span></span><span class="line"><span class="cl">    glFlush()
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 主函数
+</span></span><span class="line"><span class="cl">if __name__ == &#34;__main__&#34;:
+</span></span><span class="line"><span class="cl">    # 使用glut库初始化OpenGL
+</span></span><span class="line"><span class="cl">    glutInit()
+</span></span><span class="line"><span class="cl">    # 显示模式 GLUT_SINGLE无缓冲直接显示|GLUT_RGBA采用RGB(A非alpha)
+</span></span><span class="line"><span class="cl">    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA)
+</span></span><span class="line"><span class="cl">    # 设置窗口位置及大小
+</span></span><span class="line"><span class="cl">    glutInitWindowPosition(0, 0)  # 位置是指在屏幕的位置
+</span></span><span class="line"><span class="cl">    glutInitWindowSize(400, 400)
+</span></span><span class="line"><span class="cl">    # 创建窗口
+</span></span><span class="line"><span class="cl">    glutCreateWindow(&#34;myTest1&#34;)
+</span></span><span class="line"><span class="cl">    global x
+</span></span><span class="line"><span class="cl">    global y
+</span></span><span class="line"><span class="cl">    x = np.linspace(0,2* np.pi,num=1000)
+</span></span><span class="line"><span class="cl">    y = np.sin(x)* 200
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    init()
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # 调用display()函数绘制图像
+</span></span><span class="line"><span class="cl">    glutDisplayFunc(drawFunc)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # 进入glut主循环
+</span></span><span class="line"><span class="cl">    glutMainLoop()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="启用线性插值----glshademodelgl_smooth">启用线性插值&mdash;-glShadeModel(GL_SMOOTH)</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># -*- coding: utf-8 -*-
+</span></span><span class="line"><span class="cl">from OpenGL.GL import *
+</span></span><span class="line"><span class="cl">from OpenGL.GLU import *
+</span></span><span class="line"><span class="cl">from OpenGL.GLUT import *
+</span></span><span class="line"><span class="cl">import numpy as np
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">def init():
+</span></span><span class="line"><span class="cl">    glClearColor(1.0, 1.0, 1.0, 0.0)  # 设置画布背景色。注意：这里必须是4个参数
+</span></span><span class="line"><span class="cl">    # glClear(GL_COLOR_BUFFER_BIT)  # 将上面的颜色赋值给窗口, 只要有这个先后顺序就行
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glMatrixMode(GL_PROJECTION)  #设置投影模式
+</span></span><span class="line"><span class="cl">    gluOrtho2D(0,200,0,200)  # 设置画布x，y的范围
+</span></span><span class="line"><span class="cl">    glDisable(GL_BLEND)  # 关闭颜色混合
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glEnable(GL_LINE_STIPPLE)  #启用线型，可以绘制虚线之类的了
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 绘制图像函数
+</span></span><span class="line"><span class="cl">def drawFunc():
+</span></span><span class="line"><span class="cl">    global x
+</span></span><span class="line"><span class="cl">    global y
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # 清除屏幕
+</span></span><span class="line"><span class="cl">    glClear(GL_COLOR_BUFFER_BIT)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glLineWidth(3.0)  # 设置线的宽度
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glLineStipple(1, 0xFFFF);  # 设置线型,直线
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glShadeModel(GL_SMOOTH)  # 开启对颜色的线性插值
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glBegin(GL_LINE_STRIP)  # 绘制连续线段
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    for i in range(len(x)):
+</span></span><span class="line"><span class="cl">        glColor4f(0.0,  i /len(x), i /len(x), 1.0)  # 设置当前颜色,渐变
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        glVertex2f(x[i]*100,y[i])
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glEnd()
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # 刷新显示图像，保证前面的OpenGL命令立即执行，而不是让它们在缓冲区中等待。
+</span></span><span class="line"><span class="cl">    glFlush()
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 主函数
+</span></span><span class="line"><span class="cl">if __name__ == &#34;__main__&#34;:
+</span></span><span class="line"><span class="cl">    # 使用glut库初始化OpenGL
+</span></span><span class="line"><span class="cl">    glutInit()
+</span></span><span class="line"><span class="cl">    # 显示模式 GLUT_SINGLE无缓冲直接显示|GLUT_RGBA采用RGB(A非alpha)
+</span></span><span class="line"><span class="cl">    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA)
+</span></span><span class="line"><span class="cl">    # 设置窗口位置及大小
+</span></span><span class="line"><span class="cl">    glutInitWindowPosition(0, 0)  # 位置是指在屏幕的位置
+</span></span><span class="line"><span class="cl">    glutInitWindowSize(400, 400)
+</span></span><span class="line"><span class="cl">    # 创建窗口
+</span></span><span class="line"><span class="cl">    glutCreateWindow(&#34;myTest1&#34;)
+</span></span><span class="line"><span class="cl">    global x
+</span></span><span class="line"><span class="cl">    global y
+</span></span><span class="line"><span class="cl">    x = np.linspace(0,0.5* np.pi,num=1000)
+</span></span><span class="line"><span class="cl">    y = np.sin(x)* 200
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    init()
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # 调用display()函数绘制图像
+</span></span><span class="line"><span class="cl">    glutDisplayFunc(drawFunc)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # 进入glut主循环
+</span></span><span class="line"><span class="cl">    glutMainLoop()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="几何变换">几何变换</h2>
+<p><strong>几何变换本质是仿射变换</strong>，二维与三位基本原理一样，这里不多赘述</p>
+<h3 id="函数glmatrixmode">函数glMatrixMode（）</h3>
+<p><strong>这个函数其实就是对接下来要做什么进行一下声明</strong>，也就是在要做下一步之前告诉计算机我要对“什么”进行操作了，这个“什么”在glMatrixMode的“()”里的选项(参数)有**，GL_PROJECTION，GL_MODELVIEW和GL_TEXTURE；**</p>
+<p><strong>详细说明</strong></p>
+<ul>
+<li><strong>GL_PROJECTION</strong>： 这个是投影的意思，就是要对投影相关进行操作，也就是把物体投影到一个平面上，就像我们照相一样，把3维物体投到2维的平面上。这样，接下来的语句可以是跟透视相关的函数，比如glFrustum()或gluPerspective()；</li>
+<li><strong>GL_MODELVIEW</strong>：对模型视景的操作，接下来的语句描绘一个以模型为基础的适应，这样来设置参数，接下来用到的就是像gluLookAt()这样的函数；</li>
+<li>**GL_TEXTURE：**对纹理相关进行操作</li>
+</ul>
+<h3 id="函数glloadidentity">函数glLoadIdentity()</h3>
+<p><strong>恢复初始坐标系的手段</strong>：该命令是一个无参的无值函数，其功能是用一个4×4的单位矩阵来替换当前矩阵，实际上就是对当前矩阵进行初始化。也就是说，无论以前进行了多少次矩阵变换，在该命令执行后，<strong>当前矩阵均恢复成一个单位矩阵，即相当于没有进行任何矩阵变换状态</strong></p>
+<h3 id="三维中的视角投影">三维中的视角投影</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/2bd5871a9ea36305f229d33e7fce0249.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/2bd5871a9ea36305f229d33e7fce0249.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/2bd5871a9ea36305f229d33e7fce0249.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/2bd5871a9ea36305f229d33e7fce0249.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/2bd5871a9ea36305f229d33e7fce0249.png"
+        title="refs/heads/master/image-20210518184712038" /></p>
+<p>以上是书里面的形容整个工作流程的段内容。</p>
+<p><strong>分为</strong></p>
+<h4 id="平行投影">平行投影</h4>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/aaad111715f70823468838cf88c35170.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/aaad111715f70823468838cf88c35170.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/aaad111715f70823468838cf88c35170.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/aaad111715f70823468838cf88c35170.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/aaad111715f70823468838cf88c35170.png"
+        title="refs/heads/master/image-20210518184935113" /></p>
+<h4 id="透视投影">透视投影</h4>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/8a3bd973ffe2ac8c068f08991049c9cc.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/8a3bd973ffe2ac8c068f08991049c9cc.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/8a3bd973ffe2ac8c068f08991049c9cc.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/8a3bd973ffe2ac8c068f08991049c9cc.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/8a3bd973ffe2ac8c068f08991049c9cc.png"
+        title="refs/heads/master/image-20210518185003943" /></p>
+<h3 id="函数glortho平行投影">函数glOrtho（），平行投影</h3>
+<p>类似二维的<strong>gluOrtho2D（）</strong></p>
+<p><strong>创建一个正交平行的视景体</strong>。 一般用于物体不会因为离屏幕的远近而产生大小的变换的情况</p>
+<p>例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    glOrtho(-1,1,-1,1,-1,1)  # 设置视景体
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>视景体</strong>:其实就是能够显示观察的范围。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/7643708a27e6261d9b70051c8e95ce8e.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/7643708a27e6261d9b70051c8e95ce8e.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/7643708a27e6261d9b70051c8e95ce8e.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/7643708a27e6261d9b70051c8e95ce8e.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/7643708a27e6261d9b70051c8e95ce8e.png"
+        title="refs/heads/master/image-20210518144514464" /></p>
+<h3 id="透视投影glfrustum">透视投影glFrustum（）</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/904bbc990c9db4365238a63447a0e86a.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/904bbc990c9db4365238a63447a0e86a.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/904bbc990c9db4365238a63447a0e86a.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/904bbc990c9db4365238a63447a0e86a.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/904bbc990c9db4365238a63447a0e86a.png"
+        title="refs/heads/master/image-20210518185229062" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/b9ac18501c9d20195467de23bb84a669.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/b9ac18501c9d20195467de23bb84a669.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/b9ac18501c9d20195467de23bb84a669.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/b9ac18501c9d20195467de23bb84a669.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/b9ac18501c9d20195467de23bb84a669.png"
+        title="refs/heads/master/image-20210518144522692" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    # 使用前的基本设置
+</span></span><span class="line"><span class="cl">    glMatrixMode(GL_MODELVIEW)  #设置投影模式
+</span></span><span class="line"><span class="cl">    gluLookAt(0,0,0,  #相机在世界坐标的位置
+</span></span><span class="line"><span class="cl">              0,0,1,  #相机镜头对准的物体在世界坐标的位置！！！！！！，这里是物体的位置
+</span></span><span class="line"><span class="cl">              1,0,0  #相机向上的方向在世界坐标中的方向
+</span></span><span class="line"><span class="cl">              )
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glMatrixMode(GL_PROJECTION)  #设置投影模式
+</span></span><span class="line"><span class="cl">    # 设置投影变换视景体参数
+</span></span><span class="line"><span class="cl">    glFrustum(-1,1,-1,1, 0.3,2)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>绘制图形</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    glColor4f(1,0,0,1)
+</span></span><span class="line"><span class="cl">    drawCircle(0,0,100,0.5,z=0.5)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glColor4f(0,0,1,1)
+</span></span><span class="line"><span class="cl">    drawCircle(0,0,100, 1, z=0.9)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这两个圆半径相差一倍，但是使用透视投影，第一个能遮住第二个半</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/8b057e7b32a39c34754518dd487d8aa9.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/8b057e7b32a39c34754518dd487d8aa9.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/8b057e7b32a39c34754518dd487d8aa9.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/8b057e7b32a39c34754518dd487d8aa9.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/8b057e7b32a39c34754518dd487d8aa9.png"
+        title="refs/heads/master/image-20210518191339617" /></p>
+<p><strong>果然</strong></p>
+<h3 id="平移">平移</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    glTranslatef(0.5, 0.0, 0)  # 沿着x轴平移0.5
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="旋转">旋转</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    glPushMatrix()  # 观察矩阵入栈
+</span></span><span class="line"><span class="cl">    glRotate(90,0,0,1)  # 围绕y轴旋转90度
+</span></span><span class="line"><span class="cl">    drawTriangle(0)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glPopMatrix()  # 观察矩阵出栈，相当于回复初始矩阵了
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="缩放">缩放</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    glPushMatrix()  # 观察矩阵入栈
+</span></span><span class="line"><span class="cl">    glScale(0.5,0.5,0.5)  # 缩放到一半
+</span></span><span class="line"><span class="cl">    drawTriangle(0)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    glPopMatrix()  # 观察矩阵出栈，相当于回复初始矩阵了
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="观察矩阵入栈与出栈">观察矩阵入栈与出栈</h3>
+<p>物体的显示是有经过观察矩阵变换的</p>
+<p>当你做了一些移动或旋转等变换后，使用<strong>glPushMatrix</strong>(); <strong>观察矩阵入栈</strong>
+OpenGL 会把这个变换后的位置和角度保存起来。
+然后你再随便做第二次移动或旋转变换，再用<strong>glPopMatrix</strong>();<strong>观察矩阵出栈</strong>
+OpenGL 就把刚刚保存的那个位置和角度恢复。</p>
+<h3 id="关于视图模式下几何变换的矩阵计算顺序非常重要的一个概念">关于视图模式下几何变换的矩阵计算顺序（非常重要的一个概念）</h3>
+<p><strong>是类似栈一样执行的</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">     # 从点(x0,y0,0)绕方向（0，0，1）旋转theta度
+</span></span><span class="line"><span class="cl">    glTranslatef(x0,y0,0)                   M1
+</span></span><span class="line"><span class="cl">    glRotate(theta ,0,0,1)  # 围绕y轴旋转90度 M2
+</span></span><span class="line"><span class="cl">    glTranslatef(-1*x0,-1*y0,0)  			M3
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对于接下来要绘制的图形而言，实际上，应该是</p>
+<p>$$x^{,} = M1 \cdot M2 \cdot M3 \cdot x$$</p>
+<p>这个在很多时候都非常重要</p>
+<h2 id="深度测试">深度测试</h2>
+<p><strong>深度缓冲(Depth Buffer)</strong>,以防止被其他面遮挡的面渲染到前面。使用函数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    glEnable(GL_DEPTH_TEST)  # 深度测试
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>实验</strong></p>
+<p>我们同时绘制两个z轴不同的图形</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    drawTriangle(0)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    drawCircle(0,0,100, 0.9)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>没开之前</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/608838dede0d258a81ea1275d665c5d4.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/608838dede0d258a81ea1275d665c5d4.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/608838dede0d258a81ea1275d665c5d4.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/608838dede0d258a81ea1275d665c5d4.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/608838dede0d258a81ea1275d665c5d4.png"
+        title="refs/heads/master/image-20210518150145147" /></p>
+<p>不难看出，三角形被后来绘制的圆形给挡住了。</p>
+<p><strong>开启深度测试</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/44bf7ade0b6a45d6c0b07e2390dcdc67.png"
+        data-srcset="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/44bf7ade0b6a45d6c0b07e2390dcdc67.png, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/44bf7ade0b6a45d6c0b07e2390dcdc67.png 1.5x, https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/44bf7ade0b6a45d6c0b07e2390dcdc67.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/7974510d81a8f068b3b3d3e0ac238580/44bf7ade0b6a45d6c0b07e2390dcdc67.png"
+        title="refs/heads/master/image-20210518150228027" /></p>
+<p><strong>没毛病</strong></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-01-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/opengl%E5%AD%A6%E4%B9%A0/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://kengerlwl.github.io/opengl%E5%AD%A6%E4%B9%A0/" data-title="opengl学习" data-hashtags="OpenGL"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://kengerlwl.github.io/opengl%E5%AD%A6%E4%B9%A0/" data-hashtag="OpenGL"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://kengerlwl.github.io/opengl%E5%AD%A6%E4%B9%A0/" data-title="opengl学习"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://kengerlwl.github.io/opengl%E5%AD%A6%E4%B9%A0/" data-title="opengl学习"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://kengerlwl.github.io/opengl%E5%AD%A6%E4%B9%A0/" data-title="opengl学习"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/opengl/">OpenGL</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/openwrt-docker%E6%97%81%E8%B7%AF%E7%94%B1/" class="prev" rel="prev" title="openwrt docker旁路由"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>openwrt docker旁路由</a>
+            <a href="/nginx%E9%85%8D%E7%BD%AE/" class="next" rel="next" title="Nginx配置">Nginx配置<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.132.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kengerlwl.github.io/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"JCTYUNKA9R","algoliaIndex":"kenger","algoliaSearchKey":"3ef68664495033362b7df9cf5a3eee1e","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

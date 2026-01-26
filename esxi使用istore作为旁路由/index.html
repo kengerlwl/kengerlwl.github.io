@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>esxi使用istore作为旁路由 - Kenger`s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://kengerlwl.github.io/esxi%E4%BD%BF%E7%94%A8istore%E4%BD%9C%E4%B8%BA%E6%97%81%E8%B7%AF%E7%94%B1/">
+  <meta property="og:site_name" content="Kenger`s Blog">
+  <meta property="og:title" content="esxi使用istore作为旁路由">
+  <meta property="og:description" content="为什么istore 因为istore提供直接的iso镜像文件，方便esxi直接安装。 并且也是基于openwrt该的，大部分的使用习惯是一致的 how">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-03-21T15:27:31+00:00">
+    <meta property="article:modified_time" content="2023-03-21T15:27:31+00:00">
+    <meta property="article:tag" content="Istore">
+    <meta property="article:tag" content="代理">
+    <meta property="article:tag" content="旁路由">
+    <meta property="og:image" content="https://kengerlwl.github.io/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kengerlwl.github.io/logo.png">
+  <meta name="twitter:title" content="esxi使用istore作为旁路由">
+  <meta name="twitter:description" content="为什么istore 因为istore提供直接的iso镜像文件，方便esxi直接安装。 并且也是基于openwrt该的，大部分的使用习惯是一致的 how">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://kengerlwl.github.io/esxi%E4%BD%BF%E7%94%A8istore%E4%BD%9C%E4%B8%BA%E6%97%81%E8%B7%AF%E7%94%B1/" /><link rel="prev" href="https://kengerlwl.github.io/linux%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/" /><link rel="next" href="https://kengerlwl.github.io/vmware-esxi-%E5%A6%82%E4%BD%95%E5%A4%87%E4%BB%BD%E8%BF%81%E7%A7%BB%E7%B3%BB%E7%BB%9F/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "esxi使用istore作为旁路由",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/kengerlwl.github.io\/esxi%E4%BD%BF%E7%94%A8istore%E4%BD%9C%E4%B8%BA%E6%97%81%E8%B7%AF%E7%94%B1\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/kengerlwl.github.io\/images\/4.jpg",
+                            "width":  1280 ,
+                            "height":  720 
+                        }],"genre": "posts","keywords": "istore, 代理, 旁路由","wordcount":  1181 ,
+        "url": "https:\/\/kengerlwl.github.io\/esxi%E4%BD%BF%E7%94%A8istore%E4%BD%9C%E4%B8%BA%E6%97%81%E8%B7%AF%E7%94%B1\/","datePublished": "2023-03-21T15:27:31+00:00","dateModified": "2023-03-21T15:27:31+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "kenger","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/kengerlwl.github.io\/images\/avatar.png",
+                    "width":  1080 ,
+                    "height":  1080 
+                }},"author": {
+                "@type": "Person",
+                "name": "kenger"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/esxi%E4%BD%BF%E7%94%A8istore%E4%BD%9C%E4%B8%BA%E6%97%81%E8%B7%AF%E7%94%B1/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kenger`s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://kengerlwl.github.io/favicon-16x16.ico"
+        data-srcset="https://kengerlwl.github.io/favicon-16x16.ico, https://kengerlwl.github.io/favicon-16x16.ico 1.5x, https://kengerlwl.github.io/favicon-16x16.ico 2x"
+        data-sizes="auto"
+        alt="https://kengerlwl.github.io/favicon-16x16.ico"
+        title="https://kengerlwl.github.io/favicon-16x16.ico" /><span class="header-title-pre"> <i class='far' aria-hidden='true'></i></span>Kenger`s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/kengerlwl/kengerlwl.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/esxi%E4%BD%BF%E7%94%A8istore%E4%BD%9C%E4%B8%BA%E6%97%81%E8%B7%AF%E7%94%B1/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">esxi使用istore作为旁路由</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kengerlwl.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kenger</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E4%BB%A3%E7%90%86/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>代理</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-21">2023-03-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1181 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#首先esxi直接安装iso">首先esxi直接安装ISO</a></li>
+    <li><a href="#坑1-------记得将镜像写入存储">坑1&mdash;&mdash;-记得将镜像写入存储</a>
+      <ul>
+        <li><a href="#1先上传img镜像">1.先上传img镜像</a></li>
+        <li><a href="#2写入目标镜像">2.写入目标镜像</a></li>
+        <li><a href="#3然后esxi控制拔出u盘">3.然后esxi控制拔出u盘</a></li>
+      </ul>
+    </li>
+    <li><a href="#更改路由器ip">更改路由器ip</a>
+      <ul>
+        <li><a href="#更改旁路由lan为主路由的同一网段">更改旁路由lan为主路由的同一网段</a></li>
+        <li><a href="#配置istore">配置istore</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="为什么istore">为什么istore</h1>
+<ul>
+<li>
+<p>因为istore提供直接的iso镜像文件，方便esxi直接安装。</p>
+</li>
+<li>
+<p>并且也是基于openwrt该的，大部分的使用习惯是一致的</p>
+</li>
+</ul>
+<h1 id="how">how</h1>
+<h2 id="首先esxi直接安装iso">首先esxi直接安装ISO</h2>
+<ul>
+<li>cpu，内存都不需要很高</li>
+<li>cpu：2</li>
+<li>内存：2g</li>
+<li>存储：8g</li>
+<li>网卡：建议直通</li>
+</ul>
+<h2 id="坑1-------记得将镜像写入存储">坑1&mdash;&mdash;-记得将镜像写入存储</h2>
+<p>由于我这里<strong>选择得我是ISO文件启动，所以只是相当于U盘启动了</strong>，拔掉U盘就啥也没有了，想要实现正常效果，就需要写入。</p>
+<h3 id="1先上传img镜像">1.先上传img镜像</h3>
+<p>可以直接将img文件通过Web界面上传到系统中</p>
+<p>也可以通过scp的方式来上传</p>
+<h3 id="2写入目标镜像">2.写入目标镜像</h3>
+<p>举例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">dd if=/dev/zero of=/dev/sda     #格式化磁盘
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">dd if=/cdrom/op.img of=/dev/sda   #将img文件写入到硬盘中
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/cdrom/op.img是镜像的位置（如果你将镜像上传在了/opt/openwrt.img这里就改为/opt/openwrt.img）
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>确定完成以后，重启系统将U盘拔出即可</p>
+<h3 id="3然后esxi控制拔出u盘">3.然后esxi控制拔出u盘</h3>
+<p>启动</p>
+<h2 id="更改路由器ip">更改路由器ip</h2>
+<h3 id="更改旁路由lan为主路由的同一网段">更改旁路由lan为主路由的同一网段</h3>
+<p><code>vi /etc/config/network</code></p>
+<p><a href="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/5983908472625ebc769d6753cd4062a4/4e4db73fbc922244899f840ce1fcc74b.png" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://qnam.smzdm.com/202205/07/62761ff381ca43592.png_e1080.jpg"
+        data-srcset="https://qnam.smzdm.com/202205/07/62761ff381ca43592.png_e1080.jpg, https://qnam.smzdm.com/202205/07/62761ff381ca43592.png_e1080.jpg 1.5x, https://qnam.smzdm.com/202205/07/62761ff381ca43592.png_e1080.jpg 2x"
+        data-sizes="auto"
+        alt="https://qnam.smzdm.com/202205/07/62761ff381ca43592.png_e1080.jpg"
+        title="最强软路由系统iStoreOS_X86安装体验，极简化设置、一键旁路由、小白强烈推荐" /></a></p>
+<p>更改ip和mask到主路由同一网段，方便在主路由网段进行访问。</p>
+<h3 id="配置istore">配置istore</h3>
+<p>然后就可以根据更改后的旁路由ip进行访问了。</p>
+<p>也可以安装一下其他的插件</p>
+<p>1、不同于其他openwrt的复杂配置。 iStoreOS进行了深度定制，在某些基础功能上都有对小白极其友好的向导设置，点击网络向导。</p>
+<p><a href="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/5983908472625ebc769d6753cd4062a4/cedc20c4e21949b386304e70c4ad0ec9.png" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://qnam.smzdm.com/202205/07/62761ff410d712913.png_e1080.jpg"
+        data-srcset="https://qnam.smzdm.com/202205/07/62761ff410d712913.png_e1080.jpg, https://qnam.smzdm.com/202205/07/62761ff410d712913.png_e1080.jpg 1.5x, https://qnam.smzdm.com/202205/07/62761ff410d712913.png_e1080.jpg 2x"
+        data-sizes="auto"
+        alt="https://qnam.smzdm.com/202205/07/62761ff410d712913.png_e1080.jpg"
+        title="最强软路由系统iStoreOS_X86安装体验，极简化设置、一键旁路由、小白强烈推荐" /></a></p>
+<p>2、根据自身需求选择配置，我这里选择配置为旁路由。</p>
+<p><a href="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/5983908472625ebc769d6753cd4062a4/bd50cb647804ee660a3e10a69502b3ba.png" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://qnam.smzdm.com/202205/07/62761ff4341e22968.png_e1080.jpg"
+        data-srcset="https://qnam.smzdm.com/202205/07/62761ff4341e22968.png_e1080.jpg, https://qnam.smzdm.com/202205/07/62761ff4341e22968.png_e1080.jpg 1.5x, https://qnam.smzdm.com/202205/07/62761ff4341e22968.png_e1080.jpg 2x"
+        data-sizes="auto"
+        alt="https://qnam.smzdm.com/202205/07/62761ff4341e22968.png_e1080.jpg"
+        title="最强软路由系统iStoreOS_X86安装体验，极简化设置、一键旁路由、小白强烈推荐" /></a></p>
+<p>3、进入旁路由配置选项，只需要修改两个选项，将ip地址修改为旁路由登录ip，网管地址修改为主路由ip，根据自身需要选择是否关闭旁路由dhcp功能，我这里选择关闭，点击保存配置。</p>
+<p><a href="https://raw.githubusercontent.com/kengerlwl/kengerlwl.github.io/refs/heads/master/image/5983908472625ebc769d6753cd4062a4/e09ffad009cb129455cfc0b25597495b.png" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://qnam.smzdm.com/202205/07/62761ff431d787474.png_e1080.jpg"
+        data-srcset="https://qnam.smzdm.com/202205/07/62761ff431d787474.png_e1080.jpg, https://qnam.smzdm.com/202205/07/62761ff431d787474.png_e1080.jpg 1.5x, https://qnam.smzdm.com/202205/07/62761ff431d787474.png_e1080.jpg 2x"
+        data-sizes="auto"
+        alt="https://qnam.smzdm.com/202205/07/62761ff431d787474.png_e1080.jpg"
+        title="最强软路由系统iStoreOS_X86安装体验，极简化设置、一键旁路由、小白强烈推荐" /></a></p>
+<h1 id="坑2">坑2</h1>
+<p>istore暂停挂起后，好像会失效，建议重启解决。</p>
+<h1 id="坑3------dns配置要注意">坑3&mdash;&mdash;DNS配置要注意</h1>
+<p>对于旁路由，如果不正确配置其DNS，可能会导致旁路由下的设备会使用不了不分域名解析。</p>
+<p><strong>正确的思路：</strong></p>
+<p>我的主路由ip：<code>10.10.10.10</code></p>
+<p>我的旁路由ip：<code>10.10.100.1</code></p>
+<p>配置文件为：<strong>/etc/resolv.conf</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">search lan
+</span></span><span class="line"><span class="cl">nameserver 10.10.10.10
+</span></span><span class="line"><span class="cl">nameserver 8.8.8.8
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>解释：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cat /etc/resolv.conf
+</span></span><span class="line"><span class="cl">domain  51osos.com
+</span></span><span class="line"><span class="cl">search  www.51osos.com  51osos.com
+</span></span><span class="line"><span class="cl">nameserver 202.102.192.68
+</span></span><span class="line"><span class="cl">nameserver 202.102.192.69
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>1）nameserver：表示域名解析时，使用该地址指定的主机为域名服务器，其中域名服务器是按照文件中出现的顺序来查询的，且<strong>只有当第一个nameserver没有反应时才查询下面的nameserver</strong>。
+2）domain：声明主机的域名，很多程序会用到，如邮件系统。当为没有域名的主机进行DNS查询时，也要用到。如果没有域名，主机名将被使用，删除所有在第一个点(.)前面的内容。
+3）search：它的多个参数指明域名查询顺序，当要查询没有域名的主机，主机将在由search声明的域中分别查找。
+<strong>注意：search和domain不能共存，如果同时存在，后面出现的将会被使用。</strong></p>
+<p>总之一句话，istore，做旁路由有较大风险干扰主路由，建议试试用openwrt</p>
+<h1 id="ref">ref</h1>
+<p><a href="https://post.smzdm.com/p/a0qrvdgw/" target="_blank" rel="noopener noreffer ">https://post.smzdm.com/p/a0qrvdgw/</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-03-21</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/esxi%E4%BD%BF%E7%94%A8istore%E4%BD%9C%E4%B8%BA%E6%97%81%E8%B7%AF%E7%94%B1/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://kengerlwl.github.io/esxi%E4%BD%BF%E7%94%A8istore%E4%BD%9C%E4%B8%BA%E6%97%81%E8%B7%AF%E7%94%B1/" data-title="esxi使用istore作为旁路由" data-hashtags="istore,代理,旁路由"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://kengerlwl.github.io/esxi%E4%BD%BF%E7%94%A8istore%E4%BD%9C%E4%B8%BA%E6%97%81%E8%B7%AF%E7%94%B1/" data-hashtag="istore"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://kengerlwl.github.io/esxi%E4%BD%BF%E7%94%A8istore%E4%BD%9C%E4%B8%BA%E6%97%81%E8%B7%AF%E7%94%B1/" data-title="esxi使用istore作为旁路由"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://kengerlwl.github.io/esxi%E4%BD%BF%E7%94%A8istore%E4%BD%9C%E4%B8%BA%E6%97%81%E8%B7%AF%E7%94%B1/" data-title="esxi使用istore作为旁路由"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://kengerlwl.github.io/esxi%E4%BD%BF%E7%94%A8istore%E4%BD%9C%E4%B8%BA%E6%97%81%E8%B7%AF%E7%94%B1/" data-title="esxi使用istore作为旁路由"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/istore/">Istore</a>,&nbsp;<a href="/tags/%E4%BB%A3%E7%90%86/">代理</a>,&nbsp;<a href="/tags/%E6%97%81%E8%B7%AF%E7%94%B1/">旁路由</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/linux%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/" class="prev" rel="prev" title="linux文件权限管理"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>linux文件权限管理</a>
+            <a href="/vmware-esxi-%E5%A6%82%E4%BD%95%E5%A4%87%E4%BB%BD%E8%BF%81%E7%A7%BB%E7%B3%BB%E7%BB%9F/" class="next" rel="next" title="VMWare ESXi 如何备份迁移系统">VMWare ESXi 如何备份迁移系统<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.132.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kengerlwl.github.io/" target="_blank">kenger</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOFA4dBM4Ce_0B","darkTheme":"github-dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"github-light","mapping":"pathname","reactionsEnabled":"1","repo":"kengerlwl/kengerlwl.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzMzY0NjkyNTI="}},"search":{"algoliaAppID":"JCTYUNKA9R","algoliaIndex":"kenger","algoliaSearchKey":"3ef68664495033362b7df9cf5a3eee1e","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

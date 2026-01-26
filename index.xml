@@ -1,0 +1,90 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/</link>
+        <description>Hugo theme - LoveIt</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 25 Jan 2026 15:27:31 &#43;0000</lastBuildDate>
+            <atom:link href="https://kengerlwl.github.io/index.xml" rel="self" type="application/rss+xml" />
+        <item>
+    <title>Clash Verge 内网域名 &#43; 代理共存配置指南</title>
+    <link>https://kengerlwl.github.io/clash%E5%86%85%E7%BD%91%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/</link>
+    <pubDate>Sun, 25 Jan 2026 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/clash%E5%86%85%E7%BD%91%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/</guid>
+    <description><![CDATA[Clash Verge 内网域名 + 代理共存配置指南 问题场景 公司内网有自部署域名（如 *.tencent.com），需要通过内网 DNS 解析并直连访问；同时需要代理访问外]]></description>
+</item>
+<item>
+    <title>大模型缓存命中原理</title>
+    <link>https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%BC%93%E5%AD%98%E5%91%BD%E4%B8%AD%E5%8E%9F%E7%90%86/</link>
+    <pubDate>Tue, 20 Jan 2026 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%BC%93%E5%AD%98%E5%91%BD%E4%B8%AD%E5%8E%9F%E7%90%86/</guid>
+    <description><![CDATA[大模型的缓存命中机制：为什么我改了最后一条消息还会命中？ 很多人在用大模型时都会遇到一个现象： 明明改了最后一条 message 的内容，为什么系统还显示“缓存]]></description>
+</item>
+<item>
+    <title>Cookie复制器 隐私权政策</title>
+    <link>https://kengerlwl.github.io/cookie%E5%A4%8D%E5%88%B6%E5%99%A8-%E9%9A%90%E7%A7%81%E6%9D%83%E6%94%BF%E7%AD%96/</link>
+    <pubDate>Thu, 15 Jan 2026 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/cookie%E5%A4%8D%E5%88%B6%E5%99%A8-%E9%9A%90%E7%A7%81%E6%9D%83%E6%94%BF%E7%AD%96/</guid>
+    <description><![CDATA[Cookie复制器 隐私权政策 最后更新日期：2026年1月18日 概述 Cookie复制器（以下简称&quot;本扩展程序&quot;）是一款帮助]]></description>
+</item>
+<item>
+    <title>从工程角度理解到底什么是交错思考</title>
+    <link>https://kengerlwl.github.io/%E4%BB%8E%E5%B7%A5%E7%A8%8B%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3%E5%88%B0%E5%BA%95%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%A4%E9%94%99%E6%80%9D%E8%80%83/</link>
+    <pubDate>Sun, 11 Jan 2026 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E4%BB%8E%E5%B7%A5%E7%A8%8B%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3%E5%88%B0%E5%BA%95%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%A4%E9%94%99%E6%80%9D%E8%80%83/</guid>
+    <description><![CDATA[背景 最近做业务需要了解什么是交错思考，以前我只知道thinking机制。 本质上就是在模型正式输出前，让其输出。内部有具体的思考活动。 但是这种]]></description>
+</item>
+<item>
+    <title>运营web</title>
+    <link>https://kengerlwl.github.io/%E8%BF%90%E8%90%A5web/</link>
+    <pubDate>Sat, 10 Jan 2026 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E8%BF%90%E8%90%A5web/</guid>
+    <description><![CDATA[独立网站运营必备工具：我正在使用的三件套 作为一名独立网站运营者，工具不在多，够用就好。本文分享我目前在用的核心工具组合，帮助你快速搭建网站监]]></description>
+</item>
+<item>
+    <title>基于cloudflare来部署国内的vps</title>
+    <link>https://kengerlwl.github.io/%E5%9F%BA%E4%BA%8Ecloudflare%E6%9D%A5%E9%83%A8%E7%BD%B2%E5%9B%BD%E5%86%85%E7%9A%84vps/</link>
+    <pubDate>Fri, 02 Jan 2026 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E5%9F%BA%E4%BA%8Ecloudflare%E6%9D%A5%E9%83%A8%E7%BD%B2%E5%9B%BD%E5%86%85%E7%9A%84vps/</guid>
+    <description><![CDATA[使用 Cloudflare Tunnel 绕过国内域名备案限制 背景 当你的域名未备案，但服务器部署在国内（如腾讯云、阿里云）时，通过 Cloudflare CDN 代理访问会遇到以下问题： 1 用户 → Cloudflare CDN → 回]]></description>
+</item>
+<item>
+    <title>个人服务简单注册中心与灰度发布V2</title>
+    <link>https://kengerlwl.github.io/%E4%B8%AA%E4%BA%BA%E6%9C%8D%E5%8A%A1%E7%AE%80%E5%8D%95%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83%E4%B8%8E%E7%81%B0%E5%BA%A6%E5%8F%91%E5%B8%83/</link>
+    <pubDate>Sat, 27 Dec 2025 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E4%B8%AA%E4%BA%BA%E6%9C%8D%E5%8A%A1%E7%AE%80%E5%8D%95%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83%E4%B8%8E%E7%81%B0%E5%BA%A6%E5%8F%91%E5%B8%83/</guid>
+    <description><![CDATA[Kenger 服务注册中心架构文档 当前方案的一些问题： nginx这边目前感知比较慢，目前是nginx这边轮训，所以会有一个间隔。（考虑nginx这边提供]]></description>
+</item>
+<item>
+    <title>个人服务发布方案V1</title>
+    <link>https://kengerlwl.github.io/%E4%B8%AA%E4%BA%BA%E6%9C%8D%E5%8A%A1%E5%8F%91%E5%B8%83%E6%96%B9%E6%A1%88/</link>
+    <pubDate>Sat, 20 Dec 2025 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/%E4%B8%AA%E4%BA%BA%E6%9C%8D%E5%8A%A1%E5%8F%91%E5%B8%83%E6%96%B9%E6%A1%88/</guid>
+    <description><![CDATA[背景 我有一个个人服务，这个服务有一定的用户量，之前是单机的，只有一个容器。 但是如果我想要升级，而这个时候正好有用户在使用，部署期间将会导致服]]></description>
+</item>
+<item>
+    <title>HttpInterceptor隐私政策</title>
+    <link>https://kengerlwl.github.io/privacy_policy/</link>
+    <pubDate>Thu, 13 Nov 2025 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/privacy_policy/</guid>
+    <description><![CDATA[隐私政策 (Privacy Policy) 最后更新日期 (Last Updated): 2025年11月14日 中文版本 1. 概述 HTTP Request Interceptor（以下简称&quot;本扩展&quot;）是一个 Chrome]]></description>
+</item>
+<item>
+    <title>TypeScript学习</title>
+    <link>https://kengerlwl.github.io/typescript%E5%AD%A6%E4%B9%A0/</link>
+    <pubDate>Fri, 05 Sep 2025 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/typescript%E5%AD%A6%E4%B9%A0/</guid>
+    <description><![CDATA[demo 我们新建一个 app.ts 的文件，代码如下： var message:string = &ldquo;Hello World&rdquo; console.log(message) 通常我们使用 .ts 作为 TypeScript 代码文件的扩展名。 然后执行以下命令将 TypeScript 转换为 JavaScript 代码： 1 tsc app.ts 这时候在当前目录]]></description>
+</item>
+</channel>
+</rss>

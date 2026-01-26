@@ -1,0 +1,24 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>旁路由 - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/%E6%97%81%E8%B7%AF%E7%94%B1/</link>
+        <description>旁路由 - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 25 Oct 2023 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/%E6%97%81%E8%B7%AF%E7%94%B1/" rel="self" type="application/rss+xml" /><item>
+    <title>windows实现旁路由</title>
+    <link>https://kengerlwl.github.io/windows%E5%AE%9E%E7%8E%B0%E6%97%81%E8%B7%AF%E7%94%B1/</link>
+    <pubDate>Wed, 25 Oct 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/windows%E5%AE%9E%E7%8E%B0%E6%97%81%E8%B7%AF%E7%94%B1/</guid>
+    <description><![CDATA[背景 使用linux的时候，用op作为网关，openclash做分发。有dns污染问题。 机缘巧合之下，使用windows的clash代理，加上]]></description>
+</item>
+<item>
+    <title>esxi使用istore作为旁路由</title>
+    <link>https://kengerlwl.github.io/esxi%E4%BD%BF%E7%94%A8istore%E4%BD%9C%E4%B8%BA%E6%97%81%E8%B7%AF%E7%94%B1/</link>
+    <pubDate>Tue, 21 Mar 2023 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/esxi%E4%BD%BF%E7%94%A8istore%E4%BD%9C%E4%B8%BA%E6%97%81%E8%B7%AF%E7%94%B1/</guid>
+    <description><![CDATA[为什么istore 因为istore提供直接的iso镜像文件，方便esxi直接安装。 并且也是基于openwrt该的，大部分的使用习惯是一致的 how]]></description>
+</item>
+</channel>
+</rss>

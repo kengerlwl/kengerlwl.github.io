@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>LoRA - 标签 - Kenger`s Blog</title>
+        <link>https://kengerlwl.github.io/tags/lora/</link>
+        <description>LoRA - 标签 - Kenger`s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>kengerlwl@qq.com (kenger)</managingEditor>
+            <webMaster>kengerlwl@qq.com (kenger)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 28 May 2024 15:27:31 &#43;0000</lastBuildDate><atom:link href="https://kengerlwl.github.io/tags/lora/" rel="self" type="application/rss+xml" /><item>
+    <title>LoRA微调原理解读，及相关经验</title>
+    <link>https://kengerlwl.github.io/lora%E5%BE%AE%E8%B0%83%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB/</link>
+    <pubDate>Tue, 28 May 2024 15:27:31 &#43;0000</pubDate>
+    <author>kenger</author>
+    <guid>https://kengerlwl.github.io/lora%E5%BE%AE%E8%B0%83%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB/</guid>
+    <description><![CDATA[介绍 LoRA属于PEFT。一种利用微调训练少量参数，来达到全量微调的效果的技术。 在实际工程中非常常用。 文本主要将LoRA原理以及为什么LoR]]></description>
+</item>
+</channel>
+</rss>
